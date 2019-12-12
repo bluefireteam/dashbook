@@ -35,6 +35,8 @@ void main() {
 }
 ```
 
+![Dashbook](https://user-images.githubusercontent.com/835641/70755334-5292e280-1d18-11ea-9a4e-ae56903eb938.gif)
+
 ## Roadmap
  - Better support for themes and specific platform widgets
  - Property list for Chapters
