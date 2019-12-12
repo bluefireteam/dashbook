@@ -9,7 +9,8 @@ void main() {
       .storiesOf('Text')
       .decorator(CenterDecorator())
       .add('default', Text("Text"))
-      .add('bold', Text("Text", style: TextStyle(fontWeight: FontWeight.bold)));
+      .add('bold', Text("Text", style: TextStyle(fontWeight: FontWeight.bold)))
+      .add('color text', Text("Text", style: TextStyle(color: Color(0xFF0000FF))));
 
   dashbook
       .storiesOf('RaisedButton')
