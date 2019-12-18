@@ -2,7 +2,7 @@
 
 Dashbook is a UI development tool for Flutter, it works as a development enviroment for the project widgets and also a showcase for common widgets on the app, it is heavly inspired by [Storybook](https://storybook.js.org/) library, so it should be very easy for people who has already used Storybook, to use Dashbook.
 
-__Disclaimer__: This is still in development, suggestions, and PRs are welcome!
+__Disclaimer__: This is an early version, more features should be coming soon, suggestions, and PRs are welcome!
 
 ## How to use
 
