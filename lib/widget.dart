@@ -46,6 +46,7 @@ class _DashbookState extends State<Dashbook> {
       story.chapters.forEach((chapter) {
         children.add(
             ListTile(
+                selected: chapter.id == _currentChapter.id,
                 title: Text("  ${chapter.name}"),
                 onTap: () {
                   setState(() {

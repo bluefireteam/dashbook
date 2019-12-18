@@ -37,6 +37,15 @@ void main() {
 
 ![Dashbook](https://user-images.githubusercontent.com/835641/70755334-5292e280-1d18-11ea-9a4e-ae56903eb938.gif)
 
+## Structure
+
+Dashbook is just a widget, so you can pretty much run it any way you want as there is not any required structure that you must follow, we do recommend the following approach:
+
+ - Create a file named `main_dashbook.dart` on the root source of your project (e.g. `lib/main_dashbook.dart`)
+ - Run it with the command `flutter run -t lib/main_dashbook.dart`
+
 ## Roadmap
  - Better support for themes and specific platform widgets
  - Property list for Chapters
+ - Search on the stories list
+ - Any other suggestions from the community

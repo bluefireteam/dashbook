@@ -38,4 +38,6 @@ class Chapter {
 
     return _widget;
   }
+
+  String get id => "${story.name}#$name";
 }
