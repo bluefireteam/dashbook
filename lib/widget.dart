@@ -1,6 +1,94 @@
 import 'package:flutter/material.dart';
 import './story.dart';
 
+typedef PropertyChanged = void Function(Property);
+
+class _TextProperty extends StatefulWidget {
+
+  final Property<String> property;
+  final PropertyChanged onChanged;
+
+  _TextProperty({ this.property, this.onChanged });
+
+  @override
+  State<StatefulWidget> createState() => _TextPropertyState(property.getValue());
+}
+
+class _TextPropertyState extends State<_TextProperty> {
+
+  TextEditingController controller = TextEditingController();
+
+  _TextPropertyState(String value) {
+    controller.text = value;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return
+        Row(
+            mainAxisSize: MainAxisSize.min,
+            children:[
+              SizedBox(width: 25),
+              Text(widget.property.name),
+              SizedBox(width: 25),
+              Expanded(child:
+                  TextField(
+                      onChanged: (value) {
+                        widget.property.value = value;
+                        widget.onChanged(widget.property);
+                      },
+                      controller: controller
+                  )
+              ),
+              SizedBox(width: 25),
+            ]
+        );
+  }
+}
+
+class _ChapterPreview extends StatefulWidget {
+  final Chapter chapter;
+
+  _ChapterPreview({ this.chapter, Key key }): super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _ChapterPreviewState(chapter);
+}
+
+class _ChapterPreviewState extends State<_ChapterPreview> {
+  Chapter _currentChapter;
+
+  _ChapterPreviewState(this._currentChapter);
+
+  @override
+  Widget build(BuildContext ctx) {
+    final children = [
+      Expanded(child: _currentChapter.widget())
+    ];
+
+    if (_currentChapter.ctx.properties.isNotEmpty) {
+      children.add(
+          Expanded(child:
+              Column(children: [
+                Text("Properties", style: TextStyle(fontWeight: FontWeight.bold))
+              ]..addAll(
+                  _currentChapter.ctx.properties.entries.map((entry) {
+                    if (entry.value is Property<String>) {
+                      return _TextProperty(property: entry.value, onChanged: (property) {
+                        setState(() {});
+                      });
+
+                    }
+                    return null;
+                  })
+              ))
+          ),
+      );
+    }
+    return Column(children: children);
+  }
+}
+
 class Dashbook extends StatefulWidget {
   final List<Story> stories = [];
 
@@ -71,7 +159,7 @@ class _DashbookState extends State<Dashbook> {
               appBar: AppBar(
                   title: const Text('Dashbook'),
               ),
-              body:  _currentChapter?.widget,
+              body: _currentChapter != null ? _ChapterPreview(chapter: _currentChapter, key: Key(_currentChapter.id)) : null,
               drawer: Drawer(
                   child: ListView(children: _buildDrawer(context))
               )
