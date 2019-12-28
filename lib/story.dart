@@ -1,6 +1,38 @@
 import 'package:flutter/material.dart';
 import './decorator.dart';
 
+class Property <T> {
+  final String name;
+
+  final T defaultValue;
+
+  T value;
+
+  Property(this.name, this.defaultValue);
+
+  T getValue() => value ?? defaultValue;
+
+  @override
+  toString() => "$name - ${getValue()}";
+}
+
+class DashbookContext {
+  Map<String, Property> properties = {};
+
+  Property textProperty(String name, String defaultValue) {
+    if (properties.containsKey(name)) {
+      return properties[name];
+    } else {
+      final property = Property<String>(name, defaultValue);
+      properties[name] = property;
+
+      return property;
+    }
+  }
+}
+
+typedef ChapterBuildFunction = Widget Function(DashbookContext context);
+
 class Story {
   final String name;
   List<Chapter> chapters = [];
@@ -9,9 +41,9 @@ class Story {
 
   Story(this.name);
 
-  Story add(String name, Widget widget) {
-    final chapter = Chapter(name, widget, this);
-    chapters.add(chapter);
+  Story add(String name, ChapterBuildFunction buildFn) {
+    final _chapter = Chapter(name, buildFn, this);
+    chapters.add(_chapter);
 
     return this;
   }
@@ -24,19 +56,24 @@ class Story {
 }
 
 class Chapter {
-  final Widget _widget;
+  final ChapterBuildFunction _buildFn;
   final String name;
+  DashbookContext ctx;
 
   final Story story;
 
-  Chapter(this.name, this._widget, this.story);
+  Chapter(this.name, this._buildFn, this.story) {
+    ctx = DashbookContext();
+  }
 
-  Widget get widget {
+  Widget widget() {
+    final Widget w = _buildFn(ctx);
+
     if (story._decorator != null) {
-      return story._decorator.decorate(_widget);
+      return story._decorator.decorate(w);
     }
 
-    return _widget;
+    return w;
   }
 
   String get id => "${story.name}#$name";
