@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './decorator.dart';
 
-class Property <T> {
+class Property<T> {
   final String name;
 
   final T defaultValue;
