@@ -8,7 +8,14 @@ void main() {
   dashbook
       .storiesOf('Text')
       .decorator(CenterDecorator())
-      .add('default', (ctx) => Text(ctx.textProperty("text", "TText").getValue()))
+      .add('default', (ctx) {
+        return Text(
+            ctx.textProperty("text", "Text Example").getValue(),
+            style: TextStyle(
+                fontSize: ctx.numberProperty("font size", 20).getValue(),
+            ),
+        );
+      })
       .add('bold', (_) => Text("Text", style: TextStyle(fontWeight: FontWeight.bold)))
       .add('color text', (_) => Text("Text", style: TextStyle(color: Color(0xFF0000FF))));
 

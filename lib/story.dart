@@ -29,6 +29,17 @@ class DashbookContext {
       return property;
     }
   }
+
+  Property numberProperty(String name, double defaultValue) {
+    if (properties.containsKey(name)) {
+      return properties[name];
+    } else {
+      final property = Property<double>(name, defaultValue);
+      properties[name] = property;
+
+      return property;
+    }
+  }
 }
 
 typedef ChapterBuildFunction = Widget Function(DashbookContext context);
