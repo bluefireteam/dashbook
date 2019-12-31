@@ -1,50 +1,6 @@
 import 'package:flutter/material.dart';
 import './story.dart';
-
-typedef PropertyChanged = void Function(Property);
-
-class _TextProperty extends StatefulWidget {
-
-  final Property<String> property;
-  final PropertyChanged onChanged;
-
-  _TextProperty({ this.property, this.onChanged });
-
-  @override
-  State<StatefulWidget> createState() => _TextPropertyState(property.getValue());
-}
-
-class _TextPropertyState extends State<_TextProperty> {
-
-  TextEditingController controller = TextEditingController();
-
-  _TextPropertyState(String value) {
-    controller.text = value;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return
-        Row(
-            mainAxisSize: MainAxisSize.min,
-            children:[
-              SizedBox(width: 25),
-              Text(widget.property.name),
-              SizedBox(width: 25),
-              Expanded(child:
-                  TextField(
-                      onChanged: (value) {
-                        widget.property.value = value;
-                        widget.onChanged(widget.property);
-                      },
-                      controller: controller
-                  )
-              ),
-              SizedBox(width: 25),
-            ]
-        );
-  }
-}
+import './property_widgets.dart';
 
 class _ChapterPreview extends StatefulWidget {
   final Chapter chapter;
@@ -73,10 +29,14 @@ class _ChapterPreviewState extends State<_ChapterPreview> {
                 Text("Properties", style: TextStyle(fontWeight: FontWeight.bold))
               ]..addAll(
                   _currentChapter.ctx.properties.entries.map((entry) {
-                    if (entry.value is Property<String>) {
-                      return _TextProperty(property: entry.value, onChanged: (property) {
+                    final onChanged = (_) {
                         setState(() {});
-                      });
+                    };
+                    if (entry.value is Property<String>) {
+                      return TextProperty(property: entry.value, onChanged: onChanged);
+
+                    } else if (entry.value is Property<double>) {
+                      return NumberProperty(property: entry.value, onChanged: onChanged);
 
                     }
                     return null;
