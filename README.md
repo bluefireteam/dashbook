@@ -6,6 +6,13 @@ __Disclaimer__: This is an early version, more features should be coming soon, s
 
 ## How to use
 
+Add the dependency to your `pubspec.ymal`
+
+
+```
+dashbook: ^0.0.2
+```
+
 A `Dashbook` instance has a collection of the app widgets (Stories) and its variants (Chapters). Here you can see a very simple example of how to use it.
 
 ```dart
@@ -23,9 +30,9 @@ void main() {
       // which will center all the widgets on the center of the screen
       .decorator(CenterDecorator())
       // The Widget story can have as many chapters as needed
-      .add('default', Text("Text"))
-      .add('bold', Text("Text", style: TextStyle(fontWeight: FontWeight.bold)))
-      .add('color text', Text("Text", style: TextStyle(color: Color(0xFF0000FF))));
+      .add('default', (ctx) => ctx.textProperty("text", "Text Example").getValue())
+      .add('bold', (_) => Text("Text", style: TextStyle(fontWeight: FontWeight.bold)))
+      .add('color text', (_) => Text("Text", style: TextStyle(color: Color(0xFF0000FF))));
 
   dashbook
       .storiesOf('RaisedButton')
@@ -49,6 +56,6 @@ Dashbook is just a widget, so it can be ran in any way wanted, as there is no re
 
 ## Roadmap
  - Better support for themes and specific platform widgets
- - Property list for Chapters
+ - ~~Property list for Chapters~~
  - Search on the stories list
  - Any other suggestions from the community
