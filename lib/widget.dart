@@ -19,13 +19,13 @@ class _ChapterPreviewState extends State<_ChapterPreview> {
   @override
   Widget build(BuildContext ctx) {
     final children = [
-      Expanded(child: _currentChapter.widget())
+      Expanded(child: SingleChildScrollView(child: _currentChapter.widget()))
     ];
 
     if (_currentChapter.ctx.properties.isNotEmpty) {
       children.add(
           Expanded(child:
-              Column(children: [
+              SingleChildScrollView(child: Column(children: [
                 Text("Properties", style: TextStyle(fontWeight: FontWeight.bold))
               ]..addAll(
                   _currentChapter.ctx.properties.entries.map((entry) {
@@ -41,7 +41,7 @@ class _ChapterPreviewState extends State<_ChapterPreview> {
                     }
                     return null;
                   })
-              ))
+              )))
           ),
       );
     }
