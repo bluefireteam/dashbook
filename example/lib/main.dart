@@ -13,6 +13,9 @@ void main() {
             ctx.textProperty("text", "Text Example").getValue(),
             style: TextStyle(
                 fontSize: ctx.numberProperty("font size", 20).getValue(),
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = ctx.numberProperty("stroke width", 0).getValue()
             ),
         );
       })
