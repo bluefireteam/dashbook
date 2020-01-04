@@ -9,15 +9,33 @@ void main() {
       .storiesOf('Text')
       .decorator(CenterDecorator())
       .add('default', (ctx) {
-        return Text(
-          ctx.textProperty("text", "Text Example").getValue(),
-          style: TextStyle(
-              fontSize: ctx.numberProperty("font size", 20).getValue(),
-              foreground: Paint()
-                ..style = PaintingStyle.stroke
-                ..strokeWidth =
-                    ctx.numberProperty("stroke width", 0).getValue()),
-        );
+        return Container(
+            width: 300,
+            child: Text(
+              ctx.textProperty("text", "Text Example"),
+              textAlign: ctx.listProperty(
+                "text align",
+                TextAlign.center,
+                TextAlign.values,
+              ),
+              textDirection: ctx.listProperty(
+                "text direction",
+                TextDirection.rtl,
+                TextDirection.values,
+              ),
+              style: TextStyle(
+                  fontWeight: ctx.listProperty(
+                    "font weight",
+                    FontWeight.normal,
+                    FontWeight.values,
+                  ),
+                  fontStyle: ctx.listProperty(
+                    "font style",
+                    FontStyle.normal,
+                    FontStyle.values,
+                  ),
+                  fontSize: ctx.numberProperty("font size", 20)),
+            ));
       })
       .add('bold',
           (_) => Text("Text", style: TextStyle(fontWeight: FontWeight.bold)))
@@ -27,8 +45,7 @@ void main() {
   dashbook.storiesOf('RaisedButton').decorator(CenterDecorator()).add(
       'default',
       (ctx) => RaisedButton(
-          child: Text(ctx.textProperty("Label", "Ok").getValue()),
-          onPressed: () {}));
+          child: Text(ctx.textProperty("Label", "Ok")), onPressed: () {}));
 
   runApp(dashbook);
 }

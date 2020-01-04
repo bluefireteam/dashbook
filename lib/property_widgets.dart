@@ -76,3 +76,38 @@ class NumberPropertyState extends State<NumberProperty> {
     ]);
   }
 }
+
+class ListPropertyWidget<T> extends StatefulWidget {
+  final ListProperty<T> property;
+  final PropertyChanged onChanged;
+
+  ListPropertyWidget({this.property, this.onChanged});
+
+  @override
+  State<StatefulWidget> createState() => ListPropertyState();
+}
+
+class ListPropertyState extends State<ListPropertyWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(mainAxisSize: MainAxisSize.min, children: [
+      SizedBox(width: 25),
+      Text(widget.property.name),
+      SizedBox(width: 25),
+      Expanded(
+          child: DropdownButton(
+              value: widget.property.getValue(),
+              onChanged: (value) {
+                widget.property.value = value;
+                widget.onChanged(widget.property);
+              },
+              items: widget.property.list
+                  .map((value) => DropdownMenuItem(
+                        value: value,
+                        child: Text(value.toString()),
+                      ))
+                  .toList())),
+      SizedBox(width: 25),
+    ]);
+  }
+}

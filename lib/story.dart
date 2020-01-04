@@ -16,28 +16,46 @@ class Property<T> {
   toString() => "$name - ${getValue()}";
 }
 
+class ListProperty<T> extends Property<T> {
+  final List<T> list;
+
+  ListProperty(String name, T defaultValue, this.list)
+      : super(name, defaultValue);
+}
+
 class DashbookContext {
   Map<String, Property> properties = {};
 
-  Property textProperty(String name, String defaultValue) {
+  String textProperty(String name, String defaultValue) {
     if (properties.containsKey(name)) {
-      return properties[name];
+      return properties[name].getValue();
     } else {
       final property = Property<String>(name, defaultValue);
       properties[name] = property;
 
-      return property;
+      return property.getValue();
     }
   }
 
-  Property numberProperty(String name, double defaultValue) {
+  double numberProperty(String name, double defaultValue) {
     if (properties.containsKey(name)) {
-      return properties[name];
+      return properties[name].getValue();
     } else {
       final property = Property<double>(name, defaultValue);
       properties[name] = property;
 
-      return property;
+      return property.getValue();
+    }
+  }
+
+  T listProperty<T>(String name, T defaultValue, List<T> list) {
+    if (properties.containsKey(name)) {
+      return properties[name].getValue();
+    } else {
+      final property = ListProperty<T>(name, defaultValue, list);
+      properties[name] = property;
+
+      return property.getValue();
     }
   }
 }
