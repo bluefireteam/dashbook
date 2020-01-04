@@ -39,6 +39,9 @@ class _ChapterPreviewState extends State<_ChapterPreview> {
                         } else if (entry.value is Property<double>) {
                           return NumberProperty(
                               property: entry.value, onChanged: onChanged);
+                        } else if (entry.value is ListProperty) {
+                          return ListPropertyWidget(
+                              property: entry.value, onChanged: onChanged);
                         }
                         return null;
                       }))))),
