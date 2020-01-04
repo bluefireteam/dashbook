@@ -68,7 +68,7 @@ void main() {
 }
 ```
 
-![Dashbook](https://user-images.githubusercontent.com/835641/70755334-5292e280-1d18-11ea-9a4e-ae56903eb938.gif)
+![Dashbook](https://user-images.githubusercontent.com/835641/71767052-33860b80-2ee6-11ea-8761-88ea63a3517e.gif)
 
 ## Structure
 
