@@ -4,6 +4,24 @@ import './story.dart';
 
 typedef PropertyChanged = void Function(Property);
 
+class _PropertyScaffold extends StatelessWidget {
+  final String label;
+  final Widget child;
+
+  _PropertyScaffold({this.label, this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicWidth(
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+      SizedBox(width: 25),
+      Text(label),
+      SizedBox(width: 25),
+      Expanded(child: child)
+    ]));
+  }
+}
+
 class TextProperty extends StatefulWidget {
   final Property<String> property;
   final PropertyChanged onChanged;
@@ -23,19 +41,14 @@ class TextPropertyState extends State<TextProperty> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisSize: MainAxisSize.min, children: [
-      SizedBox(width: 25),
-      Text(widget.property.name),
-      SizedBox(width: 25),
-      Expanded(
-          child: TextField(
-              onChanged: (value) {
-                widget.property.value = value;
-                widget.onChanged(widget.property);
-              },
-              controller: controller)),
-      SizedBox(width: 25),
-    ]);
+    return _PropertyScaffold(
+        label: widget.property.name,
+        child: TextField(
+            onChanged: (value) {
+              widget.property.value = value;
+              widget.onChanged(widget.property);
+            },
+            controller: controller));
   }
 }
 
@@ -59,21 +72,16 @@ class NumberPropertyState extends State<NumberProperty> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisSize: MainAxisSize.min, children: [
-      SizedBox(width: 25),
-      Text(widget.property.name),
-      SizedBox(width: 25),
-      Expanded(
-          child: TextField(
-              keyboardType: TextInputType.number,
-              inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-              onChanged: (value) {
-                widget.property.value = double.tryParse(value);
-                widget.onChanged(widget.property);
-              },
-              controller: controller)),
-      SizedBox(width: 25),
-    ]);
+    return _PropertyScaffold(
+        label: widget.property.name,
+        child: TextField(
+            keyboardType: TextInputType.number,
+            inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+            onChanged: (value) {
+              widget.property.value = double.tryParse(value);
+              widget.onChanged(widget.property);
+            },
+            controller: controller));
   }
 }
 
@@ -90,24 +98,19 @@ class ListPropertyWidget<T> extends StatefulWidget {
 class ListPropertyState extends State<ListPropertyWidget> {
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisSize: MainAxisSize.min, children: [
-      SizedBox(width: 25),
-      Text(widget.property.name),
-      SizedBox(width: 25),
-      Expanded(
-          child: DropdownButton(
-              value: widget.property.getValue(),
-              onChanged: (value) {
-                widget.property.value = value;
-                widget.onChanged(widget.property);
-              },
-              items: widget.property.list
-                  .map((value) => DropdownMenuItem(
-                        value: value,
-                        child: Text(value.toString()),
-                      ))
-                  .toList())),
-      SizedBox(width: 25),
-    ]);
+    return _PropertyScaffold(
+        label: widget.property.name,
+        child: DropdownButton(
+            value: widget.property.getValue(),
+            onChanged: (value) {
+              widget.property.value = value;
+              widget.onChanged(widget.property);
+            },
+            items: widget.property.list
+                .map((value) => DropdownMenuItem(
+                      value: value,
+                      child: Text(value.toString()),
+                    ))
+                .toList()));
   }
 }
