@@ -1,6 +1,6 @@
 ## [0.0.3]
 
- - Added theme property on dashbook widget.
+ - Added theme property on dashbook widget. (thanks @Kyle-Mendes)
 
 ## [0.0.2]
 
