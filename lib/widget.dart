@@ -53,6 +53,9 @@ class _ChapterPreviewState extends State<_ChapterPreview> {
 
 class Dashbook extends StatefulWidget {
   final List<Story> stories = [];
+  ThemeData theme;
+
+  Dashbook({this.theme});
 
   Story storiesOf(String name) {
     final story = Story(name);
@@ -108,7 +111,7 @@ class _DashbookState extends State<Dashbook> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(routes: {
+    return MaterialApp(theme: widget.theme, routes: {
       '/': (BuildContext context) => Scaffold(
           appBar: AppBar(
             title: const Text('Dashbook'),
