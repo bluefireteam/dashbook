@@ -53,7 +53,7 @@ class _ChapterPreviewState extends State<_ChapterPreview> {
 
 class Dashbook extends StatefulWidget {
   final List<Story> stories = [];
-  ThemeData theme;
+  final ThemeData theme;
 
   Dashbook({this.theme});
 
