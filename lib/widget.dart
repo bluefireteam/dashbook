@@ -2,54 +2,6 @@ import 'package:flutter/material.dart';
 import './story.dart';
 import './property_widgets.dart';
 
-class _ChapterPreview extends StatefulWidget {
-  final Chapter chapter;
-
-  _ChapterPreview({this.chapter, Key key}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => _ChapterPreviewState(chapter);
-}
-
-class _ChapterPreviewState extends State<_ChapterPreview> {
-  Chapter _currentChapter;
-
-  _ChapterPreviewState(this._currentChapter);
-
-  @override
-  Widget build(BuildContext ctx) {
-    final children = [
-      Expanded(child: SingleChildScrollView(child: _currentChapter.widget()))
-    ];
-
-    if (_currentChapter.ctx.properties.isNotEmpty) {
-      children.add(
-        Expanded(
-            child: SingleChildScrollView(
-                child: Column(
-                    children: [
-          Text("Properties", style: TextStyle(fontWeight: FontWeight.bold))
-        ]..addAll(_currentChapter.ctx.properties.entries.map((entry) {
-                        final onChanged = (_) {
-                          setState(() {});
-                        };
-                        if (entry.value is Property<String>) {
-                          return TextProperty(
-                              property: entry.value, onChanged: onChanged);
-                        } else if (entry.value is Property<double>) {
-                          return NumberProperty(
-                              property: entry.value, onChanged: onChanged);
-                        } else if (entry.value is ListProperty) {
-                          return ListPropertyWidget(
-                              property: entry.value, onChanged: onChanged);
-                        }
-                        return null;
-                      }))))),
-      );
-    }
-    return Column(children: children);
-  }
-}
 
 class Dashbook extends StatefulWidget {
   final List<Story> stories = [];
@@ -68,8 +20,15 @@ class Dashbook extends StatefulWidget {
   State<StatefulWidget> createState() => _DashbookState();
 }
 
+enum CurrentView {
+  STORIES,
+  CHAPTER,
+  PROPERTIES,
+}
+
 class _DashbookState extends State<Dashbook> {
   Chapter _currentChapter;
+  CurrentView _currentView;
 
   @override
   void initState() {
@@ -77,50 +36,218 @@ class _DashbookState extends State<Dashbook> {
 
     if (widget.stories.isNotEmpty) {
       final story = widget.stories.first;
+      _currentView = CurrentView.STORIES;
 
       if (story.chapters.isNotEmpty) {
         _currentChapter = story.chapters.first;
+      _currentView = CurrentView.CHAPTER;
       }
     }
-  }
-
-  List<Widget> _buildDrawer(BuildContext context) {
-    List<Widget> children = [];
-
-    widget.stories.forEach((story) {
-      children.add(ListTile(
-          title:
-              Text(story.name, style: TextStyle(fontWeight: FontWeight.bold))));
-
-      story.chapters.forEach((chapter) {
-        children.add(ListTile(
-            selected: chapter.id == _currentChapter.id,
-            title: Text("  ${chapter.name}"),
-            onTap: () {
-              setState(() {
-                _currentChapter = chapter;
-              });
-
-              Navigator.of(context).pop();
-            }));
-      });
-    });
-
-    return children;
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(theme: widget.theme, routes: {
       '/': (BuildContext context) => Scaffold(
-          appBar: AppBar(
-            title: const Text('Dashbook'),
+          body: SafeArea(child: Column(children: [
+            Expanded(child: _DashbookBody(
+                    currentView: _currentView,
+                    selectedChapter: _currentChapter,
+                    stories: widget.stories,
+                    onSelectChapter: (chapter) {
+                      setState(() {
+                        _currentChapter = chapter;
+                        _currentView = CurrentView.CHAPTER;
+                      });
+                    }
+            )),
+            Container(
+                height: 50,
+                child: Row(
+                    children: [
+                      Expanded(child: _Link(
+                          label: 'Stories',
+                          textAlign: TextAlign.center,
+                          textStyle: TextStyle(
+                              fontWeight: _currentView == CurrentView.STORIES ? FontWeight.bold : FontWeight.normal,
+                          ),
+                          onTap: () {
+                            setState(() {
+                              _currentView = CurrentView.STORIES;
+                            });
+                          }
+                      )),
+                      Expanded(child: _Link(
+                          label: 'Preview',
+                          textAlign: TextAlign.center,
+                          textStyle: TextStyle(
+                              fontWeight: _currentView == CurrentView.CHAPTER ? FontWeight.bold : FontWeight.normal,
+                          ),
+                          onTap: () {
+                            setState(() {
+                              _currentView = CurrentView.CHAPTER;
+                            });
+                          }
+                      )),
+                      Expanded(child: _Link(
+                          label: 'Properties',
+                          textAlign: TextAlign.center,
+                          textStyle: TextStyle(
+                              fontWeight: _currentView == CurrentView.PROPERTIES ? FontWeight.bold : FontWeight.normal,
+                          ),
+                          onTap: () {
+                            setState(() {
+                              _currentView = CurrentView.PROPERTIES;
+                            });
+                          }
+                      )),
+                    ]
+                ),
+            )
+          ])
           ),
-          body: _currentChapter != null
-              ? _ChapterPreview(
-                  chapter: _currentChapter, key: Key(_currentChapter.id))
-              : null,
-          drawer: Drawer(child: ListView(children: _buildDrawer(context))))
+      )
     });
   }
+}
+
+typedef OnSelectChapter = Function(Chapter chapter);
+
+class _DashbookBody extends StatelessWidget {
+  final CurrentView currentView;
+  final List<Story> stories;
+  final Chapter selectedChapter;
+  final OnSelectChapter onSelectChapter;
+
+  _DashbookBody({ this.currentView, this.stories, this.selectedChapter, this.onSelectChapter });
+
+  @override
+  Widget build(BuildContext context) {
+    if (currentView == CurrentView.CHAPTER) {
+      return selectedChapter != null
+          ? _ChapterPreview(
+              currentChapter: selectedChapter, key: Key(selectedChapter.id))
+          : null;
+    } else if (currentView == CurrentView.STORIES) {
+      return _StoriesList(
+          stories: stories,
+          selectedChapter: selectedChapter,
+          onSelectChapter: onSelectChapter,
+      );
+    } else {
+      return _PropertiesContainer(currentChapter: selectedChapter);
+    }
+  }
+}
+
+class _Link extends StatelessWidget {
+  final String label;
+  final TextStyle textStyle;
+  final void Function() onTap;
+  final TextAlign textAlign;
+
+  _Link({ this.label, this.onTap, this.textStyle, this.textAlign });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        child: Container(
+            height: 40,
+            padding: EdgeInsets.all(10),
+            child: Text(this.label, textAlign: textAlign, style: textStyle)
+        ),
+        onTap: onTap,
+    );
+  }
+}
+
+class _StoriesList extends StatelessWidget {
+  final List<Story> stories;
+  final Chapter selectedChapter;
+  final OnSelectChapter onSelectChapter;
+
+  _StoriesList({ this.stories, this.selectedChapter, this.onSelectChapter });
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> children = [
+      Text('Stories', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))
+    ];
+
+    stories.forEach((story) {
+      children.add(Text(story.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)));
+
+      story.chapters.forEach((chapter) {
+        children.add(GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                child: _Link(
+                    label: "  ${chapter.name}",
+                    textAlign: TextAlign.left,
+                    textStyle: TextStyle(
+                        fontWeight: chapter.id == selectedChapter.id ? FontWeight.bold : FontWeight.normal
+                    )
+                ),
+                onTap: () {
+                  onSelectChapter(chapter);
+                }));
+      });
+    });
+
+    return SingleChildScrollView(
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: children
+        )
+    );
+
+  }
+}
+
+class _ChapterPreview extends StatelessWidget {
+
+  final Chapter currentChapter;
+
+  _ChapterPreview({ this.currentChapter, Key key }): super(key: key);
+
+  @override
+  Widget build(BuildContext ctx) {
+      return SingleChildScrollView(child: currentChapter.widget());
+  }
+}
+
+class _PropertiesContainer extends StatefulWidget {
+  final Chapter currentChapter;
+
+  _PropertiesContainer({ this.currentChapter });
+
+  @override
+  State createState() => _PropertiesContainerState();
+}
+
+class _PropertiesContainerState extends State<_PropertiesContainer> {
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+            child: Column(
+                children: [
+                  Text("Properties", style: TextStyle(fontWeight: FontWeight.bold))
+                ]..addAll(widget.currentChapter.ctx.properties.entries.map((entry) {
+                  final _onChanged = (_) {
+                    setState(() {});
+                  };
+                  if (entry.value is Property<String>) {
+                    return TextProperty(
+                        property: entry.value, onChanged: _onChanged);
+                  } else if (entry.value is Property<double>) {
+                    return NumberProperty(
+                        property: entry.value, onChanged: _onChanged);
+                  } else if (entry.value is ListProperty) {
+                    return ListPropertyWidget(
+                        property: entry.value, onChanged: _onChanged);
+                  }
+                  return null;
+                }))));
+  }
+
 }
