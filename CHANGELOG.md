@@ -1,3 +1,7 @@
+## [0.0.4]
+
+ - Redone the layout and added web friendly layout support
+
 ## [0.0.3]
 
  - Added theme property on dashbook widget. (thanks @Kyle-Mendes)
