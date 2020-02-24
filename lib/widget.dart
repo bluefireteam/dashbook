@@ -145,15 +145,17 @@ class _Link extends StatelessWidget {
   final TextStyle textStyle;
   final void Function() onTap;
   final TextAlign textAlign;
+  final EdgeInsets padding;
+  final double height;
 
-  _Link({ this.label, this.onTap, this.textStyle, this.textAlign });
+  _Link({ this.label, this.onTap, this.textStyle, this.textAlign, this.padding = const EdgeInsets.all(10), this.height = 40 });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         child: Container(
-            height: 40,
-            padding: EdgeInsets.all(10),
+            height: height,
+            padding: padding,
             child: Text(this.label, textAlign: textAlign, style: textStyle)
         ),
         onTap: onTap,
@@ -171,11 +173,14 @@ class _StoriesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [
-      Text('Stories', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))
+      SizedBox(height: 5),
+      Text('Stories', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+      SizedBox(height: 10),
     ];
 
     stories.forEach((story) {
       children.add(Text(story.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)));
+      children.add(SizedBox(height: 10));
 
       story.chapters.forEach((chapter) {
         children.add(GestureDetector(
@@ -183,6 +188,8 @@ class _StoriesList extends StatelessWidget {
                 child: _Link(
                     label: "  ${chapter.name}",
                     textAlign: TextAlign.left,
+                    padding: EdgeInsets.zero,
+                    height: 20,
                     textStyle: TextStyle(
                         fontWeight: chapter.id == selectedChapter.id ? FontWeight.bold : FontWeight.normal
                     )
@@ -194,10 +201,10 @@ class _StoriesList extends StatelessWidget {
     });
 
     return SingleChildScrollView(
-        child: Column(
+        child: Padding(padding: EdgeInsets.all(5), child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: children
-        )
+        ))
     );
 
   }
@@ -231,7 +238,8 @@ class _PropertiesContainerState extends State<_PropertiesContainer> {
     return SingleChildScrollView(
             child: Column(
                 children: [
-                  Text("Properties", style: TextStyle(fontWeight: FontWeight.bold))
+                  SizedBox(height: 10),
+                  Text("Properties", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))
                 ]..addAll(widget.currentChapter.ctx.properties.entries.map((entry) {
                   final _onChanged = (_) {
                     setState(() {});
