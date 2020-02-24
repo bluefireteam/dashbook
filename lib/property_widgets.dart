@@ -12,10 +12,12 @@ class _PropertyScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: EdgeInsets.all(5), child: Row(children: [
-      Expanded(flex: 4, child: Text(label)),
-      Expanded(flex: 6, child: child)
-    ]));
+    return Padding(
+        padding: EdgeInsets.all(5),
+        child: Row(children: [
+          Expanded(flex: 4, child: Text(label)),
+          Expanded(flex: 6, child: child)
+        ]));
   }
 }
 
