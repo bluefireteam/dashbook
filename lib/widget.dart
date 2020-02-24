@@ -153,6 +153,7 @@ class _Link extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+        behavior: HitTestBehavior.opaque,
         child: Container(
             height: height,
             padding: padding,
