@@ -20,11 +20,13 @@ class Dashbook extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(theme: theme, routes: {
       '/': (BuildContext context) => Scaffold(
-            body: SafeArea(
-                child: _DashbookBodyMobile(
-              stories: stories,
-            )),
-          )
+          body: SafeArea(
+              child: kIsWeb
+              ? _DashbookBodyWeb(stories: stories)
+              : _DashbookBodyMobile(
+                  stories: stories,
+              )),
+      )
     });
   }
 }
@@ -35,6 +37,78 @@ enum CurrentView {
   STORIES,
   CHAPTER,
   PROPERTIES,
+}
+
+class _DashbookBodyWeb extends StatefulWidget {
+  final List<Story> stories;
+
+  _DashbookBodyWeb({this.stories});
+
+  @override
+  State createState() => _DashbookBodyWebState();
+}
+
+class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
+  Chapter _currentChapter;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.stories.isNotEmpty) {
+      final story = widget.stories.first;
+
+      if (story.chapters.isNotEmpty) {
+        _currentChapter = story.chapters.first;
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(flex: 2, child: Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                          right: BorderSide(color: Theme.of(context).dividerColor)
+                      )
+                  ),
+                  child: _StoriesList(
+                      stories: widget.stories,
+                      selectedChapter: _currentChapter,
+                      onSelectChapter: (chapter) {
+                        setState(() {
+                          _currentChapter = chapter;
+                        });
+                      },
+                  )
+          )),
+          Expanded(flex: 6, child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(flex: 6, child:
+                        _currentChapter != null ? _ChapterPreview(currentChapter: _currentChapter, key: Key(_currentChapter.id)) : null
+                    ),
+                    Expanded(flex: 4, child:
+                        Container(
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    top: BorderSide(color: Theme.of(context).dividerColor)
+                                )
+                            ),
+                            child: _PropertiesContainer(
+                                currentChapter: _currentChapter,
+                                onPropertyChange: () {
+                                  setState(() { });
+                                }
+                            ),
+                        ),
+                    ),
+                  ])),
+          ]);
+  }
 }
 
 class _DashbookBodyMobile extends StatefulWidget {
@@ -229,16 +303,21 @@ class _ChapterPreview extends StatelessWidget {
   }
 }
 
+typedef OnPropertyChange = void Function();
+
 class _PropertiesContainer extends StatefulWidget {
   final Chapter currentChapter;
+  final OnPropertyChange onPropertyChange;
 
-  _PropertiesContainer({this.currentChapter});
+  _PropertiesContainer({this.currentChapter, this.onPropertyChange});
 
   @override
   State createState() => _PropertiesContainerState();
 }
 
+
 class _PropertiesContainerState extends State<_PropertiesContainer> {
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -248,8 +327,12 @@ class _PropertiesContainerState extends State<_PropertiesContainer> {
       Text("Properties",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))
     ]..addAll(widget.currentChapter.ctx.properties.entries.map((entry) {
-                final _onChanged = (_) {
+
+                final _onChanged = (chapter) {
                   setState(() {});
+                  if (widget.onPropertyChange != null) {
+                    widget.onPropertyChange();
+                  }
                 };
                 if (entry.value is Property<String>) {
                   return TextProperty(
