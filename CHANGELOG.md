@@ -1,3 +1,7 @@
+## [0.0.5]
+
+ - Fixing state sharing bug acrros properties
+
 ## [0.0.4]
 
  - Redone the layout and added web friendly layout support

@@ -43,9 +43,13 @@ void main() {
           (_) => Text("Text", style: TextStyle(color: Color(0xFF0000FF))));
 
   dashbook.storiesOf('RaisedButton').decorator(CenterDecorator()).add(
-      'default',
-      (ctx) => RaisedButton(
-          child: Text(ctx.textProperty("Label", "Ok")), onPressed: () {}));
+        'default',
+        (ctx) => RaisedButton(
+            child: Text(ctx.textProperty("Label", "Ok"),
+                style:
+                    TextStyle(fontSize: ctx.numberProperty("font size", 20))),
+            onPressed: () {}),
+      );
 
   runApp(dashbook);
 }

@@ -20,13 +20,13 @@ class Dashbook extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(theme: theme, routes: {
       '/': (BuildContext context) => Scaffold(
-          body: SafeArea(
-              child: kIsWeb
-              ? _DashbookBodyWeb(stories: stories)
-              : _DashbookBodyMobile(
-                  stories: stories,
-              )),
-      )
+            body: SafeArea(
+                child: kIsWeb
+                    ? _DashbookBodyWeb(stories: stories)
+                    : _DashbookBodyMobile(
+                        stories: stories,
+                      )),
+          )
     });
   }
 }
@@ -66,48 +66,50 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(flex: 2, child: Container(
-                  decoration: BoxDecoration(
-                      border: Border(
-                          right: BorderSide(color: Theme.of(context).dividerColor)
-                      )
-                  ),
-                  child: _StoriesList(
-                      stories: widget.stories,
-                      selectedChapter: _currentChapter,
-                      onSelectChapter: (chapter) {
-                        setState(() {
-                          _currentChapter = chapter;
-                        });
-                      },
-                  )
-          )),
-          Expanded(flex: 6, child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(flex: 6, child:
-                        _currentChapter != null ? _ChapterPreview(currentChapter: _currentChapter, key: Key(_currentChapter.id)) : null
-                    ),
-                    Expanded(flex: 4, child:
-                        Container(
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    top: BorderSide(color: Theme.of(context).dividerColor)
-                                )
-                            ),
-                            child: _PropertiesContainer(
-                                currentChapter: _currentChapter,
-                                onPropertyChange: () {
-                                  setState(() { });
-                                }
-                            ),
-                        ),
-                    ),
-                  ])),
-          ]);
+    return Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Expanded(
+          flex: 2,
+          child: Container(
+              decoration: BoxDecoration(
+                  border: Border(
+                      right:
+                          BorderSide(color: Theme.of(context).dividerColor))),
+              child: _StoriesList(
+                stories: widget.stories,
+                selectedChapter: _currentChapter,
+                onSelectChapter: (chapter) {
+                  setState(() {
+                    _currentChapter = chapter;
+                  });
+                },
+              ))),
+      Expanded(
+          flex: 6,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Expanded(
+                flex: 6,
+                child: _currentChapter != null
+                    ? _ChapterPreview(
+                        currentChapter: _currentChapter,
+                        key: Key(_currentChapter.id))
+                    : null),
+            Expanded(
+              flex: 4,
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        top:
+                            BorderSide(color: Theme.of(context).dividerColor))),
+                child: _PropertiesContainer(
+                    currentChapter: _currentChapter,
+                    onPropertyChange: () {
+                      setState(() {});
+                    }),
+              ),
+            ),
+          ])),
+    ]);
   }
 }
 
@@ -315,36 +317,48 @@ class _PropertiesContainer extends StatefulWidget {
   State createState() => _PropertiesContainerState();
 }
 
-
 class _PropertiesContainerState extends State<_PropertiesContainer> {
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        child: Column(
-            children: [
-      SizedBox(height: 10),
-      Text("Properties",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))
-    ]..addAll(widget.currentChapter.ctx.properties.entries.map((entry) {
-
-                final _onChanged = (chapter) {
-                  setState(() {});
-                  if (widget.onPropertyChange != null) {
-                    widget.onPropertyChange();
-                  }
-                };
-                if (entry.value is Property<String>) {
-                  return TextProperty(
-                      property: entry.value, onChanged: _onChanged);
-                } else if (entry.value is Property<double>) {
-                  return NumberProperty(
-                      property: entry.value, onChanged: _onChanged);
-                } else if (entry.value is ListProperty) {
-                  return ListPropertyWidget(
-                      property: entry.value, onChanged: _onChanged);
+      child: Column(
+        children: [
+          SizedBox(height: 10),
+          Text("Properties",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))
+        ]..addAll(
+            widget.currentChapter.ctx.properties.entries.map((entry) {
+              final _propertyKey =
+                  Key("${widget.currentChapter.id}#${entry.value.name}");
+              final _onChanged = (chapter) {
+                setState(() {});
+                if (widget.onPropertyChange != null) {
+                  widget.onPropertyChange();
                 }
-                return null;
-              }))));
+              };
+              if (entry.value is Property<String>) {
+                return TextProperty(
+                  property: entry.value,
+                  onChanged: _onChanged,
+                  key: _propertyKey,
+                );
+              } else if (entry.value is Property<double>) {
+                return NumberProperty(
+                  property: entry.value,
+                  onChanged: _onChanged,
+                  key: _propertyKey,
+                );
+              } else if (entry.value is ListProperty) {
+                return ListPropertyWidget(
+                  property: entry.value,
+                  onChanged: _onChanged,
+                  key: _propertyKey,
+                );
+              }
+              return null;
+            }),
+          ),
+      ),
+    );
   }
 }

@@ -25,7 +25,7 @@ class TextProperty extends StatefulWidget {
   final Property<String> property;
   final PropertyChanged onChanged;
 
-  TextProperty({this.property, this.onChanged});
+  TextProperty({this.property, this.onChanged, Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => TextPropertyState(property.getValue());
@@ -55,7 +55,7 @@ class NumberProperty extends StatefulWidget {
   final Property<double> property;
   final PropertyChanged onChanged;
 
-  NumberProperty({this.property, this.onChanged});
+  NumberProperty({this.property, this.onChanged, Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() =>
@@ -88,7 +88,8 @@ class ListPropertyWidget<T> extends StatefulWidget {
   final ListProperty<T> property;
   final PropertyChanged onChanged;
 
-  ListPropertyWidget({this.property, this.onChanged});
+  ListPropertyWidget({this.property, this.onChanged, Key key})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => ListPropertyState();
