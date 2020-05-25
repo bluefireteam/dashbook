@@ -348,6 +348,12 @@ class _PropertiesContainerState extends State<_PropertiesContainer> {
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
+              } else if (entry.value is Property<bool>) {
+                return BoolProperty(
+                  property: entry.value,
+                  onChanged: _onChanged,
+                  key: _propertyKey,
+                );
               } else if (entry.value is ListProperty) {
                 return ListPropertyWidget(
                   property: entry.value,

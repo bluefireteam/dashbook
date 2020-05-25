@@ -1,6 +1,7 @@
 ## [0.0.5]
 
  - Fixing state sharing bug acrros properties
+ - Adding bool property
 
 ## [0.0.4]
 

@@ -48,7 +48,15 @@ void main() {
             child: Text(ctx.textProperty("Label", "Ok"),
                 style:
                     TextStyle(fontSize: ctx.numberProperty("font size", 20))),
-            onPressed: () {}),
+            onPressed: () {},),
+      );
+
+  dashbook.storiesOf('Checkbox').decorator(CenterDecorator()).add(
+        'default',
+        (ctx) => Checkbox(
+            value: ctx.boolProperty("checked", true),
+            onChanged: (_) {},
+        ),
       );
 
   runApp(dashbook);
