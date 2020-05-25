@@ -45,17 +45,17 @@ void main() {
   dashbook.storiesOf('RaisedButton').decorator(CenterDecorator()).add(
         'default',
         (ctx) => RaisedButton(
-            child: Text(ctx.textProperty("Label", "Ok"),
-                style:
-                    TextStyle(fontSize: ctx.numberProperty("font size", 20))),
-            onPressed: () {},),
+          child: Text(ctx.textProperty("Label", "Ok"),
+              style: TextStyle(fontSize: ctx.numberProperty("font size", 20))),
+          onPressed: () {},
+        ),
       );
 
   dashbook.storiesOf('Checkbox').decorator(CenterDecorator()).add(
         'default',
         (ctx) => Checkbox(
-            value: ctx.boolProperty("checked", true),
-            onChanged: (_) {},
+          value: ctx.boolProperty("checked", true),
+          onChanged: (_) {},
         ),
       );
 
