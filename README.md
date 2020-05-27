@@ -63,7 +63,7 @@ void main() {
   dashbook
       .storiesOf('RaisedButton')
       .decorator(CenterDecorator())
-      .add('default', RaisedButton(child: Text('Ok'), onPressed: () {}));
+      .add('default', (ctx) => RaisedButton(child: Text('Ok'), onPressed: () {}));
 
   // Since dashbook is a widget itself, you can just call runApp passing it as a parameter
   runApp(dashbook);
