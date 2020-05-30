@@ -336,7 +336,13 @@ class _PropertiesContainerState extends State<_PropertiesContainer> {
                   widget.onPropertyChange();
                 }
               };
-              if (entry.value is Property<String>) {
+              if (entry.value is ListProperty) {
+                return ListPropertyWidget(
+                  property: entry.value,
+                  onChanged: _onChanged,
+                  key: _propertyKey,
+                );
+              } else if (entry.value is Property<String>) {
                 return TextProperty(
                   property: entry.value,
                   onChanged: _onChanged,
@@ -350,12 +356,6 @@ class _PropertiesContainerState extends State<_PropertiesContainer> {
                 );
               } else if (entry.value is Property<bool>) {
                 return BoolProperty(
-                  property: entry.value,
-                  onChanged: _onChanged,
-                  key: _propertyKey,
-                );
-              } else if (entry.value is ListProperty) {
-                return ListPropertyWidget(
                   property: entry.value,
                   onChanged: _onChanged,
                   key: _propertyKey,
