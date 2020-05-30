@@ -360,7 +360,8 @@ class _PropertiesContainerState extends State<_PropertiesContainer> {
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
-              }              return null;
+              }
+              return null;
             }),
           ),
       ),
