@@ -1,3 +1,7 @@
+## [0.0.6]
+
+ - Fixing list properties which used String values
+
 ## [0.0.5]
 
  - Fixing state sharing bug acrros properties
