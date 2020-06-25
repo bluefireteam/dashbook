@@ -64,8 +64,39 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
     }
   }
 
+  bool _hasProperties() => _currentChapter.ctx.properties.isNotEmpty;
+
   @override
   Widget build(BuildContext context) {
+    Widget body;
+    Widget preview = _currentChapter?.widget();
+
+    if (_hasProperties()) {
+      body = Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Expanded(
+                flex: 10,
+                child: preview,
+            ),
+            Expanded(
+              flex: 4,
+              child: !_hasProperties() ? Container() : Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        top:
+                            BorderSide(color: Theme.of(context).dividerColor))),
+                child: _PropertiesContainer(
+                    currentChapter: _currentChapter,
+                    onPropertyChange: () {
+                      setState(() {});
+                    }),
+              ),
+            ),
+          ],
+        );
+    } else {
+      body = preview;
+    }
+
     return Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Expanded(
           flex: 2,
@@ -82,33 +113,13 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
                     _currentChapter = chapter;
                   });
                 },
-              ))),
-      Expanded(
-          flex: 6,
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            Expanded(
-                flex: 6,
-                child: _currentChapter != null
-                    ? _ChapterPreview(
-                        currentChapter: _currentChapter,
-                        key: Key(_currentChapter.id))
-                    : null),
-            Expanded(
-              flex: 4,
-              child: Container(
-                decoration: BoxDecoration(
-                    border: Border(
-                        top:
-                            BorderSide(color: Theme.of(context).dividerColor))),
-                child: _PropertiesContainer(
-                    currentChapter: _currentChapter,
-                    onPropertyChange: () {
-                      setState(() {});
-                    }),
               ),
-            ),
-          ])),
+          ),
+      ),
+      Expanded(
+          flex: 8,
+          child: body
+      ),
     ]);
   }
 }
