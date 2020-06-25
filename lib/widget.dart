@@ -301,7 +301,7 @@ class _ChapterPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    return SingleChildScrollView(child: currentChapter.widget());
+    return currentChapter.widget();
   }
 }
 

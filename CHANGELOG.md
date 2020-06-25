@@ -1,3 +1,7 @@
+## [next]
+
+ - Fixing Chapter Preview body.
+
 ## [0.0.6]
 
  - Fixing list properties which used String values
