@@ -1,6 +1,7 @@
 ## [next]
 
  - Fixing Chapter Preview body.
+ - Hiding properties panel on web, when there is no properties
 
 ## [0.0.6]
 
