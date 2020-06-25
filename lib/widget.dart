@@ -50,6 +50,7 @@ class _DashbookBodyWeb extends StatefulWidget {
 
 class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
   Chapter _currentChapter;
+  bool _isStoriesOpen = false;
 
   @override
   void initState() {
@@ -65,6 +66,12 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
   }
 
   bool _hasProperties() => _currentChapter.ctx.properties.isNotEmpty;
+
+  void _toggleStoriesList() {
+    setState(() {
+      _isStoriesOpen = !_isStoriesOpen;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,23 +104,45 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
       body = preview;
     }
 
+    final storiesWidget = _StoriesList(
+        stories: widget.stories,
+        selectedChapter: _currentChapter,
+        onSelectChapter: (chapter) {
+          setState(() {
+            _currentChapter = chapter;
+          });
+        },
+    );
+
+    final _storiesStackList = <Widget>[];
+
+    if (_isStoriesOpen) {
+      _storiesStackList.add(
+          Positioned.fill(child: storiesWidget),
+      );
+    }
+
+    _storiesStackList.add(
+        Positioned(
+          top: 5,
+          right: 10,
+          child: GestureDetector(
+              child: Icon(_isStoriesOpen ? Icons.navigate_before : Icons.navigate_next),
+              onTap: _toggleStoriesList,
+          ),
+        ),
+    );
+
     return Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Expanded(
-          flex: 2,
+          flex: _isStoriesOpen ? 2 : null,
           child: Container(
+              width: _isStoriesOpen ? null : 45,
               decoration: BoxDecoration(
                   border: Border(
                       right:
                           BorderSide(color: Theme.of(context).dividerColor))),
-              child: _StoriesList(
-                stories: widget.stories,
-                selectedChapter: _currentChapter,
-                onSelectChapter: (chapter) {
-                  setState(() {
-                    _currentChapter = chapter;
-                  });
-                },
-              ),
+              child: Stack(children: _storiesStackList),
           ),
       ),
       Expanded(

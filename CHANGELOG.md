@@ -1,7 +1,8 @@
 ## [next]
 
  - Fixing Chapter Preview body.
- - Hiding properties panel on web, when there is no properties
+ - Hiding properties panel on web, when there is no properties.
+ - Adding control to hide/show the side bar on web.
 
 ## [0.0.6]
 
