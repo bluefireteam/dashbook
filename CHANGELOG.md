@@ -1,4 +1,4 @@
-## [next]
+## [0.0.7]
 
  - Fixing Chapter Preview body.
  - Hiding properties panel on web, when there is no properties.

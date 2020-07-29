@@ -12,7 +12,7 @@ Add the dependency to your `pubspec.ymal`
 
 
 ```
-dashbook: ^0.0.6
+dashbook: ^0.0.7
 ```
 
 A `Dashbook` instance has a collection of the app widgets (Stories) and its variants (Chapters). Here you can see a very simple example of how to use it.
@@ -71,10 +71,10 @@ void main() {
 ```
 
 ### Mobile example
-![Dashbook](https://user-images.githubusercontent.com/835641/75179761-8f685600-5719-11ea-8b2e-ecf041c1bc84.gif)
+![Dashbook](https://user-images.githubusercontent.com/835641/88855642-9106e000-d1c9-11ea-8e5f-59e994a7fa03.gif)
 
 ### Web example
-![Dashbook](https://user-images.githubusercontent.com/835641/75179763-90998300-5719-11ea-8c6a-818809ed7dcf.gif)
+![Dashbook](https://user-images.githubusercontent.com/835641/88855646-92380d00-d1c9-11ea-8df4-74136bf18728.gif)
 
 ## Structure
 
