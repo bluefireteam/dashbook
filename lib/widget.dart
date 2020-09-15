@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import './story.dart';
+import 'package:flutter/material.dart';
+
 import './property_widgets.dart';
+import './story.dart';
 
 class Dashbook extends StatelessWidget {
   final List<Story> stories = [];
   final ThemeData theme;
+  final Iterable<LocalizationsDelegate<dynamic>> localizationsDelegates;
 
-  Dashbook({this.theme});
+  Dashbook({this.theme, this.localizationsDelegates});
 
   Story storiesOf(String name) {
     final story = Story(name);
@@ -18,16 +20,19 @@ class Dashbook extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: theme, routes: {
-      '/': (BuildContext context) => Scaffold(
-            body: SafeArea(
-                child: kIsWeb
-                    ? _DashbookBodyWeb(stories: stories)
-                    : _DashbookBodyMobile(
-                        stories: stories,
-                      )),
-          )
-    });
+    return MaterialApp(
+        theme: theme,
+        localizationsDelegates: localizationsDelegates,
+        routes: {
+          '/': (BuildContext context) => Scaffold(
+                body: SafeArea(
+                    child: kIsWeb
+                        ? _DashbookBodyWeb(stories: stories)
+                        : _DashbookBodyMobile(
+                            stories: stories,
+                          )),
+              )
+        });
   }
 }
 
@@ -79,76 +84,77 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
     Widget preview = _currentChapter?.widget();
 
     if (_hasProperties()) {
-      body = Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            Expanded(
-                flex: 10,
-                child: preview,
-            ),
-            Expanded(
-              flex: 4,
-              child: !_hasProperties() ? Container() : Container(
-                decoration: BoxDecoration(
-                    border: Border(
-                        top:
-                            BorderSide(color: Theme.of(context).dividerColor))),
-                child: _PropertiesContainer(
-                    currentChapter: _currentChapter,
-                    onPropertyChange: () {
-                      setState(() {});
-                    }),
-              ),
-            ),
-          ],
-        );
+      body = Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 10,
+            child: preview,
+          ),
+          Expanded(
+            flex: 4,
+            child: !_hasProperties()
+                ? Container()
+                : Container(
+                    decoration: BoxDecoration(
+                        border: Border(
+                            top: BorderSide(
+                                color: Theme.of(context).dividerColor))),
+                    child: _PropertiesContainer(
+                        currentChapter: _currentChapter,
+                        onPropertyChange: () {
+                          setState(() {});
+                        }),
+                  ),
+          ),
+        ],
+      );
     } else {
       body = preview;
     }
 
     final storiesWidget = _StoriesList(
-        stories: widget.stories,
-        selectedChapter: _currentChapter,
-        onSelectChapter: (chapter) {
-          setState(() {
-            _currentChapter = chapter;
-          });
-        },
+      stories: widget.stories,
+      selectedChapter: _currentChapter,
+      onSelectChapter: (chapter) {
+        setState(() {
+          _currentChapter = chapter;
+        });
+      },
     );
 
     final _storiesStackList = <Widget>[];
 
     if (_isStoriesOpen) {
       _storiesStackList.add(
-          Positioned.fill(child: storiesWidget),
+        Positioned.fill(child: storiesWidget),
       );
     }
 
     _storiesStackList.add(
-        Positioned(
-          top: 5,
-          right: 10,
-          child: GestureDetector(
-              child: Icon(_isStoriesOpen ? Icons.navigate_before : Icons.navigate_next),
-              onTap: _toggleStoriesList,
-          ),
+      Positioned(
+        top: 5,
+        right: 10,
+        child: GestureDetector(
+          child: Icon(
+              _isStoriesOpen ? Icons.navigate_before : Icons.navigate_next),
+          onTap: _toggleStoriesList,
         ),
+      ),
     );
 
     return Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Expanded(
-          flex: _isStoriesOpen ? 2 : null,
-          child: Container(
-              width: _isStoriesOpen ? null : 45,
-              decoration: BoxDecoration(
-                  border: Border(
-                      right:
-                          BorderSide(color: Theme.of(context).dividerColor))),
-              child: Stack(children: _storiesStackList),
-          ),
+        flex: _isStoriesOpen ? 2 : null,
+        child: Container(
+          width: _isStoriesOpen ? null : 45,
+          decoration: BoxDecoration(
+              border: Border(
+                  right: BorderSide(color: Theme.of(context).dividerColor))),
+          child: Stack(children: _storiesStackList),
+        ),
       ),
-      Expanded(
-          flex: 8,
-          child: body
-      ),
+      Expanded(flex: 8, child: body),
     ]);
   }
 }
