@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import './story.dart';
-import './property_widgets.dart';
+import './property_widgets.dart' as p;
 
 class Dashbook extends StatelessWidget {
   final List<Story> stories = [];
@@ -424,31 +424,37 @@ class _PropertiesContainerState extends State<_PropertiesContainer> {
                 }
               };
               if (entry.value is ListProperty) {
-                return ListPropertyWidget(
+                return p.ListPropertyWidget(
                   property: entry.value,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<String>) {
-                return TextProperty(
+                return p.TextProperty(
                   property: entry.value,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<double>) {
-                return NumberProperty(
+                return p.NumberProperty(
                   property: entry.value,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<bool>) {
-                return BoolProperty(
+                return p.BoolProperty(
+                  property: entry.value,
+                  onChanged: _onChanged,
+                  key: _propertyKey,
+                );
+              } else if (entry.value is Property<Color>) {
+                return p.ColorProperty(
                   property: entry.value,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               }
-              return null;
+              return Container();
             }),
           ),
       ),

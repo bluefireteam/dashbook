@@ -59,6 +59,17 @@ class DashbookContext {
     }
   }
 
+  Color colorProperty(String name, Color defaultValue) {
+    if (properties.containsKey(name)) {
+      return properties[name].getValue();
+    } else {
+      final property = Property<Color>(name, defaultValue);
+      properties[name] = property;
+
+      return property.getValue();
+    }
+  }
+
   T listProperty<T>(String name, T defaultValue, List<T> list) {
     if (properties.containsKey(name)) {
       return properties[name].getValue();

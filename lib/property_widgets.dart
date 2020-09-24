@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import './story.dart';
 
 typedef PropertyChanged = void Function(Property);
@@ -16,11 +17,14 @@ class _PropertyScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(5),
-        child: Row(children: [
+      padding: EdgeInsets.all(5),
+      child: Row(
+        children: [
           Expanded(flex: 4, child: Text(label)),
           Expanded(flex: 6, child: child)
-        ]));
+        ],
+      ),
+    );
   }
 }
 
@@ -48,13 +52,15 @@ class TextPropertyState extends State<TextProperty> {
   @override
   Widget build(BuildContext context) {
     return _PropertyScaffold(
-        label: widget.property.name,
-        child: TextField(
-            onChanged: (value) {
-              widget.property.value = value;
-              widget.onChanged(widget.property);
-            },
-            controller: controller));
+      label: widget.property.name,
+      child: TextField(
+        onChanged: (value) {
+          widget.property.value = value;
+          widget.onChanged(widget.property);
+        },
+        controller: controller,
+      ),
+    );
   }
 }
 
@@ -83,15 +89,17 @@ class NumberPropertyState extends State<NumberProperty> {
   @override
   Widget build(BuildContext context) {
     return _PropertyScaffold(
-        label: widget.property.name,
-        child: TextField(
-            keyboardType: TextInputType.number,
-            inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-            onChanged: (value) {
-              widget.property.value = double.tryParse(value);
-              widget.onChanged(widget.property);
-            },
-            controller: controller));
+      label: widget.property.name,
+      child: TextField(
+        keyboardType: TextInputType.number,
+        inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+        onChanged: (value) {
+          widget.property.value = double.tryParse(value);
+          widget.onChanged(widget.property);
+        },
+        controller: controller,
+      ),
+    );
   }
 }
 
@@ -119,14 +127,15 @@ class BoolPropertyState extends State<BoolProperty> {
     return _PropertyScaffold(
       label: widget.property.name,
       child: Checkbox(
-          value: _value,
-          onChanged: (newValue) {
-            widget.property.value = newValue;
-            widget.onChanged(widget.property);
-            setState(() {
-              _value = newValue;
-            });
-          }),
+        value: _value,
+        onChanged: (newValue) {
+          widget.property.value = newValue;
+          widget.onChanged(widget.property);
+          setState(() {
+            _value = newValue;
+          });
+        },
+      ),
     );
   }
 }
@@ -149,20 +158,93 @@ class ListPropertyState extends State<ListPropertyWidget> {
   @override
   Widget build(BuildContext context) {
     return _PropertyScaffold(
-        label: widget.property.name,
-        child: DropdownButton(
-            value: widget.property.getValue(),
-            onChanged: (value) {
-              widget.property.value = value;
-              widget.onChanged(widget.property);
-            },
-            items: widget.property.list
-                .map(
-                  (value) => DropdownMenuItem(
-                    value: value,
-                    child: Text(value.toString()),
-                  ),
-                )
-                .toList()));
+      label: widget.property.name,
+      child: DropdownButton(
+        value: widget.property.getValue(),
+        onChanged: (value) {
+          widget.property.value = value;
+          widget.onChanged(widget.property);
+        },
+        items: widget.property.list
+            .map(
+              (value) => DropdownMenuItem(
+                value: value,
+                child: Text(value.toString()),
+              ),
+            )
+            .toList(),
+      ),
+    );
+  }
+}
+
+class ColorProperty extends StatefulWidget {
+  final Property<Color> property;
+  final PropertyChanged onChanged;
+
+  ColorProperty({
+    this.property,
+    this.onChanged,
+    Key key,
+  }) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() =>
+      ColorPropertyState(property.getValue());
+}
+
+class ColorPropertyState extends State<ColorProperty> {
+  Color pickerColor;
+  Color currentColor;
+
+  // ValueChanged<Color> callback
+  void changeColor(Color color) {
+    setState(() => pickerColor = color);
+  }
+
+  // raise the [showDialog] widget
+  Future<dynamic> show() => showDialog(
+        context: context,
+        child: AlertDialog(
+          title: const Text('Pick a color!'),
+          content: SingleChildScrollView(
+            child: ColorPicker(
+              pickerColor: pickerColor,
+              onColorChanged: changeColor,
+              showLabel: true,
+              pickerAreaHeightPercent: 0.8,
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text('Got it'),
+              onPressed: () {
+                setState(() => currentColor = pickerColor);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
+      );
+
+  ColorPropertyState(Color value) {
+    currentColor = value;
+    pickerColor = value;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _PropertyScaffold(
+      label: widget.property.name,
+      child: RaisedButton(
+        elevation: 0,
+        color: currentColor,
+        onPressed: () async {
+          await show();
+          widget.property.value = currentColor;
+          widget.onChanged(widget.property);
+        },
+      ),
+    );
   }
 }
