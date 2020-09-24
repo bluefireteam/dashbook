@@ -8,7 +8,10 @@ class _PropertyScaffold extends StatelessWidget {
   final String label;
   final Widget child;
 
-  _PropertyScaffold({this.label, this.child});
+  _PropertyScaffold({
+    this.label,
+    this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,11 @@ class TextProperty extends StatefulWidget {
   final Property<String> property;
   final PropertyChanged onChanged;
 
-  TextProperty({this.property, this.onChanged, Key key}) : super(key: key);
+  TextProperty({
+    this.property,
+    this.onChanged,
+    Key key,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => TextPropertyState(property.getValue());
@@ -55,7 +62,11 @@ class NumberProperty extends StatefulWidget {
   final Property<double> property;
   final PropertyChanged onChanged;
 
-  NumberProperty({this.property, this.onChanged, Key key}) : super(key: key);
+  NumberProperty({
+    this.property,
+    this.onChanged,
+    Key key,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() =>
@@ -88,7 +99,11 @@ class BoolProperty extends StatefulWidget {
   final Property<bool> property;
   final PropertyChanged onChanged;
 
-  BoolProperty({this.property, this.onChanged, Key key}) : super(key: key);
+  BoolProperty({
+    this.property,
+    this.onChanged,
+    Key key,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => BoolPropertyState(property.getValue());
@@ -120,8 +135,11 @@ class ListPropertyWidget<T> extends StatefulWidget {
   final ListProperty<T> property;
   final PropertyChanged onChanged;
 
-  ListPropertyWidget({this.property, this.onChanged, Key key})
-      : super(key: key);
+  ListPropertyWidget({
+    this.property,
+    this.onChanged,
+    Key key,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => ListPropertyState();
@@ -139,10 +157,12 @@ class ListPropertyState extends State<ListPropertyWidget> {
               widget.onChanged(widget.property);
             },
             items: widget.property.list
-                .map((value) => DropdownMenuItem(
-                      value: value,
-                      child: Text(value.toString()),
-                    ))
+                .map(
+                  (value) => DropdownMenuItem(
+                    value: value,
+                    child: Text(value.toString()),
+                  ),
+                )
                 .toList()));
   }
 }

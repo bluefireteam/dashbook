@@ -18,16 +18,20 @@ class Dashbook extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: theme, routes: {
-      '/': (BuildContext context) => Scaffold(
-            body: SafeArea(
+    return MaterialApp(
+      theme: theme,
+      routes: {
+        '/': (BuildContext context) => Scaffold(
+              body: SafeArea(
                 child: kIsWeb
                     ? _DashbookBodyWeb(stories: stories)
                     : _DashbookBodyMobile(
                         stories: stories,
-                      )),
-          )
-    });
+                      ),
+              ),
+            ),
+      },
+    );
   }
 }
 
@@ -79,77 +83,89 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
     Widget preview = _currentChapter?.widget();
 
     if (_hasProperties()) {
-      body = Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            Expanded(
-                flex: 10,
-                child: preview,
-            ),
-            Expanded(
-              flex: 4,
-              child: !_hasProperties() ? Container() : Container(
-                decoration: BoxDecoration(
-                    border: Border(
-                        top:
-                            BorderSide(color: Theme.of(context).dividerColor))),
-                child: _PropertiesContainer(
-                    currentChapter: _currentChapter,
-                    onPropertyChange: () {
-                      setState(() {});
-                    }),
-              ),
-            ),
-          ],
-        );
+      body = Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 10,
+            child: preview,
+          ),
+          Expanded(
+            flex: 4,
+            child: !_hasProperties()
+                ? Container()
+                : Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(color: Theme.of(context).dividerColor),
+                      ),
+                    ),
+                    child: _PropertiesContainer(
+                      currentChapter: _currentChapter,
+                      onPropertyChange: () {
+                        setState(() {});
+                      },
+                    ),
+                  ),
+          ),
+        ],
+      );
     } else {
       body = preview;
     }
 
     final storiesWidget = _StoriesList(
-        stories: widget.stories,
-        selectedChapter: _currentChapter,
-        onSelectChapter: (chapter) {
-          setState(() {
-            _currentChapter = chapter;
-          });
-        },
+      stories: widget.stories,
+      selectedChapter: _currentChapter,
+      onSelectChapter: (chapter) {
+        setState(() {
+          _currentChapter = chapter;
+        });
+      },
     );
 
     final _storiesStackList = <Widget>[];
 
     if (_isStoriesOpen) {
       _storiesStackList.add(
-          Positioned.fill(child: storiesWidget),
+        Positioned.fill(child: storiesWidget),
       );
     }
 
     _storiesStackList.add(
-        Positioned(
-          top: 5,
-          right: 10,
-          child: GestureDetector(
-              child: Icon(_isStoriesOpen ? Icons.navigate_before : Icons.navigate_next),
-              onTap: _toggleStoriesList,
+      Positioned(
+        top: 5,
+        right: 10,
+        child: GestureDetector(
+          child: Icon(
+            _isStoriesOpen ? Icons.navigate_before : Icons.navigate_next,
           ),
+          onTap: _toggleStoriesList,
         ),
+      ),
     );
 
-    return Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Expanded(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Expanded(
           flex: _isStoriesOpen ? 2 : null,
           child: Container(
-              width: _isStoriesOpen ? null : 45,
-              decoration: BoxDecoration(
-                  border: Border(
-                      right:
-                          BorderSide(color: Theme.of(context).dividerColor))),
-              child: Stack(children: _storiesStackList),
+            width: _isStoriesOpen ? null : 45,
+            decoration: BoxDecoration(
+              border: Border(
+                right: BorderSide(color: Theme.of(context).dividerColor),
+              ),
+            ),
+            child: Stack(children: _storiesStackList),
           ),
-      ),
-      Expanded(
+        ),
+        Expanded(
           flex: 8,
-          child: body
-      ),
-    ]);
+          child: body,
+        ),
+      ],
+    );
   }
 }
 
@@ -187,7 +203,9 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
     if (_currentView == CurrentView.CHAPTER) {
       view = _currentChapter != null
           ? _ChapterPreview(
-              currentChapter: _currentChapter, key: Key(_currentChapter.id))
+              currentChapter: _currentChapter,
+              key: Key(_currentChapter.id),
+            )
           : null;
     } else if (_currentView == CurrentView.STORIES) {
       view = _StoriesList(
@@ -208,51 +226,59 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
       Expanded(child: view),
       Container(
         height: 50,
-        child: Row(children: [
-          Expanded(
+        child: Row(
+          children: [
+            Expanded(
               child: _Link(
-                  label: 'Stories',
-                  textAlign: TextAlign.center,
-                  textStyle: TextStyle(
-                    fontWeight: _currentView == CurrentView.STORIES
-                        ? FontWeight.bold
-                        : FontWeight.normal,
-                  ),
-                  onTap: () {
-                    setState(() {
-                      _currentView = CurrentView.STORIES;
-                    });
-                  })),
-          Expanded(
+                label: 'Stories',
+                textAlign: TextAlign.center,
+                textStyle: TextStyle(
+                  fontWeight: _currentView == CurrentView.STORIES
+                      ? FontWeight.bold
+                      : FontWeight.normal,
+                ),
+                onTap: () {
+                  setState(() {
+                    _currentView = CurrentView.STORIES;
+                  });
+                },
+              ),
+            ),
+            Expanded(
               child: _Link(
-                  label: 'Preview',
-                  textAlign: TextAlign.center,
-                  textStyle: TextStyle(
-                    fontWeight: _currentView == CurrentView.CHAPTER
-                        ? FontWeight.bold
-                        : FontWeight.normal,
-                  ),
-                  onTap: () {
-                    setState(() {
-                      _currentView = CurrentView.CHAPTER;
-                    });
-                  })),
-          Expanded(
+                label: 'Preview',
+                textAlign: TextAlign.center,
+                textStyle: TextStyle(
+                  fontWeight: _currentView == CurrentView.CHAPTER
+                      ? FontWeight.bold
+                      : FontWeight.normal,
+                ),
+                onTap: () {
+                  setState(() {
+                    _currentView = CurrentView.CHAPTER;
+                  });
+                },
+              ),
+            ),
+            Expanded(
               child: _Link(
-                  label: 'Properties',
-                  textAlign: TextAlign.center,
-                  textStyle: TextStyle(
-                    fontWeight: _currentView == CurrentView.PROPERTIES
-                        ? FontWeight.bold
-                        : FontWeight.normal,
-                  ),
-                  onTap: () {
-                    setState(() {
-                      _currentView = CurrentView.PROPERTIES;
-                    });
-                  })),
-        ]),
-      )
+                label: 'Properties',
+                textAlign: TextAlign.center,
+                textStyle: TextStyle(
+                  fontWeight: _currentView == CurrentView.PROPERTIES
+                      ? FontWeight.bold
+                      : FontWeight.normal,
+                ),
+                onTap: () {
+                  setState(() {
+                    _currentView = CurrentView.PROPERTIES;
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     ]);
   }
 }
@@ -278,9 +304,14 @@ class _Link extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       child: Container(
-          height: height,
-          padding: padding,
-          child: Text(this.label, textAlign: textAlign, style: textStyle)),
+        height: height,
+        padding: padding,
+        child: Text(
+          this.label,
+          textAlign: textAlign,
+          style: textStyle,
+        ),
+      ),
       onTap: onTap,
     );
   }
@@ -297,40 +328,54 @@ class _StoriesList extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> children = [
       SizedBox(height: 5),
-      Text('Stories',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+      Text(
+        'Stories',
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+      ),
       SizedBox(height: 10),
     ];
 
     stories.forEach((story) {
-      children.add(Text(story.name,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)));
+      children.add(
+        Text(
+          story.name,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+      );
       children.add(SizedBox(height: 10));
 
       story.chapters.forEach((chapter) {
-        children.add(GestureDetector(
+        children.add(
+          GestureDetector(
             behavior: HitTestBehavior.opaque,
             child: _Link(
-                label: "  ${chapter.name}",
-                textAlign: TextAlign.left,
-                padding: EdgeInsets.zero,
-                height: 20,
-                textStyle: TextStyle(
-                    fontWeight: chapter.id == selectedChapter.id
-                        ? FontWeight.bold
-                        : FontWeight.normal)),
+              label: "  ${chapter.name}",
+              textAlign: TextAlign.left,
+              padding: EdgeInsets.zero,
+              height: 20,
+              textStyle: TextStyle(
+                fontWeight: chapter.id == selectedChapter.id
+                    ? FontWeight.bold
+                    : FontWeight.normal,
+              ),
+            ),
             onTap: () {
               onSelectChapter(chapter);
-            }));
+            },
+          ),
+        );
       });
     });
 
     return SingleChildScrollView(
-        child: Padding(
-            padding: EdgeInsets.all(5),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: children)));
+      child: Padding(
+        padding: EdgeInsets.all(5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: children,
+        ),
+      ),
+    );
   }
 }
 
@@ -364,8 +409,10 @@ class _PropertiesContainerState extends State<_PropertiesContainer> {
       child: Column(
         children: [
           SizedBox(height: 10),
-          Text("Properties",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))
+          Text(
+            "Properties",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+          ),
         ]..addAll(
             widget.currentChapter.ctx.properties.entries.map((entry) {
               final _propertyKey =
