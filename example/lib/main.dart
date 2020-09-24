@@ -10,44 +10,61 @@ void main() {
       .decorator(CenterDecorator())
       .add('default', (ctx) {
         return Container(
-            width: 300,
-            child: Text(
-              ctx.textProperty("text", "Text Example"),
-              textAlign: ctx.listProperty(
-                "text align",
-                TextAlign.center,
-                TextAlign.values,
+          width: 300,
+          child: Text(
+            ctx.textProperty("text", "Text Example"),
+            textAlign: ctx.listProperty(
+              "text align",
+              TextAlign.center,
+              TextAlign.values,
+            ),
+            textDirection: ctx.listProperty(
+              "text direction",
+              TextDirection.rtl,
+              TextDirection.values,
+            ),
+            style: TextStyle(
+              fontWeight: ctx.listProperty(
+                "font weight",
+                FontWeight.normal,
+                FontWeight.values,
               ),
-              textDirection: ctx.listProperty(
-                "text direction",
-                TextDirection.rtl,
-                TextDirection.values,
+              fontStyle: ctx.listProperty(
+                "font style",
+                FontStyle.normal,
+                FontStyle.values,
               ),
-              style: TextStyle(
-                  fontWeight: ctx.listProperty(
-                    "font weight",
-                    FontWeight.normal,
-                    FontWeight.values,
-                  ),
-                  fontStyle: ctx.listProperty(
-                    "font style",
-                    FontStyle.normal,
-                    FontStyle.values,
-                  ),
-                  fontSize: ctx.numberProperty("font size", 20)),
-            ));
+              fontSize: ctx.numberProperty("font size", 20),
+            ),
+          ),
+        );
       })
-      .add('bold',
-          (_) => Text("Text", style: TextStyle(fontWeight: FontWeight.bold)))
-      .add('color text',
-          (_) => Text("Text", style: TextStyle(color: Color(0xFF0000FF))));
+      .add(
+        'bold',
+        (_) => Text(
+          "Text",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      )
+      .add(
+        'color text',
+        (_) => Text(
+          "Text",
+          style: TextStyle(
+            color: Color(0xFF0000FF),
+          ),
+        ),
+      );
 
   dashbook.storiesOf('RaisedButton').decorator(CenterDecorator()).add(
         'default',
         (ctx) => RaisedButton(
           child: Text(
-              ctx.listProperty("Label", "Ok", ["Ok", "Cancel", "Other label"]),
-              style: TextStyle(fontSize: ctx.numberProperty("font size", 20))),
+            ctx.listProperty("Label", "Ok", ["Ok", "Cancel", "Other label"]),
+            style: TextStyle(
+              fontSize: ctx.numberProperty("font size", 20),
+            ),
+          ),
           onPressed: () {},
         ),
       );
