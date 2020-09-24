@@ -35,6 +35,10 @@ void main() {
                 FontStyle.values,
               ),
               fontSize: ctx.numberProperty("font size", 20),
+              color: ctx.colorProperty(
+                "color",
+                Colors.red,
+              ),
             ),
           ),
         );
