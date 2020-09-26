@@ -1,3 +1,6 @@
+## [0.0.8]
+ - Adding Color property
+
 ## [0.0.7]
 
  - Fixing Chapter Preview body.
