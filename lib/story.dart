@@ -80,6 +80,17 @@ class DashbookContext {
       return property.getValue();
     }
   }
+
+  EdgeInsets edgeInsetsProperty(String name, EdgeInsets defaultValue) {
+    if (properties.containsKey(name)) {
+      return properties[name].getValue();
+    } else {
+      final property = Property<EdgeInsets>(name, defaultValue);
+      properties[name] = property;
+
+      return property.getValue();
+    }
+  }
 }
 
 typedef ChapterBuildFunction = Widget Function(DashbookContext context);
