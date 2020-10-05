@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import '../story.dart';
-import './properties.dart';
+import './widgets/property_scafold.dart';
 
 class ColorProperty extends StatefulWidget {
   final Property<Color> property;
