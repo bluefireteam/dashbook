@@ -1,8 +1,8 @@
-export 'boolProperty.dart';
-export 'colorProperty.dart';
-export 'listProperty.dart';
-export 'numberProperty.dart';
-export 'textProperty.dart';
+export 'bool_property.dart';
+export 'color_property.dart';
+export 'list_property.dart';
+export 'number_property.dart';
+export 'text_property.dart';
 
 import 'package:flutter/material.dart';
 import '../story.dart';
