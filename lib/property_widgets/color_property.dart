@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import '../story.dart';
 import './widgets/property_scafold.dart';
+import 'widgets/property_dialog.dart';
 
 class ColorProperty extends StatefulWidget {
   final Property<Color> property;
@@ -30,17 +31,15 @@ class ColorPropertyState extends State<ColorProperty> {
   // raise the [showDialog] widget
   Future<dynamic> show() => showDialog(
         context: context,
-        child: AlertDialog(
-          title: const Text('Pick a color!'),
-          content: SingleChildScrollView(
-            child: ColorPicker(
+        child: PropertyDialog(
+          title: 'Pick a color!',
+          content: ColorPicker(
               pickerColor: pickerColor,
               onColorChanged: changeColor,
               showLabel: true,
               pickerAreaHeightPercent: 0.8,
             ),
-          ),
-          actions: <Widget>[
+          actions: [
             FlatButton(
               child: const Text('Got it'),
               onPressed: () {
