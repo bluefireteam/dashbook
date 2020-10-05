@@ -85,5 +85,19 @@ void main() {
         ),
       );
 
+  dashbook.storiesOf('Edge insets').decorator(CenterDecorator()).add(
+    'default',
+    (ctx) => Container(
+      color: Colors.blue[300],
+      padding: ctx.edgeInsetsProperty(
+        "edge Insets",
+        EdgeInsets.fromLTRB(30, 10, 30, 50),
+      ),
+      child: Text(
+        "Text",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),),
+  );
+
   runApp(dashbook);
 }
