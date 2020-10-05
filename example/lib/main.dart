@@ -11,6 +11,10 @@ void main() {
       .add('default', (ctx) {
         return Container(
           width: 300,
+          padding: ctx.edgeInsetsProperty(
+            "edge Insets",
+            EdgeInsets.fromLTRB(1, 2, 3, 4),
+          ),
           child: Text(
             ctx.textProperty("text", "Text Example"),
             textAlign: ctx.listProperty(
