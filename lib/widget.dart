@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import './story.dart';
-import './property_widgets.dart' as p;
+import 'property_widgets/properties.dart' as p;
 
 class Dashbook extends StatelessWidget {
   final List<Story> stories = [];
