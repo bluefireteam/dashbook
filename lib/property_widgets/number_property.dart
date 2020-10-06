@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../story.dart';
-import './widgets/property_scafold.dart';
+import 'widgets/property_scaffold.dart';
 
 class NumberProperty extends StatefulWidget {
   final Property<double> property;

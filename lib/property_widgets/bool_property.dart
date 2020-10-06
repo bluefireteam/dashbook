@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../story.dart';
-import './widgets/property_scafold.dart';
+import 'widgets/property_scaffold.dart';
 
 class BoolProperty extends StatefulWidget {
   final Property<bool> property;
