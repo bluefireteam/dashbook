@@ -454,7 +454,7 @@ class _PropertiesContainerState extends State<_PropertiesContainer> {
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<EdgeInsets>) {
-                return p.EdgeinsetsProperty(
+                return p.EdgeInsetsProperty(
                   property: entry.value,
                   onChanged: _onChanged,
                   key: _propertyKey,

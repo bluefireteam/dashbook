@@ -8,11 +8,10 @@ class PropertyDialog extends StatelessWidget {
   PropertyDialog({this.title, this.content, this.actions});
 
   @override
-  Widget build (_) {
+  Widget build(_) {
     return AlertDialog(
-      title: Text(this.title),
-      content: SingleChildScrollView(child: this.content),
-      actions: this.actions
-    );
+        title: Text(this.title),
+        content: SingleChildScrollView(child: this.content),
+        actions: this.actions);
   }
 }

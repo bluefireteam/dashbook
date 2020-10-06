@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../story.dart';
-import './widgets/property_scafold.dart';
+import 'widgets/property_scaffold.dart';
 
 class ListPropertyWidget<T> extends StatefulWidget {
   final ListProperty<T> property;
