@@ -66,6 +66,9 @@ class _DialogForm extends StatefulWidget {
 
 class _DialogFormState extends State<_DialogForm> {
   bool validValues = true;
+  bool useValueToAllSides = false;
+
+  TextEditingController uniqueValueController = TextEditingController();
 
   TextEditingController leftController = TextEditingController();
   TextEditingController topController = TextEditingController();
@@ -76,10 +79,25 @@ class _DialogFormState extends State<_DialogForm> {
   void initState() {
     super.initState();
 
-    leftController.text = widget.value.left.toString();
-    topController.text = widget.value.top.toString();
-    rightController.text = widget.value.right.toString();
-    bottomController.text = widget.value.bottom.toString();
+    uniqueValueController.text = widget.value.left.toString();
+    if (_allValueEqual()) {
+      useValueToAllSides = true;
+
+      leftController.text = uniqueValueController.text;
+      topController.text = uniqueValueController.text;
+      rightController.text = uniqueValueController.text;
+      bottomController.text = uniqueValueController.text;
+    } else {
+      leftController.text = widget.value.left.toString();
+      topController.text = widget.value.top.toString();
+      rightController.text = widget.value.right.toString();
+      bottomController.text = widget.value.bottom.toString();
+    }
+  }
+ 
+  bool _allValueEqual() {
+    List<double> values = [widget.value.left, widget.value.top, widget.value.right, widget.value.bottom];
+    return values.every((v) => v == values[0]);
   }
 
   @override
@@ -89,23 +107,39 @@ class _DialogFormState extends State<_DialogForm> {
       content: Column(
         children: [
           validValues ? Container() : Text('Invalid values!'),
-          Row(
+          Row(children: [
+            Text('Use the same value to all sides: '),
+            Switch(
+              value: useValueToAllSides,
+              onChanged: (bool isOn) => setState(() => useValueToAllSides = isOn),
+              activeColor: Colors.blue,
+              inactiveTrackColor: Colors.grey,
+              inactiveThumbColor: Colors.grey,
+            ),
+          ]),
+          useValueToAllSides 
+          ? Container(child: Container(width: 100, child: TextField(controller: uniqueValueController)),)
+          : Column(
             children: [
-            Container(width: 70, child: Text('Left:')),
-            Container(width: 100, child: TextField(controller: leftController)),
-          ],),
-          Row(children: [
-            Container(width: 70, child: Text('Top:')),
-            Container(width: 100, child: TextField(controller: topController)),
-          ],),
-          Row(children: [
-            Container(width: 70, child: Text('Right:')),
-            Container(width: 100, child: TextField(controller: rightController)),
-          ],),
-          Row(children: [
-            Container(width: 70, child: Text('Bottom:')),
-            Container(width: 100, child: TextField(controller: bottomController)),
-          ],),
+              Row(
+                children: [
+                Container(width: 70, child: Text('Left:')),
+                Container(width: 100, child: TextField(controller: leftController)),
+              ],),
+              Row(children: [
+                Container(width: 70, child: Text('Top:')),
+                Container(width: 100, child: TextField(controller: topController)),
+              ],),
+              Row(children: [
+                Container(width: 70, child: Text('Right:')),
+                Container(width: 100, child: TextField(controller: rightController)),
+              ],),
+              Row(children: [
+                Container(width: 70, child: Text('Bottom:')),
+                Container(width: 100, child: TextField(controller: bottomController)),
+              ],),
+            ],
+          ),
         ],
       ),
       actions: [
@@ -131,16 +165,26 @@ class _DialogFormState extends State<_DialogForm> {
 
   EdgeInsets _parseEdgeInsetValues () {
     try {
-      final double left = double.tryParse(leftController.text);
-      final double top = double.tryParse(topController.text);
-      final double right = double.tryParse(rightController.text);
-      final double bottom = double.tryParse(bottomController.text);
+      if (useValueToAllSides) {
+        final double value = double.tryParse(uniqueValueController.text);
 
-      if (left == null || top == null || right == null || bottom == null) {
-        return null;
+        if (value == null) {
+          return null;
+        }
+        
+        return EdgeInsets.all(value);
+      } else {
+        final double left = double.tryParse(leftController.text);
+        final double top = double.tryParse(topController.text);
+        final double right = double.tryParse(rightController.text);
+        final double bottom = double.tryParse(bottomController.text);
+
+        if (left == null || top == null || right == null || bottom == null) {
+          return null;
+        }
+        
+        return EdgeInsets.fromLTRB(left, top, right, bottom);
       }
-      
-      return EdgeInsets.fromLTRB(left, top, right, bottom);
     } catch(err) {
       return null;
     }
