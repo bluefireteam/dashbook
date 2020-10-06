@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import '../story.dart';
 import 'widgets/property_scaffold.dart';
 import 'widgets/property_dialog.dart';
@@ -38,12 +39,14 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
   @override
   Widget build(BuildContext context) {
     final value = widget.property.getValue();
+
     return PropertyScaffold(
       label: widget.property.name,
       child: Row(
         children: [
-          Text(
-              'Left: ${value.left}, Top: ${value.top}, Right: ${value.right}, Bottom: ${value.bottom}'),
+          kIsWeb
+          ? Text('Left: ${value.left}, Top: ${value.top}, Right: ${value.right}, Bottom: ${value.bottom}')
+              : Text('L: ${value.left.toInt()}, T: ${value.top.toInt()}, R: ${value.right.toInt()}, B: ${value.bottom.toInt()}'),
           SizedBox(
             width: 5,
           ),
@@ -91,7 +94,7 @@ class _DialogFormState extends State<_DialogForm> {
   void initState() {
     super.initState();
 
-    _uniqueValueController.text = widget._value.left.toString();
+    _uniqueValueController.text = widget._value.left.toInt().toString();
     if (_allValueEqual()) {
       _useValueToAllSides = true;
 
@@ -102,10 +105,10 @@ class _DialogFormState extends State<_DialogForm> {
     } else {
       final value = widget._value;
 
-      _leftController.text = value.left.toString();
-      _topController.text = value.top.toString();
-      _rightController.text = value.right.toString();
-      _bottomController.text = value.bottom.toString();
+      _leftController.text = value.left.toInt().toString();
+      _topController.text = value.top.toInt().toString();
+      _rightController.text = value.right.toInt().toString();
+      _bottomController.text = value.bottom.toInt().toString();
     }
   }
 
@@ -124,7 +127,7 @@ class _DialogFormState extends State<_DialogForm> {
         children: [
           _validValues ? Container() : Text('Invalid values!'),
           Row(children: [
-            Text('Use the same value on all sides: '),
+            Text('Same value to all:'),
             Switch(
               value: _useValueToAllSides,
               onChanged: (bool isOn) =>
