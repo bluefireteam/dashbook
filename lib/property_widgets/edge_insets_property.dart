@@ -45,8 +45,10 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
       child: Row(
         children: [
           kIsWeb
-          ? Text('Left: ${value.left}, Top: ${value.top}, Right: ${value.right}, Bottom: ${value.bottom}')
-              : Text('L: ${value.left.toInt()}, T: ${value.top.toInt()}, R: ${value.right.toInt()}, B: ${value.bottom.toInt()}'),
+              ? Text(
+                  'Left: ${value.left}, Top: ${value.top}, Right: ${value.right}, Bottom: ${value.bottom}')
+              : Text(
+                  'L: ${value.left.toInt()}, T: ${value.top.toInt()}, R: ${value.right.toInt()}, B: ${value.bottom.toInt()}'),
           SizedBox(
             width: 5,
           ),
