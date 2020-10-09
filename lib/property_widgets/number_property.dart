@@ -31,7 +31,7 @@ class NumberPropertyState extends State<NumberProperty> {
       label: widget.property.name,
       child: TextField(
         keyboardType: TextInputType.number,
-        inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         onChanged: (value) {
           widget.property.value = double.tryParse(value);
           widget.onChanged(widget.property);
