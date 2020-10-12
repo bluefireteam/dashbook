@@ -129,9 +129,9 @@ class _FieldWithLabel extends StatelessWidget {
   Widget build (_) {
     return Row(
       children: [
-        Container(width: 70, child: Text('$label:')),
+        Container(width: 105, child: Text('$label:')),
         Container(
-        width: 100,
+        width: 90,
         child: TextField(controller: fieldController)),
       ],
     );
