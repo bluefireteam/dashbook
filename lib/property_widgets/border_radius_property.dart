@@ -24,7 +24,8 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
 
   _BorderRadiusPropertyState(this._currentBorderRadius);
 
-  BorderRadius _parseBorderRadiusValues(bool toAllSides, String uniqueValue, String value1, String value2, String value3, String value4) {
+  BorderRadius _parseBorderRadiusValues(bool toAllSides, String uniqueValue,
+      String value1, String value2, String value3, String value4) {
     try {
       if (toAllSides) {
         final double value = double.tryParse(uniqueValue);
@@ -40,23 +41,28 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
         final double bottomLeft = double.tryParse(value3);
         final double bottomRight = double.tryParse(value4);
 
-        if (topLeft == null || topRight == null || bottomLeft == null || bottomRight == null) {
+        if (topLeft == null ||
+            topRight == null ||
+            bottomLeft == null ||
+            bottomRight == null) {
           return null;
         }
 
         return BorderRadius.only(
-          topLeft: Radius.circular(topLeft),
-          topRight: Radius.circular(topRight),
-          bottomLeft: Radius.circular(bottomLeft),
-          bottomRight: Radius.circular(bottomRight));
+            topLeft: Radius.circular(topLeft),
+            topRight: Radius.circular(topRight),
+            bottomLeft: Radius.circular(bottomLeft),
+            bottomRight: Radius.circular(bottomRight));
       }
     } catch (err) {
       return null;
     }
   }
 
-  bool _confirmEdition(bool toAllSides, String uniqueValue, String value1, String value2, String value3, String value4) {
-    BorderRadius radiusValue = _parseBorderRadiusValues(toAllSides, uniqueValue, value1, value2, value3, value4);
+  bool _confirmEdition(bool toAllSides, String uniqueValue, String value1,
+      String value2, String value3, String value4) {
+    BorderRadius radiusValue = _parseBorderRadiusValues(
+        toAllSides, uniqueValue, value1, value2, value3, value4);
 
     if (radiusValue == null) {
       return false;
@@ -67,8 +73,8 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
   }
 
   Future<dynamic> show() => showDialog(
-        context: context,
-        child: FourIntegerForm(
+      context: context,
+      child: FourIntegerForm(
           _confirmEdition,
           _currentBorderRadius.topLeft.x.toInt(),
           _currentBorderRadius.topRight.x.toInt(),
@@ -77,8 +83,7 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
           'Top left',
           'Top right',
           'Bottom left',
-          'Bottom right')
-      );
+          'Bottom right'));
 
   @override
   Widget build(BuildContext context) {

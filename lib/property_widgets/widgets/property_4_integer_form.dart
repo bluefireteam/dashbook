@@ -8,12 +8,21 @@ class FourIntegerForm extends StatefulWidget {
   final int _value3;
   final int _value4;
 
-  final String _label1; 
-  final String _label2; 
-  final String _label3; 
-  final String _label4; 
+  final String _label1;
+  final String _label2;
+  final String _label3;
+  final String _label4;
 
-  FourIntegerForm(this._confirmEdition, this._value1, this._value2, this._value3, this._value4, this._label1, this._label2, this._label3, this._label4);
+  FourIntegerForm(
+      this._confirmEdition,
+      this._value1,
+      this._value2,
+      this._value3,
+      this._value4,
+      this._label1,
+      this._label2,
+      this._label3,
+      this._label4);
 
   @override
   State createState() {
@@ -53,7 +62,12 @@ class _FourIntegerFormState extends State<FourIntegerForm> {
   }
 
   bool _allValueEqual() {
-    List<int> values = [widget._value1, widget._value2, widget._value3, widget._value4];
+    List<int> values = [
+      widget._value1,
+      widget._value2,
+      widget._value3,
+      widget._value4
+    ];
     return values.every((v) => v == values[0]);
   }
 
@@ -68,8 +82,7 @@ class _FourIntegerFormState extends State<FourIntegerForm> {
             Text('Same value to all:'),
             Switch(
               value: _useValueToAll,
-              onChanged: (bool isOn) =>
-                  setState(() => _useValueToAll = isOn),
+              onChanged: (bool isOn) => setState(() => _useValueToAll = isOn),
               activeColor: Colors.blue,
               inactiveTrackColor: Colors.grey,
               inactiveThumbColor: Colors.grey,
@@ -83,10 +96,22 @@ class _FourIntegerFormState extends State<FourIntegerForm> {
                 )
               : Column(
                   children: [
-                    _FieldWithLabel(label: widget._label1, fieldController: _firstFieldController,),
-                    _FieldWithLabel(label: widget._label2, fieldController: _secondFieldController,),
-                    _FieldWithLabel(label: widget._label3, fieldController: _thirdFieldController,),
-                    _FieldWithLabel(label: widget._label4, fieldController: _fourthFieldController,),
+                    _FieldWithLabel(
+                      label: widget._label1,
+                      fieldController: _firstFieldController,
+                    ),
+                    _FieldWithLabel(
+                      label: widget._label2,
+                      fieldController: _secondFieldController,
+                    ),
+                    _FieldWithLabel(
+                      label: widget._label3,
+                      fieldController: _thirdFieldController,
+                    ),
+                    _FieldWithLabel(
+                      label: widget._label4,
+                      fieldController: _fourthFieldController,
+                    ),
                   ],
                 ),
         ],
@@ -95,13 +120,13 @@ class _FourIntegerFormState extends State<FourIntegerForm> {
         FlatButton(
           child: const Text('Got it'),
           onPressed: () {
-
             bool validValues = widget._confirmEdition(
-              _useValueToAll,
-              _uniqueValueController.text,
-              _firstFieldController.text,
-              _secondFieldController.text, _thirdFieldController.text,
-              _fourthFieldController.text);
+                _useValueToAll,
+                _uniqueValueController.text,
+                _firstFieldController.text,
+                _secondFieldController.text,
+                _thirdFieldController.text,
+                _fourthFieldController.text);
 
             if (validValues) {
               setState(() {
@@ -123,16 +148,14 @@ class _FieldWithLabel extends StatelessWidget {
   final String label;
   final TextEditingController fieldController;
 
-  _FieldWithLabel({ this.label, this.fieldController });
+  _FieldWithLabel({this.label, this.fieldController});
 
   @override
-  Widget build (_) {
+  Widget build(_) {
     return Row(
       children: [
         Container(width: 105, child: Text('$label:')),
-        Container(
-        width: 90,
-        child: TextField(controller: fieldController)),
+        Container(width: 90, child: TextField(controller: fieldController)),
       ],
     );
   }
