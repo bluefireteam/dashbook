@@ -100,5 +100,25 @@ void main() {
         ),
       );
 
+  dashbook.storiesOf('Border radius').decorator(CenterDecorator()).add(
+        'default',
+        (ctx) => Container(
+          width: 200,
+          height: 200,
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.blue[300],
+            borderRadius: ctx.borderRadiusProperty(
+              "border radius",
+              BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10), bottomLeft: Radius.circular(50), bottomRight: Radius.circular(50))
+            )
+          ),
+          child: Text(
+            "Text",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      );
+
   runApp(dashbook);
 }

@@ -459,6 +459,12 @@ class _PropertiesContainerState extends State<_PropertiesContainer> {
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
+              } else if (entry.value is Property<BorderRadius>) {
+                return p.BorderRadiusProperty(
+                  property: entry.value,
+                  onChanged: _onChanged,
+                  key: _propertyKey,
+                );
               }
               return Container();
             }),

@@ -91,6 +91,17 @@ class DashbookContext {
       return property.getValue();
     }
   }
+
+  BorderRadius borderRadiusProperty(String name, BorderRadius defaultValue) {
+    if (properties.containsKey(name)) {
+      return properties[name].getValue();
+    } else {
+      final property = Property<BorderRadius>(name, defaultValue);
+      properties[name] = property;
+
+      return property.getValue();
+    }
+  }
 }
 
 typedef ChapterBuildFunction = Widget Function(DashbookContext context);
