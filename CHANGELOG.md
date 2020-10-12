@@ -1,3 +1,6 @@
+## [0.0.9]
+ - Adding EdgeInsets property
+
 ## [0.0.8]
  - Adding Color property
 
