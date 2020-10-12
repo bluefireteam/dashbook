@@ -24,7 +24,8 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
 
   _EdgeInsetsPropertyState(this._currentEdgeinsets);
 
-  EdgeInsets _parseEdgeInsetValues(bool toAllSides, String uniqueValue, String value1, String value2, String value3, String value4) {
+  EdgeInsets _parseEdgeInsetValues(bool toAllSides, String uniqueValue,
+      String value1, String value2, String value3, String value4) {
     try {
       if (toAllSides) {
         final double value = double.tryParse(uniqueValue);
@@ -51,8 +52,10 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
     }
   }
 
-  bool _confirmEdition(bool toAllSides, String uniqueValue, String value1, String value2, String value3, String value4) {
-    EdgeInsets edgetInsetsValue = _parseEdgeInsetValues(toAllSides, uniqueValue, value1, value2, value3, value4);
+  bool _confirmEdition(bool toAllSides, String uniqueValue, String value1,
+      String value2, String value3, String value4) {
+    EdgeInsets edgetInsetsValue = _parseEdgeInsetValues(
+        toAllSides, uniqueValue, value1, value2, value3, value4);
 
     if (edgetInsetsValue == null) {
       return false;
@@ -63,8 +66,8 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
   }
 
   Future<dynamic> show() => showDialog(
-        context: context,
-        child: FourIntegerForm(
+      context: context,
+      child: FourIntegerForm(
           _confirmEdition,
           _currentEdgeinsets.left.toInt(),
           _currentEdgeinsets.top.toInt(),
@@ -73,8 +76,7 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
           'Left',
           'Top',
           'Right',
-          'Bottom')
-      );
+          'Bottom'));
 
   @override
   Widget build(BuildContext context) {
