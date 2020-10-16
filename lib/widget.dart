@@ -79,92 +79,97 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
 
   @override
   Widget build(BuildContext context) {
-    Widget body;
-    Widget preview = _currentChapter?.widget();
+    return LayoutBuilder(
+      builder: (_, constraints) {
+        Widget body;
+        Widget preview = _currentChapter?.widget(constraints);
 
-    if (_hasProperties()) {
-      body = Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            flex: 10,
-            child: preview,
-          ),
-          Expanded(
-            flex: 4,
-            child: !_hasProperties()
-                ? Container()
-                : Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: BorderSide(color: Theme.of(context).dividerColor),
+        if (_hasProperties()) {
+          body = Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                flex: 10,
+                child: preview,
+              ),
+              Expanded(
+                flex: 4,
+                child: !_hasProperties()
+                    ? Container()
+                    : Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            top: BorderSide(
+                                color: Theme.of(context).dividerColor),
+                          ),
+                        ),
+                        child: _PropertiesContainer(
+                          currentChapter: _currentChapter,
+                          onPropertyChange: () {
+                            setState(() {});
+                          },
+                        ),
                       ),
-                    ),
-                    child: _PropertiesContainer(
-                      currentChapter: _currentChapter,
-                      onPropertyChange: () {
-                        setState(() {});
-                      },
-                    ),
+              ),
+            ],
+          );
+        } else {
+          body = preview;
+        }
+
+        final storiesWidget = _StoriesList(
+          stories: widget.stories,
+          selectedChapter: _currentChapter,
+          onSelectChapter: (chapter) {
+            setState(() {
+              _currentChapter = chapter;
+            });
+          },
+        );
+
+        final _storiesStackList = <Widget>[];
+
+        if (_isStoriesOpen) {
+          _storiesStackList.add(
+            Positioned.fill(child: storiesWidget),
+          );
+        }
+
+        _storiesStackList.add(
+          Positioned(
+            top: 5,
+            right: 10,
+            child: GestureDetector(
+              child: Icon(
+                _isStoriesOpen ? Icons.navigate_before : Icons.navigate_next,
+              ),
+              onTap: _toggleStoriesList,
+            ),
+          ),
+        );
+
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              flex: _isStoriesOpen ? 2 : null,
+              child: Container(
+                width: _isStoriesOpen ? null : 45,
+                decoration: BoxDecoration(
+                  border: Border(
+                    right: BorderSide(color: Theme.of(context).dividerColor),
                   ),
-          ),
-        ],
-      );
-    } else {
-      body = preview;
-    }
-
-    final storiesWidget = _StoriesList(
-      stories: widget.stories,
-      selectedChapter: _currentChapter,
-      onSelectChapter: (chapter) {
-        setState(() {
-          _currentChapter = chapter;
-        });
-      },
-    );
-
-    final _storiesStackList = <Widget>[];
-
-    if (_isStoriesOpen) {
-      _storiesStackList.add(
-        Positioned.fill(child: storiesWidget),
-      );
-    }
-
-    _storiesStackList.add(
-      Positioned(
-        top: 5,
-        right: 10,
-        child: GestureDetector(
-          child: Icon(
-            _isStoriesOpen ? Icons.navigate_before : Icons.navigate_next,
-          ),
-          onTap: _toggleStoriesList,
-        ),
-      ),
-    );
-
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          flex: _isStoriesOpen ? 2 : null,
-          child: Container(
-            width: _isStoriesOpen ? null : 45,
-            decoration: BoxDecoration(
-              border: Border(
-                right: BorderSide(color: Theme.of(context).dividerColor),
+                ),
+                child: Stack(children: _storiesStackList),
               ),
             ),
-            child: Stack(children: _storiesStackList),
-          ),
-        ),
-        Expanded(
-          flex: 8,
-          child: body,
-        ),
-      ],
+            Expanded(
+              flex: 8,
+              child: body,
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -386,7 +391,9 @@ class _ChapterPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    return currentChapter.widget();
+    return LayoutBuilder(
+      builder: (_, constraints) => currentChapter.widget(constraints),
+    );
   }
 }
 

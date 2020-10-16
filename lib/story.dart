@@ -24,6 +24,8 @@ class ListProperty<T> extends Property<T> {
 }
 
 class DashbookContext {
+  /// Contain the current BoxConstraints of the area available for the Chapter
+  BoxConstraints constraints;
   Map<String, Property> properties = {};
 
   String textProperty(String name, String defaultValue) {
@@ -139,7 +141,8 @@ class Chapter {
     ctx = DashbookContext();
   }
 
-  Widget widget() {
+  Widget widget(BoxConstraints constraints) {
+    ctx.constraints = constraints;
     final Widget w = _buildFn(ctx);
 
     if (story._decorator != null) {

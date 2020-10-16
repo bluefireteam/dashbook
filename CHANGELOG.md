@@ -1,6 +1,7 @@
 ## [0.0.9]
  - Adding EdgeInsets property
  - Adding BorderRadius property
+ - Adding BoxContraints on DashbookContext
 
 ## [0.0.8]
  - Adding Color property
@@ -17,7 +18,7 @@
 
 ## [0.0.5]
 
- - Fixing state sharing bug acrros properties
+ - Fixing state sharing bug across properties
  - Adding bool property
 
 ## [0.0.4]
