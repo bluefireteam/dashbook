@@ -7,7 +7,16 @@ class Dashbook extends StatelessWidget {
   final List<Story> stories = [];
   final ThemeData theme;
 
-  Dashbook({this.theme});
+  final Iterable<LocalizationsDelegate<dynamic>> localizationsDelegates;
+  final Iterable<Locale> supportedLocales;
+  final Locale defaultLocal;
+
+  Dashbook({
+    this.theme,
+    this.localizationsDelegates,
+    this.supportedLocales = const <Locale>[Locale('en', 'US')],
+    this.defaultLocal,
+  });
 
   Story storiesOf(String name) {
     final story = Story(name);
@@ -20,6 +29,11 @@ class Dashbook extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
+      supportedLocales: supportedLocales,
+      locale: defaultLocal ?? supportedLocales != null
+          ? supportedLocales.first
+          : Locale('en', 'US'),
+      localizationsDelegates: localizationsDelegates,
       routes: {
         '/': (BuildContext context) => Scaffold(
               body: SafeArea(
