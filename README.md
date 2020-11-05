@@ -115,6 +115,25 @@ final dashbook = Dashbook.multiTheme(
 ```
 
 ### Visibility control properties
+A `Dashbook` instance can also support localizations (i18n) and default language
+
+```dart
+final dashbook = Dashbook(
+    localizationsDelegates: [
+      AppLocalizations.delegate, // Custom Localization
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+    ],
+    supportedLocales: [
+      Locale('fr', ''),
+      Locale('en', ''),
+    ],
+  );
+
+```
+
+### Mobile example
+![Dashbook](https://user-images.githubusercontent.com/835641/88855642-9106e000-d1c9-11ea-8e5f-59e994a7fa03.gif)
 
 Some more complex Widgets may feature several fields, which can lead to a very long list of properties which will in turn can create a confusing example.
 
