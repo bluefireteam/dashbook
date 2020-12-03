@@ -1,10 +1,10 @@
 name: dashbook
 description: A showcase/sandbox library to help you build isolated widgets in Flutter
-version: 0.0.10
+version: 0.1.0-nullsafety.0
 homepage: https://github.com/erickzanardo/dashbook
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
+  sdk: ">=2.12.0-29.10.beta <3.0.0"
 
 dependencies:
   flutter:

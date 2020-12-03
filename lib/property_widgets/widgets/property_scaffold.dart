@@ -8,8 +8,8 @@ class PropertyScaffold extends StatelessWidget {
   final Widget child;
 
   PropertyScaffold({
-    this.label,
-    this.child,
+    required this.label,
+    required this.child,
   });
 
   @override

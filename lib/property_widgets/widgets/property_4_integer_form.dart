@@ -133,7 +133,7 @@ class _FourIntegerFormState extends State<FourIntegerForm> {
                 _validValues = true;
               });
 
-              Navigator.of(context).pop();
+              Navigator.of(context)!.pop();
             } else {
               setState(() => _validValues = false);
             }
@@ -146,9 +146,9 @@ class _FourIntegerFormState extends State<FourIntegerForm> {
 
 class _FieldWithLabel extends StatelessWidget {
   final String label;
-  final TextEditingController fieldController;
+  final TextEditingController? fieldController;
 
-  _FieldWithLabel({this.label, this.fieldController});
+  _FieldWithLabel({required this.label, this.fieldController});
 
   @override
   Widget build(_) {
