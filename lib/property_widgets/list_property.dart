@@ -4,12 +4,12 @@ import 'widgets/property_scaffold.dart';
 
 class ListPropertyWidget<T> extends StatefulWidget {
   final ListProperty<T> property;
-  final PropertyChanged onChanged;
+  final PropertyChanged? onChanged;
 
   ListPropertyWidget({
-    this.property,
+    required this.property,
     this.onChanged,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -25,7 +25,9 @@ class ListPropertyState extends State<ListPropertyWidget> {
         value: widget.property.getValue(),
         onChanged: (value) {
           widget.property.value = value;
-          widget.onChanged(widget.property);
+          if (widget.onChanged != null) {
+            widget.onChanged!(widget.property);
+          }
         },
         items: widget.property.list
             .map(

@@ -5,7 +5,7 @@ import 'property_widgets/properties.dart' as p;
 
 class Dashbook extends StatelessWidget {
   final List<Story> stories = [];
-  final ThemeData theme;
+  final ThemeData? theme;
 
   Dashbook({this.theme});
 
@@ -49,14 +49,15 @@ enum CurrentView {
 class _DashbookBodyWeb extends StatefulWidget {
   final List<Story> stories;
 
-  _DashbookBodyWeb({this.stories});
+  _DashbookBodyWeb({List<Story>? stories})
+      : stories = stories ?? List<Story>.empty();
 
   @override
   State createState() => _DashbookBodyWebState();
 }
 
 class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
-  Chapter _currentChapter;
+  Chapter? _currentChapter;
   bool _isStoriesOpen = false;
 
   @override
@@ -72,7 +73,7 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
     }
   }
 
-  bool _hasProperties() => _currentChapter.ctx.properties.isNotEmpty;
+  bool _hasProperties() => _currentChapter?.ctx.properties.isNotEmpty ?? false;
 
   void _toggleStoriesList() {
     setState(() {
@@ -85,7 +86,7 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
     return LayoutBuilder(
       builder: (_, constraints) {
         Widget body;
-        Widget preview = _currentChapter?.widget(constraints);
+        Widget preview = _currentChapter?.widget(constraints) ?? Container();
 
         if (_hasProperties()) {
           body = Column(
@@ -107,7 +108,7 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
                           ),
                         ),
                         child: _PropertiesContainer(
-                          currentChapter: _currentChapter,
+                          currentChapter: _currentChapter!,
                           onPropertyChange: () {
                             setState(() {});
                           },
@@ -155,7 +156,7 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              flex: _isStoriesOpen ? 2 : null,
+              flex: _isStoriesOpen ? 2 : 0,
               child: Container(
                 width: _isStoriesOpen ? null : 45,
                 decoration: BoxDecoration(
@@ -180,15 +181,16 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
 class _DashbookBodyMobile extends StatefulWidget {
   final List<Story> stories;
 
-  _DashbookBodyMobile({this.stories});
+  _DashbookBodyMobile({List<Story>? stories})
+      : stories = stories ?? List<Story>.empty();
 
   @override
   State createState() => _DashbookBodyMobileState();
 }
 
 class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
-  CurrentView _currentView;
-  Chapter _currentChapter;
+  CurrentView? _currentView;
+  Chapter? _currentChapter;
 
   @override
   void initState() {
@@ -207,12 +209,12 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
 
   @override
   Widget build(BuildContext context) {
-    Widget view;
+    Widget? view;
     if (_currentView == CurrentView.CHAPTER) {
       view = _currentChapter != null
           ? _ChapterPreview(
-              currentChapter: _currentChapter,
-              key: Key(_currentChapter.id),
+              currentChapter: _currentChapter!,
+              key: Key(_currentChapter!.id),
             )
           : null;
     } else if (_currentView == CurrentView.STORIES) {
@@ -227,85 +229,90 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
         },
       );
     } else {
-      view = _PropertiesContainer(currentChapter: _currentChapter);
+      view = _currentChapter != null
+          ? _PropertiesContainer(currentChapter: _currentChapter!)
+          : null;
     }
 
-    return Column(children: [
-      Expanded(child: view),
-      Container(
-        height: 50,
-        child: Row(
-          children: [
-            Expanded(
-              child: _Link(
-                label: 'Stories',
-                textAlign: TextAlign.center,
-                textStyle: TextStyle(
-                  fontWeight: _currentView == CurrentView.STORIES
-                      ? FontWeight.bold
-                      : FontWeight.normal,
+    return Column(
+      children: [
+        view != null ? Expanded(child: view) : null,
+        Container(
+          height: 50,
+          child: Row(
+            children: [
+              Expanded(
+                child: _Link(
+                  label: 'Stories',
+                  textAlign: TextAlign.center,
+                  textStyle: TextStyle(
+                    fontWeight: _currentView == CurrentView.STORIES
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                  ),
+                  onTap: () {
+                    setState(() {
+                      _currentView = CurrentView.STORIES;
+                    });
+                  },
                 ),
-                onTap: () {
-                  setState(() {
-                    _currentView = CurrentView.STORIES;
-                  });
-                },
               ),
-            ),
-            Expanded(
-              child: _Link(
-                label: 'Preview',
-                textAlign: TextAlign.center,
-                textStyle: TextStyle(
-                  fontWeight: _currentView == CurrentView.CHAPTER
-                      ? FontWeight.bold
-                      : FontWeight.normal,
+              Expanded(
+                child: _Link(
+                  label: 'Preview',
+                  textAlign: TextAlign.center,
+                  textStyle: TextStyle(
+                    fontWeight: _currentView == CurrentView.CHAPTER
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                  ),
+                  onTap: () {
+                    setState(() {
+                      _currentView = CurrentView.CHAPTER;
+                    });
+                  },
                 ),
-                onTap: () {
-                  setState(() {
-                    _currentView = CurrentView.CHAPTER;
-                  });
-                },
               ),
-            ),
-            Expanded(
-              child: _Link(
-                label: 'Properties',
-                textAlign: TextAlign.center,
-                textStyle: TextStyle(
-                  fontWeight: _currentView == CurrentView.PROPERTIES
-                      ? FontWeight.bold
-                      : FontWeight.normal,
+              Expanded(
+                child: _Link(
+                  label: 'Properties',
+                  textAlign: TextAlign.center,
+                  textStyle: TextStyle(
+                    fontWeight: _currentView == CurrentView.PROPERTIES
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                  ),
+                  onTap: () {
+                    setState(() {
+                      _currentView = CurrentView.PROPERTIES;
+                    });
+                  },
                 ),
-                onTap: () {
-                  setState(() {
-                    _currentView = CurrentView.PROPERTIES;
-                  });
-                },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    ]);
+      ].where((widget) => widget != null).toList() as List<Widget>,
+    );
   }
 }
 
 class _Link extends StatelessWidget {
   final String label;
-  final TextStyle textStyle;
-  final void Function() onTap;
-  final TextAlign textAlign;
+  final TextStyle? textStyle;
+  final void Function()? onTap;
+  final TextAlign? textAlign;
   final EdgeInsets padding;
   final double height;
 
-  _Link(
-      {this.label,
-      this.onTap,
-      this.textStyle,
-      this.textAlign,
-      this.padding = const EdgeInsets.all(10),
-      this.height = 40});
+  _Link({
+    required this.label,
+    this.onTap,
+    this.textStyle,
+    this.textAlign,
+    this.padding = const EdgeInsets.all(10),
+    this.height = 40,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -327,10 +334,12 @@ class _Link extends StatelessWidget {
 
 class _StoriesList extends StatelessWidget {
   final List<Story> stories;
-  final Chapter selectedChapter;
-  final OnSelectChapter onSelectChapter;
+  final Chapter? selectedChapter;
+  final OnSelectChapter? onSelectChapter;
 
-  _StoriesList({this.stories, this.selectedChapter, this.onSelectChapter});
+  _StoriesList(
+      {List<Story>? stories, this.selectedChapter, this.onSelectChapter})
+      : stories = stories ?? List<Story>.empty();
 
   @override
   Widget build(BuildContext context) {
@@ -362,13 +371,15 @@ class _StoriesList extends StatelessWidget {
               padding: EdgeInsets.zero,
               height: 20,
               textStyle: TextStyle(
-                fontWeight: chapter.id == selectedChapter.id
+                fontWeight: chapter.id == selectedChapter?.id
                     ? FontWeight.bold
                     : FontWeight.normal,
               ),
             ),
             onTap: () {
-              onSelectChapter(chapter);
+              if (onSelectChapter != null) {
+                onSelectChapter!(chapter);
+              }
             },
           ),
         );
@@ -390,7 +401,7 @@ class _StoriesList extends StatelessWidget {
 class _ChapterPreview extends StatelessWidget {
   final Chapter currentChapter;
 
-  _ChapterPreview({this.currentChapter, Key key}) : super(key: key);
+  _ChapterPreview({required this.currentChapter, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext ctx) {
@@ -404,9 +415,9 @@ typedef OnPropertyChange = void Function();
 
 class _PropertiesContainer extends StatefulWidget {
   final Chapter currentChapter;
-  final OnPropertyChange onPropertyChange;
+  final OnPropertyChange? onPropertyChange;
 
-  _PropertiesContainer({this.currentChapter, this.onPropertyChange});
+  _PropertiesContainer({required this.currentChapter, this.onPropertyChange});
 
   @override
   State createState() => _PropertiesContainerState();
@@ -430,48 +441,48 @@ class _PropertiesContainerState extends State<_PropertiesContainer> {
               final _onChanged = (chapter) {
                 setState(() {});
                 if (widget.onPropertyChange != null) {
-                  widget.onPropertyChange();
+                  widget.onPropertyChange!();
                 }
               };
               if (entry.value is ListProperty) {
                 return p.ListPropertyWidget(
-                  property: entry.value,
+                  property: entry.value as ListProperty,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<String>) {
                 return p.TextProperty(
-                  property: entry.value,
+                  property: entry.value as Property<String>,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<double>) {
                 return p.NumberProperty(
-                  property: entry.value,
+                  property: entry.value as Property<double>,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<bool>) {
                 return p.BoolProperty(
-                  property: entry.value,
+                  property: entry.value as Property<bool>,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<Color>) {
                 return p.ColorProperty(
-                  property: entry.value,
+                  property: entry.value as Property<Color>,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<EdgeInsets>) {
                 return p.EdgeInsetsProperty(
-                  property: entry.value,
+                  property: entry.value as Property<EdgeInsets>,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<BorderRadius>) {
                 return p.BorderRadiusProperty(
-                  property: entry.value,
+                  property: entry.value as Property<BorderRadius>,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );

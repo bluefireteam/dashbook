@@ -6,12 +6,12 @@ import 'widgets/property_dialog.dart';
 
 class ColorProperty extends StatefulWidget {
   final Property<Color> property;
-  final PropertyChanged onChanged;
+  final PropertyChanged? onChanged;
 
   ColorProperty({
-    this.property,
+    required this.property,
     this.onChanged,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -51,10 +51,9 @@ class ColorPropertyState extends State<ColorProperty> {
         ),
       );
 
-  ColorPropertyState(Color value) {
-    currentColor = value;
-    pickerColor = value;
-  }
+  ColorPropertyState(Color value)
+      : currentColor = value,
+        pickerColor = value;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +65,7 @@ class ColorPropertyState extends State<ColorProperty> {
         onPressed: () async {
           await show();
           widget.property.value = currentColor;
-          widget.onChanged(widget.property);
+          widget.onChanged?.call(widget.property);
         },
       ),
     );

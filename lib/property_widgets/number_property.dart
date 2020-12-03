@@ -5,12 +5,12 @@ import 'widgets/property_scaffold.dart';
 
 class NumberProperty extends StatefulWidget {
   final Property<double> property;
-  final PropertyChanged onChanged;
+  final PropertyChanged? onChanged;
 
   NumberProperty({
-    this.property,
+    required this.property,
     this.onChanged,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -34,7 +34,9 @@ class NumberPropertyState extends State<NumberProperty> {
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         onChanged: (value) {
           widget.property.value = double.tryParse(value);
-          widget.onChanged(widget.property);
+          if (widget.onChanged != null) {
+            widget.onChanged!(widget.property);
+          }
         },
         controller: controller,
       ),

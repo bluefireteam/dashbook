@@ -4,12 +4,12 @@ import 'widgets/property_scaffold.dart';
 
 class TextProperty extends StatefulWidget {
   final Property<String> property;
-  final PropertyChanged onChanged;
+  final PropertyChanged? onChanged;
 
   TextProperty({
-    this.property,
+    required this.property,
     this.onChanged,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -30,7 +30,9 @@ class TextPropertyState extends State<TextProperty> {
       child: TextField(
         onChanged: (value) {
           widget.property.value = value;
-          widget.onChanged(widget.property);
+          if (widget.onChanged != null) {
+            widget.onChanged!(widget.property);
+          }
         },
         controller: controller,
       ),

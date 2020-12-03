@@ -6,7 +6,7 @@ class Property<T> {
 
   final T defaultValue;
 
-  T value;
+  T? value;
 
   Property(this.name, this.defaultValue);
 
@@ -25,84 +25,49 @@ class ListProperty<T> extends Property<T> {
 
 class DashbookContext {
   /// Contain the current BoxConstraints of the area available for the Chapter
-  BoxConstraints constraints;
+  late BoxConstraints constraints;
   Map<String, Property> properties = {};
 
   String textProperty(String name, String defaultValue) {
-    if (properties.containsKey(name)) {
-      return properties[name].getValue();
-    } else {
-      final property = Property<String>(name, defaultValue);
-      properties[name] = property;
-
-      return property.getValue();
-    }
+    return properties
+        .putIfAbsent(name, () => Property<String>(name, defaultValue))
+        .getValue();
   }
 
   double numberProperty(String name, double defaultValue) {
-    if (properties.containsKey(name)) {
-      return properties[name].getValue();
-    } else {
-      final property = Property<double>(name, defaultValue);
-      properties[name] = property;
-
-      return property.getValue();
-    }
+    return properties
+        .putIfAbsent(name, () => Property<double>(name, defaultValue))
+        .getValue();
   }
 
   bool boolProperty(String name, bool defaultValue) {
-    if (properties.containsKey(name)) {
-      return properties[name].getValue();
-    } else {
-      final property = Property<bool>(name, defaultValue);
-      properties[name] = property;
-
-      return property.getValue();
-    }
+    return properties
+        .putIfAbsent(name, () => Property<bool>(name, defaultValue))
+        .getValue();
   }
 
   Color colorProperty(String name, Color defaultValue) {
-    if (properties.containsKey(name)) {
-      return properties[name].getValue();
-    } else {
-      final property = Property<Color>(name, defaultValue);
-      properties[name] = property;
-
-      return property.getValue();
-    }
+    return properties
+        .putIfAbsent(name, () => Property<Color>(name, defaultValue))
+        .getValue();
   }
 
   T listProperty<T>(String name, T defaultValue, List<T> list) {
-    if (properties.containsKey(name)) {
-      return properties[name].getValue();
-    } else {
-      final property = ListProperty<T>(name, defaultValue, list);
-      properties[name] = property;
-
-      return property.getValue();
-    }
+    return properties
+        .putIfAbsent(name, () => ListProperty<T>(name, defaultValue, list))
+        .getValue();
   }
 
   EdgeInsets edgeInsetsProperty(String name, EdgeInsets defaultValue) {
-    if (properties.containsKey(name)) {
-      return properties[name].getValue();
-    } else {
-      final property = Property<EdgeInsets>(name, defaultValue);
-      properties[name] = property;
-
-      return property.getValue();
-    }
+    return properties
+        .putIfAbsent(name, () => Property<EdgeInsets>(name, defaultValue))
+        .getValue();
   }
 
   BorderRadius borderRadiusProperty(String name, BorderRadius defaultValue) {
-    if (properties.containsKey(name)) {
-      return properties[name].getValue();
-    } else {
-      final property = Property<BorderRadius>(name, defaultValue);
-      properties[name] = property;
-
-      return property.getValue();
-    }
+    return properties
+        .putIfAbsent(name, () => Property<BorderRadius>(name, defaultValue))
+        .getValue();
   }
 }
 
@@ -112,7 +77,7 @@ class Story {
   final String name;
   List<Chapter> chapters = [];
 
-  Decorator _decorator;
+  Decorator? _decorator;
 
   Story(this.name);
 
@@ -137,16 +102,14 @@ class Chapter {
 
   final Story story;
 
-  Chapter(this.name, this._buildFn, this.story) {
-    ctx = DashbookContext();
-  }
+  Chapter(this.name, this._buildFn, this.story) : ctx = DashbookContext();
 
   Widget widget(BoxConstraints constraints) {
     ctx.constraints = constraints;
     final Widget w = _buildFn(ctx);
 
     if (story._decorator != null) {
-      return story._decorator.decorate(w);
+      return story._decorator!.decorate(w);
     }
 
     return w;

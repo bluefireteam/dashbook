@@ -4,12 +4,12 @@ import 'widgets/property_scaffold.dart';
 
 class BoolProperty extends StatefulWidget {
   final Property<bool> property;
-  final PropertyChanged onChanged;
+  final PropertyChanged? onChanged;
 
   BoolProperty({
-    this.property,
+    required this.property,
     this.onChanged,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -29,9 +29,11 @@ class BoolPropertyState extends State<BoolProperty> {
         value: _value,
         onChanged: (newValue) {
           widget.property.value = newValue;
-          widget.onChanged(widget.property);
+          if (widget.onChanged != null) {
+            widget.onChanged!(widget.property);
+          }
           setState(() {
-            _value = newValue;
+            _value = newValue ?? false;
           });
         },
       ),
