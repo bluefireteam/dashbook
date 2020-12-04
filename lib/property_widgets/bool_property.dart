@@ -29,9 +29,7 @@ class BoolPropertyState extends State<BoolProperty> {
         value: _value,
         onChanged: (newValue) {
           widget.property.value = newValue;
-          if (widget.onChanged != null) {
-            widget.onChanged!(widget.property);
-          }
+          widget.onChanged?.call(widget.property);
           setState(() {
             _value = newValue ?? false;
           });

@@ -25,9 +25,7 @@ class ListPropertyState extends State<ListPropertyWidget> {
         value: widget.property.getValue(),
         onChanged: (value) {
           widget.property.value = value;
-          if (widget.onChanged != null) {
-            widget.onChanged!(widget.property);
-          }
+          widget.onChanged?.call(widget.property);
         },
         items: widget.property.list
             .map(

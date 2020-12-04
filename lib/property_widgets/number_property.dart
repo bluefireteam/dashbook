@@ -34,9 +34,7 @@ class NumberPropertyState extends State<NumberProperty> {
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         onChanged: (value) {
           widget.property.value = double.tryParse(value);
-          if (widget.onChanged != null) {
-            widget.onChanged!(widget.property);
-          }
+          widget.onChanged?.call(widget.property);
         },
         controller: controller,
       ),
