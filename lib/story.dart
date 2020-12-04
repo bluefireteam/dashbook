@@ -108,11 +108,7 @@ class Chapter {
     ctx.constraints = constraints;
     final Widget w = _buildFn(ctx);
 
-    if (story._decorator != null) {
-      return story._decorator!.decorate(w);
-    }
-
-    return w;
+    return story._decorator?.decorate(w) ?? w;
   }
 
   String get id => "${story.name}#$name";

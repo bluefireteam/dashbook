@@ -30,9 +30,7 @@ class TextPropertyState extends State<TextProperty> {
       child: TextField(
         onChanged: (value) {
           widget.property.value = value;
-          if (widget.onChanged != null) {
-            widget.onChanged!(widget.property);
-          }
+          widget.onChanged?.call(widget.property);
         },
         controller: controller,
       ),
