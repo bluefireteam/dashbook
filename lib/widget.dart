@@ -1,3 +1,4 @@
+import 'package:dashbook/properties_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import './story.dart';
@@ -184,7 +185,6 @@ class _DashbookBodyMobile extends StatefulWidget {
 }
 
 class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
-  CurrentView _currentView;
   Chapter _currentChapter;
 
   @override
@@ -193,11 +193,9 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
 
     if (widget.stories.isNotEmpty) {
       final story = widget.stories.first;
-      _currentView = CurrentView.STORIES;
 
       if (story.chapters.isNotEmpty) {
         _currentChapter = story.chapters.first;
-        _currentView = CurrentView.CHAPTER;
       }
     }
   }
@@ -205,85 +203,24 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
   @override
   Widget build(BuildContext context) {
     Widget view;
-    if (_currentView == CurrentView.CHAPTER) {
-      view = _currentChapter != null
-          ? _ChapterPreview(
-              currentChapter: _currentChapter,
-              key: Key(_currentChapter.id),
-            )
-          : null;
-    } else if (_currentView == CurrentView.STORIES) {
-      view = _StoriesList(
-        stories: widget.stories,
-        selectedChapter: _currentChapter,
-        onSelectChapter: (chapter) {
-          setState(() {
-            _currentChapter = chapter;
-            _currentView = CurrentView.CHAPTER;
-          });
-        },
-      );
-    } else {
-      view = _PropertiesContainer(currentChapter: _currentChapter);
-    }
+
+    view = _StoriesList(
+      stories: widget.stories,
+      selectedChapter: _currentChapter,
+      onSelectChapter: (chapter) {
+        setState(() {
+          _currentChapter = chapter;
+        });
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => PropertiesPage(chapter),
+          ),
+        );
+      },
+    );
 
     return Column(children: [
       Expanded(child: view),
-      Container(
-        height: 50,
-        child: Row(
-          children: [
-            Expanded(
-              child: _Link(
-                label: 'Stories',
-                textAlign: TextAlign.center,
-                textStyle: TextStyle(
-                  fontWeight: _currentView == CurrentView.STORIES
-                      ? FontWeight.bold
-                      : FontWeight.normal,
-                ),
-                onTap: () {
-                  setState(() {
-                    _currentView = CurrentView.STORIES;
-                  });
-                },
-              ),
-            ),
-            Expanded(
-              child: _Link(
-                label: 'Preview',
-                textAlign: TextAlign.center,
-                textStyle: TextStyle(
-                  fontWeight: _currentView == CurrentView.CHAPTER
-                      ? FontWeight.bold
-                      : FontWeight.normal,
-                ),
-                onTap: () {
-                  setState(() {
-                    _currentView = CurrentView.CHAPTER;
-                  });
-                },
-              ),
-            ),
-            Expanded(
-              child: _Link(
-                label: 'Properties',
-                textAlign: TextAlign.center,
-                textStyle: TextStyle(
-                  fontWeight: _currentView == CurrentView.PROPERTIES
-                      ? FontWeight.bold
-                      : FontWeight.normal,
-                ),
-                onTap: () {
-                  setState(() {
-                    _currentView = CurrentView.PROPERTIES;
-                  });
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
     ]);
   }
 }
@@ -380,19 +317,6 @@ class _StoriesList extends StatelessWidget {
           children: children,
         ),
       ),
-    );
-  }
-}
-
-class _ChapterPreview extends StatelessWidget {
-  final Chapter currentChapter;
-
-  _ChapterPreview({this.currentChapter, Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext ctx) {
-    return LayoutBuilder(
-      builder: (_, constraints) => currentChapter.widget(constraints),
     );
   }
 }
