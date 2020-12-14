@@ -50,6 +50,17 @@ class DashbookContext {
     }
   }
 
+  int intProperty(String name, int defaultValue) {
+    if (properties.containsKey(name)) {
+      return properties[name].getValue();
+    } else {
+      final property = Property<int>(name, defaultValue);
+      properties[name] = property;
+
+      return property.getValue();
+    }
+  }
+
   bool boolProperty(String name, bool defaultValue) {
     if (properties.containsKey(name)) {
       return properties[name].getValue();
