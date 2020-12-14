@@ -74,7 +74,7 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
 
   Future<dynamic> show() => showDialog(
       context: context,
-      child: FourIntegerForm(
+      builder: (_) => FourIntegerForm(
           _confirmEdition,
           _currentBorderRadius.topLeft.x.toInt(),
           _currentBorderRadius.topRight.x.toInt(),
