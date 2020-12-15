@@ -448,6 +448,12 @@ class _PropertiesContainerState extends State<_PropertiesContainer> {
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
+              } else if (entry.value is Property<int>) {
+                return p.IntProperty(
+                  property: entry.value,
+                  onChanged: _onChanged,
+                  key: _propertyKey,
+                );
               } else if (entry.value is Property<bool>) {
                 return p.BoolProperty(
                   property: entry.value,
