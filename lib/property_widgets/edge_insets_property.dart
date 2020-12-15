@@ -67,7 +67,7 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
 
   Future<dynamic> show() => showDialog(
       context: context,
-      child: FourIntegerForm(
+      builder: (_) => FourIntegerForm(
           _confirmEdition,
           _currentEdgeinsets.left.toInt(),
           _currentEdgeinsets.top.toInt(),

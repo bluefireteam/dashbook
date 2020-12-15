@@ -1,3 +1,6 @@
+## [0.0.10]
+ - Improving how landscape and portrait mode are detected
+
 ## [0.0.9]
  - Adding EdgeInsets property
  - Adding BorderRadius property
