@@ -21,15 +21,18 @@ class Dashbook extends StatelessWidget {
     return MaterialApp(
       theme: theme,
       routes: {
-        '/': (BuildContext context) => Scaffold(
-              body: SafeArea(
-                child: kIsWeb
-                    ? _DashbookBodyWeb(stories: stories)
-                    : _DashbookBodyMobile(
-                        stories: stories,
-                      ),
-              ),
+        '/': (BuildContext context) {
+          bool isLargeScreen = MediaQuery.of(context).size.width > 768;
+          return Scaffold(
+            body: SafeArea(
+              child: isLargeScreen
+                  ? _DashbookBodyWeb(stories: stories)
+                  : _DashbookBodyMobile(
+                      stories: stories,
+                    ),
             ),
+          );
+        },
       },
     );
   }
