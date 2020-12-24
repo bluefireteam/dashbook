@@ -133,7 +133,7 @@ class _FourIntegerFormState extends State<FourIntegerForm> {
                 _validValues = true;
               });
 
-              Navigator.of(context)!.pop();
+              Navigator.of(context).pop();
             } else {
               setState(() => _validValues = false);
             }
