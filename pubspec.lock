@@ -58,11 +58,9 @@ packages:
   flutter_colorpicker:
     dependency: "direct main"
     description:
-      path: "."
-      ref: master
-      resolved-ref: "10e24da7a959798703b76c2677d7438a5295ccff"
-      url: "https://github.com/mchome/flutter_colorpicker"
-    source: git
+      name: flutter_colorpicker
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.4.0-nullsafety.0"
   flutter_test:
     dependency: "direct dev"
@@ -153,4 +151,4 @@ packages:
     version: "2.1.0-nullsafety.5"
 sdks:
   dart: ">=2.12.0-133.2.beta <3.0.0"
-  flutter: ">=1.25.0-8.1.pre"
+  flutter: ">=1.25.0-8.1.pre <2.0.0"
