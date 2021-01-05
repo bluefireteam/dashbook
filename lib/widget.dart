@@ -85,7 +85,11 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
     return LayoutBuilder(
       builder: (_, constraints) {
         Widget body;
-        Widget preview = _currentChapter?.widget(constraints);
+        final chapterWidget = _currentChapter?.widget(constraints);
+        final preview = _ChapterIconsOverlay(
+          child: chapterWidget,
+          codeLink: _currentChapter.codeLink,
+        );
 
         if (_hasProperties()) {
           body = Column(
@@ -395,8 +399,43 @@ class _ChapterPreview extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     return LayoutBuilder(
-      builder: (_, constraints) => currentChapter.widget(constraints),
+      builder: (_, constraints) {
+        final child = currentChapter.widget(constraints);
+
+        return _ChapterIconsOverlay(
+          child: child,
+          codeLink: currentChapter.codeLink,
+        );
+      },
     );
+  }
+}
+
+class _ChapterIconsOverlay extends StatelessWidget {
+  final Widget child;
+  final String codeLink;
+
+  _ChapterIconsOverlay({
+    this.child,
+    this.codeLink,
+  });
+
+  @override
+  Widget build(_) {
+    if (codeLink != null) {
+      return Stack(
+        children: [
+          Positioned.fill(child: child),
+          Positioned(
+            top: 10,
+            right: 10,
+            child: Icon(Icons.code),
+          ),
+        ],
+      );
+    }
+
+    return child;
   }
 }
 
