@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import './story.dart';
 import 'property_widgets/properties.dart' as p;
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class Dashbook extends StatelessWidget {
   final List<Story> stories = [];
@@ -429,13 +430,24 @@ class _ChapterIconsOverlay extends StatelessWidget {
           Positioned(
             top: 10,
             right: 10,
-            child: Icon(Icons.code),
+            child: GestureDetector(
+              child: Icon(Icons.code),
+              onTap: () => _launchURL(codeLink),
+            ),
           ),
         ],
       );
     }
 
     return child;
+  }
+
+  Future<void> _launchURL(String url) async {
+    if (await url_launcher.canLaunch(url)) {
+      await url_launcher.launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
 

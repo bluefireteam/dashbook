@@ -1,3 +1,6 @@
+## [0.0.11]
+ - Adding code link
+
 ## [0.0.10]
  - Improving how landscape and portrait mode are detected
 
