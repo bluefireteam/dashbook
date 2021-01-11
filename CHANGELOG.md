@@ -1,3 +1,6 @@
+## [0.1.0-nullsafety.0]
+ - Adding nullsafety support
+
 ## [0.0.11]
  - Adding code link
 
