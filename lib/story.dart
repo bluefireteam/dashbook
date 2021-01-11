@@ -81,8 +81,13 @@ class Story {
 
   Story(this.name);
 
-  Story add(String name, ChapterBuildFunction buildFn) {
-    final _chapter = Chapter(name, buildFn, this);
+  Story add(String name, ChapterBuildFunction buildFn, {String codeLink}) {
+    final _chapter = Chapter(
+      name,
+      buildFn,
+      this,
+      codeLink: codeLink,
+    );
     chapters.add(_chapter);
 
     return this;
@@ -99,10 +104,11 @@ class Chapter {
   final ChapterBuildFunction _buildFn;
   final String name;
   DashbookContext ctx;
+  final String? codeLink;
 
   final Story story;
 
-  Chapter(this.name, this._buildFn, this.story) : ctx = DashbookContext();
+  Chapter(this.name, this._buildFn, this.story, {this.codeLink}) : ctx = DashbookContext();
 
   Widget widget(BoxConstraints constraints) {
     ctx.constraints = constraints;

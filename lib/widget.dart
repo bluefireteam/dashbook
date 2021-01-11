@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import './story.dart';
 import 'property_widgets/properties.dart' as p;
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class Dashbook extends StatelessWidget {
   final List<Story> stories = [];
@@ -73,7 +74,7 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
     }
   }
 
-  bool _hasProperties() => _currentChapter?.ctx.properties.isNotEmpty ?? false;
+  bool _hasProperties() => _currentChapter?.ctx?.properties?.isNotEmpty ?? false;
 
   void _toggleStoriesList() {
     setState(() {
@@ -86,7 +87,11 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
     return LayoutBuilder(
       builder: (_, constraints) {
         Widget body;
-        Widget preview = _currentChapter?.widget(constraints) ?? Container();
+        final chapterWidget = _currentChapter?.widget(constraints) ?? Container();
+        final preview = _ChapterIconsOverlay(
+          child: chapterWidget,
+          codeLink: _currentChapter.codeLink,
+        );
 
         if (_hasProperties()) {
           body = Column(
@@ -292,7 +297,7 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
             ],
           ),
         ),
-      ].where((widget) => widget != null).toList() as List<Widget>,
+      ].where((widget) => widget != null).toList(),
     );
   }
 }
@@ -406,8 +411,54 @@ class _ChapterPreview extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     return LayoutBuilder(
-      builder: (_, constraints) => currentChapter.widget(constraints),
+      builder: (_, constraints) {
+        final child = currentChapter.widget(constraints);
+
+        return _ChapterIconsOverlay(
+          child: child,
+          codeLink: currentChapter.codeLink,
+        );
+      },
     );
+  }
+}
+
+class _ChapterIconsOverlay extends StatelessWidget {
+  final Widget child;
+  final String codeLink;
+
+  _ChapterIconsOverlay({
+    this.child,
+    this.codeLink,
+  });
+
+  @override
+  Widget build(_) {
+    if (codeLink != null) {
+      return Stack(
+        children: [
+          Positioned.fill(child: child),
+          Positioned(
+            top: 10,
+            right: 10,
+            child: GestureDetector(
+              child: Icon(Icons.code),
+              onTap: () => _launchURL(codeLink),
+            ),
+          ),
+        ],
+      );
+    }
+
+    return child;
+  }
+
+  Future<void> _launchURL(String url) async {
+    if (await url_launcher.canLaunch(url)) {
+      await url_launcher.launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
 
