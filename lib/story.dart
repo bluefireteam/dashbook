@@ -108,7 +108,8 @@ class Chapter {
 
   final Story story;
 
-  Chapter(this.name, this._buildFn, this.story, {this.codeLink}) : ctx = DashbookContext();
+  Chapter(this.name, this._buildFn, this.story, {this.codeLink})
+      : ctx = DashbookContext();
 
   Widget widget(BoxConstraints constraints) {
     ctx.constraints = constraints;

@@ -87,7 +87,8 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
     return LayoutBuilder(
       builder: (_, constraints) {
         Widget body;
-        final chapterWidget = _currentChapter?.widget(constraints) ?? Container();
+        final chapterWidget =
+            _currentChapter?.widget(constraints) ?? Container();
         final preview = _ChapterIconsOverlay(
           child: chapterWidget,
           codeLink: _currentChapter?.codeLink,
@@ -241,8 +242,7 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
 
     return Column(
       children: [
-        if (view != null)
-          Expanded(child: view),
+        if (view != null) Expanded(child: view),
         Container(
           height: 50,
           child: Row(
