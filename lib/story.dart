@@ -81,7 +81,7 @@ class Story {
 
   Story(this.name);
 
-  Story add(String name, ChapterBuildFunction buildFn, {String codeLink}) {
+  Story add(String name, ChapterBuildFunction buildFn, {String? codeLink}) {
     final _chapter = Chapter(
       name,
       buildFn,

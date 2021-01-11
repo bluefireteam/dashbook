@@ -74,7 +74,7 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
     }
   }
 
-  bool _hasProperties() => _currentChapter?.ctx?.properties?.isNotEmpty ?? false;
+  bool _hasProperties() => _currentChapter?.ctx.properties.isNotEmpty ?? false;
 
   void _toggleStoriesList() {
     setState(() {
@@ -90,7 +90,7 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
         final chapterWidget = _currentChapter?.widget(constraints) ?? Container();
         final preview = _ChapterIconsOverlay(
           child: chapterWidget,
-          codeLink: _currentChapter.codeLink,
+          codeLink: _currentChapter?.codeLink,
         );
 
         if (_hasProperties()) {
@@ -241,7 +241,8 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
 
     return Column(
       children: [
-        view != null ? Expanded(child: view) : null,
+        if (view != null)
+          Expanded(child: view),
         Container(
           height: 50,
           child: Row(
@@ -297,7 +298,7 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
             ],
           ),
         ),
-      ].where((widget) => widget != null).toList(),
+      ].toList(),
     );
   }
 }
@@ -425,10 +426,10 @@ class _ChapterPreview extends StatelessWidget {
 
 class _ChapterIconsOverlay extends StatelessWidget {
   final Widget child;
-  final String codeLink;
+  final String? codeLink;
 
   _ChapterIconsOverlay({
-    this.child,
+    required this.child,
     this.codeLink,
   });
 
@@ -443,7 +444,7 @@ class _ChapterIconsOverlay extends StatelessWidget {
             right: 10,
             child: GestureDetector(
               child: Icon(Icons.code),
-              onTap: () => _launchURL(codeLink),
+              onTap: () => _launchURL(codeLink!),
             ),
           ),
         ],
