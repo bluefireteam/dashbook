@@ -8,9 +8,9 @@ void main() {
 
   addTextStories(dashbook);
 
-  dashbook.storiesOf('RaisedButton').decorator(CenterDecorator()).add(
+  dashbook.storiesOf('ElevatedButton').decorator(CenterDecorator()).add(
         'default',
-        (ctx) => RaisedButton(
+        (ctx) => ElevatedButton(
           child: Text(
             ctx.listProperty("Label", "Ok", ["Ok", "Cancel", "Other label"]),
             style: TextStyle(
