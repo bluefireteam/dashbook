@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import './widgets/property_4_integer_form.dart';
 import './widgets/property_scaffold.dart';
+import '../helpers.dart';
 import '../../story.dart';
 
 class BorderRadiusProperty extends StatefulWidget {
@@ -93,9 +93,9 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
       label: widget.property.name,
       child: Row(
         children: [
-          kIsWeb
+          isLargeScreen(context) 
               ? Text(
-                  'Top left: ${value.topLeft.x}, Top right: ${value.topRight.x}, Bottom left: ${value.bottomLeft.x}, Bottom right: ${value.bottomRight.x}')
+                  '(Top) left: ${value.topLeft.x} right: ${value.topRight.x} \n(Bottom) left: ${value.bottomLeft.x} right: ${value.bottomRight.x}')
               : Text(
                   'TL: ${value.topLeft.x.toInt()}, TR: ${value.topRight.x.toInt()},\nBL: ${value.bottomLeft.x.toInt()}, BR: ${value.bottomRight.x.toInt()}'),
           SizedBox(

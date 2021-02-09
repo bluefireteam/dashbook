@@ -47,8 +47,8 @@ void main() {
   dashbook.storiesOf('Border radius').decorator(CenterDecorator()).add(
         'default',
         (ctx) => Container(
-          width: ctx.constraints.maxWidth,
-          height: ctx.constraints.maxHeight,
+          width: 300,
+          height: 300,
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
               color: Colors.blue[300],
