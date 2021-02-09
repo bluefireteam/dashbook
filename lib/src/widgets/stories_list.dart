@@ -4,6 +4,7 @@ import './link.dart';
 import '../story.dart';
 
 typedef OnSelectChapter = Function(Chapter chapter);
+
 class StoriesList extends StatelessWidget {
   final List<Story> stories;
   final Chapter selectedChapter;
