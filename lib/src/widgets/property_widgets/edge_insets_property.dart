@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import './widgets/property_scaffold.dart';
 import './widgets/property_4_integer_form.dart';
+import '../helpers.dart';
 import '../../story.dart';
 
 class EdgeInsetsProperty extends StatefulWidget {
@@ -86,7 +86,7 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
       label: widget.property.name,
       child: Row(
         children: [
-          kIsWeb
+          isLargeScreen(context) 
               ? Text(
                   'Left: ${value.left}, Top: ${value.top}, Right: ${value.right}, Bottom: ${value.bottom}')
               : Text(
