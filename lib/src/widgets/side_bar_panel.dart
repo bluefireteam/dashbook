@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-bool isLargeScreen(BuildContext context) =>
-    MediaQuery.of(context).size.width > 768;
+import './icon.dart';
+import './helpers.dart';
 
 class SideBarPanel extends StatelessWidget {
   final String title;
@@ -45,9 +45,10 @@ class SideBarPanel extends StatelessWidget {
           Positioned(
             right: 15,
             top: 15,
-            child: GestureDetector(
-              child: Icon(Icons.clear),
-              onTap: () => onCancel?.call(),
+            child: DashbookIcon(
+              tooltip: 'Close',
+              icon: Icons.clear,
+              onClick: () => onCancel?.call(),
             ),
           ),
         ],

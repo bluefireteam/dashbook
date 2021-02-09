@@ -3,6 +3,8 @@ import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 import './properties_container.dart';
 import './stories_list.dart';
+import './icon.dart';
+import './helpers.dart';
 import '../story.dart';
 
 class Dashbook extends StatelessWidget {
@@ -35,7 +37,6 @@ class Dashbook extends StatelessWidget {
     );
   }
 }
-
 
 enum CurrentView {
   STORIES,
@@ -71,7 +72,8 @@ class _DashbookBodyState extends State<_DashbookBody> {
   }
 
   bool _hasProperties() => _currentChapter.ctx.properties.isNotEmpty;
-  double _rightIconTop(int index) => 10.0 + index * 25.0;
+  double _rightIconTop(int index, BuildContext ctx) =>
+      10.0 + index * iconSize(context);
 
   Future<void> _launchURL(String url) async {
     if (await url_launcher.canLaunch(url)) {
@@ -94,20 +96,32 @@ class _DashbookBodyState extends State<_DashbookBody> {
             Positioned.fill(child: chapterWidget),
             if (_hasProperties())
               Positioned(
-                top: _rightIconTop(_rightIconIndex++),
+                top: _rightIconTop(_rightIconIndex++, context),
                 right: 10,
-                child: GestureDetector(
-                  child: Icon(Icons.mode_edit),
-                  onTap: () => setState(() => _isPropertiesOpen = true),
+                child: DashbookIcon(
+                  tooltip: 'Properties panel',
+                  icon: Icons.mode_edit,
+                  onClick: () => setState(() => _isPropertiesOpen = true),
                 ),
               ),
             if (_currentChapter?.codeLink != null)
               Positioned(
-                top: _rightIconTop(_rightIconIndex++),
+                top: _rightIconTop(_rightIconIndex++, context),
                 right: 10,
-                child: GestureDetector(
-                  child: Icon(Icons.code),
-                  onTap: () => _launchURL(_currentChapter.codeLink),
+                child: DashbookIcon(
+                  tooltip: 'See code',
+                  icon: Icons.code,
+                  onClick: () => _launchURL(_currentChapter.codeLink),
+                ),
+              ),
+            if (!_isStoriesOpen)
+              Positioned(
+                top: 5,
+                left: 10,
+                child: DashbookIcon(
+                  tooltip: 'Navigator',
+                  icon: Icons.menu,
+                  onClick: () => setState(() => _isStoriesOpen = true),
                 ),
               ),
             if (_isStoriesOpen)
@@ -138,15 +152,6 @@ class _DashbookBodyState extends State<_DashbookBody> {
                   onPropertyChange: () {
                     setState(() {});
                   },
-                ),
-              ),
-            if (!_isStoriesOpen)
-              Positioned(
-                top: 5,
-                left: 10,
-                child: GestureDetector(
-                  child: Icon(Icons.menu),
-                  onTap: () => setState(() => _isStoriesOpen = true),
                 ),
               ),
           ],
