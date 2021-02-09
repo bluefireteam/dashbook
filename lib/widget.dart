@@ -95,41 +95,6 @@ class _DashbookBodyState extends State<_DashbookBody> {
         return Stack(
           children: [
             Positioned.fill(child: chapterWidget),
-            if (_isStoriesOpen)
-              Positioned(
-                top: 5,
-                left: 10,
-                child: _StoriesList(
-                  stories: widget.stories,
-                  selectedChapter: _currentChapter,
-                  onSelectChapter: (chapter) {
-                    setState(() {
-                      _currentChapter = chapter;
-                      _isStoriesOpen = false;
-                    });
-                  },
-                ),
-              ),
-            if (_isPropertiesOpen)
-              Positioned(
-                top: 5,
-                right: 10,
-                child: _PropertiesContainer(
-                  currentChapter: _currentChapter,
-                  onPropertyChange: () {
-                    setState(() {});
-                  },
-                ),
-              ),
-            if (!_isStoriesOpen)
-              Positioned(
-                top: 5,
-                left: 10,
-                child: GestureDetector(
-                  child: Icon(Icons.menu),
-                  onTap: () => setState(() => _isStoriesOpen = true),
-                ),
-              ),
             if (_currentChapter?.codeLink != null)
               Positioned(
                 top: _rightIconTop(_rightIconIndex++),
@@ -148,6 +113,45 @@ class _DashbookBodyState extends State<_DashbookBody> {
                   onTap: () => setState(() => _isPropertiesOpen = true),
                 ),
               ),
+            if (_isStoriesOpen)
+              Positioned(
+                top: 0,
+                left: 0,
+                bottom: 0,
+                child: _StoriesList(
+                  stories: widget.stories,
+                  selectedChapter: _currentChapter,
+                  onCancel: () => setState(() => _isStoriesOpen = false),
+                  onSelectChapter: (chapter) {
+                    setState(() {
+                      _currentChapter = chapter;
+                      _isStoriesOpen = false;
+                    });
+                  },
+                ),
+              ),
+            if (_isPropertiesOpen)
+              Positioned(
+                top: 0,
+                right: 0,
+                bottom: 0,
+                child: _PropertiesContainer(
+                  currentChapter: _currentChapter,
+                  onCancel: () => setState(() => _isPropertiesOpen = false),
+                  onPropertyChange: () {
+                    setState(() {});
+                  },
+                ),
+              ),
+            if (!_isStoriesOpen)
+              Positioned(
+                top: 5,
+                left: 10,
+                child: GestureDetector(
+                  child: Icon(Icons.menu),
+                  onTap: () => setState(() => _isStoriesOpen = true),
+                ),
+              ),
           ],
         );
       },
@@ -163,13 +167,14 @@ class _Link extends StatelessWidget {
   final EdgeInsets padding;
   final double height;
 
-  _Link(
-      {this.label,
-      this.onTap,
-      this.textStyle,
-      this.textAlign,
-      this.padding = const EdgeInsets.all(10),
-      this.height = 40});
+  _Link({
+    this.label,
+    this.onTap,
+    this.textStyle,
+    this.textAlign,
+    this.padding = const EdgeInsets.all(10),
+    this.height = 40,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -189,67 +194,110 @@ class _Link extends StatelessWidget {
   }
 }
 
+class SideBarPanel extends StatelessWidget {
+  final String title;
+  final Widget child;
+  final VoidCallback onCancel;
+
+  SideBarPanel({
+    @required this.title,
+    @required this.child,
+    this.onCancel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final factor = isLargeScreen(context) ? 0.5 : 1;
+    return Container(
+      color: Theme.of(context).cardColor,
+      width: screenWidth * factor,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      title,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                    ),
+                    SizedBox(height: 10),
+                    child,
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            right: 15,
+            top: 15,
+            child: GestureDetector(
+              child: Icon(Icons.clear),
+              onTap: () => onCancel?.call(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _StoriesList extends StatelessWidget {
   final List<Story> stories;
   final Chapter selectedChapter;
   final OnSelectChapter onSelectChapter;
+  final VoidCallback onCancel;
 
-  _StoriesList({this.stories, this.selectedChapter, this.onSelectChapter});
+  _StoriesList({
+    this.stories,
+    this.selectedChapter,
+    this.onSelectChapter,
+    this.onCancel,
+  });
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> children = [
-      SizedBox(height: 5),
-      Text(
-        'Stories',
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-      ),
-      SizedBox(height: 10),
-    ];
-
-    stories.forEach((story) {
-      children.add(
-        Text(
-          story.name,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-      );
-      children.add(SizedBox(height: 10));
-
-      story.chapters.forEach((chapter) {
-        children.add(
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            child: _Link(
-              label: "  ${chapter.name}",
-              textAlign: TextAlign.left,
-              padding: EdgeInsets.zero,
-              height: 20,
-              textStyle: TextStyle(
-                fontWeight: chapter.id == selectedChapter.id
-                    ? FontWeight.bold
-                    : FontWeight.normal,
-              ),
+    return SideBarPanel(
+      title: 'Stories',
+      onCancel: onCancel,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (Story story in stories)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  story.name,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+                for (Chapter chapter in story.chapters)
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    child: _Link(
+                      label: "  ${chapter.name}",
+                      textAlign: TextAlign.left,
+                      padding: EdgeInsets.zero,
+                      height: 20,
+                      textStyle: TextStyle(
+                        fontWeight: chapter.id == selectedChapter.id
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                    onTap: () {
+                      onSelectChapter(chapter);
+                    },
+                  ),
+                SizedBox(height: 10),
+              ],
             ),
-            onTap: () {
-              onSelectChapter(chapter);
-            },
-          ),
-        );
-      });
-    });
-
-    return SingleChildScrollView(
-      child: Container(
-        color: Theme.of(context).cardColor,
-        width: 300,
-        child: Padding(
-          padding: EdgeInsets.all(5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: children,
-          ),
-        ),
+        ],
       ),
     );
   }
@@ -260,8 +308,13 @@ typedef OnPropertyChange = void Function();
 class _PropertiesContainer extends StatefulWidget {
   final Chapter currentChapter;
   final OnPropertyChange onPropertyChange;
+  final VoidCallback onCancel;
 
-  _PropertiesContainer({this.currentChapter, this.onPropertyChange});
+  _PropertiesContainer({
+    this.currentChapter,
+    this.onPropertyChange,
+    this.onCancel,
+  });
 
   @override
   State createState() => _PropertiesContainerState();
@@ -270,19 +323,13 @@ class _PropertiesContainer extends StatefulWidget {
 class _PropertiesContainerState extends State<_PropertiesContainer> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // TODO media query
-      width: 300,
-      child: SingleChildScrollView(
+
+    return SideBarPanel(
+        title: 'Properties',
+        onCancel: widget.onCancel,
         child: Column(
-          children: [
-            SizedBox(height: 10),
-            Text(
-              "Properties",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-            ),
-          ]..addAll(
-              widget.currentChapter.ctx.properties.entries.map((entry) {
+            children: [
+              ...widget.currentChapter.ctx.properties.entries.map((entry) {
                 final _propertyKey =
                     Key("${widget.currentChapter.id}#${entry.value.name}");
                 final _onChanged = (chapter) {
@@ -336,9 +383,8 @@ class _PropertiesContainerState extends State<_PropertiesContainer> {
                 }
                 return Container();
               }),
-            ),
+            ],
         ),
-      ),
     );
   }
 }
