@@ -95,15 +95,6 @@ class _DashbookBodyState extends State<_DashbookBody> {
         return Stack(
           children: [
             Positioned.fill(child: chapterWidget),
-            if (_currentChapter?.codeLink != null)
-              Positioned(
-                top: _rightIconTop(_rightIconIndex++),
-                right: 10,
-                child: GestureDetector(
-                  child: Icon(Icons.code),
-                  onTap: () => _launchURL(_currentChapter.codeLink),
-                ),
-              ),
             if (_hasProperties())
               Positioned(
                 top: _rightIconTop(_rightIconIndex++),
@@ -111,6 +102,15 @@ class _DashbookBodyState extends State<_DashbookBody> {
                 child: GestureDetector(
                   child: Icon(Icons.mode_edit),
                   onTap: () => setState(() => _isPropertiesOpen = true),
+                ),
+              ),
+            if (_currentChapter?.codeLink != null)
+              Positioned(
+                top: _rightIconTop(_rightIconIndex++),
+                right: 10,
+                child: GestureDetector(
+                  child: Icon(Icons.code),
+                  onTap: () => _launchURL(_currentChapter.codeLink),
                 ),
               ),
             if (_isStoriesOpen)
