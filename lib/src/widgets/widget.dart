@@ -40,7 +40,6 @@ class Dashbook extends StatelessWidget {
 
 enum CurrentView {
   STORIES,
-  CHAPTER,
   PROPERTIES,
 }
 
@@ -55,8 +54,7 @@ class _DashbookBody extends StatefulWidget {
 
 class _DashbookBodyState extends State<_DashbookBody> {
   Chapter _currentChapter;
-  bool _isStoriesOpen = false;
-  bool _isPropertiesOpen = false;
+  CurrentView _currentView;
 
   @override
   void initState() {
@@ -99,7 +97,7 @@ class _DashbookBodyState extends State<_DashbookBody> {
             child: DashbookIcon(
               tooltip: 'Properties panel',
               icon: Icons.mode_edit,
-              onClick: () => setState(() => _isPropertiesOpen = true),
+              onClick: () => setState(() => _currentView = CurrentView.PROPERTIES),
             ),
           ),
         if (_currentChapter?.codeLink != null)
@@ -112,17 +110,17 @@ class _DashbookBodyState extends State<_DashbookBody> {
               onClick: () => _launchURL(_currentChapter.codeLink),
             ),
           ),
-        if (!_isStoriesOpen)
+        if (_currentView != CurrentView.STORIES)
           Positioned(
             top: 5,
             left: 10,
             child: DashbookIcon(
               tooltip: 'Navigator',
               icon: Icons.menu,
-              onClick: () => setState(() => _isStoriesOpen = true),
+              onClick: () => setState(() => _currentView = CurrentView.STORIES),
             ),
           ),
-        if (_isStoriesOpen)
+        if (_currentView == CurrentView.STORIES)
           Positioned(
             top: 0,
             left: 0,
@@ -130,23 +128,23 @@ class _DashbookBodyState extends State<_DashbookBody> {
             child: StoriesList(
               stories: widget.stories,
               selectedChapter: _currentChapter,
-              onCancel: () => setState(() => _isStoriesOpen = false),
+              onCancel: () => setState(() => _currentView = null),
               onSelectChapter: (chapter) {
                 setState(() {
                   _currentChapter = chapter;
-                  _isStoriesOpen = false;
+                  _currentView = null;
                 });
               },
             ),
           ),
-        if (_isPropertiesOpen)
+        if (_currentView == CurrentView.PROPERTIES)
           Positioned(
             top: 0,
             right: 0,
             bottom: 0,
             child: PropertiesContainer(
               currentChapter: _currentChapter,
-              onCancel: () => setState(() => _isPropertiesOpen = false),
+              onCancel: () => setState(() => _currentView = null),
               onPropertyChange: () {
                 setState(() {});
               },
