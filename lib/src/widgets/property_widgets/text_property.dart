@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../story.dart';
-import 'widgets/property_scaffold.dart';
+import './widgets/property_scaffold.dart';
+import '../../story.dart';
 
 class TextProperty extends StatefulWidget {
   final Property<String> property;
