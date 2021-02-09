@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../story.dart';
+import '../../../story.dart';
 
 typedef PropertyChanged = void Function(Property);
 

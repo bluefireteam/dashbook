@@ -1,8 +1,8 @@
-import 'package:dashbook/property_widgets/widgets/property_4_integer_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import '../story.dart';
-import 'widgets/property_scaffold.dart';
+import './widgets/property_scaffold.dart';
+import './widgets/property_4_integer_form.dart';
+import '../../story.dart';
 
 class EdgeInsetsProperty extends StatefulWidget {
   final Property<EdgeInsets> property;
