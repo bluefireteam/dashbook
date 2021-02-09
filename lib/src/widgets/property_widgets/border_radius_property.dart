@@ -93,7 +93,7 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
       label: widget.property.name,
       child: Row(
         children: [
-          isLargeScreen(context) 
+          isLargeScreen(context)
               ? Text(
                   '(Top) left: ${value.topLeft.x} right: ${value.topRight.x} \n(Bottom) left: ${value.bottomLeft.x} right: ${value.bottomRight.x}')
               : Text(

@@ -85,78 +85,74 @@ class _DashbookBodyState extends State<_DashbookBody> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (_, constraints) {
-        final chapterWidget = _currentChapter?.widget(constraints);
+    final chapterWidget = _currentChapter?.widget();
 
-        int _rightIconIndex = 0;
+    int _rightIconIndex = 0;
 
-        return Stack(
-          children: [
-            Positioned.fill(child: chapterWidget),
-            if (_hasProperties())
-              Positioned(
-                top: _rightIconTop(_rightIconIndex++, context),
-                right: 10,
-                child: DashbookIcon(
-                  tooltip: 'Properties panel',
-                  icon: Icons.mode_edit,
-                  onClick: () => setState(() => _isPropertiesOpen = true),
-                ),
-              ),
-            if (_currentChapter?.codeLink != null)
-              Positioned(
-                top: _rightIconTop(_rightIconIndex++, context),
-                right: 10,
-                child: DashbookIcon(
-                  tooltip: 'See code',
-                  icon: Icons.code,
-                  onClick: () => _launchURL(_currentChapter.codeLink),
-                ),
-              ),
-            if (!_isStoriesOpen)
-              Positioned(
-                top: 5,
-                left: 10,
-                child: DashbookIcon(
-                  tooltip: 'Navigator',
-                  icon: Icons.menu,
-                  onClick: () => setState(() => _isStoriesOpen = true),
-                ),
-              ),
-            if (_isStoriesOpen)
-              Positioned(
-                top: 0,
-                left: 0,
-                bottom: 0,
-                child: StoriesList(
-                  stories: widget.stories,
-                  selectedChapter: _currentChapter,
-                  onCancel: () => setState(() => _isStoriesOpen = false),
-                  onSelectChapter: (chapter) {
-                    setState(() {
-                      _currentChapter = chapter;
-                      _isStoriesOpen = false;
-                    });
-                  },
-                ),
-              ),
-            if (_isPropertiesOpen)
-              Positioned(
-                top: 0,
-                right: 0,
-                bottom: 0,
-                child: PropertiesContainer(
-                  currentChapter: _currentChapter,
-                  onCancel: () => setState(() => _isPropertiesOpen = false),
-                  onPropertyChange: () {
-                    setState(() {});
-                  },
-                ),
-              ),
-          ],
-        );
-      },
+    return Stack(
+      children: [
+        Positioned.fill(child: chapterWidget),
+        if (_hasProperties())
+          Positioned(
+            top: _rightIconTop(_rightIconIndex++, context),
+            right: 10,
+            child: DashbookIcon(
+              tooltip: 'Properties panel',
+              icon: Icons.mode_edit,
+              onClick: () => setState(() => _isPropertiesOpen = true),
+            ),
+          ),
+        if (_currentChapter?.codeLink != null)
+          Positioned(
+            top: _rightIconTop(_rightIconIndex++, context),
+            right: 10,
+            child: DashbookIcon(
+              tooltip: 'See code',
+              icon: Icons.code,
+              onClick: () => _launchURL(_currentChapter.codeLink),
+            ),
+          ),
+        if (!_isStoriesOpen)
+          Positioned(
+            top: 5,
+            left: 10,
+            child: DashbookIcon(
+              tooltip: 'Navigator',
+              icon: Icons.menu,
+              onClick: () => setState(() => _isStoriesOpen = true),
+            ),
+          ),
+        if (_isStoriesOpen)
+          Positioned(
+            top: 0,
+            left: 0,
+            bottom: 0,
+            child: StoriesList(
+              stories: widget.stories,
+              selectedChapter: _currentChapter,
+              onCancel: () => setState(() => _isStoriesOpen = false),
+              onSelectChapter: (chapter) {
+                setState(() {
+                  _currentChapter = chapter;
+                  _isStoriesOpen = false;
+                });
+              },
+            ),
+          ),
+        if (_isPropertiesOpen)
+          Positioned(
+            top: 0,
+            right: 0,
+            bottom: 0,
+            child: PropertiesContainer(
+              currentChapter: _currentChapter,
+              onCancel: () => setState(() => _isPropertiesOpen = false),
+              onPropertyChange: () {
+                setState(() {});
+              },
+            ),
+          ),
+      ],
     );
   }
 }

@@ -86,7 +86,7 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
       label: widget.property.name,
       child: Row(
         children: [
-          isLargeScreen(context) 
+          isLargeScreen(context)
               ? Text(
                   'Left: ${value.left}, Top: ${value.top}, Right: ${value.right}, Bottom: ${value.bottom}')
               : Text(
