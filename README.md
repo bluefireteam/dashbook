@@ -4,11 +4,9 @@ Dashbook is a UI development tool for Flutter, it works as a development envirom
 
 It currently supports both mobile and web, having a friendly layout built to work nice on web and large resolutions.
 
-__Disclaimer__: This is an early version, more features should be coming soon, suggestions, and PRs are welcome!
-
 ## How to use
 
-Add the dependency to your `pubspec.ymal`
+Add the dependency to your `pubspec.yaml`
 
 
 ```
@@ -70,8 +68,46 @@ void main() {
 }
 ```
 
-### Mobile example
-![Dashbook](https://user-images.githubusercontent.com/835641/88855642-9106e000-d1c9-11ea-8e5f-59e994a7fa03.gif)
+## Managing themes
+
+Dashbook offers three of ways to let you change themes when viewing your stories. Dashbook iteself is built to use the provided theme to stylize its own UI, so whatever theme is provided, the Dashbook UI show works nice.
+
+### Single theme
+
+Using the default constructor of the Dashbook, use the optional `theme` parameter to set the theme.
+
+```dart
+final dashbook = Dashbook(theme: ThemeData());
+```
+
+### Dual theme
+
+When your app has two theme, the `dualTheme` constructor can be used. Two parameters `light` and `dark` can be informed to set which `ThemeData` represents a light theme, and which represents the dark theme, an additional parameter `initWithLight` can be used to tell Dashbook which theme should be used initially (defaults to `true`).
+
+When using this, Dashbook will present an icon for the user to toggle between light and dark themes
+
+```dart
+final dashbook = Dashbook.dualTheme(
+  light: YourLightTheme(),
+  dark: YourDarkTheme(),
+);
+```
+
+### Multiple themes
+
+When an app have more than two themes, the `multiTheme` contructor can be used. It receives a `themes` parameter, which is a `Map<String, ThemeData>`, and an optional parameter `initialTheme` to inform which theme should be used initially (defaults to the first entry of the map).
+
+When using this, Dashbook will present an icon, which shows a modal with a dropdown menu to enable the user to choose between the informed themes
+
+```dart
+final dashbook = Dashbook.multiTheme(
+  themes: {
+    'theme1': Theme1(),
+    'theme2': Theme2(),
+    'theme3': Theme3(),
+  }
+);
+```
 
 ### Web example
 ![Dashbook](https://user-images.githubusercontent.com/835641/88855646-92380d00-d1c9-11ea-8df4-74136bf18728.gif)
@@ -86,6 +122,5 @@ Dashbook is just a widget, so it can be ran in any way wanted, as there is no re
 
 ## Roadmap
  - Better support for themes and specific platform widgets
- - ~~Property list for Chapters~~
  - Search on the stories list
  - Any other suggestions from the community
