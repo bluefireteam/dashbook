@@ -1,3 +1,7 @@
+## [0.0.12]
+ - Layout refactor
+ - Multiple theme management
+
 ## [0.0.11]
  - Adding code link
 
