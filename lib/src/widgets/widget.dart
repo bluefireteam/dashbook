@@ -11,11 +11,13 @@ class _DashbookDualTheme {
   final ThemeData light;
   final ThemeData dark;
   final bool initWithLight;
+  final String title;
 
   _DashbookDualTheme({
     @required this.light,
     @required this.dark,
     this.initWithLight = true,
+    this.title = '',
   }) : assert(light != null && dark != null,
             'Both light and dark themes can\'t be null');
 }
@@ -119,6 +121,7 @@ class _DashbookState extends State<Dashbook> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: title,
       theme: _currentTheme,
       routes: {
         '/': (BuildContext context) {
