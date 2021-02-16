@@ -63,7 +63,7 @@ class ColorPropertyState extends State<ColorProperty> {
       child: ElevatedButton(
         child: Container(),
         style: ElevatedButton.styleFrom(
-            primary: currentColor,
+          primary: currentColor,
         ),
         onPressed: () async {
           await show();
