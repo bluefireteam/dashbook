@@ -109,8 +109,8 @@ final dashbook = Dashbook.multiTheme(
 );
 ```
 
-### Web example
-![Dashbook](https://user-images.githubusercontent.com/835641/88855646-92380d00-d1c9-11ea-8df4-74136bf18728.gif)
+### Example
+![Dashbook](https://user-images.githubusercontent.com/835641/108122027-766f5800-7082-11eb-9159-230a4f802c9f.mov)
 
 ## Structure
 
