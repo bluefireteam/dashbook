@@ -35,15 +35,19 @@ class Dashbook extends StatefulWidget {
   final ThemeData theme;
   final _DashbookDualTheme dualTheme;
   final _DashbookMultiTheme multiTheme;
+  final String title;
 
-  Dashbook({this.theme})
-      : dualTheme = null,
+  Dashbook({
+    this.theme,
+    this.title = '',
+  })  : dualTheme = null,
         multiTheme = null;
 
   Dashbook.dualTheme({
     @required ThemeData light,
     @required ThemeData dark,
     bool initWithLight = true,
+    this.title = '',
   })  : dualTheme = _DashbookDualTheme(
             dark: dark, light: light, initWithLight: initWithLight),
         theme = null,
@@ -52,6 +56,7 @@ class Dashbook extends StatefulWidget {
   Dashbook.multiTheme({
     @required Map<String, ThemeData> themes,
     String initialTheme,
+    this.title = '',
   })  : multiTheme =
             _DashbookMultiTheme(themes: themes, initialTheme: initialTheme),
         theme = null,
@@ -119,6 +124,7 @@ class _DashbookState extends State<Dashbook> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: widget.title,
       theme: _currentTheme,
       routes: {
         '/': (BuildContext context) {

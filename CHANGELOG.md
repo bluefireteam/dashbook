@@ -1,6 +1,7 @@
 ## [0.0.12]
  - Layout refactor
  - Multiple theme management
+ - Allow users to specify the title of the MaterialApp
 
 ## [0.0.11]
  - Adding code link
