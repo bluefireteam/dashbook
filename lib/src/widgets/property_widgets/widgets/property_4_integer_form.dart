@@ -117,7 +117,7 @@ class _FourIntegerFormState extends State<FourIntegerForm> {
         ],
       ),
       actions: [
-        FlatButton(
+        TextButton(
           child: const Text('Got it'),
           onPressed: () {
             bool validValues = widget._confirmEdition(
