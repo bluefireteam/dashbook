@@ -117,18 +117,18 @@ class _DashbookState extends State<Dashbook> {
 
   @override
   Widget build(BuildContext context) {
-    final chapterWidget = _currentChapter?.widget();
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: _currentTheme,
       routes: {
         '/': (BuildContext context) {
+          final chapterWidget = _currentChapter?.widget();
           return Scaffold(
             body: SafeArea(
               child: Stack(
                 children: [
-                  Positioned.fill(child: chapterWidget),
+                  Positioned.fill(
+                      child: chapterWidget, key: Key(_currentChapter.id)),
                   Positioned(
                     right: 10,
                     top: 0,
