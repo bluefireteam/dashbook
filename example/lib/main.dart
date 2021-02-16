@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:dashbook/dashbook.dart';
 
 void main() {
-  final dashbook = Dashbook();
+  final dashbook = Dashbook.dualTheme(
+      light: ThemeData(),
+      dark: ThemeData.dark(),
+  );
 
   addTextStories(dashbook);
 
