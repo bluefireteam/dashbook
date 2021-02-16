@@ -110,7 +110,7 @@ final dashbook = Dashbook.multiTheme(
 ```
 
 ### Example
-![Dashbook](https://user-images.githubusercontent.com/835641/108122027-766f5800-7082-11eb-9159-230a4f802c9f.mov)
+https://user-images.githubusercontent.com/835641/108122027-766f5800-7082-11eb-9159-230a4f802c9f.mov
 
 ## Structure
 
