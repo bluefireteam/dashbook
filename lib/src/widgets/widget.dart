@@ -7,11 +7,55 @@ import './icon.dart';
 import './helpers.dart';
 import '../story.dart';
 
-class Dashbook extends StatelessWidget {
+class _DashbookDualTheme {
+  final ThemeData light;
+  final ThemeData dark;
+  final bool initWithLight;
+
+  _DashbookDualTheme({
+    @required this.light,
+    @required this.dark,
+    this.initWithLight = true,
+  }) : assert(light != null && dark != null,
+            'Both light and dark themes can\'t be null');
+}
+
+class _DashbookMultiTheme {
+  final Map<String, ThemeData> themes;
+  final String initialTheme;
+
+  _DashbookMultiTheme({
+    @required this.themes,
+    this.initialTheme,
+  }) : assert(themes != null, 'themes can\'t be null');
+}
+
+class Dashbook extends StatefulWidget {
   final List<Story> stories = [];
   final ThemeData theme;
+  final _DashbookDualTheme dualTheme;
+  final _DashbookMultiTheme multiTheme;
 
-  Dashbook({this.theme});
+  Dashbook({this.theme})
+      : dualTheme = null,
+        multiTheme = null;
+
+  Dashbook.dualTheme({
+    @required ThemeData light,
+    @required ThemeData dark,
+    bool initWithLight = true,
+  })  : dualTheme = _DashbookDualTheme(
+            dark: dark, light: light, initWithLight: initWithLight),
+        theme = null,
+        multiTheme = null;
+
+  Dashbook.multiTheme({
+    @required Map<String, ThemeData> themes,
+    String initialTheme,
+  })  : multiTheme =
+            _DashbookMultiTheme(themes: themes, initialTheme: initialTheme),
+        theme = null,
+        dualTheme = null;
 
   Story storiesOf(String name) {
     final story = Story(name);
@@ -21,20 +65,8 @@ class Dashbook extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: theme,
-      routes: {
-        '/': (BuildContext context) {
-          return Scaffold(
-            body: SafeArea(
-              child: _DashbookBody(stories: stories),
-            ),
-          );
-        },
-      },
-    );
+  State<StatefulWidget> createState() {
+    return _DashbookState();
   }
 }
 
@@ -43,22 +75,25 @@ enum CurrentView {
   PROPERTIES,
 }
 
-class _DashbookBody extends StatefulWidget {
-  final List<Story> stories;
-
-  _DashbookBody({this.stories});
-
-  @override
-  State createState() => _DashbookBodyState();
-}
-
-class _DashbookBodyState extends State<_DashbookBody> {
+class _DashbookState extends State<Dashbook> {
   Chapter _currentChapter;
   CurrentView _currentView;
+  ThemeData _currentTheme;
 
   @override
   void initState() {
     super.initState();
+
+    if (widget.theme != null) {
+      _currentTheme = widget.theme;
+    } else if (widget.dualTheme != null) {
+      final dualTheme = widget.dualTheme;
+      _currentTheme =
+          dualTheme.initWithLight ? dualTheme.light : dualTheme.dark;
+    } else if (widget.multiTheme != null) {
+      final multiTheme = widget.multiTheme;
+      _currentTheme = multiTheme.themes[multiTheme.initialTheme];
+    }
 
     if (widget.stories.isNotEmpty) {
       final story = widget.stories.first;
@@ -70,8 +105,6 @@ class _DashbookBodyState extends State<_DashbookBody> {
   }
 
   bool _hasProperties() => _currentChapter.ctx.properties.isNotEmpty;
-  double _rightIconTop(int index, BuildContext ctx) =>
-      10.0 + index * iconSize(context);
 
   Future<void> _launchURL(String url) async {
     if (await url_launcher.canLaunch(url)) {
@@ -85,72 +118,147 @@ class _DashbookBodyState extends State<_DashbookBody> {
   Widget build(BuildContext context) {
     final chapterWidget = _currentChapter?.widget();
 
-    int _rightIconIndex = 0;
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: _currentTheme,
+      routes: {
+        '/': (BuildContext context) {
+          return Scaffold(
+            body: SafeArea(
+              child: Stack(
+                children: [
+                  Positioned.fill(child: chapterWidget),
+                  Positioned(
+                    right: 10,
+                    top: 0,
+                    bottom: 0,
+                    child: _DashbookRightIconList(
+                      children: [
+                        if (_hasProperties())
+                          DashbookIcon(
+                            tooltip: 'Properties panel',
+                            icon: Icons.mode_edit,
+                            onClick: () => setState(
+                                () => _currentView = CurrentView.PROPERTIES),
+                          ),
+                        if (_currentChapter?.codeLink != null)
+                          DashbookIcon(
+                            tooltip: 'See code',
+                            icon: Icons.code,
+                            onClick: () => _launchURL(_currentChapter.codeLink),
+                          ),
+                        if (widget.dualTheme != null)
+                          _DashbookDualThemeIcon(
+                            dualTheme: widget.dualTheme,
+                            currentTheme: _currentTheme,
+                            onChangeTheme: (theme) =>
+                                setState(() => _currentTheme = theme),
+                          ),
+                      ],
+                    ),
+                  ),
+                  if (_currentView != CurrentView.STORIES)
+                    Positioned(
+                      top: 5,
+                      left: 10,
+                      child: DashbookIcon(
+                        tooltip: 'Navigator',
+                        icon: Icons.menu,
+                        onClick: () =>
+                            setState(() => _currentView = CurrentView.STORIES),
+                      ),
+                    ),
+                  if (_currentView == CurrentView.STORIES)
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      child: StoriesList(
+                        stories: widget.stories,
+                        selectedChapter: _currentChapter,
+                        onCancel: () => setState(() => _currentView = null),
+                        onSelectChapter: (chapter) {
+                          setState(() {
+                            _currentChapter = chapter;
+                            _currentView = null;
+                          });
+                        },
+                      ),
+                    ),
+                  if (_currentView == CurrentView.PROPERTIES)
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: PropertiesContainer(
+                        currentChapter: _currentChapter,
+                        onCancel: () => setState(() => _currentView = null),
+                        onPropertyChange: () {
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          );
+        },
+      },
+    );
+  }
+}
 
-    return Stack(
-      children: [
-        Positioned.fill(child: chapterWidget),
-        if (_hasProperties())
+class _DashbookRightIconList extends StatelessWidget {
+  final List<Widget> children;
+
+  _DashbookRightIconList({
+    @required this.children,
+  });
+
+  double _rightIconTop(int index, BuildContext ctx) =>
+      10.0 + index * iconSize(ctx);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: iconSize(context),
+      child: Stack(children: [
+        for (int index = 0; index < children.length; index++)
           Positioned(
-            top: _rightIconTop(_rightIconIndex++, context),
-            right: 10,
-            child: DashbookIcon(
-              tooltip: 'Properties panel',
-              icon: Icons.mode_edit,
-              onClick: () => setState(() => _currentView = CurrentView.PROPERTIES),
-            ),
+            top: _rightIconTop(index, context),
+            child: children[index],
           ),
-        if (_currentChapter?.codeLink != null)
-          Positioned(
-            top: _rightIconTop(_rightIconIndex++, context),
-            right: 10,
-            child: DashbookIcon(
-              tooltip: 'See code',
-              icon: Icons.code,
-              onClick: () => _launchURL(_currentChapter.codeLink),
-            ),
-          ),
-        if (_currentView != CurrentView.STORIES)
-          Positioned(
-            top: 5,
-            left: 10,
-            child: DashbookIcon(
-              tooltip: 'Navigator',
-              icon: Icons.menu,
-              onClick: () => setState(() => _currentView = CurrentView.STORIES),
-            ),
-          ),
-        if (_currentView == CurrentView.STORIES)
-          Positioned(
-            top: 0,
-            left: 0,
-            bottom: 0,
-            child: StoriesList(
-              stories: widget.stories,
-              selectedChapter: _currentChapter,
-              onCancel: () => setState(() => _currentView = null),
-              onSelectChapter: (chapter) {
-                setState(() {
-                  _currentChapter = chapter;
-                  _currentView = null;
-                });
-              },
-            ),
-          ),
-        if (_currentView == CurrentView.PROPERTIES)
-          Positioned(
-            top: 0,
-            right: 0,
-            bottom: 0,
-            child: PropertiesContainer(
-              currentChapter: _currentChapter,
-              onCancel: () => setState(() => _currentView = null),
-              onPropertyChange: () {
-                setState(() {});
-              },
-            ),
-          ),
-      ],
+      ]),
+    );
+  }
+}
+
+class _DashbookDualThemeIcon extends StatelessWidget {
+  final _DashbookDualTheme dualTheme;
+  final ThemeData currentTheme;
+  final Function(ThemeData) onChangeTheme;
+
+  _DashbookDualThemeIcon({
+    @required this.dualTheme,
+    @required this.currentTheme,
+    @required this.onChangeTheme,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDarkthemeSelected = dualTheme.dark == currentTheme;
+    return DashbookIcon(
+      tooltip: isDarkthemeSelected
+          ? 'Change to light theme'
+          : 'Change to dark theme',
+      icon: isDarkthemeSelected ? Icons.nightlight_round : Icons.wb_sunny,
+      onClick: () {
+        if (isDarkthemeSelected) {
+          onChangeTheme(dualTheme.light);
+        } else {
+          onChangeTheme(dualTheme.dark);
+        }
+      },
     );
   }
 }
