@@ -92,7 +92,8 @@ class _DashbookState extends State<Dashbook> {
           dualTheme.initWithLight ? dualTheme.light : dualTheme.dark;
     } else if (widget.multiTheme != null) {
       final multiTheme = widget.multiTheme;
-      _currentTheme = multiTheme.themes[multiTheme.initialTheme];
+      _currentTheme = multiTheme.themes[multiTheme.initialTheme] ??
+          multiTheme.themes.values.first;
     }
 
     if (widget.stories.isNotEmpty) {
@@ -153,6 +154,32 @@ class _DashbookState extends State<Dashbook> {
                             currentTheme: _currentTheme,
                             onChangeTheme: (theme) =>
                                 setState(() => _currentTheme = theme),
+                          ),
+                        if (widget.multiTheme != null)
+                          DashbookIcon(
+                            tooltip: 'Choose theme',
+                            icon: Icons.palette,
+                            onClick: () {
+                              showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: Text('Theme chooser'),
+                                  content: DropdownButton(
+                                    value: _currentTheme,
+                                    items: widget.multiTheme.themes.entries
+                                        .map((entry) => DropdownMenuItem(
+                                              value: entry.value,
+                                              child: Text(entry.key),
+                                            ))
+                                        .toList(),
+                                    onChanged: (value) {
+                                      setState(() => _currentTheme = value);
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                       ],
                     ),
