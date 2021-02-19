@@ -1,3 +1,6 @@
+## [0.0.13]
+ - Fix text overflow on list properties
+ 
 ## [0.0.12]
  - Layout refactor
  - Multiple theme management

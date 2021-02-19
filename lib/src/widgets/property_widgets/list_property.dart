@@ -22,6 +22,7 @@ class ListPropertyState extends State<ListPropertyWidget> {
     return PropertyScaffold(
       label: widget.property.name,
       child: DropdownButton(
+        isExpanded: true,
         value: widget.property.getValue(),
         onChanged: (value) {
           widget.property.value = value;
