@@ -20,42 +20,56 @@ class StoriesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SideBarPanel(
-      title: 'Stories',
-      onCancel: onCancel,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (Story story in stories)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
+    return Theme(
+      data: Theme.of(context).copyWith(
+        dividerColor: Colors.transparent,
+      ),
+      child: SideBarPanel(
+        title: 'Stories',
+        onCancel: onCancel,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (Story story in stories)
+              ExpansionTile(
+                title: Text(
                   story.name,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                for (Chapter chapter in story.chapters)
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    child: Link(
-                      label: "  ${chapter.name}",
-                      textAlign: TextAlign.left,
-                      padding: EdgeInsets.zero,
-                      height: 20,
-                      textStyle: TextStyle(
-                        fontWeight: chapter.id == selectedChapter.id
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                      ),
-                    ),
-                    onTap: () {
-                      onSelectChapter(chapter);
-                    },
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
                   ),
-                SizedBox(height: 10),
-              ],
-            ),
-        ],
+                ),
+                initiallyExpanded: true,
+                children: [
+                  for (Chapter chapter in story.chapters)
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Link(
+                            label: "  ${chapter.name}",
+                            textAlign: TextAlign.left,
+                            padding: EdgeInsets.zero,
+                            height: 20,
+                            textStyle: TextStyle(
+                              fontWeight: chapter.id == selectedChapter.id
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        onSelectChapter(chapter);
+                      },
+                    ),
+                  SizedBox(height: 10),
+                ],
+              ),
+          ],
+        ),
       ),
     );
   }
