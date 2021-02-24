@@ -359,7 +359,6 @@ class _StoriesList extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          initiallyExpanded: true,
           children: story.chapters
               .map((chapter) => GestureDetector(
                     behavior: HitTestBehavior.opaque,
