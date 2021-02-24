@@ -350,42 +350,56 @@ class _StoriesList extends StatelessWidget {
 
     stories.forEach((story) {
       children.add(
-        Text(
-          story.name,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ExpansionTile(
+          title: Text(
+            story.name,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.black,
+            ),
+          ),
+          children: story.chapters
+              .map((chapter) => GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: _Link(
+                          label: "  ${chapter.name}",
+                          textAlign: TextAlign.left,
+                          padding: EdgeInsets.zero,
+                          height: 20,
+                          textStyle: TextStyle(
+                            fontWeight: chapter.id == selectedChapter.id
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      onSelectChapter(chapter);
+                    },
+                  ))
+              .toList(),
         ),
       );
-      children.add(SizedBox(height: 10));
-
-      story.chapters.forEach((chapter) {
-        children.add(
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            child: _Link(
-              label: "  ${chapter.name}",
-              textAlign: TextAlign.left,
-              padding: EdgeInsets.zero,
-              height: 20,
-              textStyle: TextStyle(
-                fontWeight: chapter.id == selectedChapter.id
-                    ? FontWeight.bold
-                    : FontWeight.normal,
-              ),
-            ),
-            onTap: () {
-              onSelectChapter(chapter);
-            },
-          ),
-        );
-      });
     });
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: children,
+    return Theme(
+      data: Theme.of(context).copyWith(
+        dividerColor: Colors.transparent,
+        accentColor: Colors.black,
+      ),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: children,
+          ),
         ),
       ),
     );
