@@ -68,6 +68,12 @@ void main() {
 }
 ```
 
+## Preview area
+
+By default Dashbook will provide the whole screen area for the preview, which means that its controll icons will appear floating above the example.
+
+That behavior can be changed with the use of the `usePreviewSafeArea` parameter on `Dashbook` constructors, when setting this parameter to `true`, Dashbook will make sure that its icons will not appear floating above the example creating a safe area for the example preview.
+
 ## Managing themes
 
 Dashbook offers three of ways to let you change themes when viewing your stories. Dashbook iteself is built to use the provided theme to stylize its own UI, so whatever theme is provided, the Dashbook UI show works nice.

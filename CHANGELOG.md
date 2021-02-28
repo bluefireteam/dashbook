@@ -1,8 +1,7 @@
-## [0.0.14]
- - Changed Story List titles to expansion tiles.
-
 ## [0.0.13]
  - Fix text overflow on list properties
+ - Changed Story List titles to expansion tiles.
+ - Adding `usePreviewSafeArea` parameter to Dashbook constructors
  
 ## [0.0.12]
  - Layout refactor

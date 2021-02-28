@@ -36,10 +36,12 @@ class Dashbook extends StatefulWidget {
   final _DashbookDualTheme dualTheme;
   final _DashbookMultiTheme multiTheme;
   final String title;
+  final bool usePreviewSafeArea;
 
   Dashbook({
     this.theme,
     this.title = '',
+    this.usePreviewSafeArea = false,
   })  : dualTheme = null,
         multiTheme = null;
 
@@ -48,6 +50,7 @@ class Dashbook extends StatefulWidget {
     @required ThemeData dark,
     bool initWithLight = true,
     this.title = '',
+    this.usePreviewSafeArea = false,
   })  : dualTheme = _DashbookDualTheme(
             dark: dark, light: light, initWithLight: initWithLight),
         theme = null,
@@ -57,6 +60,7 @@ class Dashbook extends StatefulWidget {
     @required Map<String, ThemeData> themes,
     String initialTheme,
     this.title = '',
+    this.usePreviewSafeArea = false,
   })  : multiTheme =
             _DashbookMultiTheme(themes: themes, initialTheme: initialTheme),
         theme = null,
@@ -134,7 +138,23 @@ class _DashbookState extends State<Dashbook> {
               child: Stack(
                 children: [
                   Positioned.fill(
-                      child: chapterWidget, key: Key(_currentChapter.id)),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: !widget.usePreviewSafeArea
+                            ? null
+                            : Border(
+                                left: BorderSide(
+                                    color: Theme.of(context).cardColor,
+                                    width: iconSize(context) * 2),
+                                right: BorderSide(
+                                    color: Theme.of(context).cardColor,
+                                    width: iconSize(context) * 2),
+                              ),
+                      ),
+                      child: chapterWidget,
+                    ),
+                    key: Key(_currentChapter.id),
+                  ),
                   Positioned(
                     right: 10,
                     top: 0,
