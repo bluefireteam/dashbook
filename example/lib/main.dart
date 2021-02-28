@@ -54,21 +54,26 @@ void main() {
                   child: Container(color: Colors.green),
                 ))
         ..add(
-            'with border radius',
-            (ctx) => Container(
-                  width: 300,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    color: Colors.blue[300],
-                    borderRadius: ctx.borderRadiusProperty(
-                        "border radius",
-                        BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(50),
-                            bottomRight: Radius.circular(50))),
-                  ),
-                ));
+          'with border radius',
+          (ctx) => Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+              color: Colors.blue[300],
+              borderRadius: ctx.borderRadiusProperty(
+                  "border radius",
+                  BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(50),
+                      bottomRight: Radius.circular(50))),
+            ),
+          ),
+        )
+        ..add(
+          'matching parent size',
+          (ctx) => Container(color: Colors.blue[300]),
+        );
 
   runApp(dashbook);
 }
