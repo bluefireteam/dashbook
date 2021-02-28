@@ -116,7 +116,7 @@ final dashbook = Dashbook.multiTheme(
 ```
 
 ### Example
-![Dashbook](https://user-images.githubusercontent.com/835641/108122582-44122a80-7083-11eb-866c-82aa49528cf5.gif)
+![dashbook_13](https://user-images.githubusercontent.com/835641/109422625-1ac69800-79bb-11eb-8a08-62e9771a15e8.gif)
 
 ## Structure
 
