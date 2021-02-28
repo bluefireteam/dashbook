@@ -125,8 +125,3 @@ Dashbook is just a widget, so it can be ran in any way wanted, as there is no re
  - Create a file named `main_dashbook.dart` on the root source of your project (e.g. `lib/main_dashbook.dart`)
  - Create the Dashbook instance inside that file, calling the `runApp` method in the end (look on the example above)
  - Run it with the command `flutter run -t lib/main_dashbook.dart`
-
-## Roadmap
- - Better support for themes and specific platform widgets
- - Search on the stories list
- - Any other suggestions from the community
