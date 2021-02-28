@@ -1,6 +1,6 @@
 name: dashbook
 description: A showcase/sandbox library to help you build isolated widgets in Flutter
-version: 0.0.12
+version: 0.0.13
 homepage: https://github.com/erickzanardo/dashbook
 
 environment:
