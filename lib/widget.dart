@@ -372,6 +372,7 @@ class _StoriesList extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           height: 20,
                           textStyle: TextStyle(
+                            fontSize: 16,
                             fontWeight: chapter.id == selectedChapter.id
                                 ? FontWeight.bold
                                 : FontWeight.normal,
