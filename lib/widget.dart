@@ -365,7 +365,7 @@ class _StoriesList extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.fromLTRB(16, 2, 16, 8),
                         child: _Link(
                           label: "  ${chapter.name}",
                           textAlign: TextAlign.left,
