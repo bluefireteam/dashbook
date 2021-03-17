@@ -7,9 +7,9 @@ class TextProperty extends StatefulWidget {
   final PropertyChanged onChanged;
 
   TextProperty({
-    this.property,
-    this.onChanged,
-    Key key,
+    required this.property,
+    required this.onChanged,
+    Key? key,
   }) : super(key: key);
 
   @override

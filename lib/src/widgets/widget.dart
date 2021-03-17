@@ -13,28 +13,27 @@ class _DashbookDualTheme {
   final bool initWithLight;
 
   _DashbookDualTheme({
-    @required this.light,
-    @required this.dark,
+    required this.light,
+    required this.dark,
     this.initWithLight = true,
-  }) : assert(light != null && dark != null,
-            'Both light and dark themes can\'t be null');
+  });
 }
 
 class _DashbookMultiTheme {
   final Map<String, ThemeData> themes;
-  final String initialTheme;
+  final String? initialTheme;
 
   _DashbookMultiTheme({
-    @required this.themes,
+    required this.themes,
     this.initialTheme,
-  }) : assert(themes != null, 'themes can\'t be null');
+  });
 }
 
 class Dashbook extends StatefulWidget {
   final List<Story> stories = [];
-  final ThemeData theme;
-  final _DashbookDualTheme dualTheme;
-  final _DashbookMultiTheme multiTheme;
+  final ThemeData? theme;
+  final _DashbookDualTheme? dualTheme;
+  final _DashbookMultiTheme? multiTheme;
   final String title;
   final bool usePreviewSafeArea;
 
@@ -46,8 +45,8 @@ class Dashbook extends StatefulWidget {
         multiTheme = null;
 
   Dashbook.dualTheme({
-    @required ThemeData light,
-    @required ThemeData dark,
+    required ThemeData light,
+    required ThemeData dark,
     bool initWithLight = true,
     this.title = '',
     this.usePreviewSafeArea = false,
@@ -57,8 +56,8 @@ class Dashbook extends StatefulWidget {
         multiTheme = null;
 
   Dashbook.multiTheme({
-    @required Map<String, ThemeData> themes,
-    String initialTheme,
+    required Map<String, ThemeData> themes,
+    String? initialTheme,
     this.title = '',
     this.usePreviewSafeArea = false,
   })  : multiTheme =
@@ -85,23 +84,23 @@ enum CurrentView {
 }
 
 class _DashbookState extends State<Dashbook> {
-  Chapter _currentChapter;
-  CurrentView _currentView;
-  ThemeData _currentTheme;
+  Chapter? _currentChapter;
+  CurrentView? _currentView;
+  late ThemeData _currentTheme;
 
   @override
   void initState() {
     super.initState();
 
     if (widget.theme != null) {
-      _currentTheme = widget.theme;
+      _currentTheme = widget.theme!;
     } else if (widget.dualTheme != null) {
       final dualTheme = widget.dualTheme;
       _currentTheme =
-          dualTheme.initWithLight ? dualTheme.light : dualTheme.dark;
+          dualTheme!.initWithLight ? dualTheme.light : dualTheme.dark;
     } else if (widget.multiTheme != null) {
       final multiTheme = widget.multiTheme;
-      _currentTheme = multiTheme.themes[multiTheme.initialTheme] ??
+      _currentTheme = multiTheme!.themes[multiTheme.initialTheme] ??
           multiTheme.themes.values.first;
     }
 
@@ -114,7 +113,7 @@ class _DashbookState extends State<Dashbook> {
     }
   }
 
-  bool _hasProperties() => _currentChapter.ctx.properties.isNotEmpty;
+  bool _hasProperties() => _currentChapter?.ctx.properties.isNotEmpty ?? false;
 
   Future<void> _launchURL(String url) async {
     if (await url_launcher.canLaunch(url)) {
@@ -137,24 +136,25 @@ class _DashbookState extends State<Dashbook> {
             body: SafeArea(
               child: Stack(
                 children: [
-                  Positioned.fill(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: !widget.usePreviewSafeArea
-                            ? null
-                            : Border(
-                                left: BorderSide(
-                                    color: Theme.of(context).cardColor,
-                                    width: iconSize(context) * 2),
-                                right: BorderSide(
-                                    color: Theme.of(context).cardColor,
-                                    width: iconSize(context) * 2),
-                              ),
+                  if (_currentChapter != null)
+                    Positioned.fill(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: !widget.usePreviewSafeArea
+                              ? null
+                              : Border(
+                                  left: BorderSide(
+                                      color: Theme.of(context).cardColor,
+                                      width: iconSize(context) * 2),
+                                  right: BorderSide(
+                                      color: Theme.of(context).cardColor,
+                                      width: iconSize(context) * 2),
+                                ),
+                        ),
+                        child: chapterWidget,
                       ),
-                      child: chapterWidget,
+                      key: Key(_currentChapter!.id),
                     ),
-                    key: Key(_currentChapter.id),
-                  ),
                   Positioned(
                     right: 10,
                     top: 0,
@@ -172,11 +172,11 @@ class _DashbookState extends State<Dashbook> {
                           DashbookIcon(
                             tooltip: 'See code',
                             icon: Icons.code,
-                            onClick: () => _launchURL(_currentChapter.codeLink),
+                            onClick: () => _launchURL(_currentChapter!.codeLink!),
                           ),
                         if (widget.dualTheme != null)
                           _DashbookDualThemeIcon(
-                            dualTheme: widget.dualTheme,
+                            dualTheme: widget.dualTheme!,
                             currentTheme: _currentTheme,
                             onChangeTheme: (theme) =>
                                 setState(() => _currentTheme = theme),
@@ -190,16 +190,17 @@ class _DashbookState extends State<Dashbook> {
                                 context: context,
                                 builder: (_) => AlertDialog(
                                   title: Text('Theme chooser'),
-                                  content: DropdownButton(
+                                  content: DropdownButton<ThemeData>(
                                     value: _currentTheme,
-                                    items: widget.multiTheme.themes.entries
+                                    items: widget.multiTheme!.themes.entries
                                         .map((entry) => DropdownMenuItem(
                                               value: entry.value,
                                               child: Text(entry.key),
                                             ))
                                         .toList(),
                                     onChanged: (value) {
-                                      setState(() => _currentTheme = value);
+                                      if (value != null)
+                                        setState(() => _currentTheme = value);
                                       Navigator.of(context).pop();
                                     },
                                   ),
@@ -238,13 +239,13 @@ class _DashbookState extends State<Dashbook> {
                         },
                       ),
                     ),
-                  if (_currentView == CurrentView.PROPERTIES)
+                  if (_currentView == CurrentView.PROPERTIES && _currentChapter != null)
                     Positioned(
                       top: 0,
                       right: 0,
                       bottom: 0,
                       child: PropertiesContainer(
-                        currentChapter: _currentChapter,
+                        currentChapter: _currentChapter!,
                         onCancel: () => setState(() => _currentView = null),
                         onPropertyChange: () {
                           setState(() {});
@@ -265,7 +266,7 @@ class _DashbookRightIconList extends StatelessWidget {
   final List<Widget> children;
 
   _DashbookRightIconList({
-    @required this.children,
+    required this.children,
   });
 
   double _rightIconTop(int index, BuildContext ctx) =>
@@ -292,9 +293,9 @@ class _DashbookDualThemeIcon extends StatelessWidget {
   final Function(ThemeData) onChangeTheme;
 
   _DashbookDualThemeIcon({
-    @required this.dualTheme,
-    @required this.currentTheme,
-    @required this.onChangeTheme,
+    required this.dualTheme,
+    required this.currentTheme,
+    required this.onChangeTheme,
   });
 
   @override

@@ -9,9 +9,9 @@ class EdgeInsetsProperty extends StatefulWidget {
   final PropertyChanged onChanged;
 
   EdgeInsetsProperty({
-    this.property,
-    this.onChanged,
-    Key key,
+    required this.property,
+    required this.onChanged,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -24,11 +24,11 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
 
   _EdgeInsetsPropertyState(this._currentEdgeinsets);
 
-  EdgeInsets _parseEdgeInsetValues(bool toAllSides, String uniqueValue,
+  EdgeInsets? _parseEdgeInsetValues(bool toAllSides, String uniqueValue,
       String value1, String value2, String value3, String value4) {
     try {
       if (toAllSides) {
-        final double value = double.tryParse(uniqueValue);
+        final double? value = double.tryParse(uniqueValue);
 
         if (value == null) {
           return null;
@@ -36,10 +36,10 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
 
         return EdgeInsets.all(value);
       } else {
-        final double left = double.tryParse(value1);
-        final double top = double.tryParse(value2);
-        final double right = double.tryParse(value3);
-        final double bottom = double.tryParse(value4);
+        final double? left = double.tryParse(value1);
+        final double? top = double.tryParse(value2);
+        final double? right = double.tryParse(value3);
+        final double? bottom = double.tryParse(value4);
 
         if (left == null || top == null || right == null || bottom == null) {
           return null;
@@ -54,7 +54,7 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
 
   bool _confirmEdition(bool toAllSides, String uniqueValue, String value1,
       String value2, String value3, String value4) {
-    EdgeInsets edgetInsetsValue = _parseEdgeInsetValues(
+    EdgeInsets? edgetInsetsValue = _parseEdgeInsetValues(
         toAllSides, uniqueValue, value1, value2, value3, value4);
 
     if (edgetInsetsValue == null) {

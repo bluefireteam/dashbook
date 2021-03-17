@@ -9,9 +9,9 @@ class BorderRadiusProperty extends StatefulWidget {
   final PropertyChanged onChanged;
 
   BorderRadiusProperty({
-    this.property,
-    this.onChanged,
-    Key key,
+    required this.property,
+    required this.onChanged,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -24,11 +24,11 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
 
   _BorderRadiusPropertyState(this._currentBorderRadius);
 
-  BorderRadius _parseBorderRadiusValues(bool toAllSides, String uniqueValue,
+  BorderRadius? _parseBorderRadiusValues(bool toAllSides, String uniqueValue,
       String value1, String value2, String value3, String value4) {
     try {
       if (toAllSides) {
-        final double value = double.tryParse(uniqueValue);
+        final double? value = double.tryParse(uniqueValue);
 
         if (value == null) {
           return null;
@@ -36,10 +36,10 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
 
         return BorderRadius.all(Radius.circular(value));
       } else {
-        final double topLeft = double.tryParse(value1);
-        final double topRight = double.tryParse(value2);
-        final double bottomLeft = double.tryParse(value3);
-        final double bottomRight = double.tryParse(value4);
+        final double? topLeft = double.tryParse(value1);
+        final double? topRight = double.tryParse(value2);
+        final double? bottomLeft = double.tryParse(value3);
+        final double? bottomRight = double.tryParse(value4);
 
         if (topLeft == null ||
             topRight == null ||
@@ -61,7 +61,7 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
 
   bool _confirmEdition(bool toAllSides, String uniqueValue, String value1,
       String value2, String value3, String value4) {
-    BorderRadius radiusValue = _parseBorderRadiusValues(
+    BorderRadius? radiusValue = _parseBorderRadiusValues(
         toAllSides, uniqueValue, value1, value2, value3, value4);
 
     if (radiusValue == null) {

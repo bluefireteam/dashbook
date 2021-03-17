@@ -9,9 +9,9 @@ class ColorProperty extends StatefulWidget {
   final PropertyChanged onChanged;
 
   ColorProperty({
-    this.property,
-    this.onChanged,
-    Key key,
+    required this.property,
+    required this.onChanged,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -20,8 +20,8 @@ class ColorProperty extends StatefulWidget {
 }
 
 class ColorPropertyState extends State<ColorProperty> {
-  Color pickerColor;
-  Color currentColor;
+  late Color pickerColor;
+  late Color currentColor;
 
   // ValueChanged<Color> callback
   void changeColor(Color color) {

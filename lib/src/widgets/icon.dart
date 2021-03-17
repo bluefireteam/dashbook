@@ -8,9 +8,9 @@ class DashbookIcon extends StatelessWidget {
   final String tooltip;
 
   DashbookIcon({
-    @required this.icon,
-    @required this.onClick,
-    this.tooltip,
+    required this.icon,
+    required this.onClick,
+    required this.tooltip,
   });
 
   @override
@@ -27,7 +27,7 @@ class DashbookIcon extends StatelessWidget {
             size: size,
             color: Theme.of(context).iconTheme.color,
           ),
-          onPointerUp: (_) => onClick?.call(),
+          onPointerUp: (_) => onClick.call(),
         ),
       ),
     );

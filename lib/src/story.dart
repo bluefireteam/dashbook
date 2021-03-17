@@ -6,7 +6,7 @@ class Property<T> {
 
   final T defaultValue;
 
-  T value;
+  T? value;
 
   Property(this.name, this.defaultValue);
 
@@ -28,7 +28,7 @@ class DashbookContext {
 
   String textProperty(String name, String defaultValue) {
     if (properties.containsKey(name)) {
-      return properties[name].getValue();
+      return properties[name]!.getValue();
     } else {
       final property = Property<String>(name, defaultValue);
       properties[name] = property;
@@ -39,7 +39,7 @@ class DashbookContext {
 
   double numberProperty(String name, double defaultValue) {
     if (properties.containsKey(name)) {
-      return properties[name].getValue();
+      return properties[name]!.getValue();
     } else {
       final property = Property<double>(name, defaultValue);
       properties[name] = property;
@@ -50,7 +50,7 @@ class DashbookContext {
 
   bool boolProperty(String name, bool defaultValue) {
     if (properties.containsKey(name)) {
-      return properties[name].getValue();
+      return properties[name]!.getValue();
     } else {
       final property = Property<bool>(name, defaultValue);
       properties[name] = property;
@@ -61,7 +61,7 @@ class DashbookContext {
 
   Color colorProperty(String name, Color defaultValue) {
     if (properties.containsKey(name)) {
-      return properties[name].getValue();
+      return properties[name]!.getValue();
     } else {
       final property = Property<Color>(name, defaultValue);
       properties[name] = property;
@@ -72,7 +72,7 @@ class DashbookContext {
 
   T listProperty<T>(String name, T defaultValue, List<T> list) {
     if (properties.containsKey(name)) {
-      return properties[name].getValue();
+      return properties[name]!.getValue();
     } else {
       final property = ListProperty<T>(name, defaultValue, list);
       properties[name] = property;
@@ -83,7 +83,7 @@ class DashbookContext {
 
   EdgeInsets edgeInsetsProperty(String name, EdgeInsets defaultValue) {
     if (properties.containsKey(name)) {
-      return properties[name].getValue();
+      return properties[name]!.getValue();
     } else {
       final property = Property<EdgeInsets>(name, defaultValue);
       properties[name] = property;
@@ -94,7 +94,7 @@ class DashbookContext {
 
   BorderRadius borderRadiusProperty(String name, BorderRadius defaultValue) {
     if (properties.containsKey(name)) {
-      return properties[name].getValue();
+      return properties[name]!.getValue();
     } else {
       final property = Property<BorderRadius>(name, defaultValue);
       properties[name] = property;
@@ -110,11 +110,11 @@ class Story {
   final String name;
   List<Chapter> chapters = [];
 
-  Decorator _decorator;
+  Decorator? _decorator;
 
   Story(this.name);
 
-  Story add(String name, ChapterBuildFunction buildFn, {String codeLink}) {
+  Story add(String name, ChapterBuildFunction buildFn, {String? codeLink}) {
     final _chapter = Chapter(
       name,
       buildFn,
@@ -136,23 +136,17 @@ class Story {
 class Chapter {
   final ChapterBuildFunction _buildFn;
   final String name;
-  DashbookContext ctx;
-  final String codeLink;
+  DashbookContext ctx = DashbookContext();
+  final String? codeLink;
 
   final Story story;
 
-  Chapter(this.name, this._buildFn, this.story, {this.codeLink}) {
-    ctx = DashbookContext();
-  }
+  Chapter(this.name, this._buildFn, this.story, {this.codeLink});
 
   Widget widget() {
     final Widget w = _buildFn(ctx);
 
-    if (story._decorator != null) {
-      return story._decorator.decorate(w);
-    }
-
-    return w;
+    return story._decorator?.decorate(w) ?? w;
   }
 
   String get id => "${story.name}#$name";

@@ -7,9 +7,9 @@ class BoolProperty extends StatefulWidget {
   final PropertyChanged onChanged;
 
   BoolProperty({
-    this.property,
-    this.onChanged,
-    Key key,
+    required this.property,
+    required this.onChanged,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -17,7 +17,7 @@ class BoolProperty extends StatefulWidget {
 }
 
 class BoolPropertyState extends State<BoolProperty> {
-  bool _value = false;
+  bool? _value;
 
   BoolPropertyState(this._value);
 

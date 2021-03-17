@@ -148,7 +148,7 @@ class _FieldWithLabel extends StatelessWidget {
   final String label;
   final TextEditingController fieldController;
 
-  _FieldWithLabel({this.label, this.fieldController});
+  _FieldWithLabel({ required this.label, required this.fieldController});
 
   @override
   Widget build(_) {
