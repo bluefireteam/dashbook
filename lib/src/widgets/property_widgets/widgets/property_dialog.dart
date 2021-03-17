@@ -5,7 +5,11 @@ class PropertyDialog extends StatelessWidget {
   final Widget content;
   final List<Widget> actions;
 
-  PropertyDialog({this.title, this.content, this.actions});
+  PropertyDialog({
+    required this.title,
+    required this.content,
+    required this.actions,
+  });
 
   @override
   Widget build(_) {

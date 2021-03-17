@@ -7,15 +7,15 @@ typedef OnSelectChapter = Function(Chapter chapter);
 
 class StoriesList extends StatelessWidget {
   final List<Story> stories;
-  final Chapter selectedChapter;
+  final Chapter? selectedChapter;
   final OnSelectChapter onSelectChapter;
   final VoidCallback onCancel;
 
   StoriesList({
-    this.stories,
+    required this.stories,
+    required this.onSelectChapter,
+    required this.onCancel,
     this.selectedChapter,
-    this.onSelectChapter,
-    this.onCancel,
   });
 
   @override
@@ -54,7 +54,7 @@ class StoriesList extends StatelessWidget {
                             padding: EdgeInsets.zero,
                             height: 20,
                             textStyle: TextStyle(
-                              fontWeight: chapter.id == selectedChapter.id
+                              fontWeight: chapter.id == selectedChapter?.id
                                   ? FontWeight.bold
                                   : FontWeight.normal,
                             ),

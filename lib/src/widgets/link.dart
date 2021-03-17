@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 class Link extends StatelessWidget {
   final String label;
   final TextStyle textStyle;
-  final void Function() onTap;
+  final VoidCallback? onTap;
   final TextAlign textAlign;
   final EdgeInsets padding;
   final double height;
 
   Link({
-    this.label,
+    required this.label,
+    required this.textStyle,
+    required this.textAlign,
     this.onTap,
-    this.textStyle,
-    this.textAlign,
     this.padding = const EdgeInsets.all(10),
     this.height = 40,
   });

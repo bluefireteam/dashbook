@@ -6,11 +6,11 @@ import './helpers.dart';
 class SideBarPanel extends StatelessWidget {
   final String title;
   final Widget child;
-  final VoidCallback onCancel;
+  final VoidCallback? onCancel;
 
   SideBarPanel({
-    @required this.title,
-    @required this.child,
+    required this.title,
+    required this.child,
     this.onCancel,
   });
 

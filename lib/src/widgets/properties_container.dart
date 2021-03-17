@@ -11,9 +11,9 @@ class PropertiesContainer extends StatefulWidget {
   final VoidCallback onCancel;
 
   PropertiesContainer({
-    this.currentChapter,
-    this.onPropertyChange,
-    this.onCancel,
+    required this.currentChapter,
+    required this.onPropertyChange,
+    required this.onCancel,
   });
 
   @override
@@ -33,49 +33,47 @@ class _PropertiesContainerState extends State<PropertiesContainer> {
                 Key("${widget.currentChapter.id}#${entry.value.name}");
             final _onChanged = (chapter) {
               setState(() {});
-              if (widget.onPropertyChange != null) {
-                widget.onPropertyChange();
-              }
+              widget.onPropertyChange();
             };
             if (entry.value is ListProperty) {
               return p.ListPropertyWidget(
-                property: entry.value,
+                property: entry.value as ListProperty,
                 onChanged: _onChanged,
                 key: _propertyKey,
               );
             } else if (entry.value is Property<String>) {
               return p.TextProperty(
-                property: entry.value,
+                property: entry.value as Property<String>,
                 onChanged: _onChanged,
                 key: _propertyKey,
               );
             } else if (entry.value is Property<double>) {
               return p.NumberProperty(
-                property: entry.value,
+                property: entry.value as Property<double>,
                 onChanged: _onChanged,
                 key: _propertyKey,
               );
             } else if (entry.value is Property<bool>) {
               return p.BoolProperty(
-                property: entry.value,
+                property: entry.value as Property<bool>,
                 onChanged: _onChanged,
                 key: _propertyKey,
               );
             } else if (entry.value is Property<Color>) {
               return p.ColorProperty(
-                property: entry.value,
+                property: entry.value as Property<Color>,
                 onChanged: _onChanged,
                 key: _propertyKey,
               );
             } else if (entry.value is Property<EdgeInsets>) {
               return p.EdgeInsetsProperty(
-                property: entry.value,
+                property: entry.value as Property<EdgeInsets>,
                 onChanged: _onChanged,
                 key: _propertyKey,
               );
             } else if (entry.value is Property<BorderRadius>) {
               return p.BorderRadiusProperty(
-                property: entry.value,
+                property: entry.value as Property<BorderRadius>,
                 onChanged: _onChanged,
                 key: _propertyKey,
               );
