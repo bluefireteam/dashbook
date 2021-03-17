@@ -172,7 +172,8 @@ class _DashbookState extends State<Dashbook> {
                           DashbookIcon(
                             tooltip: 'See code',
                             icon: Icons.code,
-                            onClick: () => _launchURL(_currentChapter!.codeLink!),
+                            onClick: () =>
+                                _launchURL(_currentChapter!.codeLink!),
                           ),
                         if (widget.dualTheme != null)
                           _DashbookDualThemeIcon(
@@ -239,7 +240,8 @@ class _DashbookState extends State<Dashbook> {
                         },
                       ),
                     ),
-                  if (_currentView == CurrentView.PROPERTIES && _currentChapter != null)
+                  if (_currentView == CurrentView.PROPERTIES &&
+                      _currentChapter != null)
                     Positioned(
                       top: 0,
                       right: 0,
