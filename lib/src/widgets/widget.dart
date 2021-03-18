@@ -36,11 +36,13 @@ class Dashbook extends StatefulWidget {
   final _DashbookMultiTheme? multiTheme;
   final String title;
   final bool usePreviewSafeArea;
+  final GlobalKey<NavigatorState>? navigatorKey;
 
   Dashbook({
     this.theme,
     this.title = '',
     this.usePreviewSafeArea = false,
+    this.navigatorKey,
   })  : dualTheme = null,
         multiTheme = null;
 
@@ -50,6 +52,7 @@ class Dashbook extends StatefulWidget {
     bool initWithLight = true,
     this.title = '',
     this.usePreviewSafeArea = false,
+    this.navigatorKey,
   })  : dualTheme = _DashbookDualTheme(
             dark: dark, light: light, initWithLight: initWithLight),
         theme = null,
@@ -60,6 +63,7 @@ class Dashbook extends StatefulWidget {
     String? initialTheme,
     this.title = '',
     this.usePreviewSafeArea = false,
+    this.navigatorKey,
   })  : multiTheme =
             _DashbookMultiTheme(themes: themes, initialTheme: initialTheme),
         theme = null,
@@ -127,6 +131,7 @@ class _DashbookState extends State<Dashbook> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      navigatorKey: widget.navigatorKey,
       title: widget.title,
       theme: _currentTheme,
       routes: {

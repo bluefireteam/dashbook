@@ -1,5 +1,6 @@
 ## [0.1.0]
  - Null safety support
+ - Adding navigatorKey parameter to Dashbook widget
 
 ## [0.0.13]
  - Fix text overflow on list properties
