@@ -13,7 +13,8 @@ class BoolProperty extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => BoolPropertyState(property!.getValue());
+  State<StatefulWidget> createState() =>
+      BoolPropertyState(property!.getValue());
 }
 
 class BoolPropertyState extends State<BoolProperty> {

@@ -60,9 +60,12 @@ class ColorPropertyState extends State<ColorProperty> {
   Widget build(BuildContext context) {
     return PropertyScaffold(
       label: widget.property!.name,
-      child: RaisedButton(
-        elevation: 0,
-        color: currentColor,
+      child: ElevatedButton(
+        child: null,
+        style: ElevatedButton.styleFrom(
+          elevation: 0,
+          primary: currentColor,
+        ),
         onPressed: () async {
           await show();
           widget.property!.value = currentColor;

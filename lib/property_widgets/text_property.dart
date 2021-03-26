@@ -13,7 +13,8 @@ class TextProperty extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => TextPropertyState(property!.getValue()!);
+  State<StatefulWidget> createState() =>
+      TextPropertyState(property!.getValue()!);
 }
 
 class TextPropertyState extends State<TextProperty> {

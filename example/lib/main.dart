@@ -12,7 +12,8 @@ void main() {
         'default',
         (ctx) => ElevatedButton(
           child: Text(
-            ctx.listProperty("Label", "Ok", ["Ok", "Cancel", "Other label"]) ?? "",
+            ctx.listProperty("Label", "Ok", ["Ok", "Cancel", "Other label"]) ??
+                "",
             style: TextStyle(
               fontSize: ctx.numberProperty("font size", 20),
             ),
