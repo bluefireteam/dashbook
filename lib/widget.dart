@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class Dashbook extends StatelessWidget {
   final List<Story> stories = [];
-  final ThemeData theme;
+  final ThemeData? theme;
 
   Dashbook({this.theme});
 
@@ -48,7 +48,7 @@ enum CurrentView {
 }
 
 class _DashbookBodyWeb extends StatefulWidget {
-  final List<Story> stories;
+  final List<Story>? stories;
 
   _DashbookBodyWeb({this.stories});
 
@@ -57,15 +57,15 @@ class _DashbookBodyWeb extends StatefulWidget {
 }
 
 class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
-  Chapter _currentChapter;
+  Chapter? _currentChapter;
   bool _isStoriesOpen = false;
 
   @override
   void initState() {
     super.initState();
 
-    if (widget.stories.isNotEmpty) {
-      final story = widget.stories.first;
+    if (widget.stories!.isNotEmpty) {
+      final story = widget.stories!.first;
 
       if (story.chapters.isNotEmpty) {
         _currentChapter = story.chapters.first;
@@ -73,7 +73,7 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
     }
   }
 
-  bool _hasProperties() => _currentChapter.ctx.properties.isNotEmpty;
+  bool _hasProperties() => _currentChapter!.ctx.properties.isNotEmpty;
 
   void _toggleStoriesList() {
     setState(() {
@@ -89,7 +89,7 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
         final chapterWidget = _currentChapter?.widget(constraints);
         final preview = _ChapterIconsOverlay(
           child: chapterWidget,
-          codeLink: _currentChapter.codeLink,
+          codeLink: _currentChapter!.codeLink,
         );
 
         if (_hasProperties()) {
@@ -160,7 +160,7 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              flex: _isStoriesOpen ? 2 : null,
+              flex: _isStoriesOpen ? 2 : 1,
               child: Container(
                 width: _isStoriesOpen ? null : 45,
                 decoration: BoxDecoration(
@@ -183,7 +183,7 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
 }
 
 class _DashbookBodyMobile extends StatefulWidget {
-  final List<Story> stories;
+  final List<Story>? stories;
 
   _DashbookBodyMobile({this.stories});
 
@@ -192,15 +192,15 @@ class _DashbookBodyMobile extends StatefulWidget {
 }
 
 class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
-  CurrentView _currentView;
-  Chapter _currentChapter;
+  CurrentView? _currentView;
+  Chapter? _currentChapter;
 
   @override
   void initState() {
     super.initState();
 
-    if (widget.stories.isNotEmpty) {
-      final story = widget.stories.first;
+    if (widget.stories!.isNotEmpty) {
+      final story = widget.stories!.first;
       _currentView = CurrentView.STORIES;
 
       if (story.chapters.isNotEmpty) {
@@ -212,12 +212,12 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
 
   @override
   Widget build(BuildContext context) {
-    Widget view;
+    Widget? view;
     if (_currentView == CurrentView.CHAPTER) {
       view = _currentChapter != null
           ? _ChapterPreview(
               currentChapter: _currentChapter,
-              key: Key(_currentChapter.id),
+              key: Key(_currentChapter!.id),
             )
           : null;
     } else if (_currentView == CurrentView.STORIES) {
@@ -236,7 +236,7 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
     }
 
     return Column(children: [
-      Expanded(child: view),
+      Expanded(child: view!),
       Container(
         height: 50,
         child: Row(
@@ -297,10 +297,10 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
 }
 
 class _Link extends StatelessWidget {
-  final String label;
-  final TextStyle textStyle;
-  final void Function() onTap;
-  final TextAlign textAlign;
+  final String? label;
+  final TextStyle? textStyle;
+  final void Function()? onTap;
+  final TextAlign? textAlign;
   final EdgeInsets padding;
   final double height;
 
@@ -320,7 +320,7 @@ class _Link extends StatelessWidget {
         height: height,
         padding: padding,
         child: Text(
-          this.label,
+          this.label!,
           textAlign: textAlign,
           style: textStyle,
         ),
@@ -331,9 +331,9 @@ class _Link extends StatelessWidget {
 }
 
 class _StoriesList extends StatelessWidget {
-  final List<Story> stories;
-  final Chapter selectedChapter;
-  final OnSelectChapter onSelectChapter;
+  final List<Story>? stories;
+  final Chapter? selectedChapter;
+  final OnSelectChapter? onSelectChapter;
 
   _StoriesList({this.stories, this.selectedChapter, this.onSelectChapter});
 
@@ -348,7 +348,7 @@ class _StoriesList extends StatelessWidget {
       SizedBox(height: 10),
     ];
 
-    stories.forEach((story) {
+    stories!.forEach((story) {
       children.add(
         ExpansionTile(
           title: Text(
@@ -373,7 +373,7 @@ class _StoriesList extends StatelessWidget {
                           height: 20,
                           textStyle: TextStyle(
                             fontSize: 16,
-                            fontWeight: chapter.id == selectedChapter.id
+                            fontWeight: chapter.id == selectedChapter!.id
                                 ? FontWeight.bold
                                 : FontWeight.normal,
                           ),
@@ -381,7 +381,7 @@ class _StoriesList extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      onSelectChapter(chapter);
+                      onSelectChapter!(chapter);
                     },
                   ))
               .toList(),
@@ -408,19 +408,19 @@ class _StoriesList extends StatelessWidget {
 }
 
 class _ChapterPreview extends StatelessWidget {
-  final Chapter currentChapter;
+  final Chapter? currentChapter;
 
-  _ChapterPreview({this.currentChapter, Key key}) : super(key: key);
+  _ChapterPreview({this.currentChapter, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext ctx) {
     return LayoutBuilder(
       builder: (_, constraints) {
-        final child = currentChapter.widget(constraints);
+        final child = currentChapter!.widget(constraints);
 
         return _ChapterIconsOverlay(
           child: child,
-          codeLink: currentChapter.codeLink,
+          codeLink: currentChapter!.codeLink,
         );
       },
     );
@@ -428,8 +428,8 @@ class _ChapterPreview extends StatelessWidget {
 }
 
 class _ChapterIconsOverlay extends StatelessWidget {
-  final Widget child;
-  final String codeLink;
+  final Widget? child;
+  final String? codeLink;
 
   _ChapterIconsOverlay({
     this.child,
@@ -441,20 +441,20 @@ class _ChapterIconsOverlay extends StatelessWidget {
     if (codeLink != null) {
       return Stack(
         children: [
-          Positioned.fill(child: child),
+          Positioned.fill(child: child!),
           Positioned(
             top: 10,
             right: 10,
             child: GestureDetector(
               child: Icon(Icons.code),
-              onTap: () => _launchURL(codeLink),
+              onTap: () => _launchURL(codeLink!),
             ),
           ),
         ],
       );
     }
 
-    return child;
+    return child!;
   }
 
   Future<void> _launchURL(String url) async {
@@ -469,8 +469,8 @@ class _ChapterIconsOverlay extends StatelessWidget {
 typedef OnPropertyChange = void Function();
 
 class _PropertiesContainer extends StatefulWidget {
-  final Chapter currentChapter;
-  final OnPropertyChange onPropertyChange;
+  final Chapter? currentChapter;
+  final OnPropertyChange? onPropertyChange;
 
   _PropertiesContainer({this.currentChapter, this.onPropertyChange});
 
@@ -490,54 +490,54 @@ class _PropertiesContainerState extends State<_PropertiesContainer> {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
           ),
         ]..addAll(
-            widget.currentChapter.ctx.properties.entries.map((entry) {
+            widget.currentChapter!.ctx.properties.entries.map((entry) {
               final _propertyKey =
-                  Key("${widget.currentChapter.id}#${entry.value.name}");
+                  Key("${widget.currentChapter!.id}#${entry.value.name}");
               final _onChanged = (chapter) {
                 setState(() {});
                 if (widget.onPropertyChange != null) {
-                  widget.onPropertyChange();
+                  widget.onPropertyChange!();
                 }
               };
               if (entry.value is ListProperty) {
                 return p.ListPropertyWidget(
-                  property: entry.value,
+                  property: entry.value as ListProperty?,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<String>) {
                 return p.TextProperty(
-                  property: entry.value,
+                  property: entry.value as Property<String?>?,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<double>) {
                 return p.NumberProperty(
-                  property: entry.value,
+                  property: entry.value as Property<double?>?,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<bool>) {
                 return p.BoolProperty(
-                  property: entry.value,
+                  property: entry.value as Property<bool?>?,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<Color>) {
                 return p.ColorProperty(
-                  property: entry.value,
+                  property: entry.value as Property<Color?>?,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<EdgeInsets>) {
                 return p.EdgeInsetsProperty(
-                  property: entry.value,
+                  property: entry.value as Property<EdgeInsets?>?,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );
               } else if (entry.value is Property<BorderRadius>) {
                 return p.BorderRadiusProperty(
-                  property: entry.value,
+                  property: entry.value as Property<BorderRadius?>?,
                   onChanged: _onChanged,
                   key: _propertyKey,
                 );

@@ -5,30 +5,30 @@ import '../story.dart';
 import 'widgets/property_scaffold.dart';
 
 class EdgeInsetsProperty extends StatefulWidget {
-  final Property<EdgeInsets> property;
-  final PropertyChanged onChanged;
+  final Property<EdgeInsets?>? property;
+  final PropertyChanged? onChanged;
 
   EdgeInsetsProperty({
     this.property,
     this.onChanged,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() =>
-      _EdgeInsetsPropertyState(property.getValue());
+      _EdgeInsetsPropertyState(property!.getValue());
 }
 
 class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
-  EdgeInsets _currentEdgeinsets;
+  EdgeInsets? _currentEdgeinsets;
 
   _EdgeInsetsPropertyState(this._currentEdgeinsets);
 
-  EdgeInsets _parseEdgeInsetValues(bool toAllSides, String uniqueValue,
+  EdgeInsets? _parseEdgeInsetValues(bool toAllSides, String uniqueValue,
       String value1, String value2, String value3, String value4) {
     try {
       if (toAllSides) {
-        final double value = double.tryParse(uniqueValue);
+        final double? value = double.tryParse(uniqueValue);
 
         if (value == null) {
           return null;
@@ -36,10 +36,10 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
 
         return EdgeInsets.all(value);
       } else {
-        final double left = double.tryParse(value1);
-        final double top = double.tryParse(value2);
-        final double right = double.tryParse(value3);
-        final double bottom = double.tryParse(value4);
+        final double? left = double.tryParse(value1);
+        final double? top = double.tryParse(value2);
+        final double? right = double.tryParse(value3);
+        final double? bottom = double.tryParse(value4);
 
         if (left == null || top == null || right == null || bottom == null) {
           return null;
@@ -54,7 +54,7 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
 
   bool _confirmEdition(bool toAllSides, String uniqueValue, String value1,
       String value2, String value3, String value4) {
-    EdgeInsets edgetInsetsValue = _parseEdgeInsetValues(
+    EdgeInsets? edgetInsetsValue = _parseEdgeInsetValues(
         toAllSides, uniqueValue, value1, value2, value3, value4);
 
     if (edgetInsetsValue == null) {
@@ -69,10 +69,10 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
       context: context,
       builder: (_) => FourIntegerForm(
           _confirmEdition,
-          _currentEdgeinsets.left.toInt(),
-          _currentEdgeinsets.top.toInt(),
-          _currentEdgeinsets.right.toInt(),
-          _currentEdgeinsets.bottom.toInt(),
+          _currentEdgeinsets!.left.toInt(),
+          _currentEdgeinsets!.top.toInt(),
+          _currentEdgeinsets!.right.toInt(),
+          _currentEdgeinsets!.bottom.toInt(),
           'Left',
           'Top',
           'Right',
@@ -80,17 +80,17 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
 
   @override
   Widget build(BuildContext context) {
-    final value = widget.property.getValue();
+    final value = widget.property!.getValue();
 
     return PropertyScaffold(
-      label: widget.property.name,
+      label: widget.property!.name,
       child: Row(
         children: [
           kIsWeb
               ? Text(
-                  'Left: ${value.left}, Top: ${value.top}, Right: ${value.right}, Bottom: ${value.bottom}')
+                  'Left: ${value!.left}, Top: ${value.top}, Right: ${value.right}, Bottom: ${value.bottom}')
               : Text(
-                  'L: ${value.left.toInt()}, T: ${value.top.toInt()}, R: ${value.right.toInt()}, B: ${value.bottom.toInt()}'),
+                  'L: ${value!.left.toInt()}, T: ${value.top.toInt()}, R: ${value.right.toInt()}, B: ${value.bottom.toInt()}'),
           SizedBox(
             width: 5,
           ),
@@ -101,8 +101,8 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
             ),
             onPressed: () async {
               await show();
-              widget.property.value = _currentEdgeinsets;
-              widget.onChanged(widget.property);
+              widget.property!.value = _currentEdgeinsets;
+              widget.onChanged!(widget.property);
             },
           ),
         ],

@@ -117,7 +117,7 @@ class _FourIntegerFormState extends State<FourIntegerForm> {
         ],
       ),
       actions: [
-        FlatButton(
+        TextButton(
           child: const Text('Got it'),
           onPressed: () {
             bool validValues = widget._confirmEdition(
@@ -145,8 +145,8 @@ class _FourIntegerFormState extends State<FourIntegerForm> {
 }
 
 class _FieldWithLabel extends StatelessWidget {
-  final String label;
-  final TextEditingController fieldController;
+  final String? label;
+  final TextEditingController? fieldController;
 
   _FieldWithLabel({this.label, this.fieldController});
 
