@@ -1,3 +1,6 @@
+## [next]
+ - Fixing null theme
+
 ## [0.1.0]
  - Null safety support
  - Adding navigatorKey parameter to Dashbook widget
