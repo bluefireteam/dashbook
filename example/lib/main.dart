@@ -5,9 +5,9 @@ import 'package:example/text_story.dart';
 
 void main() {
   final dashbook = Dashbook.dualTheme(
-      light: ThemeData(),
-      dark: ThemeData.dark(),
-      title: 'Dashbook Example',
+    light: ThemeData(),
+    dark: ThemeData.dark(),
+    title: 'Dashbook Example',
   );
 
   addTextStories(dashbook);
