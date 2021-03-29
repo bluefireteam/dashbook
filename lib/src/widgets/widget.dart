@@ -90,7 +90,7 @@ enum CurrentView {
 class _DashbookState extends State<Dashbook> {
   Chapter? _currentChapter;
   CurrentView? _currentView;
-  late ThemeData _currentTheme;
+  ThemeData? _currentTheme;
 
   @override
   void initState() {
@@ -183,7 +183,7 @@ class _DashbookState extends State<Dashbook> {
                         if (widget.dualTheme != null)
                           _DashbookDualThemeIcon(
                             dualTheme: widget.dualTheme!,
-                            currentTheme: _currentTheme,
+                            currentTheme: _currentTheme!,
                             onChangeTheme: (theme) =>
                                 setState(() => _currentTheme = theme),
                           ),
@@ -197,7 +197,7 @@ class _DashbookState extends State<Dashbook> {
                                 builder: (_) => AlertDialog(
                                   title: Text('Theme chooser'),
                                   content: DropdownButton<ThemeData>(
-                                    value: _currentTheme,
+                                    value: _currentTheme!,
                                     items: widget.multiTheme!.themes.entries
                                         .map((entry) => DropdownMenuItem(
                                               value: entry.value,
