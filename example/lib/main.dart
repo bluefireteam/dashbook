@@ -10,9 +10,10 @@ void main() {
 
   dashbook.storiesOf('RaisedButton').decorator(CenterDecorator()).add(
         'default',
-        (ctx) => RaisedButton(
+        (ctx) => ElevatedButton(
           child: Text(
-            ctx.listProperty("Label", "Ok", ["Ok", "Cancel", "Other label"]),
+            ctx.listProperty("Label", "Ok", ["Ok", "Cancel", "Other label"]) ??
+                "",
             style: TextStyle(
               fontSize: ctx.numberProperty("font size", 20),
             ),
@@ -47,8 +48,8 @@ void main() {
   dashbook.storiesOf('Border radius').decorator(CenterDecorator()).add(
         'default',
         (ctx) => Container(
-          width: ctx.constraints.maxWidth,
-          height: ctx.constraints.maxHeight,
+          width: ctx.constraints?.maxWidth ?? double.infinity,
+          height: ctx.constraints?.maxHeight ?? double.infinity,
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
               color: Colors.blue[300],

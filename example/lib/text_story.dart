@@ -16,7 +16,7 @@ void addTextStories(Dashbook dashbook) {
               EdgeInsets.fromLTRB(1, 2, 3, 4),
             ),
             child: Text(
-              ctx.textProperty("text", "Text Example"),
+              ctx.textProperty("text", "Text Example") ?? "",
               textAlign: ctx.listProperty(
                 "text align",
                 TextAlign.center,

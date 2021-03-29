@@ -5,23 +5,23 @@ import 'widgets/property_scaffold.dart';
 import 'widgets/property_dialog.dart';
 
 class ColorProperty extends StatefulWidget {
-  final Property<Color> property;
-  final PropertyChanged onChanged;
+  final Property<Color?>? property;
+  final PropertyChanged? onChanged;
 
   ColorProperty({
     this.property,
     this.onChanged,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() =>
-      ColorPropertyState(property.getValue());
+      ColorPropertyState(property!.getValue());
 }
 
 class ColorPropertyState extends State<ColorProperty> {
-  Color pickerColor;
-  Color currentColor;
+  Color? pickerColor;
+  Color? currentColor;
 
   // ValueChanged<Color> callback
   void changeColor(Color color) {
@@ -34,13 +34,13 @@ class ColorPropertyState extends State<ColorProperty> {
         builder: (_) => PropertyDialog(
           title: 'Pick a color!',
           content: ColorPicker(
-            pickerColor: pickerColor,
+            pickerColor: pickerColor!,
             onColorChanged: changeColor,
             showLabel: true,
             pickerAreaHeightPercent: 0.8,
           ),
           actions: [
-            FlatButton(
+            TextButton(
               child: const Text('Got it'),
               onPressed: () {
                 setState(() => currentColor = pickerColor);
@@ -51,7 +51,7 @@ class ColorPropertyState extends State<ColorProperty> {
         ),
       );
 
-  ColorPropertyState(Color value) {
+  ColorPropertyState(Color? value) {
     currentColor = value;
     pickerColor = value;
   }
@@ -59,14 +59,17 @@ class ColorPropertyState extends State<ColorProperty> {
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
-      label: widget.property.name,
-      child: RaisedButton(
-        elevation: 0,
-        color: currentColor,
+      label: widget.property!.name,
+      child: ElevatedButton(
+        child: null,
+        style: ElevatedButton.styleFrom(
+          elevation: 0,
+          primary: currentColor,
+        ),
         onPressed: () async {
           await show();
-          widget.property.value = currentColor;
-          widget.onChanged(widget.property);
+          widget.property!.value = currentColor;
+          widget.onChanged!(widget.property);
         },
       ),
     );
