@@ -65,5 +65,4 @@ void addStories(Dashbook dashbook) {
           'matching parent size',
           (ctx) => Container(color: Colors.blue[300]),
         );
-
 }
