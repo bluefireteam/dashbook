@@ -28,7 +28,7 @@ class DashbookContext {
   BoxConstraints? constraints;
   Map<String, Property> properties = {};
 
-  String? textProperty(String name, String defaultValue) {
+  String textProperty(String name, String defaultValue) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
@@ -39,7 +39,7 @@ class DashbookContext {
     }
   }
 
-  double? numberProperty(String name, double defaultValue) {
+  double numberProperty(String name, double defaultValue) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
@@ -50,7 +50,7 @@ class DashbookContext {
     }
   }
 
-  bool? boolProperty(String name, bool defaultValue) {
+  bool boolProperty(String name, bool defaultValue) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
@@ -61,7 +61,7 @@ class DashbookContext {
     }
   }
 
-  Color? colorProperty(String name, Color defaultValue) {
+  Color colorProperty(String name, Color defaultValue) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
@@ -72,7 +72,7 @@ class DashbookContext {
     }
   }
 
-  T? listProperty<T>(String name, T defaultValue, List<T> list) {
+  T listProperty<T>(String name, T defaultValue, List<T> list) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
@@ -83,7 +83,7 @@ class DashbookContext {
     }
   }
 
-  EdgeInsets? edgeInsetsProperty(String name, EdgeInsets defaultValue) {
+  EdgeInsets edgeInsetsProperty(String name, EdgeInsets defaultValue) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
@@ -94,7 +94,7 @@ class DashbookContext {
     }
   }
 
-  BorderRadius? borderRadiusProperty(String name, BorderRadius defaultValue) {
+  BorderRadius borderRadiusProperty(String name, BorderRadius defaultValue) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
