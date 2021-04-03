@@ -1,5 +1,6 @@
 ## [next]
  - Fixing null theme
+ - Scroll and expansion tiles state are now persisted when the stories list is closed
 
 ## [0.1.0]
  - Null safety support
