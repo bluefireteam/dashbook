@@ -26,12 +26,14 @@ class StoriesList extends StatelessWidget {
       ),
       child: SideBarPanel(
         title: 'Stories',
+        scrollViewKey: PageStorageKey('stories_list'),
         onCancel: onCancel,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             for (Story story in stories)
               ExpansionTile(
+                key: PageStorageKey('story_${story.name}'),
                 title: Text(
                   story.name,
                   style: TextStyle(

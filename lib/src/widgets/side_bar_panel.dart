@@ -7,11 +7,13 @@ class SideBarPanel extends StatelessWidget {
   final String title;
   final Widget child;
   final VoidCallback? onCancel;
+  final PageStorageKey? scrollViewKey;
 
   SideBarPanel({
     required this.title,
     required this.child,
     this.onCancel,
+    this.scrollViewKey,
   });
 
   @override
@@ -25,6 +27,7 @@ class SideBarPanel extends StatelessWidget {
         children: [
           Positioned.fill(
             child: SingleChildScrollView(
+              key: scrollViewKey,
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Column(
