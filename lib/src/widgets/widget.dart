@@ -1,6 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
+import '../platform_utils/platform_utils.dart';
 import './properties_container.dart';
 import './stories_list.dart';
 import './icon.dart';
@@ -108,7 +111,11 @@ class _DashbookState extends State<Dashbook> {
           multiTheme.themes.values.first;
     }
 
-    if (widget.stories.isNotEmpty) {
+    final initialChapter = PlatformUtils.getInitialChapter(widget.stories);
+
+    if (initialChapter != null) {
+      _currentChapter = initialChapter;
+    } else if (widget.stories.isNotEmpty) {
       final story = widget.stories.first;
 
       if (story.chapters.isNotEmpty) {
@@ -134,8 +141,8 @@ class _DashbookState extends State<Dashbook> {
       navigatorKey: widget.navigatorKey,
       title: widget.title,
       theme: _currentTheme,
-      routes: {
-        '/': (BuildContext context) {
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(builder: (context) {
           final chapterWidget = _currentChapter?.widget();
           return Scaffold(
             body: SafeArea(
@@ -214,6 +221,20 @@ class _DashbookState extends State<Dashbook> {
                               );
                             },
                           ),
+                        if (kIsWeb && _currentChapter != null)
+                          DashbookIcon(
+                            tooltip: 'Share this example',
+                            icon: Icons.share,
+                            onClick: () {
+                              final url =
+                                  PlatformUtils.getChapterUrl(_currentChapter!);
+                              Clipboard.setData(ClipboardData(text: url));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text("Link copied to your clipboard"),
+                              ));
+                            },
+                          ),
                       ],
                     ),
                   ),
@@ -263,7 +284,7 @@ class _DashbookState extends State<Dashbook> {
               ),
             ),
           );
-        },
+        });
       },
     );
   }
