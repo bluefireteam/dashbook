@@ -149,5 +149,5 @@ class Chapter {
     return story._decorator?.decorate(w) ?? w;
   }
 
-  String get id => "${story.name}\$$name";
+  String get id => "${story.name}_$name";
 }
