@@ -9,6 +9,7 @@ import './stories_list.dart';
 import './icon.dart';
 import './helpers.dart';
 import '../story.dart';
+import './intructions_dialog.dart';
 
 class _DashbookDualTheme {
   final ThemeData light;
@@ -180,6 +181,19 @@ class _DashbookState extends State<Dashbook> {
                             onClick: () => setState(
                                 () => _currentView = CurrentView.PROPERTIES),
                           ),
+                        if (_currentChapter?.info != null)
+                          DashbookIcon(
+                              tooltip: 'Instructions',
+                              icon: Icons.info,
+                              onClick: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return InstructionsDialog(
+                                        instructions: _currentChapter!.info!,
+                                      );
+                                    });
+                              }),
                         if (_currentChapter?.codeLink != null)
                           DashbookIcon(
                             tooltip: 'See code',
