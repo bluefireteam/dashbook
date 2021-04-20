@@ -23,64 +23,92 @@ class PropertiesContainer extends StatefulWidget {
 class _PropertiesContainerState extends State<PropertiesContainer> {
   @override
   Widget build(BuildContext context) {
+    final List<Widget> children = [];
+
+    for (var entry in widget.currentChapter.ctx.properties.entries) {
+      // Check if this property is controlled by another one and if so
+      // we only add it to the list if the values matches
+      final controlProperty = entry.value.controlProperty;
+      if (controlProperty != null) {
+        final controlledByProperty =
+            widget.currentChapter.ctx.properties[controlProperty.key];
+        if (controlledByProperty != null) {
+          if (controlledByProperty.getValue() != controlProperty.value) {
+            continue;
+          }
+        }
+      }
+
+      final _propertyKey =
+          Key("${widget.currentChapter.id}#${entry.value.name}");
+      final _onChanged = (chapter) {
+        setState(() {});
+        widget.onPropertyChange();
+      };
+
+      if (entry.value is ListProperty) {
+        children.add(
+          p.ListPropertyWidget(
+            property: entry.value as ListProperty,
+            onChanged: _onChanged,
+            key: _propertyKey,
+          ),
+        );
+      } else if (entry.value is Property<String>) {
+        children.add(
+          p.TextProperty(
+            property: entry.value as Property<String>,
+            onChanged: _onChanged,
+            key: _propertyKey,
+          ),
+        );
+      } else if (entry.value is Property<double>) {
+        children.add(
+          p.NumberProperty(
+            property: entry.value as Property<double>,
+            onChanged: _onChanged,
+            key: _propertyKey,
+          ),
+        );
+      } else if (entry.value is Property<bool>) {
+        children.add(
+          p.BoolProperty(
+            property: entry.value as Property<bool>,
+            onChanged: _onChanged,
+            key: _propertyKey,
+          ),
+        );
+      } else if (entry.value is Property<Color>) {
+        children.add(
+          p.ColorProperty(
+            property: entry.value as Property<Color>,
+            onChanged: _onChanged,
+            key: _propertyKey,
+          ),
+        );
+      } else if (entry.value is Property<EdgeInsets>) {
+        children.add(
+          p.EdgeInsetsProperty(
+            property: entry.value as Property<EdgeInsets>,
+            onChanged: _onChanged,
+            key: _propertyKey,
+          ),
+        );
+      } else if (entry.value is Property<BorderRadius>) {
+        children.add(
+          p.BorderRadiusProperty(
+            property: entry.value as Property<BorderRadius>,
+            onChanged: _onChanged,
+            key: _propertyKey,
+          ),
+        );
+      }
+    }
     return SideBarPanel(
       title: 'Properties',
       onCancel: widget.onCancel,
       child: Column(
-        children: [
-          ...widget.currentChapter.ctx.properties.entries.map((entry) {
-            final _propertyKey =
-                Key("${widget.currentChapter.id}#${entry.value.name}");
-            final _onChanged = (chapter) {
-              setState(() {});
-              widget.onPropertyChange();
-            };
-            if (entry.value is ListProperty) {
-              return p.ListPropertyWidget(
-                property: entry.value as ListProperty,
-                onChanged: _onChanged,
-                key: _propertyKey,
-              );
-            } else if (entry.value is Property<String>) {
-              return p.TextProperty(
-                property: entry.value as Property<String>,
-                onChanged: _onChanged,
-                key: _propertyKey,
-              );
-            } else if (entry.value is Property<double>) {
-              return p.NumberProperty(
-                property: entry.value as Property<double>,
-                onChanged: _onChanged,
-                key: _propertyKey,
-              );
-            } else if (entry.value is Property<bool>) {
-              return p.BoolProperty(
-                property: entry.value as Property<bool>,
-                onChanged: _onChanged,
-                key: _propertyKey,
-              );
-            } else if (entry.value is Property<Color>) {
-              return p.ColorProperty(
-                property: entry.value as Property<Color>,
-                onChanged: _onChanged,
-                key: _propertyKey,
-              );
-            } else if (entry.value is Property<EdgeInsets>) {
-              return p.EdgeInsetsProperty(
-                property: entry.value as Property<EdgeInsets>,
-                onChanged: _onChanged,
-                key: _propertyKey,
-              );
-            } else if (entry.value is Property<BorderRadius>) {
-              return p.BorderRadiusProperty(
-                property: entry.value as Property<BorderRadius>,
-                onChanged: _onChanged,
-                key: _propertyKey,
-              );
-            }
-            return Container();
-          }),
-        ],
+        children: children,
       ),
     );
   }

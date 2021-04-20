@@ -115,6 +115,38 @@ final dashbook = Dashbook.multiTheme(
 );
 ```
 
+### Control properties
+
+Some more complex Widgets may feature several fields, that can lead to a very long list of properties which will in turn can create a confuse example.
+
+This can be improved by the use of control properties. This API allows a property to be show or hidden according to the value of another property.
+
+For example, let's imagine a Widget which can show both an information and an error message, controlled by a property called type, this widget also allows the user to customize both the error and information color, with control properties the error color property can be shown only when the type is error.
+
+Example:
+
+```dart
+dashbook.storiesOf('MessageCard').decorator(CenterDecorator()).add(
+    'default',
+    (ctx) => MessageCard(
+        message: ctx.textProperty('message', 'Some cool message'),
+        type: ctx.listProperty('type', MessageCardType.info, MessageCardType.values),
+        errorColor: ctx.colorProperty(
+            'errorColor',
+            const Color(0xFFCC6941),
+            // this property will only be shown when type is error
+            controlProperty: ControlProperty('type', MessageCardType.error),
+        ),
+        infoColor: ctx.colorProperty(
+            'infoColor',
+            const Color(0xFF5E89FF),
+            // this property will only be shown when type is info 
+            controlProperty: ControlProperty('type', MessageCardType.info),
+        ),
+    ),
+);
+```
+
 ### Example
 ![dashbook_13](https://user-images.githubusercontent.com/835641/109422625-1ac69800-79bb-11eb-8a08-62e9771a15e8.gif)
 

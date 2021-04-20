@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import './decorator.dart';
 
+class ControlProperty {
+  final String key;
+  final Object value;
+
+  ControlProperty(this.key, this.value);
+}
+
 class Property<T> {
   final String name;
 
@@ -8,7 +15,9 @@ class Property<T> {
 
   T? value;
 
-  Property(this.name, this.defaultValue);
+  final ControlProperty? controlProperty;
+
+  Property(this.name, this.defaultValue, {this.controlProperty});
 
   T getValue() => value ?? defaultValue;
 
@@ -19,14 +28,16 @@ class Property<T> {
 class ListProperty<T> extends Property<T> {
   final List<T> list;
 
-  ListProperty(String name, T defaultValue, this.list)
-      : super(name, defaultValue);
+  ListProperty(String name, T defaultValue, this.list,
+      {ControlProperty? controlProperty})
+      : super(name, defaultValue, controlProperty: controlProperty);
 }
 
 class DashbookContext {
   Map<String, Property> properties = {};
 
-  String textProperty(String name, String defaultValue) {
+  String textProperty(String name, String defaultValue,
+      {ControlProperty? controlProperty}) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
@@ -37,66 +48,78 @@ class DashbookContext {
     }
   }
 
-  double numberProperty(String name, double defaultValue) {
+  double numberProperty(String name, double defaultValue,
+      {ControlProperty? controlProperty}) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
-      final property = Property<double>(name, defaultValue);
+      final property = Property<double>(name, defaultValue,
+          controlProperty: controlProperty);
       properties[name] = property;
 
       return property.getValue();
     }
   }
 
-  bool boolProperty(String name, bool defaultValue) {
+  bool boolProperty(String name, bool defaultValue,
+      {ControlProperty? controlProperty}) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
-      final property = Property<bool>(name, defaultValue);
+      final property =
+          Property<bool>(name, defaultValue, controlProperty: controlProperty);
       properties[name] = property;
 
       return property.getValue();
     }
   }
 
-  Color colorProperty(String name, Color defaultValue) {
+  Color colorProperty(String name, Color defaultValue,
+      {ControlProperty? controlProperty}) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
-      final property = Property<Color>(name, defaultValue);
+      final property =
+          Property<Color>(name, defaultValue, controlProperty: controlProperty);
       properties[name] = property;
 
       return property.getValue();
     }
   }
 
-  T listProperty<T>(String name, T defaultValue, List<T> list) {
+  T listProperty<T>(String name, T defaultValue, List<T> list,
+      {ControlProperty? controlProperty}) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
-      final property = ListProperty<T>(name, defaultValue, list);
+      final property = ListProperty<T>(name, defaultValue, list,
+          controlProperty: controlProperty);
       properties[name] = property;
 
       return property.getValue();
     }
   }
 
-  EdgeInsets edgeInsetsProperty(String name, EdgeInsets defaultValue) {
+  EdgeInsets edgeInsetsProperty(String name, EdgeInsets defaultValue,
+      {ControlProperty? controlProperty}) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
-      final property = Property<EdgeInsets>(name, defaultValue);
+      final property = Property<EdgeInsets>(name, defaultValue,
+          controlProperty: controlProperty);
       properties[name] = property;
 
       return property.getValue();
     }
   }
 
-  BorderRadius borderRadiusProperty(String name, BorderRadius defaultValue) {
+  BorderRadius borderRadiusProperty(String name, BorderRadius defaultValue,
+      {ControlProperty? controlProperty}) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
-      final property = Property<BorderRadius>(name, defaultValue);
+      final property = Property<BorderRadius>(name, defaultValue,
+          controlProperty: controlProperty);
       properties[name] = property;
 
       return property.getValue();
