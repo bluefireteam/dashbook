@@ -1,3 +1,6 @@
+## [next]
+ - Adding info property to chapters
+
 ## [0.1.1]
  - Fixing null theme
  - Scroll and expansion tiles state are now persisted when the stories list is closed
