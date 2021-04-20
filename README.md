@@ -8,7 +8,6 @@ It currently supports both mobile and web, having a friendly layout built to wor
 
 Add the dependency to your `pubspec.yaml`
 
-
 ```
 dashbook: ^0.1.0
 ```
