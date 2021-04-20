@@ -1,3 +1,6 @@
+## [next]
+ - Large screens preview container share the space with the properties contaner for better visualization
+
 ## [0.1.1]
  - Fixing null theme
  - Scroll and expansion tiles state are now persisted when the stories list is closed

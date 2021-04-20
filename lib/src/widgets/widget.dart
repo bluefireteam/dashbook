@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 import '../platform_utils/platform_utils.dart';
+import './preview_container.dart';
 import './properties_container.dart';
 import './stories_list.dart';
 import './icon.dart';
@@ -149,23 +150,11 @@ class _DashbookState extends State<Dashbook> {
               child: Stack(
                 children: [
                   if (_currentChapter != null)
-                    Positioned.fill(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: !widget.usePreviewSafeArea
-                              ? null
-                              : Border(
-                                  left: BorderSide(
-                                      color: Theme.of(context).cardColor,
-                                      width: iconSize(context) * 2),
-                                  right: BorderSide(
-                                      color: Theme.of(context).cardColor,
-                                      width: iconSize(context) * 2),
-                                ),
-                        ),
-                        child: chapterWidget,
-                      ),
+                    PreviewContainer(
                       key: Key(_currentChapter!.id),
+                      child: chapterWidget!,
+                      usePreviewSafeArea: widget.usePreviewSafeArea,
+                      isPropertiesOpen: _currentView == CurrentView.PROPERTIES,
                     ),
                   Positioned(
                     right: 10,
