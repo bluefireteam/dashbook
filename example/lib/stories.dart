@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:dashbook/dashbook.dart';
 
+import './widgets/message_card.dart';
+
 void addStories(Dashbook dashbook) {
   dashbook.storiesOf('ElevatedButton').decorator(CenterDecorator()).add(
         'default',
@@ -65,4 +67,25 @@ void addStories(Dashbook dashbook) {
           'matching parent size',
           (ctx) => Container(color: Colors.blue[300]),
         );
+
+  dashbook.storiesOf('MessageCard').decorator(CenterDecorator()).add(
+        'default',
+        (ctx) => MessageCard(
+          message: ctx.textProperty('message', 'Some cool message'),
+          type: ctx.listProperty(
+              'type', MessageCardType.info, MessageCardType.values),
+          errorColor: ctx.colorProperty(
+            'errorColor',
+            const Color(0xFFCC6941),
+            visibilityControlProperty:
+                ControlProperty('type', MessageCardType.error),
+          ),
+          infoColor: ctx.colorProperty(
+            'infoColor',
+            const Color(0xFF5E89FF),
+            visibilityControlProperty:
+                ControlProperty('type', MessageCardType.info),
+          ),
+        ),
+      );
 }
