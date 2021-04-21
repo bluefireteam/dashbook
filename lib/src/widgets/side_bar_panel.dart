@@ -18,11 +18,9 @@ class SideBarPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final factor = isLargeScreen(context) ? 0.5 : 1;
     return Container(
       color: Theme.of(context).cardColor,
-      width: screenWidth * factor,
+      width: sideBarSize(context),
       child: Stack(
         children: [
           Positioned.fill(

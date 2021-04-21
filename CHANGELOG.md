@@ -1,5 +1,7 @@
 ## [next]
  - Adding control property to all properties
+ - Large screens preview container share the space with the properties contaner for better visualization
+ - Adding info property to chapters
 
 ## [0.1.1]
  - Fixing null theme
