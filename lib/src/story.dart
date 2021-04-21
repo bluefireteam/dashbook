@@ -15,9 +15,9 @@ class Property<T> {
 
   T? value;
 
-  final ControlProperty? controlProperty;
+  final ControlProperty? visibilityControlProperty;
 
-  Property(this.name, this.defaultValue, {this.controlProperty});
+  Property(this.name, this.defaultValue, {this.visibilityControlProperty});
 
   T getValue() => value ?? defaultValue;
 
@@ -28,20 +28,34 @@ class Property<T> {
 class ListProperty<T> extends Property<T> {
   final List<T> list;
 
-  ListProperty(String name, T defaultValue, this.list,
-      {ControlProperty? controlProperty})
-      : super(name, defaultValue, controlProperty: controlProperty);
+  ListProperty(
+    String name,
+    T defaultValue,
+    this.list, {
+    ControlProperty? visibilityControlProperty,
+  }) : super(
+          name,
+          defaultValue,
+          visibilityControlProperty: visibilityControlProperty,
+        );
 }
 
 class DashbookContext {
   Map<String, Property> properties = {};
 
-  String textProperty(String name, String defaultValue,
-      {ControlProperty? controlProperty}) {
+  String textProperty(
+    String name,
+    String defaultValue, {
+    ControlProperty? visibilityControlProperty,
+  }) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
-      final property = Property<String>(name, defaultValue);
+      final property = Property<String>(
+        name,
+        defaultValue,
+        visibilityControlProperty: visibilityControlProperty,
+      );
       properties[name] = property;
 
       return property.getValue();
@@ -49,12 +63,15 @@ class DashbookContext {
   }
 
   double numberProperty(String name, double defaultValue,
-      {ControlProperty? controlProperty}) {
+      {ControlProperty? visibilityControlProperty}) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
-      final property = Property<double>(name, defaultValue,
-          controlProperty: controlProperty);
+      final property = Property<double>(
+        name,
+        defaultValue,
+        visibilityControlProperty: visibilityControlProperty,
+      );
       properties[name] = property;
 
       return property.getValue();
@@ -62,12 +79,15 @@ class DashbookContext {
   }
 
   bool boolProperty(String name, bool defaultValue,
-      {ControlProperty? controlProperty}) {
+      {ControlProperty? visibilityControlProperty}) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
-      final property =
-          Property<bool>(name, defaultValue, controlProperty: controlProperty);
+      final property = Property<bool>(
+        name,
+        defaultValue,
+        visibilityControlProperty: visibilityControlProperty,
+      );
       properties[name] = property;
 
       return property.getValue();
@@ -75,12 +95,15 @@ class DashbookContext {
   }
 
   Color colorProperty(String name, Color defaultValue,
-      {ControlProperty? controlProperty}) {
+      {ControlProperty? visibilityControlProperty}) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
-      final property =
-          Property<Color>(name, defaultValue, controlProperty: controlProperty);
+      final property = Property<Color>(
+        name,
+        defaultValue,
+        visibilityControlProperty: visibilityControlProperty,
+      );
       properties[name] = property;
 
       return property.getValue();
@@ -88,12 +111,16 @@ class DashbookContext {
   }
 
   T listProperty<T>(String name, T defaultValue, List<T> list,
-      {ControlProperty? controlProperty}) {
+      {ControlProperty? visibilityControlProperty}) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
-      final property = ListProperty<T>(name, defaultValue, list,
-          controlProperty: controlProperty);
+      final property = ListProperty<T>(
+        name,
+        defaultValue,
+        list,
+        visibilityControlProperty: visibilityControlProperty,
+      );
       properties[name] = property;
 
       return property.getValue();
@@ -101,12 +128,15 @@ class DashbookContext {
   }
 
   EdgeInsets edgeInsetsProperty(String name, EdgeInsets defaultValue,
-      {ControlProperty? controlProperty}) {
+      {ControlProperty? visibilityControlProperty}) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
-      final property = Property<EdgeInsets>(name, defaultValue,
-          controlProperty: controlProperty);
+      final property = Property<EdgeInsets>(
+        name,
+        defaultValue,
+        visibilityControlProperty: visibilityControlProperty,
+      );
       properties[name] = property;
 
       return property.getValue();
@@ -114,12 +144,15 @@ class DashbookContext {
   }
 
   BorderRadius borderRadiusProperty(String name, BorderRadius defaultValue,
-      {ControlProperty? controlProperty}) {
+      {ControlProperty? visibilityControlProperty}) {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue();
     } else {
-      final property = Property<BorderRadius>(name, defaultValue,
-          controlProperty: controlProperty);
+      final property = Property<BorderRadius>(
+        name,
+        defaultValue,
+        visibilityControlProperty: visibilityControlProperty,
+      );
       properties[name] = property;
 
       return property.getValue();

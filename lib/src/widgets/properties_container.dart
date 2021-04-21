@@ -28,12 +28,13 @@ class _PropertiesContainerState extends State<PropertiesContainer> {
     for (var entry in widget.currentChapter.ctx.properties.entries) {
       // Check if this property is controlled by another one and if so
       // we only add it to the list if the values matches
-      final controlProperty = entry.value.controlProperty;
-      if (controlProperty != null) {
+      final visibilityControlProperty = entry.value.visibilityControlProperty;
+      if (visibilityControlProperty != null) {
         final controlledByProperty =
-            widget.currentChapter.ctx.properties[controlProperty.key];
+            widget.currentChapter.ctx.properties[visibilityControlProperty.key];
         if (controlledByProperty != null) {
-          if (controlledByProperty.getValue() != controlProperty.value) {
+          if (controlledByProperty.getValue() !=
+              visibilityControlProperty.value) {
             continue;
           }
         }

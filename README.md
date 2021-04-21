@@ -114,13 +114,13 @@ final dashbook = Dashbook.multiTheme(
 );
 ```
 
-### Control properties
+### Visibility control properties
 
 Some more complex Widgets may feature several fields, which can lead to a very long list of properties which will in turn can create a confusing example.
 
-This can be improved by the use of control properties. This API allows a property to be shown or hidden according to the value of another property.
+This can be improved by the use of visibility control properties. This API allows a property to be shown or hidden according to the value of another property.
 
-For example, let's imagine a Widget which can show both an information and an error message, controlled by a property called type, this widget also allows the user to customize both the error and information color, with control properties the error color property can be shown only when the type is error.
+For example, let's imagine a Widget which can show both an information and an error message, controlled by a property called type, this widget also allows the user to customize both the error and information color, with visibility control properties the error color property can be shown only when the type is error.
 
 Example:
 
@@ -134,13 +134,13 @@ dashbook.storiesOf('MessageCard').decorator(CenterDecorator()).add(
             'errorColor',
             const Color(0xFFCC6941),
             // this property will only be shown when type is error
-            controlProperty: ControlProperty('type', MessageCardType.error),
+            visibilityControlProperty: ControlProperty('type', MessageCardType.error),
         ),
         infoColor: ctx.colorProperty(
             'infoColor',
             const Color(0xFF5E89FF),
             // this property will only be shown when type is info 
-            controlProperty: ControlProperty('type', MessageCardType.info),
+            visibilityControlProperty: ControlProperty('type', MessageCardType.info),
         ),
     ),
 );
