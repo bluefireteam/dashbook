@@ -88,15 +88,14 @@ class StoriesList extends StatelessWidget {
                             ),
                             if (true)
                               Opacity(
-                                opacity: chapter.id == currentBookmark
-                                  ? 1
-                                  : 0.05,
+                                opacity:
+                                    chapter.id == currentBookmark ? 1 : 0.05,
                                 child: DashbookIcon(
                                   icon: Icons.bookmark,
                                   onClick: () => _pin(chapter),
                                   tooltip: chapter.id == currentBookmark
-                                    ? 'Remove this chapter'
-                                    : 'Bookmark this bookmark',
+                                      ? 'Remove this chapter'
+                                      : 'Bookmark this bookmark',
                                 ),
                               ),
                           ],

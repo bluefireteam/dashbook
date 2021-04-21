@@ -127,7 +127,8 @@ class _DashbookState extends State<Dashbook> {
 
     if (initialChapter == null) {
       if (preferences.bookmarkedChapter != null) {
-        initialChapter = findChapter(preferences.bookmarkedChapter!, widget.stories);
+        initialChapter =
+            findChapter(preferences.bookmarkedChapter!, widget.stories);
       } else if (widget.stories.isNotEmpty) {
         final story = widget.stories.first;
 
