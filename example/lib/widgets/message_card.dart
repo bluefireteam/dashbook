@@ -6,7 +6,7 @@ enum MessageCardType {
 }
 
 /// Naive widget to be an example of a little bit more
-/// complex widget that can contain different modes
+/// complex one with different types.
 class MessageCard extends StatelessWidget {
   final String message;
   final MessageCardType type;
