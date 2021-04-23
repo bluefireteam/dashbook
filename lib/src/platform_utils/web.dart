@@ -1,4 +1,5 @@
-import 'package:dashbook/dashbook.dart';
+import '../story.dart';
+import '../story_util.dart';
 
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
@@ -17,15 +18,8 @@ class PlatformUtils {
 
     if (hash.isNotEmpty) {
       final currentId = Uri.decodeComponent(hash.substring(2));
-      print(currentId);
 
-      for (var story in stories) {
-        for (var chapter in story.chapters) {
-          if (chapter.id == currentId) {
-            return chapter;
-          }
-        }
-      }
+      return findChapter(currentId, stories);
     }
     return null;
   }

@@ -10,7 +10,9 @@ import './stories_list.dart';
 import './icon.dart';
 import './helpers.dart';
 import '../story.dart';
+import '../story_util.dart';
 import './intructions_dialog.dart';
+import '../preferences.dart';
 
 class _DashbookDualTheme {
   final ThemeData light;
@@ -96,6 +98,8 @@ class _DashbookState extends State<Dashbook> {
   Chapter? _currentChapter;
   CurrentView? _currentView;
   ThemeData? _currentTheme;
+  late DashbookPreferences _preferences;
+  bool _loading = true;
 
   @override
   void initState() {
@@ -112,18 +116,33 @@ class _DashbookState extends State<Dashbook> {
       _currentTheme = multiTheme!.themes[multiTheme.initialTheme] ??
           multiTheme.themes.values.first;
     }
+    _finishLoading();
+  }
 
-    final initialChapter = PlatformUtils.getInitialChapter(widget.stories);
+  void _finishLoading() async {
+    final preferences = DashbookPreferences();
+    await preferences.load();
 
-    if (initialChapter != null) {
-      _currentChapter = initialChapter;
-    } else if (widget.stories.isNotEmpty) {
-      final story = widget.stories.first;
+    var initialChapter = PlatformUtils.getInitialChapter(widget.stories);
 
-      if (story.chapters.isNotEmpty) {
-        _currentChapter = story.chapters.first;
+    if (initialChapter == null) {
+      if (preferences.bookmarkedChapter != null) {
+        initialChapter =
+            findChapter(preferences.bookmarkedChapter!, widget.stories);
+      } else if (widget.stories.isNotEmpty) {
+        final story = widget.stories.first;
+
+        if (story.chapters.isNotEmpty) {
+          initialChapter = story.chapters.first;
+        }
       }
     }
+
+    setState(() {
+      _currentChapter = initialChapter;
+      _preferences = preferences;
+      _loading = false;
+    });
   }
 
   bool _hasProperties() => _currentChapter?.ctx.properties.isNotEmpty ?? false;
@@ -138,6 +157,10 @@ class _DashbookState extends State<Dashbook> {
 
   @override
   Widget build(BuildContext context) {
+    if (_loading) {
+      return Container();
+    }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: widget.navigatorKey,
@@ -260,6 +283,17 @@ class _DashbookState extends State<Dashbook> {
                       child: StoriesList(
                         stories: widget.stories,
                         selectedChapter: _currentChapter,
+                        currentBookmark: _preferences.bookmarkedChapter,
+                        onBookmarkChapter: (String bookmark) {
+                          setState(() {
+                            _preferences.bookmarkedChapter = bookmark;
+                          });
+                        },
+                        onClearBookmark: () {
+                          setState(() {
+                            _preferences.bookmarkedChapter = null;
+                          });
+                        },
                         onCancel: () => setState(() => _currentView = null),
                         onSelectChapter: (chapter) {
                           setState(() {
