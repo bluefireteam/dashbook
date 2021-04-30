@@ -1,5 +1,11 @@
 # Dashbook
 
+<p align="center">
+  <a href="https://flame-engine.org">
+    <img alt="flame" width="400px" src="https://raw.githubusercontent.com/erickzanardo/dashbook/main/media/dashbook-logo-typo.png">
+  </a>
+</p>
+
 Dashbook is a UI development tool for Flutter, it works as a development enviroment for the project widgets and also a showcase for common widgets on the app, it is heavly inspired by [Storybook](https://storybook.js.org/) library, so it should be very easy for people who has already used Storybook, to use Dashbook.
 
 It currently supports both mobile and web, having a friendly layout built to work nice on web and large resolutions.
@@ -9,7 +15,7 @@ It currently supports both mobile and web, having a friendly layout built to wor
 Add the dependency to your `pubspec.yaml`
 
 ```
-dashbook: ^0.1.0
+dashbook: ^0.1.2
 ```
 
 A `Dashbook` instance has a collection of the app widgets (Stories) and its variants (Chapters). Here you can see a very simple example of how to use it.
