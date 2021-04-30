@@ -1,7 +1,7 @@
 # Dashbook
 
 <p align="center">
-  <img alt="dashbook" width="400px" src="https://github.com/erickzanardo/dashbook/raw/main/media/dashbook-logo-typo.png">
+  <img alt="dashbook" width="600px" src="https://github.com/erickzanardo/dashbook/raw/main/media/dashbook-logo-typo.png">
 </p>
 
 Dashbook is a UI development tool for Flutter, it works as a development enviroment for the project widgets and also a showcase for common widgets on the app, it is heavly inspired by [Storybook](https://storybook.js.org/) library, so it should be very easy for people who has already used Storybook, to use Dashbook.
