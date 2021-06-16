@@ -1,0 +1,116 @@
+# Version 1.1
+
+# This is a basic workflow to help you get started with Actions
+
+name: Create or Update Jira Link
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on pull request events but only for the main branch
+  pull_request:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      # Get commit messages and store them to the environment variable
+      - name: Get Commit Message Tickets
+        run: |
+          MSG=$(git log origin/${{ github.event.pull_request.base.ref }}..)
+          echo "github.event.after: ${{ github.event.after }}"
+          echo "MSG: $MSG"
+          
+          PATTERN=DEV-[0-9]*
+          JIRA_ISSUES=""
+          for word in $MSG; do
+          if [[ $word =~ $PATTERN ]]; then
+            echo "found a match on $word"
+            JIRA_ISSUES+=" $BASH_REMATCH"
+          fi
+          done
+          
+          echo "JIRA_ISSUES: $JIRA_ISSUES"
+          echo "JIRA_ISSUES=${JIRA_ISSUES}" >> $GITHUB_ENV
+          
+      # Runs a set of commands using the runners shell
+      - name: "link-ticket"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          #  LINK PR TO JIRA TICKET #
+          #  Once this is in production, add personal access token to the repository with name JIRA_TOKEN
+          #  https://docs.github.com/en/actions/reference/encrypted-secrets
+          #  Example syntax for accessing secrets
+          #  https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsenv
+                    
+          echo "COMMIT_MESSAGES: ${{env.COMMIT_MESSAGES}}"
+          
+          BASE_URL=https://jira.alkami.com/rest/api/2
+          #BASE_URL=https://staging2.orb.alkamitech.com/rest/api/2
+          
+          #  Split the github ref to get the PR number
+          REF_ARRAY=($(echo $GITHUB_REF | tr '/' ' '))
+          LEN=${#REF_ARRAY[@]}
+          PR_NUM=${REF_ARRAY[LEN-2]}
+          echo Extracting PR number from #GITHUB_REF ... ${PR_NUM}
+          PR_URL=https://github.com/test_repo/pull/${PR_NUM}
+          echo "PR_URL: $PR_URL"
+          
+          #  Parse the Jira issue from the branch name by matching "DEV-"
+          #BRANCH=${GITHUB_HEAD_REF}
+          PATTERN=[a-zA-Z0-9,\.\_\-]+-[0-9]+
+          
+          echo "env.JIRA_ISSUES: ${{env.COMMIT_MESSAGES}}"
+          
+          for word in ${{env.JIRA_ISSUES}}; do
+          echo "Looking at word: $word"
+          if [[ $word =~ $PATTERN ]]; then
+          echo "found a match"
+          ISSUE=$BASH_REMATCH
+          echo Attempting to post link to issue: $ISSUE
+          
+          generate_post_data()
+          {
+          cat <<EOF
+              {
+              "globalId": "${ISSUE}_${PR_NUM}",
+              "object": {
+                  "url": "$PR_URL",
+                  "title": "PR #$PR_NUM",
+                  "summary": "Submitted by ${{ github.actor }}",
+                  "icon": {
+                      "url16x16": "https://cdn4.iconfinder.com/data/icons/iconsimple-logotypes/512/github-512.png",
+                      "title": "GitHub"
+                }
+            }
+          }
+          EOF
+          }
+          
+          JIRA_LINK_URL=$BASE_URL/issue/$ISSUE/remotelink
+          echo POSTING to $JIRA_LINK_URL
+          echo $(generate_post_data)
+          curl --location --request POST "$JIRA_LINK_URL" \
+          --header "Accept: application/json" \
+          --header "Content-Type: application/json" \
+          --header "Authorization: Bearer ${{ secrets.JIRA_TOKEN }}" \
+          --data "$(generate_post_data)"
+          
+          fi
+          done
+          
