@@ -1,3 +1,4 @@
+import 'package:dashbook/src/widgets/keys.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -188,6 +189,7 @@ class _DashbookState extends State<Dashbook> {
                       children: [
                         if (_hasProperties())
                           DashbookIcon(
+                            key: kPropertiesIcon,
                             tooltip: 'Properties panel',
                             icon: Icons.mode_edit,
                             onClick: () => setState(
