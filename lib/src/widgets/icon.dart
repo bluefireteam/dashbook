@@ -11,7 +11,8 @@ class DashbookIcon extends StatelessWidget {
     required this.icon,
     required this.onClick,
     required this.tooltip,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
