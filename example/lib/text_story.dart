@@ -92,10 +92,18 @@ Proin sit amet euismod ligula. Phasellus consectetur venenatis ipsum, in digniss
       )
       .add(
         'color text',
-        (_) => Text(
+        (ctx) => Text(
           "Text",
           style: TextStyle(
-            color: Color(0xFF0000FF),
+            color: ctx.optionsProperty(
+              'color',
+              Color(0xFF0000FF),
+              [
+                PropertyOption('Red', const Color(0xFFFF0000)),
+                PropertyOption('Green', const Color(0xFF00FF00)),
+                PropertyOption('Blue', const Color(0xFF0000FF)),
+              ],
+            ),
           ),
         ),
       );
