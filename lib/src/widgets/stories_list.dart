@@ -58,10 +58,10 @@ class _StoriesListState extends State<StoriesList> {
 
   @override
   void dispose() {
-    super.dispose();
     _filterTextController.dispose();
 
     widget.onUpdateFilter(_filter);
+    super.dispose();
   }
 
   void _pin(Chapter chapter) {
