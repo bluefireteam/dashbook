@@ -8,12 +8,14 @@ class SideBarPanel extends StatelessWidget {
   final Widget child;
   final VoidCallback? onCancel;
   final PageStorageKey? scrollViewKey;
+  final Key? onCloseKey;
 
   SideBarPanel({
     required this.title,
     required this.child,
     this.onCancel,
     this.scrollViewKey,
+    this.onCloseKey,
   });
 
   @override
@@ -47,6 +49,7 @@ class SideBarPanel extends StatelessWidget {
             right: 15,
             top: 15,
             child: DashbookIcon(
+              key: onCloseKey,
               tooltip: 'Close',
               icon: Icons.clear,
               onClick: () => onCancel?.call(),
