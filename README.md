@@ -13,7 +13,7 @@ It currently supports both mobile and web, having a friendly layout built to wor
 Add the dependency to your `pubspec.yaml`
 
 ```
-dashbook: ^0.1.2
+dashbook: ^0.1.3
 ```
 
 A `Dashbook` instance has a collection of the app widgets (Stories) and its variants (Chapters). Here you can see a very simple example of how to use it.
