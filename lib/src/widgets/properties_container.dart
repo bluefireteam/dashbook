@@ -55,6 +55,14 @@ class _PropertiesContainerState extends State<PropertiesContainer> {
             key: _propertyKey,
           ),
         );
+      } else if (entry.value is OptionsProperty) {
+        children.add(
+          p.OptionsPropertyWidget(
+            property: entry.value as OptionsProperty,
+            onChanged: _onChanged,
+            key: _propertyKey,
+          ),
+        );
       } else if (entry.value is Property<String>) {
         children.add(
           p.TextProperty(

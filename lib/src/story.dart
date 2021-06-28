@@ -40,6 +40,33 @@ class ListProperty<T> extends Property<T> {
         );
 }
 
+class OptionsProperty<T> extends Property<T> {
+  final List<PropertyOption<T>> list;
+
+  OptionsProperty(
+    String name,
+    T defaultValue,
+    this.list, {
+    ControlProperty? visibilityControlProperty,
+  }) : super(
+          name,
+          defaultValue,
+          visibilityControlProperty: visibilityControlProperty,
+        );
+}
+
+class PropertyOption<T> {
+  final String label;
+  final T value;
+
+  PropertyOption(this.label, this.value);
+
+  @override
+  String toString() {
+    return label.toString();
+  }
+}
+
 class DashbookContext {
   Map<String, Property> properties = {};
 
@@ -116,6 +143,24 @@ class DashbookContext {
       return properties[name]!.getValue();
     } else {
       final property = ListProperty<T>(
+        name,
+        defaultValue,
+        list,
+        visibilityControlProperty: visibilityControlProperty,
+      );
+      properties[name] = property;
+
+      return property.getValue();
+    }
+  }
+
+  T optionsProperty<T>(
+      String name, T defaultValue, List<PropertyOption<T>> list,
+      {ControlProperty? visibilityControlProperty}) {
+    if (properties.containsKey(name)) {
+      return properties[name]!.getValue();
+    } else {
+      final property = OptionsProperty<T>(
         name,
         defaultValue,
         list,

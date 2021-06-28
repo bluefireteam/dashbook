@@ -1,3 +1,6 @@
+## [0.1.3]
+ - Added Options Property
+
 ## [0.1.2]
  - Adding control property to all properties
  - Large screens preview container share the space with the properties contaner for better visualization
