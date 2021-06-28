@@ -1,5 +1,6 @@
 ## [0.1.3]
  - Added Options Property
+ - Added Stories/Chapter Filter
 
 ## [0.1.2]
  - Adding control property to all properties

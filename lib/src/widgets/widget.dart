@@ -101,6 +101,7 @@ class _DashbookState extends State<Dashbook> {
   ThemeData? _currentTheme;
   late DashbookPreferences _preferences;
   bool _loading = true;
+  String _storiesFilter = '';
 
   @override
   void initState() {
@@ -271,6 +272,7 @@ class _DashbookState extends State<Dashbook> {
                       top: 5,
                       left: 10,
                       child: DashbookIcon(
+                        key: kStoriesIcon,
                         tooltip: 'Navigator',
                         icon: Icons.menu,
                         onClick: () =>
@@ -286,6 +288,10 @@ class _DashbookState extends State<Dashbook> {
                         stories: widget.stories,
                         selectedChapter: _currentChapter,
                         currentBookmark: _preferences.bookmarkedChapter,
+                        currentFilter: _storiesFilter,
+                        onUpdateFilter: (value) {
+                          _storiesFilter = value;
+                        },
                         onBookmarkChapter: (String bookmark) {
                           setState(() {
                             _preferences.bookmarkedChapter = bookmark;
