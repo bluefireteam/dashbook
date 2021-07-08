@@ -77,7 +77,7 @@ jobs:
           LEN=${#REF_ARRAY[@]}
           PR_NUM=${REF_ARRAY[LEN-2]}
           echo Extracting PR number from #GITHUB_REF ... ${PR_NUM}
-          PR_URL=https://github.com/test_repo/pull/${PR_NUM}
+          PR_URL=https://github.com/${{ github.repository }}/pull/${PR_NUM}
           echo "PR_URL: $PR_URL"
           
           #  Parse the Jira issue from the branch name by matching "DEV-"
