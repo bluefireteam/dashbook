@@ -1,4 +1,4 @@
-# Version 1.1
+# Version 1.2
 
 # This is a basic workflow to help you get started with Actions
 
@@ -43,7 +43,13 @@ jobs:
             JIRA_ISSUES+=" $BASH_REMATCH"
           fi
           done
+
+          if [ -z "$JIRA_ISSUES" ]; then
+            echo "ERROR: No Jira issue found.  You must include a Jira issue in the comments of your commit."
+            exit 1
+          fi
           
+          echo "JIRALINK"
           echo "JIRA_ISSUES: $JIRA_ISSUES"
           echo "JIRA_ISSUES=${JIRA_ISSUES}" >> $GITHUB_ENV
           
@@ -60,6 +66,9 @@ jobs:
                     
           echo "COMMIT_MESSAGES: ${{env.COMMIT_MESSAGES}}"
           
+          echo "Target Branch: ${{ github.event.pull_request.base.ref }}"
+          echo "Source Branch: ${{ github.event.pull_request.head.ref }}"
+          
           BASE_URL=https://jira.alkami.com/rest/api/2
           #BASE_URL=https://staging2.orb.alkamitech.com/rest/api/2
           
@@ -68,7 +77,7 @@ jobs:
           LEN=${#REF_ARRAY[@]}
           PR_NUM=${REF_ARRAY[LEN-2]}
           echo Extracting PR number from #GITHUB_REF ... ${PR_NUM}
-          PR_URL=https://github.com/test_repo/pull/${PR_NUM}
+          PR_URL=https://github.com/${{ github.repository }}/pull/${PR_NUM}
           echo "PR_URL: $PR_URL"
           
           #  Parse the Jira issue from the branch name by matching "DEV-"
@@ -83,6 +92,8 @@ jobs:
           echo "found a match"
           ISSUE=$BASH_REMATCH
           echo Attempting to post link to issue: $ISSUE
+
+          echo Repository name: $GITHUB_REPOSITORY
           
           generate_post_data()
           {
@@ -91,7 +102,7 @@ jobs:
               "globalId": "${ISSUE}_${PR_NUM}",
               "object": {
                   "url": "$PR_URL",
-                  "title": "PR #$PR_NUM",
+                  "title": "PR #$PR_NUM in $GITHUB_REPOSITORY",
                   "summary": "Submitted by ${{ github.actor }}",
                   "icon": {
                       "url16x16": "https://cdn4.iconfinder.com/data/icons/iconsimple-logotypes/512/github-512.png",
@@ -113,4 +124,3 @@ jobs:
           
           fi
           done
-          
