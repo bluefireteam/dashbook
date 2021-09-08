@@ -1,3 +1,6 @@
+## [0.1.4]
+ - Adding support to Flutter 2.5
+
 ## [0.1.3]
  - Added Options Property
  - Added Stories/Chapter Filter

@@ -75,3 +75,5 @@ build/
 example/.flutter-plugins-dependencies
 
 coverage
+
+.fvm
