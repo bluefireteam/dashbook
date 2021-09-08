@@ -8,6 +8,8 @@ Dashbook is a UI development tool for Flutter, it works as a development envirom
 
 It currently supports both mobile and web, having a friendly layout built to work nice on web and large resolutions.
 
+Have any questions or ideas? Join our [Discord](https://discord.gg/FCHGNZ4yxF).
+
 ## How to use
 
 Add the dependency to your `pubspec.yaml`
