@@ -5,12 +5,14 @@ class DevicePreview extends StatelessWidget {
   final Widget child;
   final DeviceInfo deviceInfo;
   final Orientation deviceOrientation;
+  final bool showDeviceFrame;
 
   const DevicePreview({
     Key? key,
     required this.child,
     required this.deviceInfo,
     required this.deviceOrientation,
+    required this.showDeviceFrame,
   }) : super(key: key);
 
   @override
@@ -29,7 +31,7 @@ class DevicePreview extends StatelessWidget {
         child: DeviceFrame(
           orientation: deviceOrientation,
           device: deviceInfo,
-          isFrameVisible: true,
+          isFrameVisible: showDeviceFrame,
           screen: MediaQuery(
             data: mediaQuery,
             child: Container(

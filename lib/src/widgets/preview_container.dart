@@ -12,12 +12,14 @@ class PreviewContainer extends StatelessWidget {
   final Key key;
   final DeviceInfo? deviceInfo;
   final Orientation? deviceOrientation;
+  final bool showDeviceFrame;
 
   PreviewContainer({
     required this.key,
     required this.child,
     required this.usePreviewSafeArea,
     required this.isPropertiesOpen,
+    required this.showDeviceFrame,
     this.deviceInfo,
     this.deviceOrientation,
   }) : super(key: key);
@@ -31,6 +33,7 @@ class PreviewContainer extends StatelessWidget {
       right: (kIsWeb && isPropertiesOpen) ? sideBarSize(context) : 0,
       child: deviceInfo != null
           ? DevicePreview(
+              showDeviceFrame: showDeviceFrame,
               deviceInfo: deviceInfo!,
               deviceOrientation: deviceOrientation!,
               child: Container(

@@ -106,6 +106,7 @@ class _DashbookState extends State<Dashbook> {
   String _storiesFilter = '';
   DeviceInfo? deviceInfo;
   Orientation deviceOrientation = Orientation.portrait;
+  bool showDeviceFrame = true;
 
   @override
   void initState() {
@@ -187,6 +188,7 @@ class _DashbookState extends State<Dashbook> {
                       isPropertiesOpen: _currentView == CurrentView.PROPERTIES,
                       deviceInfo: deviceInfo,
                       deviceOrientation: deviceOrientation,
+                      showDeviceFrame: showDeviceFrame,
                     ),
                   Positioned(
                     right: 10,
@@ -286,6 +288,7 @@ class _DashbookState extends State<Dashbook> {
                             if (deviceInfo == null) {
                               setState(() =>
                                   deviceOrientation = Orientation.portrait);
+                              setState(() => showDeviceFrame = true);
                             }
                           },
                         ),
@@ -297,6 +300,13 @@ class _DashbookState extends State<Dashbook> {
                                 deviceOrientation == Orientation.portrait
                                     ? Orientation.landscape
                                     : Orientation.portrait),
+                          ),
+                        if (deviceInfo != null)
+                          DashbookIcon(
+                            tooltip: 'Device frame',
+                            icon: Icons.mobile_off_outlined,
+                            onClick: () => setState(
+                                () => showDeviceFrame = !showDeviceFrame),
                           ),
                       ],
                     ),
