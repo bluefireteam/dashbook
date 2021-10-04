@@ -1,4 +1,6 @@
+import 'package:dashbook/src/widgets/device_dialog.dart';
 import 'package:dashbook/src/widgets/keys.dart';
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -102,6 +104,7 @@ class _DashbookState extends State<Dashbook> {
   late DashbookPreferences _preferences;
   bool _loading = true;
   String _storiesFilter = '';
+  DeviceInfo? deviceInfo;
 
   @override
   void initState() {
@@ -181,6 +184,7 @@ class _DashbookState extends State<Dashbook> {
                       child: chapterWidget!,
                       usePreviewSafeArea: widget.usePreviewSafeArea,
                       isPropertiesOpen: _currentView == CurrentView.PROPERTIES,
+                      deviceInfo: deviceInfo,
                     ),
                   Positioned(
                     right: 10,
@@ -264,6 +268,20 @@ class _DashbookState extends State<Dashbook> {
                               ));
                             },
                           ),
+                        DashbookIcon(
+                          tooltip: 'Device preview',
+                          icon: Icons.phone_android_outlined,
+                          onClick: () async {
+                            final selectedDevice = await showDialog(
+                              context: context,
+                              builder: (_) => DeviceDialog(
+                                currentSelection: deviceInfo,
+                              ),
+                            );
+
+                            setState(() => deviceInfo = selectedDevice);
+                          },
+                        ),
                       ],
                     ),
                   ),
