@@ -105,6 +105,7 @@ class _DashbookState extends State<Dashbook> {
   bool _loading = true;
   String _storiesFilter = '';
   DeviceInfo? deviceInfo;
+  Orientation deviceOrientation = Orientation.portrait;
 
   @override
   void initState() {
@@ -185,6 +186,7 @@ class _DashbookState extends State<Dashbook> {
                       usePreviewSafeArea: widget.usePreviewSafeArea,
                       isPropertiesOpen: _currentView == CurrentView.PROPERTIES,
                       deviceInfo: deviceInfo,
+                      deviceOrientation: deviceOrientation,
                     ),
                   Positioned(
                     right: 10,
@@ -280,8 +282,22 @@ class _DashbookState extends State<Dashbook> {
                             );
 
                             setState(() => deviceInfo = selectedDevice);
+
+                            if (deviceInfo == null) {
+                              setState(() =>
+                                  deviceOrientation = Orientation.portrait);
+                            }
                           },
                         ),
+                        if (deviceInfo != null)
+                          DashbookIcon(
+                            tooltip: 'Orientation',
+                            icon: Icons.screen_rotation_outlined,
+                            onClick: () => setState(() => deviceOrientation =
+                                deviceOrientation == Orientation.portrait
+                                    ? Orientation.landscape
+                                    : Orientation.portrait),
+                          ),
                       ],
                     ),
                   ),

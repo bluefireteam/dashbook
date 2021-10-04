@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class DevicePreview extends StatelessWidget {
   final Widget child;
   final DeviceInfo deviceInfo;
+  final Orientation deviceOrientation;
 
   const DevicePreview({
     Key? key,
     required this.child,
     required this.deviceInfo,
+    required this.deviceOrientation,
   }) : super(key: key);
 
   @override
@@ -25,6 +27,7 @@ class DevicePreview extends StatelessWidget {
       child: FittedBox(
         fit: BoxFit.contain,
         child: DeviceFrame(
+          orientation: deviceOrientation,
           device: deviceInfo,
           isFrameVisible: true,
           screen: MediaQuery(
@@ -41,12 +44,18 @@ class DevicePreview extends StatelessWidget {
 
   MediaQueryData _mediaQueryData(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final padding = deviceInfo.safeAreas;
+    final isRotated = DeviceFrame.isRotated(deviceInfo, deviceOrientation);
+
+    final padding = isRotated
+        ? (deviceInfo.rotatedSafeAreas ?? deviceInfo.safeAreas)
+        : deviceInfo.safeAreas;
 
     final screenSize = deviceInfo.screenSize;
+    final width = isRotated ? screenSize.height : screenSize.width;
+    final height = isRotated ? screenSize.width : screenSize.height;
 
     return mediaQuery.copyWith(
-      size: Size(screenSize.width, screenSize.height),
+      size: Size(width, height),
       padding: padding,
       viewInsets: EdgeInsets.zero,
       viewPadding: padding,

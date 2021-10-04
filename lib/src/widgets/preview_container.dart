@@ -11,6 +11,7 @@ class PreviewContainer extends StatelessWidget {
   final bool isPropertiesOpen;
   final Key key;
   final DeviceInfo? deviceInfo;
+  final Orientation? deviceOrientation;
 
   PreviewContainer({
     required this.key,
@@ -18,6 +19,7 @@ class PreviewContainer extends StatelessWidget {
     required this.usePreviewSafeArea,
     required this.isPropertiesOpen,
     this.deviceInfo,
+    this.deviceOrientation,
   }) : super(key: key);
 
   @override
@@ -30,6 +32,7 @@ class PreviewContainer extends StatelessWidget {
       child: deviceInfo != null
           ? DevicePreview(
               deviceInfo: deviceInfo!,
+              deviceOrientation: deviceOrientation!,
               child: Container(
                 decoration: BoxDecoration(
                   border: usePreviewSafeArea
