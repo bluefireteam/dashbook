@@ -287,8 +287,9 @@ class _DashbookState extends State<Dashbook> {
                             setState(() => deviceInfo = selectedDevice);
 
                             if (deviceInfo == null) {
-                              setState(() =>
-                                  deviceOrientation = Orientation.portrait);
+                              setState(() {
+                                  deviceOrientation = Orientation.portrait;
+                              });
                               setState(() => showDeviceFrame = true);
                             }
                           },

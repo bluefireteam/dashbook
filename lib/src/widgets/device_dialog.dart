@@ -50,7 +50,7 @@ class _DeviceDialogState extends State<DeviceDialog> {
               }).toList(),
               onChanged: (device) => setState(() => _selectedDevice = device),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -61,7 +61,7 @@ class _DeviceDialogState extends State<DeviceDialog> {
                   onPressed: () => Navigator.of(context).pop(_selectedDevice),
                   child: Text('Select'),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
