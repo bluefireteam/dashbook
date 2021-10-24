@@ -273,6 +273,7 @@ class _DashbookState extends State<Dashbook> {
                             },
                           ),
                         DashbookIcon(
+                          key: kDevicePreviewIcon,
                           tooltip: 'Device preview',
                           icon: Icons.phone_android_outlined,
                           onClick: () async {
@@ -294,6 +295,7 @@ class _DashbookState extends State<Dashbook> {
                         ),
                         if (deviceInfo != null)
                           DashbookIcon(
+                            key: kRotateIcon,
                             tooltip: 'Orientation',
                             icon: Icons.screen_rotation_outlined,
                             onClick: () => setState(() => deviceOrientation =
@@ -303,6 +305,7 @@ class _DashbookState extends State<Dashbook> {
                           ),
                         if (deviceInfo != null)
                           DashbookIcon(
+                            key: kHideFrameIcon,
                             tooltip: 'Device frame',
                             icon: Icons.mobile_off_outlined,
                             onClick: () => setState(
