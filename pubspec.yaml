@@ -18,3 +18,4 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mockingjay: ^0.1.1
