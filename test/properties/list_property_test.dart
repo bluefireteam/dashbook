@@ -8,15 +8,14 @@ import '../helpers.dart';
 Dashbook _getDashbook() {
   final dashbook = Dashbook();
 
-  dashbook
-    ..storiesOf('List').add('default', (ctx) {
-      return Text(
-        'Current: ${ctx.listProperty('listValue', 'ValueX', [
-              'ValueX',
-              'ValueY'
-            ])}',
-      );
-    });
+  dashbook.storiesOf('List').add('default', (ctx) {
+    return Text(
+      'Current: ${ctx.listProperty('listValue', 'ValueX', [
+            'ValueX',
+            'ValueY'
+          ])}',
+    );
+  });
 
   return dashbook;
 }

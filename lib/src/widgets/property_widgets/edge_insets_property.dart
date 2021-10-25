@@ -1,14 +1,14 @@
+import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/helpers.dart';
+import 'package:dashbook/src/widgets/property_widgets/widgets/property_4_integer_form.dart';
+import 'package:dashbook/src/widgets/property_widgets/widgets/property_scaffold.dart';
 import 'package:flutter/material.dart';
-import './widgets/property_scaffold.dart';
-import './widgets/property_4_integer_form.dart';
-import '../helpers.dart';
-import '../../story.dart';
 
 class EdgeInsetsProperty extends StatefulWidget {
   final Property<EdgeInsets> property;
   final PropertyChanged onChanged;
 
-  EdgeInsetsProperty({
+  const EdgeInsetsProperty({
     required this.property,
     required this.onChanged,
     Key? key,
@@ -16,6 +16,7 @@ class EdgeInsetsProperty extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() =>
+      // ignore: no_logic_in_create_state
       _EdgeInsetsPropertyState(property.getValue());
 }
 
@@ -24,11 +25,17 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
 
   _EdgeInsetsPropertyState(this._currentEdgeinsets);
 
-  EdgeInsets? _parseEdgeInsetValues(bool toAllSides, String uniqueValue,
-      String value1, String value2, String value3, String value4) {
+  EdgeInsets? _parseEdgeInsetValues(
+    bool toAllSides,
+    String uniqueValue,
+    String value1,
+    String value2,
+    String value3,
+    String value4,
+  ) {
     try {
       if (toAllSides) {
-        final double? value = double.tryParse(uniqueValue);
+        final value = double.tryParse(uniqueValue);
 
         if (value == null) {
           return null;
@@ -36,10 +43,10 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
 
         return EdgeInsets.all(value);
       } else {
-        final double? left = double.tryParse(value1);
-        final double? top = double.tryParse(value2);
-        final double? right = double.tryParse(value3);
-        final double? bottom = double.tryParse(value4);
+        final left = double.tryParse(value1);
+        final top = double.tryParse(value2);
+        final right = double.tryParse(value3);
+        final bottom = double.tryParse(value4);
 
         if (left == null || top == null || right == null || bottom == null) {
           return null;
@@ -52,10 +59,22 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
     }
   }
 
-  bool _confirmEdition(bool toAllSides, String uniqueValue, String value1,
-      String value2, String value3, String value4) {
-    EdgeInsets? edgetInsetsValue = _parseEdgeInsetValues(
-        toAllSides, uniqueValue, value1, value2, value3, value4);
+  bool _confirmEdition(
+    bool toAllSides,
+    String uniqueValue,
+    String value1,
+    String value2,
+    String value3,
+    String value4,
+  ) {
+    final edgetInsetsValue = _parseEdgeInsetValues(
+      toAllSides,
+      uniqueValue,
+      value1,
+      value2,
+      value3,
+      value4,
+    );
 
     if (edgetInsetsValue == null) {
       return false;
@@ -65,9 +84,9 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
     }
   }
 
-  Future<dynamic> show() => showDialog(
-      context: context,
-      builder: (_) => FourIntegerForm(
+  Future<void> show() => showDialog<void>(
+        context: context,
+        builder: (_) => FourIntegerForm(
           _confirmEdition,
           _currentEdgeinsets.left.toInt(),
           _currentEdgeinsets.top.toInt(),
@@ -76,7 +95,9 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
           'Left',
           'Top',
           'Right',
-          'Bottom'));
+          'Bottom',
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -86,23 +107,32 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
       label: widget.property.name,
       child: Row(
         children: [
-          isLargeScreen(context)
-              ? Text(
-                  'Left: ${value.left}, Top: ${value.top}, Right: ${value.right}, Bottom: ${value.bottom}')
-              : Text(
-                  'L: ${value.left.toInt()}, T: ${value.top.toInt()}, R: ${value.right.toInt()}, B: ${value.bottom.toInt()}'),
-          SizedBox(
+          if (isLargeScreen(context))
+            Text(
+              'Left: ${value.left}, '
+              'Top: ${value.top}, '
+              'Right: ${value.right}, '
+              'Bottom: ${value.bottom}',
+            )
+          else
+            Text(
+              'L: ${value.left.toInt()}, '
+              'T: ${value.top.toInt()}, '
+              'R: ${value.right.toInt()}, '
+              'B: ${value.bottom.toInt()}',
+            ),
+          const SizedBox(
             width: 5,
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.edit,
-              size: 20.0,
+              size: 20,
             ),
             onPressed: () async {
               await show();
               widget.property.value = _currentEdgeinsets;
-              widget.onChanged(widget.property);
+              widget.onChanged();
             },
           ),
         ],

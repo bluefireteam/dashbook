@@ -1,7 +1,6 @@
+import 'package:dashbook/src/widgets/helpers.dart';
+import 'package:dashbook/src/widgets/icon.dart';
 import 'package:flutter/material.dart';
-
-import './icon.dart';
-import './helpers.dart';
 
 class SideBarPanel extends StatelessWidget {
   final String title;
@@ -10,13 +9,14 @@ class SideBarPanel extends StatelessWidget {
   final PageStorageKey? scrollViewKey;
   final Key? onCloseKey;
 
-  SideBarPanel({
+  const SideBarPanel({
+    Key? key,
     required this.title,
     required this.child,
     this.onCancel,
     this.scrollViewKey,
     this.onCloseKey,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +29,18 @@ class SideBarPanel extends StatelessWidget {
             child: SingleChildScrollView(
               key: scrollViewKey,
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
                       title,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                      ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     child,
                   ],
                 ),

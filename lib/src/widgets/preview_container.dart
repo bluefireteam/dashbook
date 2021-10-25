@@ -1,21 +1,19 @@
 import 'package:dashbook/src/widgets/device_preview.dart';
+import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import './helpers.dart';
 
 class PreviewContainer extends StatelessWidget {
   final bool usePreviewSafeArea;
   final Widget child;
   final bool isPropertiesOpen;
-  final Key key;
   final DeviceInfo? deviceInfo;
   final Orientation? deviceOrientation;
   final bool showDeviceFrame;
 
-  PreviewContainer({
-    required this.key,
+  const PreviewContainer({
+    required Key key,
     required this.child,
     required this.usePreviewSafeArea,
     required this.isPropertiesOpen,
@@ -41,11 +39,13 @@ class PreviewContainer extends StatelessWidget {
                   border: usePreviewSafeArea
                       ? Border(
                           left: BorderSide(
-                              color: Theme.of(context).cardColor,
-                              width: iconSize(context) * 2),
+                            color: Theme.of(context).cardColor,
+                            width: iconSize(context) * 2,
+                          ),
                           right: BorderSide(
-                              color: Theme.of(context).cardColor,
-                              width: iconSize(context) * 2),
+                            color: Theme.of(context).cardColor,
+                            width: iconSize(context) * 2,
+                          ),
                         )
                       : null,
                 ),

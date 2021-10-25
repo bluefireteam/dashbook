@@ -11,12 +11,12 @@ class DashbookPreferences {
     _bookmarkedChapter = preferences.getString(_kBookmarkedChapter);
   }
 
-  void _setString(String key, String? value) async {
+  Future<void> _setString(String key, String? value) async {
     final preferences = await SharedPreferences.getInstance();
     if (value == null) {
-      preferences.remove(key);
+      await preferences.remove(key);
     } else {
-      preferences.setString(key, value);
+      await preferences.setString(key, value);
     }
   }
 

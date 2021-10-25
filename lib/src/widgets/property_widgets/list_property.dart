@@ -1,36 +1,36 @@
+import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/property_widgets/widgets/property_scaffold.dart';
 import 'package:flutter/material.dart';
-import './widgets/property_scaffold.dart';
-import '../../story.dart';
 
 class ListPropertyWidget<T> extends StatefulWidget {
   final ListProperty<T> property;
   final PropertyChanged onChanged;
 
-  ListPropertyWidget({
+  const ListPropertyWidget({
     required this.property,
     required this.onChanged,
     Key? key,
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => ListPropertyState();
+  State<StatefulWidget> createState() => ListPropertyState<T>();
 }
 
-class ListPropertyState extends State<ListPropertyWidget> {
+class ListPropertyState<T> extends State<ListPropertyWidget<T>> {
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
       label: widget.property.name,
-      child: DropdownButton(
+      child: DropdownButton<T>(
         isExpanded: true,
         value: widget.property.getValue(),
         onChanged: (value) {
           widget.property.value = value;
-          widget.onChanged(widget.property);
+          widget.onChanged();
         },
         items: widget.property.list
             .map(
-              (value) => DropdownMenuItem(
+              (value) => DropdownMenuItem<T>(
                 value: value,
                 child: Text(value.toString()),
               ),

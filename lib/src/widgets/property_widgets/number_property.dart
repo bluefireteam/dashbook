@@ -1,13 +1,13 @@
+import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/property_widgets/widgets/property_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import './widgets/property_scaffold.dart';
-import '../../story.dart';
 
 class NumberProperty extends StatefulWidget {
   final Property<double> property;
   final PropertyChanged onChanged;
 
-  NumberProperty({
+  const NumberProperty({
     required this.property,
     required this.onChanged,
     Key? key,
@@ -34,7 +34,7 @@ class NumberPropertyState extends State<NumberProperty> {
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         onChanged: (value) {
           widget.property.value = double.tryParse(value);
-          widget.onChanged(widget.property);
+          widget.onChanged();
         },
         controller: controller,
       ),

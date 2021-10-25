@@ -12,10 +12,10 @@ void main() {
               return MockNavigatorProvider(
                 navigator: navigator ?? MockNavigator(),
                 child: ElevatedButton(
-                  child: Text('ButtonTest'),
-                  onPressed: () => showDialog(
+                  child: const Text('ButtonTest'),
+                  onPressed: () => showDialog<DeviceInfo>(
                     context: context,
-                    builder: (_) => DeviceDialog(),
+                    builder: (_) => const DeviceDialog(),
                   ),
                 ),
               );
@@ -33,7 +33,8 @@ void main() {
       expect(find.text('Select a device frame'), findsOneWidget);
       expect(
         find.byWidgetPredicate(
-            (widget) => widget is DropdownButton<DeviceInfo>),
+          (widget) => widget is DropdownButton<DeviceInfo>,
+        ),
         findsOneWidget,
       );
 
@@ -41,9 +42,10 @@ void main() {
       expect(selectButtonLabel, findsOneWidget);
       expect(
         find.ancestor(
-            of: selectButtonLabel,
-            matching:
-                find.byWidgetPredicate((widget) => widget is ElevatedButton)),
+          of: selectButtonLabel,
+          matching:
+              find.byWidgetPredicate((widget) => widget is ElevatedButton),
+        ),
         findsOneWidget,
       );
 
@@ -51,9 +53,10 @@ void main() {
       expect(cancelButtonLabel, findsOneWidget);
       expect(
         find.ancestor(
-            of: cancelButtonLabel,
-            matching:
-                find.byWidgetPredicate((widget) => widget is ElevatedButton)),
+          of: cancelButtonLabel,
+          matching:
+              find.byWidgetPredicate((widget) => widget is ElevatedButton),
+        ),
         findsOneWidget,
       );
 
@@ -61,9 +64,10 @@ void main() {
       expect(clearButtonLabel, findsOneWidget);
       expect(
         find.ancestor(
-            of: clearButtonLabel,
-            matching:
-                find.byWidgetPredicate((widget) => widget is ElevatedButton)),
+          of: clearButtonLabel,
+          matching:
+              find.byWidgetPredicate((widget) => widget is ElevatedButton),
+        ),
         findsOneWidget,
       );
     });

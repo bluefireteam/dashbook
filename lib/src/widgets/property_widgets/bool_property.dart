@@ -1,12 +1,12 @@
+import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/property_widgets/widgets/property_scaffold.dart';
 import 'package:flutter/material.dart';
-import '../../story.dart';
-import './widgets/property_scaffold.dart';
 
 class BoolProperty extends StatefulWidget {
   final Property<bool> property;
   final PropertyChanged onChanged;
 
-  BoolProperty({
+  const BoolProperty({
     required this.property,
     required this.onChanged,
     Key? key,
@@ -29,7 +29,7 @@ class BoolPropertyState extends State<BoolProperty> {
         value: _value,
         onChanged: (newValue) {
           widget.property.value = newValue;
-          widget.onChanged(widget.property);
+          widget.onChanged();
           setState(() {
             _value = newValue;
           });

@@ -8,29 +8,30 @@ class Link extends StatelessWidget {
   final EdgeInsets padding;
   final double height;
 
-  Link({
+  const Link({
+    Key? key,
     required this.label,
     required this.textStyle,
     required this.textAlign,
     this.onTap,
     this.padding = const EdgeInsets.all(10),
     this.height = 40,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
+      onTap: onTap,
       child: Container(
         height: height,
         padding: padding,
         child: Text(
-          this.label,
+          label,
           textAlign: textAlign,
           style: textStyle,
         ),
       ),
-      onTap: onTap,
     );
   }
 }

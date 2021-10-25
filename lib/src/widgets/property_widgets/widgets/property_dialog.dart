@@ -5,17 +5,19 @@ class PropertyDialog extends StatelessWidget {
   final Widget content;
   final List<Widget> actions;
 
-  PropertyDialog({
+  const PropertyDialog({
+    Key? key,
     required this.title,
     required this.content,
     required this.actions,
-  });
+  }) : super(key: key);
 
   @override
-  Widget build(_) {
+  Widget build(BuildContext context) {
     return AlertDialog(
-        title: Text(this.title),
-        content: SingleChildScrollView(child: this.content),
-        actions: this.actions);
+      title: Text(title),
+      content: SingleChildScrollView(child: content),
+      actions: actions,
+    );
   }
 }

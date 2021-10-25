@@ -1,12 +1,12 @@
+import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/property_widgets/widgets/property_scaffold.dart';
 import 'package:flutter/material.dart';
-import './widgets/property_scaffold.dart';
-import '../../story.dart';
 
 class OptionsPropertyWidget<T> extends StatefulWidget {
   final OptionsProperty<T> property;
   final PropertyChanged onChanged;
 
-  OptionsPropertyWidget({
+  const OptionsPropertyWidget({
     required this.property,
     required this.onChanged,
     Key? key,
@@ -26,7 +26,7 @@ class OptionsPropertyState extends State<OptionsPropertyWidget> {
         value: widget.property.getValue(),
         onChanged: (value) {
           widget.property.value = value;
-          widget.onChanged(widget.property);
+          widget.onChanged();
         },
         items: widget.property.list
             .map(

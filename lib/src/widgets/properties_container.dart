@@ -1,7 +1,7 @@
+import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/property_widgets/properties.dart' as p;
+import 'package:dashbook/src/widgets/side_bar_panel.dart';
 import 'package:flutter/material.dart';
-import './property_widgets/properties.dart' as p;
-import './side_bar_panel.dart';
-import '../story.dart';
 
 typedef OnPropertyChange = void Function();
 
@@ -10,11 +10,12 @@ class PropertiesContainer extends StatefulWidget {
   final OnPropertyChange onPropertyChange;
   final VoidCallback onCancel;
 
-  PropertiesContainer({
+  const PropertiesContainer({
+    Key? key,
     required this.currentChapter,
     required this.onPropertyChange,
     required this.onCancel,
-  });
+  }) : super(key: key);
 
   @override
   State createState() => _PropertiesContainerState();
@@ -23,9 +24,9 @@ class PropertiesContainer extends StatefulWidget {
 class _PropertiesContainerState extends State<PropertiesContainer> {
   @override
   Widget build(BuildContext context) {
-    final List<Widget> children = [];
+    final children = <Widget>[];
 
-    for (var entry in widget.currentChapter.ctx.properties.entries) {
+    for (final entry in widget.currentChapter.ctx.properties.entries) {
       // Check if this property is controlled by another one and if so
       // we only add it to the list if the values matches
       final visibilityControlProperty = entry.value.visibilityControlProperty;
@@ -41,14 +42,15 @@ class _PropertiesContainerState extends State<PropertiesContainer> {
       }
 
       final _propertyKey =
-          Key("${widget.currentChapter.id}#${entry.value.name}");
-      final _onChanged = (chapter) {
+          Key('${widget.currentChapter.id}#${entry.value.name}');
+      final _onChanged = () {
         setState(() {});
         widget.onPropertyChange();
       };
 
       if (entry.value is ListProperty) {
         children.add(
+          // ignore: implicit_dynamic_type
           p.ListPropertyWidget(
             property: entry.value as ListProperty,
             onChanged: _onChanged,
@@ -57,6 +59,7 @@ class _PropertiesContainerState extends State<PropertiesContainer> {
         );
       } else if (entry.value is OptionsProperty) {
         children.add(
+          // ignore: implicit_dynamic_type
           p.OptionsPropertyWidget(
             property: entry.value as OptionsProperty,
             onChanged: _onChanged,
