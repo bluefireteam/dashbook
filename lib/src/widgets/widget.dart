@@ -288,7 +288,7 @@ class _DashbookState extends State<Dashbook> {
 
                             if (deviceInfo == null) {
                               setState(() {
-                                  deviceOrientation = Orientation.portrait;
+                                deviceOrientation = Orientation.portrait;
                               });
                               setState(() => showDeviceFrame = true);
                             }
@@ -299,10 +299,12 @@ class _DashbookState extends State<Dashbook> {
                             key: kRotateIcon,
                             tooltip: 'Orientation',
                             icon: Icons.screen_rotation_outlined,
-                            onClick: () => setState(() => deviceOrientation =
-                                deviceOrientation == Orientation.portrait
-                                    ? Orientation.landscape
-                                    : Orientation.portrait),
+                            onClick: () => setState(() {
+                              deviceOrientation =
+                                  deviceOrientation == Orientation.portrait
+                                      ? Orientation.landscape
+                                      : Orientation.portrait;
+                            }),
                           ),
                         if (deviceInfo != null)
                           DashbookIcon(
