@@ -1,3 +1,6 @@
+## [next]
+ - Adding support to preview the example inside a device frame 
+
 ## [0.1.4]
  - Adding support to Flutter 2.5
 
