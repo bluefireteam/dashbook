@@ -31,10 +31,9 @@ class _DeviceDialogState extends State<DeviceDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('Select a device frame'),
-            SizedBox(
+            const Text('Select a device frame'),
+            const SizedBox(
               height: 15,
             ),
             DropdownButton<DeviceInfo>(
@@ -59,7 +58,7 @@ class _DeviceDialogState extends State<DeviceDialog> {
               children: [
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(_selectedDevice),
-                  child: Text('Select'),
+                  child: const Text('Select'),
                 ),
                 const SizedBox(
                   width: 15,
@@ -67,14 +66,14 @@ class _DeviceDialogState extends State<DeviceDialog> {
                 ElevatedButton(
                   onPressed: () =>
                       Navigator.of(context).pop(widget.currentSelection),
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Clear'),
+                  child: const Text('Clear'),
                 ),
               ],
             ),

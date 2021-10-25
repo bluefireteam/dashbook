@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import '../../../story.dart';
 
-typedef PropertyChanged = void Function(Property);
+typedef PropertyChanged = void Function();
 
 class PropertyScaffold extends StatelessWidget {
   final String label;
   final Widget child;
 
-  PropertyScaffold({
+  const PropertyScaffold({
+    Key? key,
     required this.label,
     required this.child,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
       child: Row(
         children: [
           Expanded(flex: 4, child: Text(label)),

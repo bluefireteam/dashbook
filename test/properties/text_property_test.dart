@@ -8,12 +8,11 @@ import '../helpers.dart';
 Dashbook _getDashbook() {
   final dashbook = Dashbook();
 
-  dashbook
-    ..storiesOf('List').add('default', (ctx) {
-      return Text(
-        'Current: ${ctx.textProperty('textValue', 'ValueX')}',
-      );
-    });
+  dashbook.storiesOf('List').add('default', (ctx) {
+    return Text(
+      'Current: ${ctx.textProperty('textValue', 'ValueX')}',
+    );
+  });
 
   return dashbook;
 }

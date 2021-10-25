@@ -1,9 +1,9 @@
+import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/widgets/icon.dart';
 import 'package:dashbook/src/widgets/keys.dart';
+import 'package:dashbook/src/widgets/link.dart';
+import 'package:dashbook/src/widgets/side_bar_panel.dart';
 import 'package:flutter/material.dart';
-import './side_bar_panel.dart';
-import './link.dart';
-import '../story.dart';
 
 typedef OnSelectChapter = Function(Chapter chapter);
 typedef OnBookmarkChapter = Function(String chapter);
@@ -19,7 +19,7 @@ class StoriesList extends StatefulWidget {
   final void Function(String) onUpdateFilter;
   final String currentFilter;
 
-  StoriesList({
+  const StoriesList({
     required this.stories,
     required this.currentBookmark,
     required this.onBookmarkChapter,
@@ -77,7 +77,7 @@ class _StoriesListState extends State<StoriesList> {
       return true;
     }
 
-    for (var chapter in story.chapters) {
+    for (final chapter in story.chapters) {
       if (_matchesFilter(chapter.name)) {
         return true;
       }
@@ -98,16 +98,16 @@ class _StoriesListState extends State<StoriesList> {
       child: SideBarPanel(
         title: 'Stories',
         onCloseKey: kStoriesCloseIcon,
-        scrollViewKey: PageStorageKey('stories_list'),
+        scrollViewKey: const PageStorageKey<String>('stories_list'),
         onCancel: widget.onCancel,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 16.0),
+              padding: const EdgeInsets.only(right: 16),
               child: TextField(
                 key: kStoriesFilterField,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Filter stories and chapters',
                 ),
                 controller: _filterTextController,
@@ -119,7 +119,7 @@ class _StoriesListState extends State<StoriesList> {
                   key: PageStorageKey('story_${story.name}'),
                   title: Text(
                     story.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
@@ -142,7 +142,7 @@ class _StoriesListState extends State<StoriesList> {
                                     },
                                     behavior: HitTestBehavior.opaque,
                                     child: Link(
-                                      label: "  ${chapter.name}",
+                                      label: '  ${chapter.name}',
                                       textAlign: TextAlign.left,
                                       padding: EdgeInsets.zero,
                                       height: 20,
@@ -174,7 +174,7 @@ class _StoriesListState extends State<StoriesList> {
                             ),
                           ),
                         ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                   ],
                 ),
           ],

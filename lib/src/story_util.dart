@@ -1,8 +1,8 @@
-import './story.dart';
+import 'package:dashbook/dashbook.dart';
 
 Chapter? findChapter(String id, List<Story> stories) {
-  for (var story in stories) {
-    for (var chapter in story.chapters) {
+  for (final story in stories) {
+    for (final chapter in story.chapters) {
       if (chapter.id == id) {
         return chapter;
       }

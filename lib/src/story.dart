@@ -1,5 +1,5 @@
+import 'package:dashbook/dashbook.dart';
 import 'package:flutter/material.dart';
-import './decorator.dart';
 
 class ControlProperty {
   final String key;
@@ -22,7 +22,7 @@ class Property<T> {
   T getValue() => value ?? defaultValue;
 
   @override
-  toString() => "$name - ${getValue()}";
+  String toString() => '$name - ${getValue()}';
 }
 
 class ListProperty<T> extends Property<T> {
@@ -63,7 +63,7 @@ class PropertyOption<T> {
 
   @override
   String toString() {
-    return label.toString();
+    return label;
   }
 }
 
@@ -76,7 +76,7 @@ class DashbookContext {
     ControlProperty? visibilityControlProperty,
   }) {
     if (properties.containsKey(name)) {
-      return properties[name]!.getValue();
+      return properties[name]!.getValue() as String;
     } else {
       final property = Property<String>(
         name,
@@ -89,10 +89,13 @@ class DashbookContext {
     }
   }
 
-  double numberProperty(String name, double defaultValue,
-      {ControlProperty? visibilityControlProperty}) {
+  double numberProperty(
+    String name,
+    double defaultValue, {
+    ControlProperty? visibilityControlProperty,
+  }) {
     if (properties.containsKey(name)) {
-      return properties[name]!.getValue();
+      return properties[name]!.getValue() as double;
     } else {
       final property = Property<double>(
         name,
@@ -105,10 +108,13 @@ class DashbookContext {
     }
   }
 
-  bool boolProperty(String name, bool defaultValue,
-      {ControlProperty? visibilityControlProperty}) {
+  bool boolProperty(
+    String name,
+    bool defaultValue, {
+    ControlProperty? visibilityControlProperty,
+  }) {
     if (properties.containsKey(name)) {
-      return properties[name]!.getValue();
+      return properties[name]!.getValue() as bool;
     } else {
       final property = Property<bool>(
         name,
@@ -121,10 +127,13 @@ class DashbookContext {
     }
   }
 
-  Color colorProperty(String name, Color defaultValue,
-      {ControlProperty? visibilityControlProperty}) {
+  Color colorProperty(
+    String name,
+    Color defaultValue, {
+    ControlProperty? visibilityControlProperty,
+  }) {
     if (properties.containsKey(name)) {
-      return properties[name]!.getValue();
+      return properties[name]!.getValue() as Color;
     } else {
       final property = Property<Color>(
         name,
@@ -137,10 +146,14 @@ class DashbookContext {
     }
   }
 
-  T listProperty<T>(String name, T defaultValue, List<T> list,
-      {ControlProperty? visibilityControlProperty}) {
+  T listProperty<T>(
+    String name,
+    T defaultValue,
+    List<T> list, {
+    ControlProperty? visibilityControlProperty,
+  }) {
     if (properties.containsKey(name)) {
-      return properties[name]!.getValue();
+      return properties[name]!.getValue() as T;
     } else {
       final property = ListProperty<T>(
         name,
@@ -155,10 +168,13 @@ class DashbookContext {
   }
 
   T optionsProperty<T>(
-      String name, T defaultValue, List<PropertyOption<T>> list,
-      {ControlProperty? visibilityControlProperty}) {
+    String name,
+    T defaultValue,
+    List<PropertyOption<T>> list, {
+    ControlProperty? visibilityControlProperty,
+  }) {
     if (properties.containsKey(name)) {
-      return properties[name]!.getValue();
+      return properties[name]!.getValue() as T;
     } else {
       final property = OptionsProperty<T>(
         name,
@@ -172,10 +188,13 @@ class DashbookContext {
     }
   }
 
-  EdgeInsets edgeInsetsProperty(String name, EdgeInsets defaultValue,
-      {ControlProperty? visibilityControlProperty}) {
+  EdgeInsets edgeInsetsProperty(
+    String name,
+    EdgeInsets defaultValue, {
+    ControlProperty? visibilityControlProperty,
+  }) {
     if (properties.containsKey(name)) {
-      return properties[name]!.getValue();
+      return properties[name]!.getValue() as EdgeInsets;
     } else {
       final property = Property<EdgeInsets>(
         name,
@@ -188,10 +207,13 @@ class DashbookContext {
     }
   }
 
-  BorderRadius borderRadiusProperty(String name, BorderRadius defaultValue,
-      {ControlProperty? visibilityControlProperty}) {
+  BorderRadius borderRadiusProperty(
+    String name,
+    BorderRadius defaultValue, {
+    ControlProperty? visibilityControlProperty,
+  }) {
     if (properties.containsKey(name)) {
-      return properties[name]!.getValue();
+      return properties[name]!.getValue() as BorderRadius;
     } else {
       final property = Property<BorderRadius>(
         name,
@@ -215,8 +237,12 @@ class Story {
 
   Story(this.name);
 
-  Story add(String name, ChapterBuildFunction buildFn,
-      {String? codeLink, String? info}) {
+  Story add(
+    String name,
+    ChapterBuildFunction buildFn, {
+    String? codeLink,
+    String? info,
+  }) {
     final _chapter = Chapter(
       name,
       buildFn,
@@ -248,10 +274,10 @@ class Chapter {
   Chapter(this.name, this._buildFn, this.story, {this.codeLink, this.info});
 
   Widget widget() {
-    final Widget w = _buildFn(ctx);
+    final w = _buildFn(ctx);
 
     return story._decorator?.decorate(w) ?? w;
   }
 
-  String get id => "${story.name}_$name";
+  String get id => '${story.name}_$name';
 }

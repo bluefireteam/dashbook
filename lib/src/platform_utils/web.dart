@@ -1,8 +1,8 @@
-import '../story.dart';
-import '../story_util.dart';
-
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
+
+import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/story_util.dart';
 
 class PlatformUtils {
   PlatformUtils._();

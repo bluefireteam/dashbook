@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:dashbook/dashbook.dart';
+import 'package:flutter/material.dart';
 
 void addTextStories(Dashbook dashbook) {
   dashbook
@@ -12,35 +11,35 @@ void addTextStories(Dashbook dashbook) {
           return Container(
             width: 300,
             padding: ctx.edgeInsetsProperty(
-              "edge Insets",
-              EdgeInsets.fromLTRB(1, 2, 3, 4),
+              'edge Insets',
+              const EdgeInsets.fromLTRB(1, 2, 3, 4),
             ),
             child: Text(
-              ctx.textProperty("text", "Text Example"),
+              ctx.textProperty('text', 'Text Example'),
               textAlign: ctx.listProperty(
-                "text align",
+                'text align',
                 TextAlign.center,
                 TextAlign.values,
               ),
               textDirection: ctx.listProperty(
-                "text direction",
+                'text direction',
                 TextDirection.rtl,
                 TextDirection.values,
               ),
               style: TextStyle(
                 fontWeight: ctx.listProperty(
-                  "font weight",
+                  'font weight',
                   FontWeight.normal,
                   FontWeight.values,
                 ),
                 fontStyle: ctx.listProperty(
-                  "font style",
+                  'font style',
                   FontStyle.normal,
                   FontStyle.values,
                 ),
-                fontSize: ctx.numberProperty("font size", 20),
+                fontSize: ctx.numberProperty('font size', 20),
                 color: ctx.colorProperty(
-                  "color",
+                  'color',
                   Colors.red,
                 ),
               ),
@@ -85,19 +84,19 @@ Proin sit amet euismod ligula. Phasellus consectetur venenatis ipsum, in digniss
       )
       .add(
         'bold',
-        (_) => Text(
-          "Text",
+        (_) => const Text(
+          'Text',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       )
       .add(
         'color text',
         (ctx) => Text(
-          "Text",
+          'Text',
           style: TextStyle(
             color: ctx.optionsProperty(
               'color',
-              Color(0xFF0000FF),
+              const Color(0xFF0000FF),
               [
                 PropertyOption('Red', const Color(0xFFFF0000)),
                 PropertyOption('Green', const Color(0xFF00FF00)),

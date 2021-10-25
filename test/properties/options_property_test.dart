@@ -8,15 +8,14 @@ import '../helpers.dart';
 Dashbook _getDashbook() {
   final dashbook = Dashbook();
 
-  dashbook
-    ..storiesOf('Options').add('default', (ctx) {
-      return Text(
-        '${ctx.optionsProperty('optionsProperty', 'ValueX', [
-              PropertyOption('First option', 'ValueX'),
-              PropertyOption('Second option', 'ValueY'),
-            ])}',
-      );
-    });
+  dashbook.storiesOf('Options').add('default', (ctx) {
+    return Text(
+      ctx.optionsProperty('optionsProperty', 'ValueX', [
+        PropertyOption('First option', 'ValueX'),
+        PropertyOption('Second option', 'ValueY'),
+      ]),
+    );
+  });
 
   return dashbook;
 }

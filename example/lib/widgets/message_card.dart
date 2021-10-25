@@ -14,19 +14,20 @@ class MessageCard extends StatelessWidget {
   final Color errorColor;
   final Color infoColor;
 
-  MessageCard({
+  const MessageCard({
+    Key? key,
     required this.message,
     required this.type,
     this.errorColor = const Color(0xFFCC6941),
     this.infoColor = const Color(0xFF5E89FF),
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
-      child: Text(message),
+      padding: const EdgeInsets.all(10),
       color: type == MessageCardType.info ? infoColor : errorColor,
+      child: Text(message),
     );
   }
 }

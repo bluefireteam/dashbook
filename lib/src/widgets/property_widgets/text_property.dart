@@ -1,12 +1,12 @@
+import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/property_widgets/widgets/property_scaffold.dart';
 import 'package:flutter/material.dart';
-import './widgets/property_scaffold.dart';
-import '../../story.dart';
 
 class TextProperty extends StatefulWidget {
   final Property<String> property;
   final PropertyChanged onChanged;
 
-  TextProperty({
+  const TextProperty({
     required this.property,
     required this.onChanged,
     Key? key,
@@ -30,7 +30,7 @@ class TextPropertyState extends State<TextProperty> {
       child: TextField(
         onChanged: (value) {
           widget.property.value = value;
-          widget.onChanged(widget.property);
+          widget.onChanged();
         },
         controller: controller,
       ),

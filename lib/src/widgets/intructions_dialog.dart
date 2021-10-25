@@ -4,16 +4,17 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 class _InstructionsText extends StatelessWidget {
   final String instructions;
 
-  _InstructionsText(this.instructions);
+  const _InstructionsText(this.instructions);
 
   @override
   Widget build(BuildContext context) {
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
-    final codeTextColor = isDarkTheme ? Color(0xFFE5E5E5) : Color(0xFF858585);
+    final codeTextColor =
+        isDarkTheme ? const Color(0xFFE5E5E5) : const Color(0xFF858585);
 
     final codeBackGroundColor =
-        isDarkTheme ? Color(0xFF858585) : Color(0xFFDEDEDE);
+        isDarkTheme ? const Color(0xFF858585) : const Color(0xFFDEDEDE);
 
     return Markdown(
       selectable: true,
@@ -21,11 +22,11 @@ class _InstructionsText extends StatelessWidget {
       styleSheet: MarkdownStyleSheet(
         codeblockDecoration: BoxDecoration(
           color: codeBackGroundColor,
-          borderRadius: BorderRadius.all(Radius.circular(4)),
+          borderRadius: const BorderRadius.all(Radius.circular(4)),
         ),
         code: TextStyle(
           decoration: TextDecoration.none,
-          backgroundColor: Color(0x00FFFFFF),
+          backgroundColor: const Color(0x00FFFFFF),
           color: codeTextColor,
         ),
       ),
@@ -36,26 +37,27 @@ class _InstructionsText extends StatelessWidget {
 class InstructionsDialog extends StatelessWidget {
   final String instructions;
 
-  InstructionsDialog({
+  const InstructionsDialog({
+    Key? key,
     required this.instructions,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       child: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             Expanded(
               child: _InstructionsText(instructions),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Close'),
+              child: const Text('Close'),
             ),
           ],
         ),

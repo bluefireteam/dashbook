@@ -7,15 +7,16 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  device_frame: ^0.4.2
   flutter:
     sdk: flutter
   flutter_colorpicker: ^0.5.0
-  url_launcher: ^6.0.2
   flutter_markdown: ^0.6.1
   shared_preferences: ^2.0.5
-  device_frame: ^0.4.2
+  url_launcher: ^6.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mockingjay: ^0.1.1
+  very_good_analysis: ^2.4.0

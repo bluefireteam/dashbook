@@ -1,8 +1,17 @@
+import 'package:dashbook/src/widgets/property_widgets/widgets/property_dialog.dart';
 import 'package:flutter/material.dart';
-import 'property_dialog.dart';
+
+typedef ConfirmEditionFucntion = bool Function(
+  bool,
+  String,
+  String,
+  String,
+  String,
+  String,
+);
 
 class FourIntegerForm extends StatefulWidget {
-  final Function _confirmEdition;
+  final ConfirmEditionFucntion _confirmEdition;
   final int _value1;
   final int _value2;
   final int _value3;
@@ -13,16 +22,18 @@ class FourIntegerForm extends StatefulWidget {
   final String _label3;
   final String _label4;
 
-  FourIntegerForm(
-      this._confirmEdition,
-      this._value1,
-      this._value2,
-      this._value3,
-      this._value4,
-      this._label1,
-      this._label2,
-      this._label3,
-      this._label4);
+  const FourIntegerForm(
+    this._confirmEdition,
+    this._value1,
+    this._value2,
+    this._value3,
+    this._value4,
+    this._label1,
+    this._label2,
+    this._label3,
+    this._label4, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   State createState() {
@@ -62,7 +73,7 @@ class _FourIntegerFormState extends State<FourIntegerForm> {
   }
 
   bool _allValueEqual() {
-    List<int> values = [
+    final values = <int>[
       widget._value1,
       widget._value2,
       widget._value3,
@@ -77,56 +88,61 @@ class _FourIntegerFormState extends State<FourIntegerForm> {
       title: 'Set values:',
       content: Column(
         children: [
-          _validValues ? Container() : Text('Invalid values!'),
-          Row(children: [
-            Text('Same value to all:'),
-            Switch(
-              value: _useValueToAll,
-              onChanged: (bool isOn) => setState(() => _useValueToAll = isOn),
-              activeColor: Colors.blue,
-              inactiveTrackColor: Colors.grey,
-              inactiveThumbColor: Colors.grey,
-            ),
-          ]),
-          _useValueToAll
-              ? Container(
-                  child: Container(
-                      width: 100,
-                      child: TextField(controller: _uniqueValueController)),
-                )
-              : Column(
-                  children: [
-                    _FieldWithLabel(
-                      label: widget._label1,
-                      fieldController: _firstFieldController,
-                    ),
-                    _FieldWithLabel(
-                      label: widget._label2,
-                      fieldController: _secondFieldController,
-                    ),
-                    _FieldWithLabel(
-                      label: widget._label3,
-                      fieldController: _thirdFieldController,
-                    ),
-                    _FieldWithLabel(
-                      label: widget._label4,
-                      fieldController: _fourthFieldController,
-                    ),
-                  ],
+          if (_validValues) Container() else const Text('Invalid values!'),
+          Row(
+            children: [
+              const Text(
+                'Same value to all:',
+              ),
+              Switch(
+                value: _useValueToAll,
+                onChanged: (bool isOn) => setState(() => _useValueToAll = isOn),
+                activeColor: Colors.blue,
+                inactiveTrackColor: Colors.grey,
+                inactiveThumbColor: Colors.grey,
+              ),
+            ],
+          ),
+          if (_useValueToAll)
+            SizedBox(
+              width: 100,
+              child: TextField(controller: _uniqueValueController),
+            )
+          else
+            Column(
+              children: [
+                _FieldWithLabel(
+                  label: widget._label1,
+                  fieldController: _firstFieldController,
                 ),
+                _FieldWithLabel(
+                  label: widget._label2,
+                  fieldController: _secondFieldController,
+                ),
+                _FieldWithLabel(
+                  label: widget._label3,
+                  fieldController: _thirdFieldController,
+                ),
+                _FieldWithLabel(
+                  label: widget._label4,
+                  fieldController: _fourthFieldController,
+                ),
+              ],
+            ),
         ],
       ),
       actions: [
         TextButton(
           child: const Text('Got it'),
           onPressed: () {
-            bool validValues = widget._confirmEdition(
-                _useValueToAll,
-                _uniqueValueController.text,
-                _firstFieldController.text,
-                _secondFieldController.text,
-                _thirdFieldController.text,
-                _fourthFieldController.text);
+            final validValues = widget._confirmEdition(
+              _useValueToAll,
+              _uniqueValueController.text,
+              _firstFieldController.text,
+              _secondFieldController.text,
+              _thirdFieldController.text,
+              _fourthFieldController.text,
+            );
 
             if (validValues) {
               setState(() {
@@ -148,14 +164,14 @@ class _FieldWithLabel extends StatelessWidget {
   final String label;
   final TextEditingController fieldController;
 
-  _FieldWithLabel({required this.label, required this.fieldController});
+  const _FieldWithLabel({required this.label, required this.fieldController});
 
   @override
   Widget build(_) {
     return Row(
       children: [
-        Container(width: 105, child: Text('$label:')),
-        Container(width: 90, child: TextField(controller: fieldController)),
+        SizedBox(width: 105, child: Text('$label:')),
+        SizedBox(width: 90, child: TextField(controller: fieldController)),
       ],
     );
   }

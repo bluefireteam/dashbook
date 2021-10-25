@@ -1,13 +1,12 @@
+import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:flutter/material.dart';
-
-import './helpers.dart';
 
 class DashbookIcon extends StatelessWidget {
   final IconData icon;
   final VoidCallback onClick;
   final String tooltip;
 
-  DashbookIcon({
+  const DashbookIcon({
     required this.icon,
     required this.onClick,
     required this.tooltip,
@@ -19,7 +18,7 @@ class DashbookIcon extends StatelessWidget {
     final size = iconSize(context);
     return Tooltip(
       message: tooltip,
-      child: Container(
+      child: SizedBox(
         width: size,
         height: size,
         child: Listener(

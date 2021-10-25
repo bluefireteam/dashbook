@@ -27,7 +27,6 @@ class DevicePreview extends StatelessWidget {
         bottom: 20,
       ),
       child: FittedBox(
-        fit: BoxFit.contain,
         child: DeviceFrame(
           orientation: deviceOrientation,
           device: deviceInfo,
@@ -35,8 +34,8 @@ class DevicePreview extends StatelessWidget {
           screen: MediaQuery(
             data: mediaQuery,
             child: Container(
-              child: child,
               color: Theme.of(context).scaffoldBackgroundColor,
+              child: child,
             ),
           ),
         ),

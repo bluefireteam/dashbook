@@ -1,14 +1,14 @@
+import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/property_widgets/widgets/property_dialog.dart';
+import 'package:dashbook/src/widgets/property_widgets/widgets/property_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import './widgets/property_scaffold.dart';
-import './widgets/property_dialog.dart';
-import '../../story.dart';
 
 class ColorProperty extends StatefulWidget {
   final Property<Color> property;
   final PropertyChanged onChanged;
 
-  ColorProperty({
+  const ColorProperty({
     required this.property,
     required this.onChanged,
     Key? key,
@@ -16,6 +16,7 @@ class ColorProperty extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() =>
+      // ignore: no_logic_in_create_state
       ColorPropertyState(property.getValue());
 }
 
@@ -29,14 +30,13 @@ class ColorPropertyState extends State<ColorProperty> {
   }
 
   // raise the [showDialog] widget
-  Future<dynamic> show() => showDialog(
+  Future<void> show() => showDialog<void>(
         context: context,
         builder: (_) => PropertyDialog(
           title: 'Pick a color!',
           content: ColorPicker(
             pickerColor: pickerColor,
             onColorChanged: changeColor,
-            showLabel: true,
             pickerAreaHeightPercent: 0.8,
           ),
           actions: [
@@ -61,15 +61,15 @@ class ColorPropertyState extends State<ColorProperty> {
     return PropertyScaffold(
       label: widget.property.name,
       child: ElevatedButton(
-        child: Container(),
         style: ElevatedButton.styleFrom(
           primary: currentColor,
         ),
         onPressed: () async {
           await show();
           widget.property.value = currentColor;
-          widget.onChanged(widget.property);
+          widget.onChanged();
         },
+        child: Container(),
       ),
     );
   }

@@ -10,11 +10,10 @@ Dashbook _getDashbook() {
   final dashbook = Dashbook();
 
   dashbook.storiesOf('Text').add('default', (_) {
-    return Text('Text story of the default chapter');
-  })
-    ..add('bold', (_) {
-      return Text('Text story of the bold chapter');
-    });
+    return const Text('Text story of the default chapter');
+  }).add('bold', (_) {
+    return const Text('Text story of the bold chapter');
+  });
 
   return dashbook;
 }
@@ -181,7 +180,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-            (element) => element is DeviceFrame && !element.isFrameVisible),
+          (element) => element is DeviceFrame && !element.isFrameVisible,
+        ),
         findsOneWidget,
       );
     });
@@ -217,9 +217,11 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.byWidgetPredicate((element) =>
-            element is DeviceFrame &&
-            element.orientation == Orientation.landscape),
+        find.byWidgetPredicate(
+          (element) =>
+              element is DeviceFrame &&
+              element.orientation == Orientation.landscape,
+        ),
         findsOneWidget,
       );
     });
