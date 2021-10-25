@@ -13,7 +13,9 @@ dependencies:
   url_launcher: ^6.0.2
   flutter_markdown: ^0.6.1
   shared_preferences: ^2.0.5
+  device_frame: ^0.4.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mockingjay: ^0.1.1

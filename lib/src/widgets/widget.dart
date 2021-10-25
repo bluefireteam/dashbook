@@ -1,4 +1,6 @@
+import 'package:dashbook/src/widgets/device_dialog.dart';
 import 'package:dashbook/src/widgets/keys.dart';
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -102,6 +104,9 @@ class _DashbookState extends State<Dashbook> {
   late DashbookPreferences _preferences;
   bool _loading = true;
   String _storiesFilter = '';
+  DeviceInfo? deviceInfo;
+  Orientation deviceOrientation = Orientation.portrait;
+  bool showDeviceFrame = true;
 
   @override
   void initState() {
@@ -181,6 +186,9 @@ class _DashbookState extends State<Dashbook> {
                       child: chapterWidget!,
                       usePreviewSafeArea: widget.usePreviewSafeArea,
                       isPropertiesOpen: _currentView == CurrentView.PROPERTIES,
+                      deviceInfo: deviceInfo,
+                      deviceOrientation: deviceOrientation,
+                      showDeviceFrame: showDeviceFrame,
                     ),
                   Positioned(
                     right: 10,
@@ -263,6 +271,48 @@ class _DashbookState extends State<Dashbook> {
                                 content: Text("Link copied to your clipboard"),
                               ));
                             },
+                          ),
+                        DashbookIcon(
+                          key: kDevicePreviewIcon,
+                          tooltip: 'Device preview',
+                          icon: Icons.phone_android_outlined,
+                          onClick: () async {
+                            final selectedDevice = await showDialog(
+                              context: context,
+                              builder: (_) => DeviceDialog(
+                                currentSelection: deviceInfo,
+                              ),
+                            );
+
+                            setState(() => deviceInfo = selectedDevice);
+
+                            if (deviceInfo == null) {
+                              setState(() {
+                                deviceOrientation = Orientation.portrait;
+                              });
+                              setState(() => showDeviceFrame = true);
+                            }
+                          },
+                        ),
+                        if (deviceInfo != null)
+                          DashbookIcon(
+                            key: kRotateIcon,
+                            tooltip: 'Orientation',
+                            icon: Icons.screen_rotation_outlined,
+                            onClick: () => setState(() {
+                              deviceOrientation =
+                                  deviceOrientation == Orientation.portrait
+                                      ? Orientation.landscape
+                                      : Orientation.portrait;
+                            }),
+                          ),
+                        if (deviceInfo != null)
+                          DashbookIcon(
+                            key: kHideFrameIcon,
+                            tooltip: 'Device frame',
+                            icon: Icons.mobile_off_outlined,
+                            onClick: () => setState(
+                                () => showDeviceFrame = !showDeviceFrame),
                           ),
                       ],
                     ),
