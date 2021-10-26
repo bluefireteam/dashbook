@@ -115,6 +115,7 @@ class _DashbookState extends State<Dashbook> {
   DeviceInfo? deviceInfo;
   Orientation deviceOrientation = Orientation.portrait;
   bool showDeviceFrame = true;
+  bool _storyPanelPinned = false;
 
   @override
   void initState() {
@@ -195,6 +196,7 @@ class _DashbookState extends State<Dashbook> {
                         usePreviewSafeArea: widget.usePreviewSafeArea,
                         isPropertiesOpen:
                             _currentView == CurrentView.properties,
+                        storyPanelPinned: _storyPanelPinned,
                         deviceInfo: deviceInfo,
                         deviceOrientation: deviceOrientation,
                         showDeviceFrame: showDeviceFrame,
@@ -212,7 +214,10 @@ class _DashbookState extends State<Dashbook> {
                               tooltip: 'Properties panel',
                               icon: Icons.mode_edit,
                               onClick: () => setState(
-                                () => _currentView = CurrentView.properties,
+                                () {
+                                  _currentView = CurrentView.properties;
+                                  _storyPanelPinned = false;
+                                },
                               ),
                             ),
                           if (_currentChapter?.info != null)
@@ -358,9 +363,15 @@ class _DashbookState extends State<Dashbook> {
                         bottom: 0,
                         child: StoriesList(
                           stories: widget.stories,
+                          storyPanelPinned: _storyPanelPinned,
                           selectedChapter: _currentChapter,
                           currentBookmark: _preferences.bookmarkedChapter,
                           currentFilter: _storiesFilter,
+                          onStoryPinChange: () {
+                            setState(() {
+                              _storyPanelPinned = !_storyPanelPinned;
+                            });
+                          },
                           onUpdateFilter: (value) {
                             _storiesFilter = value;
                           },
@@ -374,11 +385,16 @@ class _DashbookState extends State<Dashbook> {
                               _preferences.bookmarkedChapter = null;
                             });
                           },
-                          onCancel: () => setState(() => _currentView = null),
+                          onCancel: () => setState(() {
+                            _currentView = null;
+                            _storyPanelPinned = false;
+                          }),
                           onSelectChapter: (chapter) {
                             setState(() {
                               _currentChapter = chapter;
-                              _currentView = null;
+                              if (!_storyPanelPinned) {
+                                _currentView = null;
+                              }
                             });
                           },
                         ),

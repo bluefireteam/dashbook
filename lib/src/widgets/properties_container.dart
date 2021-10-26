@@ -1,4 +1,5 @@
 import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:dashbook/src/widgets/property_widgets/properties.dart' as p;
 import 'package:dashbook/src/widgets/side_bar_panel.dart';
 import 'package:flutter/material.dart';
@@ -118,6 +119,7 @@ class _PropertiesContainerState extends State<PropertiesContainer> {
     }
     return SideBarPanel(
       title: 'Properties',
+      width: sideBarSizeProperties(context),
       onCancel: widget.onCancel,
       child: Column(
         children: children,
