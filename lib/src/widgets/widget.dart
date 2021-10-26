@@ -233,7 +233,8 @@ class _DashbookState extends State<Dashbook> {
                     Expanded(
                       child: Stack(
                         children: [
-                          if (_currentChapter != null)
+                          if (_currentChapter != null &&
+                              (kIsWeb || _currentView != CurrentView.stories))
                             PreviewContainer(
                               key: Key(_currentChapter!.id),
                               usePreviewSafeArea: widget.usePreviewSafeArea,
