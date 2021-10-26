@@ -103,16 +103,14 @@ class _StoriesListState extends State<StoriesList> {
       ),
       child: SideBarPanel(
         title: 'Stories',
-        titleIcon: kIsWeb
-            ? DashbookIcon(
-                key: kStoryPinIcon,
-                tooltip: widget.storyPanelPinned ? 'Unpin' : 'Pin',
-                icon: widget.storyPanelPinned
-                    ? Icons.push_pin
-                    : Icons.push_pin_outlined,
-                onClick: widget.onStoryPinChange,
-              )
-            : null,
+        titleIcon: DashbookIcon(
+          key: kStoryPinIcon,
+          tooltip: widget.storyPanelPinned ? 'Unpin' : 'Pin',
+          icon: widget.storyPanelPinned
+              ? Icons.push_pin
+              : Icons.push_pin_outlined,
+          onClick: widget.onStoryPinChange,
+        ),
         width: sideBarSizeStory(context),
         onCloseKey: kStoriesCloseIcon,
         scrollViewKey: const PageStorageKey<String>('stories_list'),

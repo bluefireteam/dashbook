@@ -1,4 +1,5 @@
 import 'package:dashbook/src/widgets/icon.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class SideBarPanel extends StatelessWidget {
@@ -51,7 +52,10 @@ class SideBarPanel extends StatelessWidget {
                             padding: const EdgeInsets.only(
                               left: 8,
                             ),
-                            child: titleIcon,
+                            child: Opacity(
+                              opacity: kIsWeb ? 1 : 0,
+                              child: titleIcon,
+                            ),
                           ),
                       ],
                     ),
