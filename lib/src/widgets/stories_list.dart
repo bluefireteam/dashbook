@@ -4,6 +4,7 @@ import 'package:dashbook/src/widgets/icon.dart';
 import 'package:dashbook/src/widgets/keys.dart';
 import 'package:dashbook/src/widgets/link.dart';
 import 'package:dashbook/src/widgets/side_bar_panel.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 typedef OnSelectChapter = Function(Chapter chapter);
@@ -102,14 +103,16 @@ class _StoriesListState extends State<StoriesList> {
       ),
       child: SideBarPanel(
         title: 'Stories',
-        titleIcon: DashbookIcon(
-          key: kStoryPinIcon,
-          tooltip: widget.storyPanelPinned ? 'Unpin' : 'Pin',
-          icon: widget.storyPanelPinned
-              ? Icons.push_pin
-              : Icons.push_pin_outlined,
-          onClick: widget.onStoryPinChange,
-        ),
+        titleIcon: kIsWeb
+            ? DashbookIcon(
+                key: kStoryPinIcon,
+                tooltip: widget.storyPanelPinned ? 'Unpin' : 'Pin',
+                icon: widget.storyPanelPinned
+                    ? Icons.push_pin
+                    : Icons.push_pin_outlined,
+                onClick: widget.onStoryPinChange,
+              )
+            : null,
         width: sideBarSizeStory(context),
         onCloseKey: kStoriesCloseIcon,
         scrollViewKey: const PageStorageKey<String>('stories_list'),
