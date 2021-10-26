@@ -314,8 +314,9 @@ class _DashbookState extends State<Dashbook> {
                                                 .toList(),
                                             onChanged: (value) {
                                               if (value != null) {
-                                                setState(() =>
-                                                    _currentTheme = value);
+                                                setState(
+                                                  () => _currentTheme = value,
+                                                );
                                               }
                                               Navigator.of(context).pop();
                                             },
@@ -333,12 +334,14 @@ class _DashbookState extends State<Dashbook> {
                                         _currentChapter!,
                                       );
                                       Clipboard.setData(
-                                          ClipboardData(text: url));
+                                        ClipboardData(text: url),
+                                      );
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         const SnackBar(
                                           content: Text(
-                                              'Link copied to your clipboard'),
+                                            'Link copied to your clipboard',
+                                          ),
                                         ),
                                       );
                                     },
