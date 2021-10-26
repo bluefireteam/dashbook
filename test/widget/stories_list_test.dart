@@ -1,4 +1,5 @@
 import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/icon.dart';
 import 'package:dashbook/src/widgets/keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -84,6 +85,70 @@ void main() {
 
         expect(find.text('  bold'), findsOneWidget);
       });
+    });
+
+    testWidgets('shows the stories pin icon', (tester) async {
+      await tester.pumpDashbook(_getDashbook());
+
+      await tester.tap(find.byKey(kStoriesIcon));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(kStoryPinIcon), findsOneWidget);
+      expect(
+        find.byWidgetPredicate(
+          (widget) =>
+              widget is DashbookIcon && widget.icon == Icons.push_pin_outlined,
+        ),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('can pin the stories list', (tester) async {
+      await tester.pumpDashbook(_getDashbook());
+
+      await tester.tap(find.byKey(kStoriesIcon));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(kStoryPinIcon), findsOneWidget);
+
+      await tester.tap(find.byKey(kStoryPinIcon));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('  bold'));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(kStoryPinIcon), findsOneWidget);
+    });
+
+    testWidgets('can toggle pin stories list', (tester) async {
+      await tester.pumpDashbook(_getDashbook());
+
+      await tester.tap(find.byKey(kStoriesIcon));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(kStoryPinIcon), findsOneWidget);
+
+      await tester.tap(find.byKey(kStoryPinIcon));
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byWidgetPredicate(
+          (widget) => widget is DashbookIcon && widget.icon == Icons.push_pin,
+        ),
+        findsOneWidget,
+      );
+
+      await tester.tap(find.byKey(kStoryPinIcon));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(kStoryPinIcon), findsOneWidget);
+      expect(
+        find.byWidgetPredicate(
+          (widget) =>
+              widget is DashbookIcon && widget.icon == Icons.push_pin_outlined,
+        ),
+        findsOneWidget,
+      );
     });
   });
 }

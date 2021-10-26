@@ -1,8 +1,10 @@
 import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:dashbook/src/widgets/icon.dart';
 import 'package:dashbook/src/widgets/keys.dart';
 import 'package:dashbook/src/widgets/link.dart';
 import 'package:dashbook/src/widgets/side_bar_panel.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 typedef OnSelectChapter = Function(Chapter chapter);
@@ -18,6 +20,8 @@ class StoriesList extends StatefulWidget {
   final VoidCallback onCancel;
   final void Function(String) onUpdateFilter;
   final String currentFilter;
+  final bool storyPanelPinned;
+  final void Function() onStoryPinChange;
 
   const StoriesList({
     required this.stories,
@@ -28,6 +32,8 @@ class StoriesList extends StatefulWidget {
     required this.onCancel,
     required this.onUpdateFilter,
     required this.currentFilter,
+    required this.storyPanelPinned,
+    required this.onStoryPinChange,
     Key? key,
     this.selectedChapter,
   }) : super(key: key);
@@ -97,6 +103,15 @@ class _StoriesListState extends State<StoriesList> {
       ),
       child: SideBarPanel(
         title: 'Stories',
+        titleIcon: DashbookIcon(
+          key: kStoryPinIcon,
+          tooltip: widget.storyPanelPinned ? 'Unpin' : 'Pin',
+          icon: widget.storyPanelPinned
+              ? Icons.push_pin
+              : Icons.push_pin_outlined,
+          onClick: widget.onStoryPinChange,
+        ),
+        width: sideBarSizeStory(context),
         onCloseKey: kStoriesCloseIcon,
         scrollViewKey: const PageStorageKey<String>('stories_list'),
         onCancel: widget.onCancel,
@@ -144,8 +159,7 @@ class _StoriesListState extends State<StoriesList> {
                                     child: Link(
                                       label: '  ${chapter.name}',
                                       textAlign: TextAlign.left,
-                                      padding: EdgeInsets.zero,
-                                      height: 20,
+                                      padding: const EdgeInsets.only(right: 8),
                                       textStyle: TextStyle(
                                         fontWeight: chapter.id ==
                                                 widget.selectedChapter?.id
@@ -155,21 +169,19 @@ class _StoriesListState extends State<StoriesList> {
                                     ),
                                   ),
                                 ),
-                                if (true)
-                                  Opacity(
-                                    opacity:
+                                Opacity(
+                                  opacity: chapter.id == widget.currentBookmark
+                                      ? 1
+                                      : 0.05,
+                                  child: DashbookIcon(
+                                    icon: Icons.bookmark,
+                                    onClick: () => _pin(chapter),
+                                    tooltip:
                                         chapter.id == widget.currentBookmark
-                                            ? 1
-                                            : 0.05,
-                                    child: DashbookIcon(
-                                      icon: Icons.bookmark,
-                                      onClick: () => _pin(chapter),
-                                      tooltip:
-                                          chapter.id == widget.currentBookmark
-                                              ? 'Remove this chapter'
-                                              : 'Bookmark this bookmark',
-                                    ),
+                                            ? 'Remove this chapter'
+                                            : 'Bookmark this bookmark',
                                   ),
+                                ),
                               ],
                             ),
                           ),

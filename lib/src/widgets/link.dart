@@ -6,7 +6,6 @@ class Link extends StatelessWidget {
   final VoidCallback? onTap;
   final TextAlign textAlign;
   final EdgeInsets padding;
-  final double height;
 
   const Link({
     Key? key,
@@ -15,7 +14,6 @@ class Link extends StatelessWidget {
     required this.textAlign,
     this.onTap,
     this.padding = const EdgeInsets.all(10),
-    this.height = 40,
   }) : super(key: key);
 
   @override
@@ -24,7 +22,6 @@ class Link extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
-        height: height,
         padding: padding,
         child: Text(
           label,

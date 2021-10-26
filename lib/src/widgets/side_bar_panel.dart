@@ -1,5 +1,5 @@
-import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:dashbook/src/widgets/icon.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class SideBarPanel extends StatelessWidget {
@@ -8,6 +8,8 @@ class SideBarPanel extends StatelessWidget {
   final VoidCallback? onCancel;
   final PageStorageKey? scrollViewKey;
   final Key? onCloseKey;
+  final double width;
+  final DashbookIcon? titleIcon;
 
   const SideBarPanel({
     Key? key,
@@ -16,13 +18,15 @@ class SideBarPanel extends StatelessWidget {
     this.onCancel,
     this.scrollViewKey,
     this.onCloseKey,
+    this.titleIcon,
+    required this.width,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).cardColor,
-      width: sideBarSize(context),
+      width: width,
       child: Stack(
         children: [
           Positioned.fill(
@@ -33,12 +37,27 @@ class SideBarPanel extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                      ),
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),
+                        ),
+                        if (titleIcon != null)
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 8,
+                            ),
+                            child: Opacity(
+                              opacity: kIsWeb ? 1 : 0,
+                              child: titleIcon,
+                            ),
+                          ),
+                      ],
                     ),
                     const SizedBox(height: 10),
                     child,

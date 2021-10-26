@@ -5,7 +5,13 @@ bool isLargeScreen(BuildContext context) =>
 
 double iconSize(BuildContext context) => isLargeScreen(context) ? 24.0 : 48.0;
 
-double sideBarSize(BuildContext context) {
+double sideBarSizeStory(BuildContext context) {
+  final screenWidth = MediaQuery.of(context).size.width;
+  final factor = isLargeScreen(context) ? 0.25 : 1;
+  return screenWidth * factor;
+}
+
+double sideBarSizeProperties(BuildContext context) {
   final screenWidth = MediaQuery.of(context).size.width;
   final factor = isLargeScreen(context) ? 0.5 : 1;
   return screenWidth * factor;
