@@ -1,6 +1,7 @@
 ## [next]
  - Adding support to preview the example inside a device frame 
- - Adding pin button to story list 
+ - Adding pin button to story list
+ - Change custom navigation bar to `Drawer`
 
 ## [0.1.4]
  - Adding support to Flutter 2.5

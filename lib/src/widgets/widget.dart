@@ -188,179 +188,10 @@ class _DashbookState extends State<Dashbook> {
             final chapterWidget = _currentChapter?.widget();
             return Scaffold(
               body: SafeArea(
-                child: Stack(
+                child: Row(
                   children: [
-                    if (_currentChapter != null)
-                      PreviewContainer(
-                        key: Key(_currentChapter!.id),
-                        usePreviewSafeArea: widget.usePreviewSafeArea,
-                        isPropertiesOpen:
-                            _currentView == CurrentView.properties,
-                        storyPanelPinned: _storyPanelPinned,
-                        deviceInfo: deviceInfo,
-                        deviceOrientation: deviceOrientation,
-                        showDeviceFrame: showDeviceFrame,
-                        child: chapterWidget!,
-                      ),
-                    Positioned(
-                      right: 10,
-                      top: 0,
-                      bottom: 0,
-                      child: _DashbookRightIconList(
-                        children: [
-                          if (_hasProperties())
-                            DashbookIcon(
-                              key: kPropertiesIcon,
-                              tooltip: 'Properties panel',
-                              icon: Icons.mode_edit,
-                              onClick: () => setState(
-                                () {
-                                  _currentView = CurrentView.properties;
-                                  _storyPanelPinned = false;
-                                },
-                              ),
-                            ),
-                          if (_currentChapter?.info != null)
-                            DashbookIcon(
-                              tooltip: 'Instructions',
-                              icon: Icons.info,
-                              onClick: () {
-                                showDialog<void>(
-                                  context: context,
-                                  builder: (_) {
-                                    return InstructionsDialog(
-                                      instructions: _currentChapter!.info!,
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          if (_currentChapter?.codeLink != null)
-                            DashbookIcon(
-                              tooltip: 'See code',
-                              icon: Icons.code,
-                              onClick: () =>
-                                  _launchURL(_currentChapter!.codeLink!),
-                            ),
-                          if (widget._dualTheme != null)
-                            _DashbookDualThemeIcon(
-                              dualTheme: widget._dualTheme!,
-                              currentTheme: _currentTheme!,
-                              onChangeTheme: (theme) =>
-                                  setState(() => _currentTheme = theme),
-                            ),
-                          if (widget._multiTheme != null)
-                            DashbookIcon(
-                              tooltip: 'Choose theme',
-                              icon: Icons.palette,
-                              onClick: () {
-                                showDialog<void>(
-                                  context: context,
-                                  builder: (_) => AlertDialog(
-                                    title: const Text('Theme chooser'),
-                                    content: DropdownButton<ThemeData>(
-                                      value: _currentTheme,
-                                      items: widget._multiTheme!.themes.entries
-                                          .map(
-                                            (entry) => DropdownMenuItem(
-                                              value: entry.value,
-                                              child: Text(entry.key),
-                                            ),
-                                          )
-                                          .toList(),
-                                      onChanged: (value) {
-                                        if (value != null) {
-                                          setState(() => _currentTheme = value);
-                                        }
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          if (kIsWeb && _currentChapter != null)
-                            DashbookIcon(
-                              tooltip: 'Share this example',
-                              icon: Icons.share,
-                              onClick: () {
-                                final url = PlatformUtils.getChapterUrl(
-                                  _currentChapter!,
-                                );
-                                Clipboard.setData(ClipboardData(text: url));
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content:
-                                        Text('Link copied to your clipboard'),
-                                  ),
-                                );
-                              },
-                            ),
-                          DashbookIcon(
-                            key: kDevicePreviewIcon,
-                            tooltip: 'Device preview',
-                            icon: Icons.phone_android_outlined,
-                            onClick: () async {
-                              final selectedDevice =
-                                  await showDialog<DeviceInfo>(
-                                context: context,
-                                builder: (_) => DeviceDialog(
-                                  currentSelection: deviceInfo,
-                                ),
-                              );
-
-                              setState(() => deviceInfo = selectedDevice);
-
-                              if (deviceInfo == null) {
-                                setState(() {
-                                  deviceOrientation = Orientation.portrait;
-                                });
-                                setState(() => showDeviceFrame = true);
-                              }
-                            },
-                          ),
-                          if (deviceInfo != null)
-                            DashbookIcon(
-                              key: kRotateIcon,
-                              tooltip: 'Orientation',
-                              icon: Icons.screen_rotation_outlined,
-                              onClick: () => setState(() {
-                                deviceOrientation =
-                                    deviceOrientation == Orientation.portrait
-                                        ? Orientation.landscape
-                                        : Orientation.portrait;
-                              }),
-                            ),
-                          if (deviceInfo != null)
-                            DashbookIcon(
-                              key: kHideFrameIcon,
-                              tooltip: 'Device frame',
-                              icon: Icons.mobile_off_outlined,
-                              onClick: () => setState(
-                                () => showDeviceFrame = !showDeviceFrame,
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                    if (_currentView != CurrentView.stories)
-                      Positioned(
-                        top: 5,
-                        left: 10,
-                        child: DashbookIcon(
-                          key: kStoriesIcon,
-                          tooltip: 'Navigator',
-                          icon: Icons.menu,
-                          onClick: () => setState(
-                            () => _currentView = CurrentView.stories,
-                          ),
-                        ),
-                      ),
                     if (_currentView == CurrentView.stories)
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        bottom: 0,
+                      Drawer(
                         child: StoriesList(
                           stories: widget.stories,
                           storyPanelPinned: _storyPanelPinned,
@@ -399,20 +230,198 @@ class _DashbookState extends State<Dashbook> {
                           },
                         ),
                       ),
-                    if (_currentView == CurrentView.properties &&
-                        _currentChapter != null)
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: PropertiesContainer(
-                          currentChapter: _currentChapter!,
-                          onCancel: () => setState(() => _currentView = null),
-                          onPropertyChange: () {
-                            setState(() {});
-                          },
-                        ),
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          if (_currentChapter != null)
+                            PreviewContainer(
+                              key: Key(_currentChapter!.id),
+                              usePreviewSafeArea: widget.usePreviewSafeArea,
+                              isPropertiesOpen:
+                                  _currentView == CurrentView.properties,
+                              deviceInfo: deviceInfo,
+                              deviceOrientation: deviceOrientation,
+                              showDeviceFrame: showDeviceFrame,
+                              child: chapterWidget!,
+                            ),
+                          Positioned(
+                            right: 10,
+                            top: 0,
+                            bottom: 0,
+                            child: _DashbookRightIconList(
+                              children: [
+                                if (_hasProperties())
+                                  DashbookIcon(
+                                    key: kPropertiesIcon,
+                                    tooltip: 'Properties panel',
+                                    icon: Icons.mode_edit,
+                                    onClick: () => setState(
+                                      () {
+                                        _currentView = CurrentView.properties;
+                                        _storyPanelPinned = false;
+                                      },
+                                    ),
+                                  ),
+                                if (_currentChapter?.info != null)
+                                  DashbookIcon(
+                                    tooltip: 'Instructions',
+                                    icon: Icons.info,
+                                    onClick: () {
+                                      showDialog<void>(
+                                        context: context,
+                                        builder: (_) {
+                                          return InstructionsDialog(
+                                            instructions:
+                                                _currentChapter!.info!,
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                if (_currentChapter?.codeLink != null)
+                                  DashbookIcon(
+                                    tooltip: 'See code',
+                                    icon: Icons.code,
+                                    onClick: () =>
+                                        _launchURL(_currentChapter!.codeLink!),
+                                  ),
+                                if (widget._dualTheme != null)
+                                  _DashbookDualThemeIcon(
+                                    dualTheme: widget._dualTheme!,
+                                    currentTheme: _currentTheme!,
+                                    onChangeTheme: (theme) =>
+                                        setState(() => _currentTheme = theme),
+                                  ),
+                                if (widget._multiTheme != null)
+                                  DashbookIcon(
+                                    tooltip: 'Choose theme',
+                                    icon: Icons.palette,
+                                    onClick: () {
+                                      showDialog<void>(
+                                        context: context,
+                                        builder: (_) => AlertDialog(
+                                          title: const Text('Theme chooser'),
+                                          content: DropdownButton<ThemeData>(
+                                            value: _currentTheme,
+                                            items: widget
+                                                ._multiTheme!.themes.entries
+                                                .map(
+                                                  (entry) => DropdownMenuItem(
+                                                    value: entry.value,
+                                                    child: Text(entry.key),
+                                                  ),
+                                                )
+                                                .toList(),
+                                            onChanged: (value) {
+                                              if (value != null) {
+                                                setState(() =>
+                                                    _currentTheme = value);
+                                              }
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                if (kIsWeb && _currentChapter != null)
+                                  DashbookIcon(
+                                    tooltip: 'Share this example',
+                                    icon: Icons.share,
+                                    onClick: () {
+                                      final url = PlatformUtils.getChapterUrl(
+                                        _currentChapter!,
+                                      );
+                                      Clipboard.setData(
+                                          ClipboardData(text: url));
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              'Link copied to your clipboard'),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                DashbookIcon(
+                                  key: kDevicePreviewIcon,
+                                  tooltip: 'Device preview',
+                                  icon: Icons.phone_android_outlined,
+                                  onClick: () async {
+                                    final selectedDevice =
+                                        await showDialog<DeviceInfo>(
+                                      context: context,
+                                      builder: (_) => DeviceDialog(
+                                        currentSelection: deviceInfo,
+                                      ),
+                                    );
+
+                                    setState(() => deviceInfo = selectedDevice);
+
+                                    if (deviceInfo == null) {
+                                      setState(() {
+                                        deviceOrientation =
+                                            Orientation.portrait;
+                                      });
+                                      setState(() => showDeviceFrame = true);
+                                    }
+                                  },
+                                ),
+                                if (deviceInfo != null)
+                                  DashbookIcon(
+                                    key: kRotateIcon,
+                                    tooltip: 'Orientation',
+                                    icon: Icons.screen_rotation_outlined,
+                                    onClick: () => setState(() {
+                                      deviceOrientation = deviceOrientation ==
+                                              Orientation.portrait
+                                          ? Orientation.landscape
+                                          : Orientation.portrait;
+                                    }),
+                                  ),
+                                if (deviceInfo != null)
+                                  DashbookIcon(
+                                    key: kHideFrameIcon,
+                                    tooltip: 'Device frame',
+                                    icon: Icons.mobile_off_outlined,
+                                    onClick: () => setState(
+                                      () => showDeviceFrame = !showDeviceFrame,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          if (_currentView != CurrentView.stories)
+                            Positioned(
+                              top: 5,
+                              left: 10,
+                              child: DashbookIcon(
+                                key: kStoriesIcon,
+                                tooltip: 'Navigator',
+                                icon: Icons.menu,
+                                onClick: () => setState(
+                                  () => _currentView = CurrentView.stories,
+                                ),
+                              ),
+                            ),
+                          if (_currentView == CurrentView.properties &&
+                              _currentChapter != null)
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              bottom: 0,
+                              child: PropertiesContainer(
+                                currentChapter: _currentChapter!,
+                                onCancel: () =>
+                                    setState(() => _currentView = null),
+                                onPropertyChange: () {
+                                  setState(() {});
+                                },
+                              ),
+                            ),
+                        ],
                       ),
+                    ),
                   ],
                 ),
               ),

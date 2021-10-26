@@ -11,7 +11,6 @@ class PreviewContainer extends StatelessWidget {
   final DeviceInfo? deviceInfo;
   final Orientation? deviceOrientation;
   final bool showDeviceFrame;
-  final bool storyPanelPinned;
 
   const PreviewContainer({
     required Key key,
@@ -19,7 +18,6 @@ class PreviewContainer extends StatelessWidget {
     required this.usePreviewSafeArea,
     required this.isPropertiesOpen,
     required this.showDeviceFrame,
-    required this.storyPanelPinned,
     this.deviceInfo,
     this.deviceOrientation,
   }) : super(key: key);
@@ -29,7 +27,7 @@ class PreviewContainer extends StatelessWidget {
     return Positioned(
       top: 0,
       bottom: 0,
-      left: storyPanelPinned ? sideBarSizeStory(context) : 0,
+      left: 0,
       right: (kIsWeb && isPropertiesOpen) ? sideBarSizeProperties(context) : 0,
       child: deviceInfo != null
           ? DevicePreview(
