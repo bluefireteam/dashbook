@@ -1,4 +1,4 @@
-## [next]
+## [0.1.5]
  - Adding support to preview the example inside a device frame 
  - Adding pin button to story list
  - Change custom navigation bar to `Drawer`
