@@ -1,4 +1,4 @@
-import 'package:dashbook/src/widgets/device_dialog.dart';
+import 'package:dashbook/src/widgets/select_device/device_dialog.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
