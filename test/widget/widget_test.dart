@@ -49,7 +49,7 @@ void main() {
     });
 
     testWidgets('can select and apply a device to preview', (tester) async {
-      final selectedDevice = Devices.android.nexus9;
+      final selectedDevice = Devices.android.mediumPhone;
 
       await tester.pumpDashbook(_getDashbook());
 
@@ -79,7 +79,7 @@ void main() {
     testWidgets(
         'rotate and hide frame are showed when a device to preview is selected',
         (tester) async {
-      final selectedDevice = Devices.android.nexus9;
+      final selectedDevice = Devices.android.mediumPhone;
 
       await tester.pumpDashbook(_getDashbook());
 
@@ -110,7 +110,7 @@ void main() {
     });
 
     testWidgets('can clear the device preview selected', (tester) async {
-      final selectedDevice = Devices.android.nexus9;
+      final selectedDevice = Devices.android.mediumPhone;
 
       await tester.pumpDashbook(_getDashbook());
 
@@ -149,7 +149,7 @@ void main() {
     });
 
     testWidgets('can hide device frame', (tester) async {
-      final selectedDevice = Devices.android.nexus9;
+      final selectedDevice = Devices.android.mediumPhone;
 
       await tester.pumpDashbook(_getDashbook());
 
@@ -187,7 +187,7 @@ void main() {
     });
 
     testWidgets('can rotate device preview', (tester) async {
-      final selectedDevice = Devices.android.nexus9;
+      final selectedDevice = Devices.android.mediumPhone;
 
       await tester.pumpDashbook(_getDashbook());
 
