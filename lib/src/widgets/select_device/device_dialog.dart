@@ -1,3 +1,4 @@
+import 'package:dashbook/src/widgets/select_device/custom_device.dart';
 import 'package:dashbook/src/widgets/select_device/device_dialog_buttons.dart';
 import 'package:dashbook/src/widgets/select_device/select_device.dart';
 import 'package:device_frame/device_frame.dart';
@@ -17,7 +18,7 @@ class DeviceDialog extends StatefulWidget {
 
 class _DeviceDialogState extends State<DeviceDialog> {
   DeviceInfo? _selectedDevice;
-  bool isCustom = false;
+  bool _isCustom = false;
 
   @override
   void initState() {
@@ -25,6 +26,13 @@ class _DeviceDialogState extends State<DeviceDialog> {
 
     _selectedDevice = widget.currentSelection;
   }
+
+  void _selectDevice(BuildContext context, [DeviceInfo? select]) {
+    Navigator.of(context).pop(select);
+  }
+
+  set isCustom(bool value) => setState(() => _isCustom = value);
+  bool get isCustom => _isCustom;
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +43,16 @@ class _DeviceDialogState extends State<DeviceDialog> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SelectDevice(
-              selectedDevice: _selectedDevice,
-              onSelect: (device) => setState(() => _selectedDevice = device),
-            ),
+            if (isCustom)
+              CustomDevice(
+                changeToList: () => isCustom = false,
+              )
+            else
+              SelectDevice(
+                selectedDevice: _selectedDevice,
+                onSelect: (device) => setState(() => _selectedDevice = device),
+                changeToCustom: () => isCustom = true,
+              ),
             const SizedBox(height: 15),
             DeviceDialogButtons(
               onCancel: () => _selectDevice(context, widget.currentSelection),
@@ -48,19 +62,6 @@ class _DeviceDialogState extends State<DeviceDialog> {
           ],
         ),
       ),
-    );
-  }
-
-  void _selectDevice(BuildContext context, [DeviceInfo? select]) {
-    Navigator.of(context).pop(select);
-  }
-
-  DeviceInfo customSetup({required Size size}) {
-    return DeviceInfo.genericTablet(
-      platform: TargetPlatform.android,
-      id: 'custom_setup',
-      name: 'Custom',
-      screenSize: size,
     );
   }
 }
