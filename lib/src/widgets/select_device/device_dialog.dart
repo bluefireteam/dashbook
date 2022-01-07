@@ -17,17 +17,22 @@ class DeviceDialog extends StatefulWidget {
 }
 
 class _DeviceDialogState extends State<DeviceDialog> {
+  final _formKey = GlobalKey<FormState>();
   DeviceInfo? _selectedDevice;
-  bool _isCustom = false;
+  late bool _isCustom;
 
   @override
   void initState() {
     super.initState();
 
+    isCustom = widget.currentSelection?.identifier.name == kCustomDeviceId;
     _selectedDevice = widget.currentSelection;
   }
 
   void _selectDevice(BuildContext context, [DeviceInfo? select]) {
+    if (isCustom) {
+      if (_formKey.currentState?.validate() == false) return;
+    }
     Navigator.of(context).pop(select);
   }
 
@@ -45,7 +50,13 @@ class _DeviceDialogState extends State<DeviceDialog> {
           children: [
             if (isCustom)
               CustomDevice(
-                changeToList: () => isCustom = false,
+                formKey: _formKey,
+                changeToList: () {
+                  _selectedDevice = null;
+                  isCustom = false;
+                },
+                onUpdateDevice: (device) => _selectedDevice = device,
+                selectedDevice: _selectedDevice,
               )
             else
               SelectDevice(
