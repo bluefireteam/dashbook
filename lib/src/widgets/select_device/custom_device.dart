@@ -119,8 +119,8 @@ class CustomDeviceState extends State<CustomDevice> {
                 const SizedBox(height: 12),
                 _PickPlatform(
                   selected: custom.identifier.platform,
-                  onSelect: (platform) =>
-                      setState(() => _setCustom(platform: platform)),
+                  onSelect: (platform) => 
+                    setState(() => _setCustom(platform: platform)),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
@@ -189,14 +189,17 @@ class _PickPlatform extends StatelessWidget {
         return TextButton(
           onPressed: () => onSelect(platform),
           child: Text(
-            platform.name,
+            _getPlatformName(platform),
             style: TextStyle(
-              fontWeight:
-                  platform == selected ? FontWeight.bold : FontWeight.normal,
+              fontWeight: platform == selected ? 
+                FontWeight.bold : FontWeight.normal,
             ),
           ),
         );
       }).toList(),
     );
   }
+
+  String _getPlatformName(TargetPlatform platform) 
+    => platform.toString().split('.').last;
 }
