@@ -30,8 +30,8 @@ class _DeviceDialogState extends State<DeviceDialog> {
   }
 
   void _selectDevice(BuildContext context, [DeviceInfo? select]) {
-    if (isCustom) {
-      if (_formKey.currentState?.validate() == false) return;
+    if (isCustom && _formKey.currentState?.validate() == false) {
+      return;
     }
     Navigator.of(context).pop(select);
   }
