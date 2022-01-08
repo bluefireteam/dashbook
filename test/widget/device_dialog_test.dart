@@ -5,7 +5,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockingjay/mockingjay.dart';
 
 void main() {
-  Widget _pumpDeviceDialog({MockNavigator? navigator}) => MaterialApp(
+  Widget _pumpDeviceDialog({
+    MockNavigator? navigator,
+    void Function(DeviceInfo?)? onSelect,
+  }) =>
+      MaterialApp(
         home: Scaffold(
           body: Builder(
             builder: (context) {
@@ -13,16 +17,25 @@ void main() {
                 navigator: navigator ?? MockNavigator(),
                 child: ElevatedButton(
                   child: const Text('ButtonTest'),
-                  onPressed: () => showDialog<DeviceInfo>(
-                    context: context,
-                    builder: (_) => const DeviceDialog(),
-                  ),
+                  onPressed: () async {
+                    final result = await showDialog<DeviceInfo>(
+                      context: context,
+                      builder: (_) => const DeviceDialog(),
+                    );
+                    onSelect?.call(result);
+                  },
                 ),
               );
             },
           ),
         ),
       );
+
+  Future<void> _openCustomSetup(WidgetTester tester) async {
+    final customDeviceButtonLabel = find.text('Custom Device');
+    await tester.tap(customDeviceButtonLabel);
+    await tester.pumpAndSettle();
+  }
 
   group('Device dialog', () {
     testWidgets('show select dialog', (tester) async {
@@ -70,6 +83,94 @@ void main() {
         ),
         findsOneWidget,
       );
+
+      final customDeviceButtonLabel = find.text('Custom Device');
+      expect(customDeviceButtonLabel, findsOneWidget);
+      expect(
+        find.ancestor(
+          of: customDeviceButtonLabel,
+          matching:
+              find.byWidgetPredicate((widget) => widget is OutlinedButton),
+        ),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets(
+        'When click in Custom Device button, '
+        'should show a form to customize device info', (tester) async {
+      await tester.pumpWidget(_pumpDeviceDialog());
+      await tester.tap(find.text('ButtonTest'));
+      await tester.pumpAndSettle();
+
+      await _openCustomSetup(tester);
+
+      expect(find.text('Custom Device'), findsNothing);
+      final deviceListButtonLabel = find.text('Devices List');
+      expect(
+        find.ancestor(
+          of: deviceListButtonLabel,
+          matching:
+              find.byWidgetPredicate((widget) => widget is OutlinedButton),
+        ),
+        findsOneWidget,
+      );
+
+      final customDeviceTitle = find.text('Choose your custom setup');
+      expect(customDeviceTitle, findsOneWidget);
+
+      final formFields = ['Height', 'Width'];
+      for (final label in formFields) {
+        expect(
+          find.ancestor(
+            of: find.text(label),
+            matching:
+                find.byWidgetPredicate((widget) => widget is TextFormField),
+          ),
+          findsOneWidget,
+        );
+      }
+      final availablePlatforms = [TargetPlatform.android, TargetPlatform.iOS];
+      for (final platform in availablePlatforms) {
+        expect(
+          find.ancestor(
+            of: find.text(platform.toString().split('.').last),
+            matching: find.byWidgetPredicate((widget) => widget is TextButton),
+          ),
+          findsOneWidget,
+        );
+      }
+    });
+
+    testWidgets('Should customize a device info and return it', (tester) async {
+      DeviceInfo? result;
+      await tester.pumpWidget(
+        _pumpDeviceDialog(onSelect: (selected) async => result = selected),
+      );
+      await tester.tap(find.text('ButtonTest'));
+      await tester.pumpAndSettle();
+
+      await _openCustomSetup(tester);
+
+      final formFields = ['Height', 'Width'];
+      for (final label in formFields) {
+        await tester.enterText(
+          find.ancestor(
+            of: find.text(label),
+            matching:
+                find.byWidgetPredicate((widget) => widget is TextFormField),
+          ),
+          '1000',
+        );
+      }
+      await tester.tap(find.text('iOS'));
+
+      await tester.tap(find.text('Select'));
+
+      expect(result, isNotNull);
+      expect(result!.screenSize.width, 1000);
+      expect(result!.screenSize.height, 1000);
+      expect(result!.identifier.platform, TargetPlatform.iOS);
     });
 /*
     /// There is an issue on mockingjay when the test uses showdialog with navigator
