@@ -45,7 +45,7 @@ class DevicePreview extends StatelessWidget {
 
   MediaQueryData _mediaQueryData(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final isRotated = DeviceFrame.isRotated(deviceInfo, deviceOrientation);
+    final isRotated = deviceInfo.isLandscape(deviceOrientation);
 
     final padding = isRotated
         ? (deviceInfo.rotatedSafeAreas ?? deviceInfo.safeAreas)
