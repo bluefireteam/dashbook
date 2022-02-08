@@ -148,7 +148,7 @@ class _FormField extends StatelessWidget {
   final void Function(num) onUpdate;
 
   String? _numValidator(String? value) {
-    if (value == null || value.isEmpty) return 'Value could not be empty';
+    if (value == null || value.isEmpty) return 'Value can not be empty';
     final isDigitsOnly = num.tryParse(value);
     if (isDigitsOnly == null) return 'Input needs to be digits only';
     if (isDigitsOnly > 5000) return 'Try to use a value less than 5000';
