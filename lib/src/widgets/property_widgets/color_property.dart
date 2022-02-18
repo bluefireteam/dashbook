@@ -7,12 +7,10 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 class ColorProperty extends StatefulWidget {
   final Property<Color> property;
   final PropertyChanged onChanged;
-  final String? tooltipMessage;
 
   const ColorProperty({
     required this.property,
     required this.onChanged,
-    this.tooltipMessage,
     Key? key,
   }) : super(key: key);
 
@@ -61,7 +59,7 @@ class ColorPropertyState extends State<ColorProperty> {
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
-      tooltipMessage: widget.tooltipMessage,
+      tooltipMessage: widget.property.tooltipMessage,
       label: widget.property.name,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(

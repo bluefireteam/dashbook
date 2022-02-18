@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 class TextProperty extends StatefulWidget {
   final Property<String> property;
   final PropertyChanged onChanged;
-  final String? tooltipMessage;
 
   const TextProperty({
     required this.property,
     required this.onChanged,
-    this.tooltipMessage,
     Key? key,
   }) : super(key: key);
 
@@ -28,7 +26,7 @@ class TextPropertyState extends State<TextProperty> {
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
-      tooltipMessage: widget.tooltipMessage,
+      tooltipMessage: widget.property.tooltipMessage,
       label: widget.property.name,
       child: TextField(
         onChanged: (value) {

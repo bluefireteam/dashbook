@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 class BoolProperty extends StatefulWidget {
   final Property<bool> property;
   final PropertyChanged onChanged;
-  final String? tooltipMessage;
 
   const BoolProperty({
     required this.property,
     required this.onChanged,
-    this.tooltipMessage,
     Key? key,
   }) : super(key: key);
 
@@ -26,7 +24,7 @@ class BoolPropertyState extends State<BoolProperty> {
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
-      tooltipMessage: widget.tooltipMessage,
+      tooltipMessage: widget.property.tooltipMessage,
       label: widget.property.name,
       child: Checkbox(
         value: _value,

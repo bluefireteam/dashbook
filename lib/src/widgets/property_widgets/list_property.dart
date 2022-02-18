@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 class ListPropertyWidget<T> extends StatefulWidget {
   final ListProperty<T> property;
   final PropertyChanged onChanged;
-  final String? tooltipMessage;
 
   const ListPropertyWidget({
     required this.property,
     required this.onChanged,
-    this.tooltipMessage,
     Key? key,
   }) : super(key: key);
 
@@ -22,7 +20,7 @@ class ListPropertyState<T> extends State<ListPropertyWidget<T>> {
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
-      tooltipMessage: widget.tooltipMessage,
+      tooltipMessage: widget.property.tooltipMessage,
       label: widget.property.name,
       child: DropdownButton<T>(
         isExpanded: true,
