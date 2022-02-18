@@ -13,11 +13,18 @@ class Property<T> {
 
   final T defaultValue;
 
+  final String? tooltipMessage;
+
   T? value;
 
   final ControlProperty? visibilityControlProperty;
 
-  Property(this.name, this.defaultValue, {this.visibilityControlProperty});
+  Property(
+    this.name,
+    this.defaultValue, {
+    this.tooltipMessage,
+    this.visibilityControlProperty,
+  });
 
   T getValue() => value ?? defaultValue;
 
@@ -32,10 +39,12 @@ class ListProperty<T> extends Property<T> {
     String name,
     T defaultValue,
     this.list, {
+    String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) : super(
           name,
           defaultValue,
+          tooltipMessage: tooltipMessage,
           visibilityControlProperty: visibilityControlProperty,
         );
 }
@@ -47,10 +56,12 @@ class OptionsProperty<T> extends Property<T> {
     String name,
     T defaultValue,
     this.list, {
+    String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) : super(
           name,
           defaultValue,
+          tooltipMessage: tooltipMessage,
           visibilityControlProperty: visibilityControlProperty,
         );
 }
@@ -73,6 +84,7 @@ class DashbookContext {
   String textProperty(
     String name,
     String defaultValue, {
+    String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
     if (properties.containsKey(name)) {
@@ -81,6 +93,7 @@ class DashbookContext {
       final property = Property<String>(
         name,
         defaultValue,
+        tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
       );
       properties[name] = property;
@@ -92,6 +105,7 @@ class DashbookContext {
   double numberProperty(
     String name,
     double defaultValue, {
+    String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
     if (properties.containsKey(name)) {
@@ -100,6 +114,7 @@ class DashbookContext {
       final property = Property<double>(
         name,
         defaultValue,
+        tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
       );
       properties[name] = property;
@@ -111,6 +126,7 @@ class DashbookContext {
   bool boolProperty(
     String name,
     bool defaultValue, {
+    String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
     if (properties.containsKey(name)) {
@@ -119,6 +135,7 @@ class DashbookContext {
       final property = Property<bool>(
         name,
         defaultValue,
+        tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
       );
       properties[name] = property;
@@ -130,6 +147,7 @@ class DashbookContext {
   Color colorProperty(
     String name,
     Color defaultValue, {
+    String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
     if (properties.containsKey(name)) {
@@ -138,6 +156,7 @@ class DashbookContext {
       final property = Property<Color>(
         name,
         defaultValue,
+        tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
       );
       properties[name] = property;
@@ -150,6 +169,7 @@ class DashbookContext {
     String name,
     T defaultValue,
     List<T> list, {
+    String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
     if (properties.containsKey(name)) {
@@ -159,6 +179,7 @@ class DashbookContext {
         name,
         defaultValue,
         list,
+        tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
       );
       properties[name] = property;
@@ -171,6 +192,7 @@ class DashbookContext {
     String name,
     T defaultValue,
     List<PropertyOption<T>> list, {
+    String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
     if (properties.containsKey(name)) {
@@ -180,6 +202,7 @@ class DashbookContext {
         name,
         defaultValue,
         list,
+        tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
       );
       properties[name] = property;
@@ -191,6 +214,7 @@ class DashbookContext {
   EdgeInsets edgeInsetsProperty(
     String name,
     EdgeInsets defaultValue, {
+    String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
     if (properties.containsKey(name)) {
@@ -199,6 +223,7 @@ class DashbookContext {
       final property = Property<EdgeInsets>(
         name,
         defaultValue,
+        tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
       );
       properties[name] = property;
@@ -210,6 +235,7 @@ class DashbookContext {
   BorderRadius borderRadiusProperty(
     String name,
     BorderRadius defaultValue, {
+    String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
     if (properties.containsKey(name)) {
@@ -218,6 +244,7 @@ class DashbookContext {
       final property = Property<BorderRadius>(
         name,
         defaultValue,
+        tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
       );
       properties[name] = property;
