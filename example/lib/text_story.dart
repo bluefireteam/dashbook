@@ -15,7 +15,12 @@ void addTextStories(Dashbook dashbook) {
               const EdgeInsets.fromLTRB(1, 2, 3, 4),
             ),
             child: Text(
-              ctx.textProperty('text', 'Text Example'),
+              ctx.textProperty(
+                'text',
+                'Text Example',
+                tooltipMessage: 'This property is used to change the content '
+                    'from Text widget',
+              ),
               textAlign: ctx.listProperty(
                 'text align',
                 TextAlign.center,
