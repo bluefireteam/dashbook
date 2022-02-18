@@ -7,10 +7,12 @@ import 'package:flutter/material.dart';
 class EdgeInsetsProperty extends StatefulWidget {
   final Property<EdgeInsets> property;
   final PropertyChanged onChanged;
+  final String? tooltipMessage;
 
   const EdgeInsetsProperty({
     required this.property,
     required this.onChanged,
+    this.tooltipMessage,
     Key? key,
   }) : super(key: key);
 
@@ -104,6 +106,7 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
     final value = widget.property.getValue();
 
     return PropertyScaffold(
+      tooltipMessage: widget.tooltipMessage,
       label: widget.property.name,
       child: Row(
         children: [

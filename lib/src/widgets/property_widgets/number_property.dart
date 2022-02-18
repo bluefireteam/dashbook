@@ -6,10 +6,12 @@ import 'package:flutter/services.dart';
 class NumberProperty extends StatefulWidget {
   final Property<double> property;
   final PropertyChanged onChanged;
+  final String? tooltipMessage;
 
   const NumberProperty({
     required this.property,
     required this.onChanged,
+    this.tooltipMessage,
     Key? key,
   }) : super(key: key);
 
@@ -28,6 +30,7 @@ class NumberPropertyState extends State<NumberProperty> {
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
+      tooltipMessage: widget.tooltipMessage,
       label: widget.property.name,
       child: TextField(
         keyboardType: TextInputType.number,

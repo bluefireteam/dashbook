@@ -7,10 +7,12 @@ import 'package:flutter/material.dart';
 class BorderRadiusProperty extends StatefulWidget {
   final Property<BorderRadius> property;
   final PropertyChanged onChanged;
+  final String? tooltipMessage;
 
   const BorderRadiusProperty({
     required this.property,
     required this.onChanged,
+    this.tooltipMessage,
     Key? key,
   }) : super(key: key);
 
@@ -111,6 +113,7 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
     final value = widget.property.getValue();
 
     return PropertyScaffold(
+      tooltipMessage: widget.tooltipMessage,
       label: widget.property.name,
       child: Row(
         children: [
