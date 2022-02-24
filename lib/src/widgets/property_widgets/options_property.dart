@@ -20,6 +20,7 @@ class OptionsPropertyState extends State<OptionsPropertyWidget> {
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
+      tooltipMessage: widget.property.tooltipMessage,
       label: widget.property.name,
       child: DropdownButton(
         isExpanded: true,

@@ -111,6 +111,7 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
     final value = widget.property.getValue();
 
     return PropertyScaffold(
+      tooltipMessage: widget.property.tooltipMessage,
       label: widget.property.name,
       child: Row(
         children: [

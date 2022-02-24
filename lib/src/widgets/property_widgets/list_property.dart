@@ -20,6 +20,7 @@ class ListPropertyState<T> extends State<ListPropertyWidget<T>> {
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
+      tooltipMessage: widget.property.tooltipMessage,
       label: widget.property.name,
       child: DropdownButton<T>(
         isExpanded: true,

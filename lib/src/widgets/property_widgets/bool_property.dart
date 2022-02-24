@@ -24,6 +24,7 @@ class BoolPropertyState extends State<BoolProperty> {
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
+      tooltipMessage: widget.property.tooltipMessage,
       label: widget.property.name,
       child: Checkbox(
         value: _value,

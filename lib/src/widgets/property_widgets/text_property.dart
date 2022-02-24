@@ -26,6 +26,7 @@ class TextPropertyState extends State<TextProperty> {
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
+      tooltipMessage: widget.property.tooltipMessage,
       label: widget.property.name,
       child: TextField(
         onChanged: (value) {

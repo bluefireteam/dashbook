@@ -59,6 +59,7 @@ class ColorPropertyState extends State<ColorProperty> {
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
+      tooltipMessage: widget.property.tooltipMessage,
       label: widget.property.name,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(

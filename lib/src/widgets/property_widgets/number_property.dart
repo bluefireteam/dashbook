@@ -28,6 +28,7 @@ class NumberPropertyState extends State<NumberProperty> {
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
+      tooltipMessage: widget.property.tooltipMessage,
       label: widget.property.name,
       child: TextField(
         keyboardType: TextInputType.number,
