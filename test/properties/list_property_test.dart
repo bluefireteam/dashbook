@@ -10,10 +10,12 @@ Dashbook _getDashbook() {
 
   dashbook.storiesOf('List').add('default', (ctx) {
     return Text(
-      'Current: ${ctx.listProperty('listValue', 'ValueX', [
-            'ValueX',
-            'ValueY'
-          ])}',
+      'Current: ${ctx.listProperty(
+        'listValue',
+        'ValueX',
+        ['ValueX', 'ValueY'],
+        tooltipMessage: 'Test tooltip',
+      )}',
     );
   });
 
@@ -46,6 +48,28 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Current: ValueY'), findsOneWidget);
+    });
+
+    testWidgets('shows the property tooltip', (tester) async {
+      await tester.pumpDashbook(_getDashbook());
+
+      await tester.openPropertiesPanel();
+
+      await tester.longPress(find.byIcon(Icons.info_outline_rounded));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(kTooltipTitle), findsOneWidget);
+    });
+
+    testWidgets('can open the property tooltip', (tester) async {
+      await tester.pumpDashbook(_getDashbook());
+
+      await tester.openPropertiesPanel();
+
+      await tester.longPress(find.byIcon(Icons.info_outline_rounded));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Test tooltip'), findsOneWidget);
     });
   });
 }

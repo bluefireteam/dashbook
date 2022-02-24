@@ -1,3 +1,4 @@
+import 'package:dashbook/src/widgets/keys.dart';
 import 'package:flutter/material.dart';
 
 class TitleWithTooltip extends StatelessWidget {
@@ -12,11 +13,12 @@ class TitleWithTooltip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Wrap(
       children: [
         Text(label),
         const SizedBox(width: 8),
         Tooltip(
+          key: kTooltipTitle,
           verticalOffset: 8,
           preferBelow: false,
           message: tooltipMessage,
