@@ -1,22 +1,22 @@
 name: dashbook
 description: A showcase/sandbox library to help you build isolated widgets in Flutter
-version: 0.1.6
+version: 0.1.7
 homepage: https://github.com/bluefireteam/dashbook
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  device_frame: ^0.6.1
+  device_frame: ^1.0.0
   flutter:
     sdk: flutter
   flutter_colorpicker: ^1.0.3
-  flutter_markdown: ^0.6.1
+  flutter_markdown: ^0.6.9
   shared_preferences: ^2.0.13
   url_launcher: ^6.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mockingjay: ^0.1.1
+  mockingjay: ^0.2.0
   very_good_analysis: ^2.4.0

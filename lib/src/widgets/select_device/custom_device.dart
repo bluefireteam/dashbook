@@ -153,6 +153,7 @@ class _FormField extends StatelessWidget {
     if (isDigitsOnly == null) return 'Input needs to be digits only';
     if (isDigitsOnly > 5000) return 'Try to use a value less than 5000';
     if (isDigitsOnly < 100) return 'Try to use a value greather than 100';
+    return null;
   }
 
   @override
