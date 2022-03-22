@@ -4,7 +4,6 @@ import 'package:dashbook/src/widgets/icon.dart';
 import 'package:dashbook/src/widgets/keys.dart';
 import 'package:dashbook/src/widgets/link.dart';
 import 'package:dashbook/src/widgets/side_bar_panel.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 typedef OnSelectChapter = Function(Chapter chapter);
