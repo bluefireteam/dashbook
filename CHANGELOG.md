@@ -1,3 +1,7 @@
+## [0.1.7]
+ - Updating dependencies
+ - Fix warnings
+
 ## [0.1.6]
  - Adding tooltip to properties
  - Updating dependencies to work on Flutter 2.10
