@@ -15,7 +15,7 @@ Have any questions or ideas? Join our [Discord](https://discord.gg/FCHGNZ4yxF).
 Add the dependency to your `pubspec.yaml`
 
 ```
-dashbook: ^0.1.6
+dashbook: ^0.1.7
 ```
 
 A `Dashbook` instance has a collection of the app widgets (Stories) and its variants (Chapters). Here you can see a very simple example of how to use it.
@@ -145,7 +145,7 @@ dashbook.storiesOf('MessageCard').decorator(CenterDecorator()).add(
         infoColor: ctx.colorProperty(
             'infoColor',
             const Color(0xFF5E89FF),
-            // this property will only be shown when type is info 
+            // this property will only be shown when type is info
             visibilityControlProperty: ControlProperty('type', MessageCardType.info),
         ),
     ),

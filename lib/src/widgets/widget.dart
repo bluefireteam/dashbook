@@ -16,6 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
+typedef OnChapterChange = void Function(Chapter);
+
 class _DashbookDualTheme {
   final ThemeData light;
   final ThemeData dark;
@@ -46,6 +48,8 @@ class Dashbook extends StatefulWidget {
   final String title;
   final bool usePreviewSafeArea;
   final GlobalKey<NavigatorState>? navigatorKey;
+  /// Called whenever a new chapter is selected.
+  final OnChapterChange? onChapterChange;
 
   Dashbook({
     Key? key,
@@ -53,6 +57,7 @@ class Dashbook extends StatefulWidget {
     this.title = '',
     this.usePreviewSafeArea = false,
     this.navigatorKey,
+    this.onChapterChange,
   })  : _dualTheme = null,
         _multiTheme = null,
         super(key: key);
@@ -65,6 +70,7 @@ class Dashbook extends StatefulWidget {
     this.title = '',
     this.usePreviewSafeArea = false,
     this.navigatorKey,
+    this.onChapterChange,
   })  : _dualTheme = _DashbookDualTheme(
           dark: dark,
           light: light,
@@ -81,6 +87,7 @@ class Dashbook extends StatefulWidget {
     this.title = '',
     this.usePreviewSafeArea = false,
     this.navigatorKey,
+    this.onChapterChange,
   })  : _multiTheme =
             _DashbookMultiTheme(themes: themes, initialTheme: initialTheme),
         theme = null,
@@ -154,6 +161,10 @@ class _DashbookState extends State<Dashbook> {
       }
     }
 
+    if (initialChapter != null) {
+      widget.onChapterChange?.call(initialChapter);
+    }
+
     setState(() {
       _currentChapter = initialChapter;
       _preferences = preferences;
@@ -221,6 +232,7 @@ class _DashbookState extends State<Dashbook> {
                             _storyPanelPinned = false;
                           }),
                           onSelectChapter: (chapter) {
+                            widget.onChapterChange?.call(chapter);
                             setState(() {
                               _currentChapter = chapter;
                               if (!_storyPanelPinned) {
