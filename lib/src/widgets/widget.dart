@@ -48,6 +48,7 @@ class Dashbook extends StatefulWidget {
   final String title;
   final bool usePreviewSafeArea;
   final GlobalKey<NavigatorState>? navigatorKey;
+
   /// Called whenever a new chapter is selected.
   final OnChapterChange? onChapterChange;
 
