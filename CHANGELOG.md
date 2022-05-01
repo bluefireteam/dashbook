@@ -1,3 +1,6 @@
+## [0.1.8]
+ - Adding onChapterChange to `Dashbook`
+
 ## [0.1.7]
  - Updating dependencies
  - Fix warnings
