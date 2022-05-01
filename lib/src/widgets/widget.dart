@@ -255,7 +255,8 @@ class _DashbookState extends State<Dashbook> {
                               key: Key(_currentChapter!.id),
                               usePreviewSafeArea: widget.usePreviewSafeArea,
                               isPropertiesOpen:
-                                  _currentView == CurrentView.properties,
+                                  _currentView == CurrentView.properties ||
+                                      _currentView == CurrentView.actions,
                               deviceInfo: deviceInfo,
                               deviceOrientation: deviceOrientation,
                               showDeviceFrame: showDeviceFrame,
