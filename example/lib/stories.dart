@@ -96,4 +96,27 @@ void addStories(Dashbook dashbook) {
           ),
         ),
       );
+
+  dashbook.storiesOf('Toast').add(
+    'deault',
+    (context) {
+      context
+        ..action('Show toast', (context) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Hello'),
+            ),
+          );
+        })
+        ..action('Show toast 2', (context) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Hello 2'),
+            ),
+          );
+        });
+
+      return const Center(child: Text('Use the actions menu to show a Toast'));
+    },
+  );
 }

@@ -73,6 +73,29 @@ void main() {
 }
 ```
 
+## Actions
+
+Dashbook also provides a way for easily calling methods from its UI, these callbacks can be used for more complex examples which demands user interaction.
+
+For example, a `Dialog` is something that isn't direclty rendered on a page, but rather show upon an action, an example for a `CustomDialog` widget could be achieved on Dashbook by using the following code:
+
+```dart
+final dashbook = Dashbook();
+
+dashbook
+  .storiesOf('CustomDialog')
+  .add('default', (ctx) {
+    ctx.action('Open dialog', (context) {
+      showDialog(
+        context: context,
+        builder: (_) => CustomDialog(),
+      );
+    });
+
+    return Text('Use actions to show the Dialog');
+  });
+```
+
 ## Preview area
 
 By default Dashbook will provide the whole screen area for the preview, which means that its controll icons will appear floating above the example.

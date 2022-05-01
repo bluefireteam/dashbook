@@ -1,5 +1,6 @@
 ## [0.1.8]
  - Adding onChapterChange to `Dashbook`
+ - Adding Actions API
 
 ## [0.1.7]
  - Updating dependencies

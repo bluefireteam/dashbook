@@ -2,6 +2,7 @@ import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/platform_utils/platform_utils.dart';
 import 'package:dashbook/src/preferences.dart';
 import 'package:dashbook/src/story_util.dart';
+import 'package:dashbook/src/widgets/actions_container.dart';
 import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:dashbook/src/widgets/icon.dart';
 import 'package:dashbook/src/widgets/intructions_dialog.dart';
@@ -111,6 +112,7 @@ class Dashbook extends StatefulWidget {
 enum CurrentView {
   stories,
   properties,
+  actions,
 }
 
 class _DashbookState extends State<Dashbook> {
@@ -174,6 +176,7 @@ class _DashbookState extends State<Dashbook> {
   }
 
   bool _hasProperties() => _currentChapter?.ctx.properties.isNotEmpty ?? false;
+  bool _hasActions() => _currentChapter?.ctx.actions.isNotEmpty ?? false;
 
   Future<void> _launchURL(String url) async {
     if (await url_launcher.canLaunch(url)) {
@@ -272,6 +275,18 @@ class _DashbookState extends State<Dashbook> {
                                     onClick: () => setState(
                                       () {
                                         _currentView = CurrentView.properties;
+                                        _storyPanelPinned = false;
+                                      },
+                                    ),
+                                  ),
+                                if (_hasActions())
+                                  DashbookIcon(
+                                    key: kActionsIcon,
+                                    tooltip: 'Actions panel',
+                                    icon: Icons.play_arrow,
+                                    onClick: () => setState(
+                                      () {
+                                        _currentView = CurrentView.actions;
                                         _storyPanelPinned = false;
                                       },
                                     ),
@@ -434,6 +449,18 @@ class _DashbookState extends State<Dashbook> {
                                 onPropertyChange: () {
                                   setState(() {});
                                 },
+                              ),
+                            ),
+                          if (_currentView == CurrentView.actions &&
+                              _currentChapter != null)
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              bottom: 0,
+                              child: ActionsContainer(
+                                currentChapter: _currentChapter!,
+                                onCancel: () =>
+                                    setState(() => _currentView = null),
                               ),
                             ),
                         ],
