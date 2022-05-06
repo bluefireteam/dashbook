@@ -4,10 +4,13 @@
 
 name: Create or Update Jira Link
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
-  # Triggers the workflow on pull request events but only for the main branch
+  # Triggers the workflow on pull request events but only for the main and release branches
   pull_request:
+    branches:
+      - main
+      - 'release/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
