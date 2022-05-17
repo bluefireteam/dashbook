@@ -179,8 +179,9 @@ class _DashbookState extends State<Dashbook> {
   bool _hasActions() => _currentChapter?.ctx.actions.isNotEmpty ?? false;
 
   Future<void> _launchURL(String url) async {
-    if (await url_launcher.canLaunch(url)) {
-      await url_launcher.launch(url);
+    final uri = Uri.parse(url);
+    if (await url_launcher.canLaunchUrl(uri)) {
+      await url_launcher.launchUrl(uri);
     } else {
       throw 'Could not launch $url';
     }

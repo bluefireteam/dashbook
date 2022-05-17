@@ -1,6 +1,7 @@
 ## [0.1.8]
  - Adding onChapterChange to `Dashbook`
  - Adding Actions API
+ - Updating url_launcher package
 
 ## [0.1.7]
  - Updating dependencies
