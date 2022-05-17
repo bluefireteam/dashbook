@@ -2,6 +2,7 @@
  - Adding onChapterChange to `Dashbook`
  - Adding Actions API
  - Updating url_launcher package
+ - Updating mocktail and mockingjay
 
 ## [0.1.7]
  - Updating dependencies
