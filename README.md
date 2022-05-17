@@ -77,7 +77,7 @@ void main() {
 
 Dashbook also provides a way for easily calling methods from its UI, these callbacks can be used for more complex examples which demands user interaction.
 
-For example, a `Dialog` is something that isn't direclty rendered on a page, but rather show upon an action, an example for a `CustomDialog` widget could be achieved on Dashbook by using the following code:
+For example, a `Dialog` is something that isn't directly rendered on a page, but rather shows upon an action, an example for a `CustomDialog` widget could be achieved on Dashbook by using the following code:
 
 ```dart
 final dashbook = Dashbook();
