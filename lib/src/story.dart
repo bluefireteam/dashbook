@@ -80,6 +80,11 @@ class PropertyOption<T> {
 
 class DashbookContext {
   Map<String, Property> properties = {};
+  Map<String, void Function(BuildContext)> actions = {};
+
+  void action(String name, void Function(BuildContext) callback) {
+    actions[name] = callback;
+  }
 
   String textProperty(
     String name,
