@@ -261,6 +261,9 @@ class _DashbookState extends State<Dashbook> {
                               deviceInfo: deviceInfo,
                               deviceOrientation: deviceOrientation,
                               showDeviceFrame: showDeviceFrame,
+                              info: _currentChapter?.pinInfo == true
+                                  ? _currentChapter?.info
+                                  : null,
                               child: chapterWidget!,
                             ),
                           Positioned(
@@ -293,7 +296,8 @@ class _DashbookState extends State<Dashbook> {
                                       },
                                     ),
                                   ),
-                                if (_currentChapter?.info != null)
+                                if (_currentChapter?.info != null &&
+                                    _currentChapter?.pinInfo == false)
                                   DashbookIcon(
                                     tooltip: 'Instructions',
                                     icon: Icons.info,

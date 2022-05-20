@@ -92,8 +92,52 @@ dashbook
       );
     });
 
-    return Text('Use actions to show the Dialog');
+    return SizedBox();
   });
+```
+
+## Example information
+
+Often an example may not be intuitive enough and the user may be lost without some instruction on how to interact with it. To mitigate that, text information can be linked to an example to serve as a guide, or to show any other relevant information.
+
+To do so, simply use the `info` parameter on the `add` method of a story:
+
+```dart
+final dashbook = Dashbook();
+
+dashbook
+  .storiesOf('CustomDialog')
+  .add('default',
+    (ctx) {
+      ctx.action('Open dialog', (context) {
+        showDialog(
+          context: context,
+          builder: (_) => CustomDialog(),
+        );
+      });
+
+      return SizedBox();
+    },
+    info: 'Use the actions button on the side to show the dialog.',
+  );
+```
+
+This will present a small `i` icon on the side toolbar that once clicked will present the information to the user.
+
+Dashbook also offers the possibility to directly show the information on the preview area, removing the necessity for the user to click on the icon. To do so, pass `true` to the `pinInfo` parameter.
+
+```dart
+final dashbook = Dashbook();
+
+dashbook
+  .storiesOf('CustomDialog')
+  .add('default',
+    (ctx) {
+      // omitted ...
+    },
+    info: 'Use the actions button on the side to show the dialog.',
+    pinInfo: true,
+  );
 ```
 
 ## Preview area
