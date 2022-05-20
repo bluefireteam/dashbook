@@ -98,9 +98,9 @@ dashbook
 
 ## Example information
 
-More than often, an example may not be intuitive enough and the user may be lost without some instruction on how to interact with it. To mitigate that, text information can be linked to an example to serve as a guide, or really to show any relevant information.
+Often an example may not be intuitive enough and the user may be lost without some instruction on how to interact with it. To mitigate that, text information can be linked to an example to serve as a guide, or to show any other relevant information.
 
-To do so, simple use the `info` parameter on the `add` method of a story:
+To do so, simply use the `info` parameter on the `add` method of a story:
 
 ```dart
 final dashbook = Dashbook();
@@ -124,7 +124,7 @@ dashbook
 
 This will present a small `i` icon on the side toolbar that once clicked will present the information to the user.
 
-Dashbook also offers the possibility to directly show the information on the preview area, removing the necessity for the user to click on the icon. To do so, simple pass `true` to the `pinInfo` parameter.
+Dashbook also offers the possibility to directly show the information on the preview area, removing the necessity for the user to click on the icon. To do so, pass `true` to the `pinInfo` parameter.
 
 ```dart
 final dashbook = Dashbook();
