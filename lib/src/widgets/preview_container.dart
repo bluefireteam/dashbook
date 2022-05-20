@@ -11,6 +11,7 @@ class PreviewContainer extends StatelessWidget {
   final DeviceInfo? deviceInfo;
   final Orientation? deviceOrientation;
   final bool showDeviceFrame;
+  final String? info;
 
   const PreviewContainer({
     required Key key,
@@ -20,39 +21,61 @@ class PreviewContainer extends StatelessWidget {
     required this.showDeviceFrame,
     this.deviceInfo,
     this.deviceOrientation,
+    this.info,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final preview = deviceInfo != null
+        ? DevicePreview(
+            showDeviceFrame: showDeviceFrame,
+            deviceInfo: deviceInfo!,
+            deviceOrientation: deviceOrientation!,
+            child: Container(
+              decoration: BoxDecoration(
+                border: usePreviewSafeArea
+                    ? Border(
+                        left: BorderSide(
+                          color: Theme.of(context).cardColor,
+                          width: iconSize(context) * 2,
+                        ),
+                        right: BorderSide(
+                          color: Theme.of(context).cardColor,
+                          width: iconSize(context) * 2,
+                        ),
+                      )
+                    : null,
+              ),
+              child: child,
+            ),
+          )
+        : child;
+
     return Positioned(
       top: 0,
       bottom: 0,
       left: 0,
       right: (kIsWeb && isPropertiesOpen) ? sideBarSizeProperties(context) : 0,
-      child: deviceInfo != null
-          ? DevicePreview(
-              showDeviceFrame: showDeviceFrame,
-              deviceInfo: deviceInfo!,
-              deviceOrientation: deviceOrientation!,
-              child: Container(
-                decoration: BoxDecoration(
-                  border: usePreviewSafeArea
-                      ? Border(
-                          left: BorderSide(
-                            color: Theme.of(context).cardColor,
-                            width: iconSize(context) * 2,
-                          ),
-                          right: BorderSide(
-                            color: Theme.of(context).cardColor,
-                            width: iconSize(context) * 2,
-                          ),
-                        )
-                      : null,
+      child: info == null
+          ? preview
+          : Stack(
+              children: [
+                Positioned.fill(child: preview),
+                Positioned(
+                  bottom: 6,
+                  left: 6,
+                  right: 6,
+                  child: Center(
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text(info!),
+                      ),
+                    ),
+                  ),
                 ),
-                child: child,
-              ),
-            )
-          : child,
+              ],
+            ),
     );
   }
 }

@@ -274,6 +274,7 @@ class Story {
     ChapterBuildFunction buildFn, {
     String? codeLink,
     String? info,
+    bool pinInfo = false,
   }) {
     final _chapter = Chapter(
       name,
@@ -281,6 +282,7 @@ class Story {
       this,
       codeLink: codeLink,
       info: info,
+      pinInfo: pinInfo,
     );
     chapters.add(_chapter);
 
@@ -300,10 +302,18 @@ class Chapter {
   DashbookContext ctx = DashbookContext();
   final String? codeLink;
   final String? info;
+  final bool pinInfo;
 
   final Story story;
 
-  Chapter(this.name, this._buildFn, this.story, {this.codeLink, this.info});
+  Chapter(
+    this.name,
+    this._buildFn,
+    this.story, {
+    this.codeLink,
+    this.info,
+    this.pinInfo = false,
+  });
 
   Widget widget() {
     final w = _buildFn(ctx);

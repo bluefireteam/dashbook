@@ -116,7 +116,9 @@ void addStories(Dashbook dashbook) {
           );
         });
 
-      return const Center(child: Text('Use the actions menu to show a Toast'));
+      return const SizedBox();
     },
+    info: 'Use the actions menu to show a Toast',
+    pinInfo: true,
   );
 }
