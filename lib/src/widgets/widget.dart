@@ -334,6 +334,7 @@ class _DashbookState extends State<Dashbook> {
                                     onClick: () {
                                       showDialog<void>(
                                         context: context,
+                                        useRootNavigator: false,
                                         builder: (_) => AlertDialog(
                                           title: const Text('Theme chooser'),
                                           content: DropdownButton<ThemeData>(
