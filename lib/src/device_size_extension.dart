@@ -25,7 +25,8 @@ enum SizeCategory {
 }
 
 /// These breakpoints are matched to those defined by the [material docs](https://material.io/design/layout/understanding-layout.html)
-/// The number represents the point it starts, so a device between 600 and 1240px wide is considered small.
+/// The number represents the point it starts, so a device between 600 and
+/// 1240px wide is considered small.
 class _Breakpoint {
   static const small = 600;
   static const medium = 1240;

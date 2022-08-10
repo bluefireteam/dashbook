@@ -2,7 +2,6 @@ import 'package:dashbook/src/device_size_extension.dart';
 import 'package:dashbook/src/widgets/device_preview.dart';
 import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:device_frame/device_frame.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class PreviewContainer extends StatelessWidget {
