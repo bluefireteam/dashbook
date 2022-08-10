@@ -1,3 +1,4 @@
+import 'package:dashbook/src/device_size_extension.dart';
 import 'package:dashbook/src/widgets/device_preview.dart';
 import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:device_frame/device_frame.dart';
@@ -55,7 +56,9 @@ class PreviewContainer extends StatelessWidget {
       top: 0,
       bottom: 0,
       left: 0,
-      right: (kIsWeb && isPropertiesOpen) ? sideBarSizeProperties(context) : 0,
+      right: (context.isNotPhoneSize && isPropertiesOpen)
+          ? sideBarSizeProperties(context)
+          : 0,
       child: info == null
           ? preview
           : Stack(

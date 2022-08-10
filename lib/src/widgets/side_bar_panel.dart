@@ -1,3 +1,4 @@
+import 'package:dashbook/src/device_size_extension.dart';
 import 'package:dashbook/src/widgets/icon.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,8 @@ class SideBarPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final showTitleIcon = context.isNotPhoneSize;
+
     return Container(
       color: Theme.of(context).cardColor,
       width: width,
@@ -53,7 +56,7 @@ class SideBarPanel extends StatelessWidget {
                               left: 8,
                             ),
                             child: Opacity(
-                              opacity: kIsWeb ? 1 : 0,
+                              opacity: showTitleIcon ? 1 : 0,
                               child: titleIcon,
                             ),
                           ),
