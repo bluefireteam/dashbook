@@ -1,4 +1,5 @@
 import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/device_size_extension.dart';
 import 'package:dashbook/src/platform_utils/platform_utils.dart';
 import 'package:dashbook/src/preferences.dart';
 import 'package:dashbook/src/story_util.dart';
@@ -251,7 +252,8 @@ class _DashbookState extends State<Dashbook> {
                       child: Stack(
                         children: [
                           if (_currentChapter != null &&
-                              (kIsWeb || _currentView != CurrentView.stories))
+                              (context.isNotPhoneSize ||
+                                  _currentView != CurrentView.stories))
                             PreviewContainer(
                               key: Key(_currentChapter!.id),
                               usePreviewSafeArea: widget.usePreviewSafeArea,
