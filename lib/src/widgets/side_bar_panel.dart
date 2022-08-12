@@ -10,6 +10,7 @@ class SideBarPanel extends StatelessWidget {
   final Key? onCloseKey;
   final double width;
   final DashbookIcon? titleIcon;
+  final bool sideBarIsAlwaysShown;
 
   const SideBarPanel({
     Key? key,
@@ -20,11 +21,12 @@ class SideBarPanel extends StatelessWidget {
     this.onCloseKey,
     this.titleIcon,
     required this.width,
+    this.sideBarIsAlwaysShown = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final showTitleIcon = context.isNotPhoneSize;
+    final showTitleIcon = context.isNotPhoneSize && !sideBarIsAlwaysShown;
 
     return Container(
       color: Theme.of(context).cardColor,
@@ -68,16 +70,17 @@ class SideBarPanel extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            right: 15,
-            top: 15,
-            child: DashbookIcon(
-              key: onCloseKey,
-              tooltip: 'Close',
-              icon: Icons.clear,
-              onClick: () => onCancel?.call(),
+          if (!sideBarIsAlwaysShown)
+            Positioned(
+              right: 15,
+              top: 15,
+              child: DashbookIcon(
+                key: onCloseKey,
+                tooltip: 'Close',
+                icon: Icons.clear,
+                onClick: () => onCancel?.call(),
+              ),
             ),
-          ),
         ],
       ),
     );
