@@ -1,3 +1,8 @@
+## [0.1.9]
+ - Preview area can be pinned
+ - Fix theme dialog navigation
+ - Better UI support for native desktop platform
+
 ## [0.1.8]
  - Adding onChapterChange to `Dashbook`
  - Adding Actions API
