@@ -1,3 +1,6 @@
+## [0.1.10]
+ - Add option to auto pin stories on large screens.
+
 ## [0.1.9]
  - Preview area can be pinned
  - Fix theme dialog navigation
