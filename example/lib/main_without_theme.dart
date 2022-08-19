@@ -4,7 +4,7 @@ import 'package:example/text_story.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  final dashbook = Dashbook();
+  final dashbook = Dashbook(autoPinStoriesOnLargeScreen: true);
 
   addTextStories(dashbook);
   addStories(dashbook);

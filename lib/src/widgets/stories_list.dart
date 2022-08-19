@@ -21,6 +21,7 @@ class StoriesList extends StatefulWidget {
   final String currentFilter;
   final bool storyPanelPinned;
   final void Function() onStoryPinChange;
+  final bool storiesAreAlwaysShown;
 
   const StoriesList({
     required this.stories,
@@ -33,6 +34,7 @@ class StoriesList extends StatefulWidget {
     required this.currentFilter,
     required this.storyPanelPinned,
     required this.onStoryPinChange,
+    required this.storiesAreAlwaysShown,
     Key? key,
     this.selectedChapter,
   }) : super(key: key);
@@ -114,6 +116,7 @@ class _StoriesListState extends State<StoriesList> {
         onCloseKey: kStoriesCloseIcon,
         scrollViewKey: const PageStorageKey<String>('stories_list'),
         onCancel: widget.onCancel,
+        sideBarIsAlwaysShown: widget.storiesAreAlwaysShown,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

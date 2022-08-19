@@ -8,6 +8,7 @@ void main() {
     light: ThemeData(),
     dark: ThemeData.dark(),
     title: 'Dashbook Example',
+    autoPinStoriesOnLargeScreen: true,
   );
 
   addTextStories(dashbook);

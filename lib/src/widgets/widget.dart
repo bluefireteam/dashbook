@@ -49,6 +49,7 @@ class Dashbook extends StatefulWidget {
   final _DashbookMultiTheme? _multiTheme;
   final String title;
   final bool usePreviewSafeArea;
+  final bool autoPinStoriesOnLargeScreen;
   final GlobalKey<NavigatorState>? navigatorKey;
 
   /// Called whenever a new chapter is selected.
@@ -59,6 +60,7 @@ class Dashbook extends StatefulWidget {
     this.theme,
     this.title = '',
     this.usePreviewSafeArea = false,
+    this.autoPinStoriesOnLargeScreen = false,
     this.navigatorKey,
     this.onChapterChange,
   })  : _dualTheme = null,
@@ -72,6 +74,7 @@ class Dashbook extends StatefulWidget {
     bool initWithLight = true,
     this.title = '',
     this.usePreviewSafeArea = false,
+    this.autoPinStoriesOnLargeScreen = false,
     this.navigatorKey,
     this.onChapterChange,
   })  : _dualTheme = _DashbookDualTheme(
@@ -89,6 +92,7 @@ class Dashbook extends StatefulWidget {
     String? initialTheme,
     this.title = '',
     this.usePreviewSafeArea = false,
+    this.autoPinStoriesOnLargeScreen = false,
     this.navigatorKey,
     this.onChapterChange,
   })  : _multiTheme =
@@ -203,11 +207,15 @@ class _DashbookState extends State<Dashbook> {
         return MaterialPageRoute<void>(
           builder: (context) {
             final chapterWidget = _currentChapter?.widget();
+            final alwaysShowStories =
+                widget.autoPinStoriesOnLargeScreen && context.isWideScreen;
+
             return Scaffold(
               body: SafeArea(
                 child: Row(
                   children: [
-                    if (_currentView == CurrentView.stories)
+                    if (_currentView == CurrentView.stories ||
+                        alwaysShowStories)
                       Drawer(
                         child: StoriesList(
                           stories: widget.stories,
@@ -220,6 +228,7 @@ class _DashbookState extends State<Dashbook> {
                               _storyPanelPinned = !_storyPanelPinned;
                             });
                           },
+                          storiesAreAlwaysShown: alwaysShowStories,
                           onUpdateFilter: (value) {
                             _storiesFilter = value;
                           },
@@ -432,7 +441,8 @@ class _DashbookState extends State<Dashbook> {
                               ],
                             ),
                           ),
-                          if (_currentView != CurrentView.stories)
+                          if (_currentView != CurrentView.stories &&
+                              !alwaysShowStories)
                             Positioned(
                               top: 5,
                               left: 10,

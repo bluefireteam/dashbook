@@ -15,6 +15,11 @@ extension DeviceSizeExtension on BuildContext {
   bool get isTabletSize => sizeCategory == SizeCategory.tablet;
   bool get isLaptopSize => sizeCategory == SizeCategory.laptop;
   bool get isDesktopSize => sizeCategory == SizeCategory.desktop;
+
+  bool get isWideScreen {
+    final width = MediaQuery.of(this).size.width;
+    return width > _Breakpoint.large;
+  }
 }
 
 enum SizeCategory {
