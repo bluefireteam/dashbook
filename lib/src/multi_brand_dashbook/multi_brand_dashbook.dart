@@ -129,7 +129,7 @@ class _MultiBrandDashbookState extends State<MultiBrandDashbook> {
         : SmallApp(
             brands: widget.brands,
             selectedIndex: widget.brands.indexOf(widget.selectedBrand),
-            onSelected: (i) => context.go('/${widget.brands[i].path}'),
+            onSelected: (i) => _navigate(brand: widget.brands[i].path),
             contentBuilder: builder,
           );
     return Theme(
