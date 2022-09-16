@@ -19,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
-typedef OnChapterChange = void Function(Chapter);
 typedef OnViewChange = void Function(CurrentView?);
 typedef OnThemeChange = void Function(ThemeData);
 

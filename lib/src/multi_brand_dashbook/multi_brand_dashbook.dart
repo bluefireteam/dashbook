@@ -61,29 +61,36 @@ class MultiBrandApp extends StatelessWidget {
   late final GoRouter _router = _createRouter();
 
   GoRouter _createRouter() {
-    final routes = brands
-        .map(
-          (e) => GoRoute(
-            path: '/${e.path}',
-            pageBuilder: (context, state) => CustomTransitionPage<void>(
-              key: state.pageKey,
-              child: MultiBrandDashbook(
-                brands: brands,
-                selectedBrand: e,
-                config: config,
-              ),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) =>
-                      FadeTransition(opacity: animation, child: child),
-            ),
+    final routes = GoRoute(
+      path: '/:brand/:story/:chapter',
+      pageBuilder: (context, state) => CustomTransitionPage<void>(
+        key: state.pageKey,
+        child: MultiBrandDashbook(
+          brands: brands,
+          selectedBrand: brands.firstWhere(
+            (element) => element.path == state.params['brand'],
           ),
-        )
-        .toList();
+          currentChapter:
+              getChapter(state.params['story']!, state.params['chapter']!),
+          config: config,
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(opacity: animation, child: child),
+      ),
+    );
 
     return GoRouter(
-      routes: routes,
-      redirect: (state) => state.path == '/' ? '/${brands.first.path}' : null,
+      initialLocation:
+          '/${brands.first.path}/${config.stories.first.name.toLowerCase()}/${config.stories.first.chapters.first.name.toLowerCase()}',
+      routes: [routes],
     );
+  }
+
+  Chapter getChapter(String story, String chapter) {
+    return config.stories
+        .firstWhere((element) => element.name.toLowerCase() == story)
+        .chapters
+        .firstWhere((element) => element.name.toLowerCase() == chapter);
   }
 }
 
@@ -92,11 +99,13 @@ class MultiBrandDashbook extends StatefulWidget {
     required this.brands,
     required this.config,
     required this.selectedBrand,
+    required this.currentChapter,
     Key? key,
   }) : super(key: key);
   final List<DashbookBrand> brands;
   final DashbookConfig config;
   final DashbookBrand selectedBrand;
+  final Chapter currentChapter;
 
   @override
   State<MultiBrandDashbook> createState() => _MultiBrandDashbookState();
@@ -114,7 +123,7 @@ class _MultiBrandDashbookState extends State<MultiBrandDashbook> {
         ? WideApp(
             brands: widget.brands,
             selectedIndex: widget.brands.indexOf(widget.selectedBrand),
-            onSelected: (i) => context.go('/${widget.brands[i].path}'),
+            onSelected: (i) => _navigate(brand: widget.brands[i].path),
             contentBuilder: builder,
           )
         : SmallApp(
@@ -129,6 +138,14 @@ class _MultiBrandDashbookState extends State<MultiBrandDashbook> {
     );
   }
 
+  void _navigate({String? brand, Chapter? chapter}) {
+    brand ??= widget.selectedBrand.path;
+    chapter ??= widget.currentChapter;
+    context.go(
+      '/$brand/${chapter.story.name.toLowerCase()}/${chapter.name.toLowerCase()}',
+    );
+  }
+
   Widget builder(BuildContext context) {
     return _MultiBrandContent(
       config: widget.config,
@@ -139,22 +156,28 @@ class _MultiBrandDashbookState extends State<MultiBrandDashbook> {
           widget.selectedBrand.themeSettings.currentTheme = themeData;
         });
       },
+      currentChapter: widget.currentChapter,
+      onChapterChange: (chapter) => _navigate(chapter: chapter),
     );
   }
 }
 
 class _MultiBrandContent extends StatefulWidget {
   const _MultiBrandContent({
-    Key? key,
     required this.config,
     required this.themeSettings,
     required this.onThemeChange,
     required this.stories,
+    required this.currentChapter,
+    required this.onChapterChange,
+    Key? key,
   }) : super(key: key);
   final DashbookConfig config;
   final ThemeSettings themeSettings;
   final OnThemeChange onThemeChange;
   final List<Story> stories;
+  final Chapter currentChapter;
+  final OnChapterChange onChapterChange;
 
   @override
   State<_MultiBrandContent> createState() => _MultiBrandContentState();
@@ -162,31 +185,18 @@ class _MultiBrandContent extends StatefulWidget {
 
 class _MultiBrandContentState extends State<_MultiBrandContent> {
   CurrentView? currentView = CurrentView.stories;
-  Chapter? currentChapter;
-
-  @override
-  void initState() {
-    super.initState();
-    currentChapter = widget.stories.first.chapters.first;
-  }
 
   @override
   Widget build(BuildContext context) {
     return DashbookContent(
       currentView: currentView,
-      currentChapter: currentChapter,
+      currentChapter: widget.currentChapter,
       config: widget.config,
-      onChapterChange: onChapterChange,
+      onChapterChange: widget.onChapterChange,
       onViewChange: onViewChange,
       themeSettings: widget.themeSettings,
       onThemeChange: widget.onThemeChange,
     );
-  }
-
-  void onChapterChange(Chapter chapter) {
-    setState(() {
-      currentChapter = chapter;
-    });
   }
 
   void onViewChange(CurrentView? view) {
