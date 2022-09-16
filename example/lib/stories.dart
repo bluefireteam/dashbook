@@ -2,7 +2,7 @@ import 'package:dashbook/dashbook.dart';
 import 'package:example/widgets/message_card.dart';
 import 'package:flutter/material.dart';
 
-void addStories(Dashbook dashbook) {
+void addStories(MultiBrandBookBuilder dashbook) {
   dashbook.storiesOf('ElevatedButton').decorator(CenterDecorator()).add(
         'default',
         (ctx) => ElevatedButton(

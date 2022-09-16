@@ -1,7 +1,7 @@
 import 'package:dashbook/dashbook.dart';
 import 'package:flutter/material.dart';
 
-void addTextStories(Dashbook dashbook) {
+void addTextStories(MultiBrandBookBuilder dashbook) {
   dashbook
       .storiesOf('Text')
       .decorator(CenterDecorator())
