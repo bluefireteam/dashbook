@@ -1,0 +1,44 @@
+name: Release Package
+
+env:
+  dart_version: 2.16.1
+  flutter_version: 2.10.3
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - release/**
+
+jobs:
+  release_package:
+    name: Release and tag package with GitHub Api
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v2
+        with:
+          path: /opt/hostedtoolcache/flutter
+          key: ${{ env.flutter_version }}-flutter
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: ${{ env.flutter_version }}
+          channel: 'stable'
+
+      - name: Authorize Cloudsmith
+        run:  ./shell_scripts/authorize_cloudsmith.sh ${{ secrets.CLOUDSMITH_API_KEY }}
+      
+      - name: Pub get
+        run: flutter pub get
+
+      - name: Publish
+        run: dart pub run mplat_pr_tools publish

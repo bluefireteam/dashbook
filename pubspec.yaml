@@ -1,10 +1,11 @@
 name: dashbook
 description: A showcase/sandbox library to help you build isolated widgets in Flutter
-version: 1.0.0
 homepage: https://github.com/erickzanardo/dashbook
+publish_to: https://dart.cloudsmith.io/alkami/flutter/
+version: 1.1.0
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.15.0 <3.0.0" # dart version
 
 dependencies:
   flutter:
@@ -16,3 +17,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  mplat_pr_tools:
+    hosted: https://dart.cloudsmith.io/alkami/flutter/
+    version: ^1.15.0

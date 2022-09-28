@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
+
 import './story.dart';
 import 'property_widgets/properties.dart' as p;
-import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class Dashbook extends StatelessWidget {
   final List<Story> stories = [];
@@ -107,8 +107,7 @@ class _DashbookBodyWebState extends State<_DashbookBodyWeb> {
                     : Container(
                         decoration: BoxDecoration(
                           border: Border(
-                            top: BorderSide(
-                                color: Theme.of(context).dividerColor),
+                            top: BorderSide(color: Theme.of(context).dividerColor),
                           ),
                         ),
                         child: _PropertiesContainer(
@@ -246,9 +245,7 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
                 label: 'Stories',
                 textAlign: TextAlign.center,
                 textStyle: TextStyle(
-                  fontWeight: _currentView == CurrentView.STORIES
-                      ? FontWeight.bold
-                      : FontWeight.normal,
+                  fontWeight: _currentView == CurrentView.STORIES ? FontWeight.bold : FontWeight.normal,
                 ),
                 onTap: () {
                   setState(() {
@@ -262,9 +259,7 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
                 label: 'Preview',
                 textAlign: TextAlign.center,
                 textStyle: TextStyle(
-                  fontWeight: _currentView == CurrentView.CHAPTER
-                      ? FontWeight.bold
-                      : FontWeight.normal,
+                  fontWeight: _currentView == CurrentView.CHAPTER ? FontWeight.bold : FontWeight.normal,
                 ),
                 onTap: () {
                   setState(() {
@@ -278,9 +273,7 @@ class _DashbookBodyMobileState extends State<_DashbookBodyMobile> {
                 label: 'Properties',
                 textAlign: TextAlign.center,
                 textStyle: TextStyle(
-                  fontWeight: _currentView == CurrentView.PROPERTIES
-                      ? FontWeight.bold
-                      : FontWeight.normal,
+                  fontWeight: _currentView == CurrentView.PROPERTIES ? FontWeight.bold : FontWeight.normal,
                 ),
                 onTap: () {
                   setState(() {
@@ -373,9 +366,7 @@ class _StoriesList extends StatelessWidget {
                           height: 20,
                           textStyle: TextStyle(
                             fontSize: 16,
-                            fontWeight: chapter.id == selectedChapter!.id
-                                ? FontWeight.bold
-                                : FontWeight.normal,
+                            fontWeight: chapter.id == selectedChapter!.id ? FontWeight.bold : FontWeight.normal,
                           ),
                         ),
                       ),
@@ -392,7 +383,7 @@ class _StoriesList extends StatelessWidget {
     return Theme(
       data: Theme.of(context).copyWith(
         dividerColor: Colors.transparent,
-        accentColor: Colors.black,
+        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
       ),
       child: SingleChildScrollView(
         child: Padding(
@@ -491,8 +482,7 @@ class _PropertiesContainerState extends State<_PropertiesContainer> {
           ),
         ]..addAll(
             widget.currentChapter!.ctx.properties.entries.map((entry) {
-              final _propertyKey =
-                  Key("${widget.currentChapter!.id}#${entry.value.name}");
+              final _propertyKey = Key("${widget.currentChapter!.id}#${entry.value.name}");
               final _onChanged = (chapter) {
                 setState(() {});
                 if (widget.onPropertyChange != null) {

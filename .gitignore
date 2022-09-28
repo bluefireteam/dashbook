@@ -1,3 +1,7 @@
+# files generated during test coverage
+coverage/
+test/generated_coverage_helper_test.dart
+
 # Miscellaneous
 *.class
 *.log
