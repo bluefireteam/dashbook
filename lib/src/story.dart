@@ -161,6 +161,10 @@ class DashbookContext {
     actions[name] = callback;
   }
 
+  /// Function to add a property to properties panel.
+  ///
+  /// To add a property could extend [Property] or create a property with an
+  /// anonymous property widget builder with [Property.withBuilder]
   T addProperty<T>(Property<T> property) {
     if (properties.containsKey(property.name)) {
       return properties[property.name]!.getValue() as T;

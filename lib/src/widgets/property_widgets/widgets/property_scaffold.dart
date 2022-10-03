@@ -1,6 +1,10 @@
 import 'package:dashbook/src/widgets/property_widgets/widgets/title_with_tooltip.dart';
 import 'package:flutter/material.dart';
 
+/// Signature for a callback function that is called to tell properties that
+/// they have updated values.
+///
+/// Used a lot like [ChangeNotifier.notifyListeners].
 typedef PropertyChanged = void Function();
 
 class PropertyScaffold extends StatelessWidget {
