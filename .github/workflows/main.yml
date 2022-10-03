@@ -17,8 +17,7 @@ jobs:
         with:
           channel: 'stable'
           cache: true
-      - uses: bluefireteam/melos-action@main
-      - run: melos run format-check
+      - run: flutter format --set-exit-if-changed lib test
 
   analyze:
     runs-on: ubuntu-latest
@@ -28,8 +27,7 @@ jobs:
         with:
           channel: 'stable'
           cache: true
-      - uses: bluefireteam/melos-action@main
-      - run: melos run analyze
+      - run: flutter analyze lib test
   # END LINTING STAGE
 
   # BEGIN TESTING STAGE
@@ -41,7 +39,6 @@ jobs:
         with:
           channel: 'stable'
           cache: true
-      - uses: bluefireteam/melos-action@main
       - uses: bluefireteam/spec-action@main
   # END TESTING STAGE
 
