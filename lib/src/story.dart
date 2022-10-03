@@ -9,6 +9,9 @@ class ControlProperty {
   ControlProperty(this.key, this.value);
 }
 
+/// Signature for a function that creates the property editor widget.
+///
+/// Used by [Property.withBuilder].
 typedef PropertyEditorBuilder<T> = Widget Function(
   Property<T> property,
   PropertyChanged onChanged,
@@ -33,6 +36,8 @@ abstract class Property<T> {
     this.visibilityControlProperty,
   });
 
+  /// Constructor for a Property with an anonymous builder function instead of
+  /// overridden function.
   factory Property.withBuilder(
     String name,
     T defaultValue, {
@@ -51,6 +56,13 @@ abstract class Property<T> {
 
   T getValue() => value ?? defaultValue;
 
+  /// Function that creates the widget shown in the property editor sidebar.
+  ///
+  /// Implement this when overriding [Property] to declare what a property
+  /// editor is, such as a TextField or a checkbox.
+  ///
+  /// See [p.ListPropertyWidget] or [p.ColorProperty] for examples of widgets
+  /// used for property editing.
   Widget createPropertyEditor({
     required PropertyChanged onChanged,
     Key? key,
