@@ -6,7 +6,7 @@ version: 1.0.0+1
 publish_to: none
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.18.0 <3.0.0"
 
 dependencies:
   cupertino_icons: ^0.1.2
@@ -14,6 +14,7 @@ dependencies:
     path: ../
   flutter:
     sdk: flutter
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
