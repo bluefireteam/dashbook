@@ -39,6 +39,6 @@ jobs:
         with:
           channel: 'stable'
           cache: true
-      - uses: bluefireteam/spec-action@main
+      - run: flutter test
   # END TESTING STAGE
 
