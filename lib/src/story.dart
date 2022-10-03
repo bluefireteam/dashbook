@@ -164,10 +164,8 @@ class DashbookContext {
     String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
-    if (properties.containsKey(name)) {
-      return properties[name]!.getValue() as String;
-    } else {
-      final property = Property<String>.withBuilder(
+    return addProperty(
+      Property<String>.withBuilder(
         name,
         defaultValue,
         tooltipMessage: tooltipMessage,
@@ -177,11 +175,8 @@ class DashbookContext {
           onChanged: onChanged,
           key: key,
         ),
-      );
-      properties[name] = property;
-
-      return property.getValue();
-    }
+      ),
+    );
   }
 
   double numberProperty(
@@ -190,10 +185,8 @@ class DashbookContext {
     String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
-    if (properties.containsKey(name)) {
-      return properties[name]!.getValue() as double;
-    } else {
-      final property = Property<double>.withBuilder(
+    return addProperty(
+      Property<double>.withBuilder(
         name,
         defaultValue,
         tooltipMessage: tooltipMessage,
@@ -203,11 +196,8 @@ class DashbookContext {
           onChanged: onChanged,
           key: key,
         ),
-      );
-      properties[name] = property;
-
-      return property.getValue();
-    }
+      ),
+    );
   }
 
   bool boolProperty(
@@ -216,10 +206,8 @@ class DashbookContext {
     String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
-    if (properties.containsKey(name)) {
-      return properties[name]!.getValue() as bool;
-    } else {
-      final property = Property<bool>.withBuilder(
+    return addProperty(
+      Property<bool>.withBuilder(
         name,
         defaultValue,
         tooltipMessage: tooltipMessage,
@@ -229,11 +217,8 @@ class DashbookContext {
           onChanged: onChanged,
           key: key,
         ),
-      );
-      properties[name] = property;
-
-      return property.getValue();
-    }
+      ),
+    );
   }
 
   Color colorProperty(
@@ -242,10 +227,8 @@ class DashbookContext {
     String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
-    if (properties.containsKey(name)) {
-      return properties[name]!.getValue() as Color;
-    } else {
-      final property = Property<Color>.withBuilder(
+    return addProperty(
+      Property<Color>.withBuilder(
         name,
         defaultValue,
         tooltipMessage: tooltipMessage,
@@ -255,11 +238,8 @@ class DashbookContext {
           onChanged: onChanged,
           key: key,
         ),
-      );
-      properties[name] = property;
-
-      return property.getValue();
-    }
+      ),
+    );
   }
 
   T listProperty<T>(
@@ -269,20 +249,15 @@ class DashbookContext {
     String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
-    if (properties.containsKey(name)) {
-      return properties[name]!.getValue() as T;
-    } else {
-      final property = ListProperty<T>(
+    return addProperty(
+      ListProperty<T>(
         name,
         defaultValue,
         list,
         tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
-      );
-      properties[name] = property;
-
-      return property.getValue();
-    }
+      ),
+    );
   }
 
   T optionsProperty<T>(
@@ -292,20 +267,15 @@ class DashbookContext {
     String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
-    if (properties.containsKey(name)) {
-      return properties[name]!.getValue() as T;
-    } else {
-      final property = OptionsProperty<T>(
+    return addProperty(
+      OptionsProperty<T>(
         name,
         defaultValue,
         list,
         tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
-      );
-      properties[name] = property;
-
-      return property.getValue();
-    }
+      ),
+    );
   }
 
   EdgeInsets edgeInsetsProperty(
@@ -314,10 +284,8 @@ class DashbookContext {
     String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
-    if (properties.containsKey(name)) {
-      return properties[name]!.getValue() as EdgeInsets;
-    } else {
-      final property = Property<EdgeInsets>.withBuilder(
+    return addProperty(
+      Property<EdgeInsets>.withBuilder(
         name,
         defaultValue,
         tooltipMessage: tooltipMessage,
@@ -327,11 +295,8 @@ class DashbookContext {
           onChanged: onChanged,
           key: key,
         ),
-      );
-      properties[name] = property;
-
-      return property.getValue();
-    }
+      ),
+    );
   }
 
   BorderRadius borderRadiusProperty(
@@ -340,10 +305,8 @@ class DashbookContext {
     String? tooltipMessage,
     ControlProperty? visibilityControlProperty,
   }) {
-    if (properties.containsKey(name)) {
-      return properties[name]!.getValue() as BorderRadius;
-    } else {
-      final property = Property<BorderRadius>.withBuilder(
+    return addProperty(
+      Property<BorderRadius>.withBuilder(
         name,
         defaultValue,
         tooltipMessage: tooltipMessage,
@@ -353,11 +316,8 @@ class DashbookContext {
           onChanged: onChanged,
           key: key,
         ),
-      );
-      properties[name] = property;
-
-      return property.getValue();
-    }
+      ),
+    );
   }
 }
 
