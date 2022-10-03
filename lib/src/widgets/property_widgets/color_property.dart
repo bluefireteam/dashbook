@@ -1,6 +1,5 @@
 import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/widgets/property_widgets/widgets/property_dialog.dart';
-import 'package:dashbook/src/widgets/property_widgets/widgets/property_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 

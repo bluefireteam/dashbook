@@ -1,5 +1,4 @@
 import 'package:dashbook/dashbook.dart';
-import 'package:dashbook/src/widgets/property_widgets/widgets/property_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class TextProperty extends StatefulWidget {

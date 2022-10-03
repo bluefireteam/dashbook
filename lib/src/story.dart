@@ -1,4 +1,5 @@
 import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/property_widgets/properties.dart' as p;
 import 'package:flutter/material.dart';
 
 class ControlProperty {
@@ -8,7 +9,13 @@ class ControlProperty {
   ControlProperty(this.key, this.value);
 }
 
-class Property<T> {
+typedef PropertyEditorBuilder<T> = Widget Function(
+  Property<T> property,
+  PropertyChanged onChanged,
+  Key? key,
+);
+
+abstract class Property<T> {
   final String name;
 
   final T defaultValue;
@@ -26,10 +33,48 @@ class Property<T> {
     this.visibilityControlProperty,
   });
 
+  factory Property.withBuilder(
+    String name,
+    T defaultValue, {
+    required PropertyEditorBuilder<T> builder,
+    String? tooltipMessage,
+    ControlProperty? visibilityControlProperty,
+  }) {
+    return _PropertyWithBuilder<T>(
+      name,
+      defaultValue,
+      tooltipMessage: tooltipMessage,
+      visibilityControlProperty: visibilityControlProperty,
+      builder: builder,
+    );
+  }
+
   T getValue() => value ?? defaultValue;
+
+  Widget createPropertyEditor({
+    required PropertyChanged onChanged,
+    Key? key,
+  });
 
   @override
   String toString() => '$name - ${getValue()}';
+}
+
+class _PropertyWithBuilder<T> extends Property<T> {
+  final PropertyEditorBuilder<T> builder;
+
+  _PropertyWithBuilder(
+    super.name,
+    super.defaultValue, {
+    required this.builder,
+    super.tooltipMessage,
+    super.visibilityControlProperty,
+  });
+
+  @override
+  Widget createPropertyEditor({required PropertyChanged onChanged, Key? key}) {
+    return builder(this, onChanged, key);
+  }
 }
 
 class ListProperty<T> extends Property<T> {
@@ -47,6 +92,15 @@ class ListProperty<T> extends Property<T> {
           tooltipMessage: tooltipMessage,
           visibilityControlProperty: visibilityControlProperty,
         );
+
+  @override
+  Widget createPropertyEditor({required PropertyChanged onChanged, Key? key}) {
+    return p.ListPropertyWidget(
+      property: this,
+      onChanged: onChanged,
+      key: key,
+    );
+  }
 }
 
 class OptionsProperty<T> extends Property<T> {
@@ -64,6 +118,15 @@ class OptionsProperty<T> extends Property<T> {
           tooltipMessage: tooltipMessage,
           visibilityControlProperty: visibilityControlProperty,
         );
+
+  @override
+  Widget createPropertyEditor({required PropertyChanged onChanged, Key? key}) {
+    return p.OptionsPropertyWidget(
+      property: this,
+      onChanged: onChanged,
+      key: key,
+    );
+  }
 }
 
 class PropertyOption<T> {
@@ -86,6 +149,15 @@ class DashbookContext {
     actions[name] = callback;
   }
 
+  T addProperty<T>(Property<T> property) {
+    if (properties.containsKey(property.name)) {
+      return properties[property.name]!.getValue() as T;
+    } else {
+      properties[property.name] = property;
+      return property.getValue();
+    }
+  }
+
   String textProperty(
     String name,
     String defaultValue, {
@@ -95,11 +167,16 @@ class DashbookContext {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue() as String;
     } else {
-      final property = Property<String>(
+      final property = Property<String>.withBuilder(
         name,
         defaultValue,
         tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
+        builder: (property, onChanged, key) => p.TextProperty(
+          property: property,
+          onChanged: onChanged,
+          key: key,
+        ),
       );
       properties[name] = property;
 
@@ -116,11 +193,16 @@ class DashbookContext {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue() as double;
     } else {
-      final property = Property<double>(
+      final property = Property<double>.withBuilder(
         name,
         defaultValue,
         tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
+        builder: (property, onChanged, key) => p.NumberProperty(
+          property: property,
+          onChanged: onChanged,
+          key: key,
+        ),
       );
       properties[name] = property;
 
@@ -137,11 +219,16 @@ class DashbookContext {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue() as bool;
     } else {
-      final property = Property<bool>(
+      final property = Property<bool>.withBuilder(
         name,
         defaultValue,
         tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
+        builder: (property, onChanged, key) => p.BoolProperty(
+          property: property,
+          onChanged: onChanged,
+          key: key,
+        ),
       );
       properties[name] = property;
 
@@ -158,11 +245,16 @@ class DashbookContext {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue() as Color;
     } else {
-      final property = Property<Color>(
+      final property = Property<Color>.withBuilder(
         name,
         defaultValue,
         tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
+        builder: (property, onChanged, key) => p.ColorProperty(
+          property: property,
+          onChanged: onChanged,
+          key: key,
+        ),
       );
       properties[name] = property;
 
@@ -225,11 +317,16 @@ class DashbookContext {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue() as EdgeInsets;
     } else {
-      final property = Property<EdgeInsets>(
+      final property = Property<EdgeInsets>.withBuilder(
         name,
         defaultValue,
         tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
+        builder: (property, onChanged, key) => p.EdgeInsetsProperty(
+          property: property,
+          onChanged: onChanged,
+          key: key,
+        ),
       );
       properties[name] = property;
 
@@ -246,11 +343,16 @@ class DashbookContext {
     if (properties.containsKey(name)) {
       return properties[name]!.getValue() as BorderRadius;
     } else {
-      final property = Property<BorderRadius>(
+      final property = Property<BorderRadius>.withBuilder(
         name,
         defaultValue,
         tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
+        builder: (property, onChanged, key) => p.BorderRadiusProperty(
+          property: property,
+          onChanged: onChanged,
+          key: key,
+        ),
       );
       properties[name] = property;
 

@@ -1,6 +1,5 @@
 import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/widgets/helpers.dart';
-import 'package:dashbook/src/widgets/property_widgets/properties.dart' as p;
 import 'package:dashbook/src/widgets/side_bar_panel.dart';
 import 'package:flutter/material.dart';
 
@@ -49,73 +48,12 @@ class _PropertiesContainerState extends State<PropertiesContainer> {
         widget.onPropertyChange();
       };
 
-      if (entry.value is ListProperty) {
-        children.add(
-          // ignore: implicit_dynamic_type
-          p.ListPropertyWidget(
-            property: entry.value as ListProperty,
-            onChanged: _onChanged,
-            key: _propertyKey,
-          ),
-        );
-      } else if (entry.value is OptionsProperty) {
-        children.add(
-          // ignore: implicit_dynamic_type
-          p.OptionsPropertyWidget(
-            property: entry.value as OptionsProperty,
-            onChanged: _onChanged,
-            key: _propertyKey,
-          ),
-        );
-      } else if (entry.value is Property<String>) {
-        children.add(
-          p.TextProperty(
-            property: entry.value as Property<String>,
-            onChanged: _onChanged,
-            key: _propertyKey,
-          ),
-        );
-      } else if (entry.value is Property<double>) {
-        children.add(
-          p.NumberProperty(
-            property: entry.value as Property<double>,
-            onChanged: _onChanged,
-            key: _propertyKey,
-          ),
-        );
-      } else if (entry.value is Property<bool>) {
-        children.add(
-          p.BoolProperty(
-            property: entry.value as Property<bool>,
-            onChanged: _onChanged,
-            key: _propertyKey,
-          ),
-        );
-      } else if (entry.value is Property<Color>) {
-        children.add(
-          p.ColorProperty(
-            property: entry.value as Property<Color>,
-            onChanged: _onChanged,
-            key: _propertyKey,
-          ),
-        );
-      } else if (entry.value is Property<EdgeInsets>) {
-        children.add(
-          p.EdgeInsetsProperty(
-            property: entry.value as Property<EdgeInsets>,
-            onChanged: _onChanged,
-            key: _propertyKey,
-          ),
-        );
-      } else if (entry.value is Property<BorderRadius>) {
-        children.add(
-          p.BorderRadiusProperty(
-            property: entry.value as Property<BorderRadius>,
-            onChanged: _onChanged,
-            key: _propertyKey,
-          ),
-        );
-      }
+      children.add(
+        entry.value.createPropertyEditor(
+          onChanged: _onChanged,
+          key: _propertyKey,
+        ),
+      );
     }
     return SideBarPanel(
       title: 'Properties',
