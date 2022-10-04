@@ -35,7 +35,6 @@ class DateTimePropertyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.findRenderObject();
     final selectedDate = property.getValue();
 
     return PropertyScaffold(
