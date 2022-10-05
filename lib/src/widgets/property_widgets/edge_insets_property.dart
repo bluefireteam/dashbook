@@ -1,7 +1,6 @@
 import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:dashbook/src/widgets/property_widgets/widgets/property_4_integer_form.dart';
-import 'package:dashbook/src/widgets/property_widgets/widgets/property_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class EdgeInsetsProperty extends StatefulWidget {

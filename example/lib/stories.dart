@@ -1,4 +1,5 @@
 import 'package:dashbook/dashbook.dart';
+import 'package:example/properties/date_time_property.dart';
 import 'package:example/widgets/message_card.dart';
 import 'package:flutter/material.dart';
 
@@ -120,5 +121,52 @@ void addStories(Dashbook dashbook) {
     },
     info: 'Use the actions menu to show a Toast',
     pinInfo: true,
+  );
+
+  dashbook.storiesOf('Custom property types').add(
+    'DateTimeProperty',
+    (dashbookContext) {
+      return Builder(builder: (context) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Using DateTimeProperty:',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            Text(
+              DateTimePropertyView.dateFormat.format(
+                dashbookContext.addProperty(
+                  DateTimeProperty(
+                    'Date in text',
+                    DateTime.now(),
+                  ),
+                ),
+              ),
+            ),
+            Divider(),
+            Text(
+              'Using anonymous property widget builder:',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            Text(
+              DateTimePropertyView.dateFormat.format(
+                dashbookContext.addProperty(
+                  Property.withBuilder(
+                    'Date in text (anonymous)',
+                    DateTime.now(),
+                    builder: (property, onChanged, key) => DateTimePropertyView(
+                      property: property,
+                      onChanged: onChanged,
+                      key: key,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      });
+    },
   );
 }
