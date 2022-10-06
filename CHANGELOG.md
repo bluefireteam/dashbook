@@ -1,3 +1,6 @@
+## [0.1.11]
+ - Adding custom properties.
+
 ## [0.1.10]
  - Add option to auto pin stories on large screens.
 
