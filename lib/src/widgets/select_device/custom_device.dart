@@ -121,6 +121,7 @@ class CustomDeviceState extends State<CustomDevice> {
                     ],
                   ),
                 const SizedBox(height: 12),
+                const Text('Text scale factor:'),
                 Slider(
                   value: widget.textScaleValue,
                   divisions: 3,

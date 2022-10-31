@@ -40,6 +40,7 @@ class SelectDevice extends StatelessWidget {
                 onChanged: onSelect,
               ),
               const SizedBox(height: 12),
+              const Text('Text scale factor:'),
               Slider(
                 value: textScaleValue,
                 divisions: 3,
