@@ -18,46 +18,42 @@ class SelectDevice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return SizedBox(
-          width: constraints.maxWidth * .5,
-          child: Column(
-            children: [
-              const Text('Select a device frame'),
-              const SizedBox(height: 15),
-              DropdownButton<DeviceInfo>(
-                value: selectedDevice,
-                items: [
-                  ...Devices.android.all,
-                  ...Devices.ios.all,
-                ].map((DeviceInfo device) {
-                  return DropdownMenuItem(
-                    value: device,
-                    child: Text(device.name),
-                  );
-                }).toList(),
-                onChanged: onSelect,
-              ),
-              const SizedBox(height: 12),
-              const Text('Text scale factor:'),
-              Slider(
-                value: textScaleValue,
-                divisions: 3,
-                min: 0.85,
-                max: 1.3,
-                label: textScaleValue.toString(),
-                onChanged: onUpdateTextScaleFactor,
-              ),
-              const SizedBox(height: 12),
-              OutlinedButton(
-                onPressed: changeToCustom,
-                child: const Text('Custom Device'),
-              ),
-            ],
+    return Column(
+      children: [
+        const Text('Select a device frame'),
+        const SizedBox(height: 15),
+        DropdownButton<DeviceInfo>(
+          value: selectedDevice,
+          items: [
+            ...Devices.android.all,
+            ...Devices.ios.all,
+          ].map((DeviceInfo device) {
+            return DropdownMenuItem(
+              value: device,
+              child: Text(device.name),
+            );
+          }).toList(),
+          onChanged: onSelect,
+        ),
+        const SizedBox(height: 12),
+        const Text('Text scale factor:'),
+        SizedBox(
+          width: 300,
+          child: Slider(
+            value: textScaleValue,
+            divisions: 3,
+            min: 0.85,
+            max: 1.3,
+            label: textScaleValue.toString(),
+            onChanged: onUpdateTextScaleFactor,
           ),
-        );
-      },
+        ),
+        const SizedBox(height: 12),
+        OutlinedButton(
+          onPressed: changeToCustom,
+          child: const Text('Custom Device'),
+        ),
+      ],
     );
   }
 }
