@@ -147,8 +147,6 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(textScaleFactor(), 1.3);
-
-      expect(find.byType(DeviceFrame), findsOneWidget);
     });
 
     testWidgets(
