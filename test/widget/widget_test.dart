@@ -120,6 +120,35 @@ void main() {
       expect(find.byType(DeviceFrame), findsOneWidget);
     });
 
+    testWidgets('can select and apply a text scale factor', (tester) async {
+      await tester.pumpDashbook(_getDashbook());
+
+      final textScaleFactor = () => tester
+          .widgetList<RichText>(
+            find.byType(RichText),
+          )
+          .firstWhere(
+            (element) =>
+                element.text.toPlainText() ==
+                'Text story of the default chapter',
+          )
+          .textScaleFactor;
+
+      expect(textScaleFactor(), 1.0);
+
+      await tester.tap(find.byKey(kDevicePreviewIcon));
+      await tester.pumpAndSettle();
+
+      await tester.drag(find.byType(Slider), const Offset(100, 0));
+      await tester.pumpAndSettle();
+
+      final selectButton = find.text('Select');
+      await tester.tap(selectButton);
+      await tester.pumpAndSettle();
+
+      expect(textScaleFactor(), 1.3);
+    });
+
     testWidgets(
         'rotate and hide frame are showed when a device to preview is selected',
         (tester) async {

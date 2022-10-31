@@ -11,8 +11,8 @@ import 'package:dashbook/src/widgets/keys.dart';
 import 'package:dashbook/src/widgets/preview_container.dart';
 import 'package:dashbook/src/widgets/properties_container.dart';
 import 'package:dashbook/src/widgets/select_device/device_dialog.dart';
+import 'package:dashbook/src/widgets/select_device/device_settings.dart';
 import 'package:dashbook/src/widgets/stories_list.dart';
-import 'package:device_frame/device_frame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -127,7 +127,7 @@ class _DashbookState extends State<Dashbook> {
   late DashbookPreferences _preferences;
   bool _loading = true;
   String _storiesFilter = '';
-  DeviceInfo? deviceInfo;
+  DeviceSettings? deviceInfo;
   Orientation deviceOrientation = Orientation.portrait;
   bool showDeviceFrame = true;
   bool _storyPanelPinned = false;
@@ -399,7 +399,7 @@ class _DashbookState extends State<Dashbook> {
                                   icon: Icons.phone_android_outlined,
                                   onClick: () async {
                                     final selectedDevice =
-                                        await showDialog<DeviceInfo>(
+                                        await showDialog<DeviceSettings>(
                                       context: context,
                                       builder: (_) => DeviceDialog(
                                         currentSelection: deviceInfo,

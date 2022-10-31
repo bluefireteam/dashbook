@@ -1,4 +1,5 @@
 import 'package:dashbook/src/widgets/select_device/device_dialog.dart';
+import 'package:dashbook/src/widgets/select_device/device_settings.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -7,7 +8,7 @@ import 'package:mockingjay/mockingjay.dart';
 void main() {
   Widget _pumpDeviceDialog({
     MockNavigator? navigator,
-    void Function(DeviceInfo?)? onSelect,
+    void Function(DeviceSettings?)? onSelect,
   }) =>
       MaterialApp(
         home: Scaffold(
@@ -18,7 +19,7 @@ void main() {
                 child: ElevatedButton(
                   child: const Text('ButtonTest'),
                   onPressed: () async {
-                    final result = await showDialog<DeviceInfo>(
+                    final result = await showDialog<DeviceSettings>(
                       context: context,
                       builder: (_) => const DeviceDialog(),
                     );
@@ -143,7 +144,7 @@ void main() {
     });
 
     testWidgets('Should customize a device info and return it', (tester) async {
-      DeviceInfo? result;
+      DeviceSettings? result;
       await tester.pumpWidget(
         _pumpDeviceDialog(onSelect: (selected) async => result = selected),
       );
@@ -165,12 +166,15 @@ void main() {
       }
       await tester.tap(find.text('iOS'));
 
+      await tester.drag(find.byType(Slider), const Offset(50, 0));
+
       await tester.tap(find.text('Select'));
 
       expect(result, isNotNull);
-      expect(result!.screenSize.width, 1000);
-      expect(result!.screenSize.height, 1000);
-      expect(result!.identifier.platform, TargetPlatform.iOS);
+      expect(result!.textScaleFactor, 1.15);
+      expect(result!.deviceInfo!.screenSize.width, 1000);
+      expect(result!.deviceInfo!.screenSize.height, 1000);
+      expect(result!.deviceInfo!.identifier.platform, TargetPlatform.iOS);
     });
 /*
     /// There is an issue on mockingjay when the test uses showdialog with navigator
