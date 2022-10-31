@@ -1,6 +1,6 @@
 import 'package:device_frame/device_frame.dart';
 
-/// A class containing information about a mocked user's phone and settings.
+/// A class containing information about a mocked user's device and settings.
 ///
 /// Use [deviceInfo] to control the mocked device itself, such as size and
 /// visual representation on screen.
