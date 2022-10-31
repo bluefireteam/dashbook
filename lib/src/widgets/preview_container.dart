@@ -1,14 +1,14 @@
 import 'package:dashbook/src/device_size_extension.dart';
 import 'package:dashbook/src/widgets/device_preview.dart';
 import 'package:dashbook/src/widgets/helpers.dart';
-import 'package:device_frame/device_frame.dart';
+import 'package:dashbook/src/widgets/select_device/device_settings.dart';
 import 'package:flutter/material.dart';
 
 class PreviewContainer extends StatelessWidget {
   final bool usePreviewSafeArea;
   final Widget child;
   final bool isPropertiesOpen;
-  final DeviceInfo? deviceInfo;
+  final DeviceSettings? deviceInfo;
   final Orientation? deviceOrientation;
   final bool showDeviceFrame;
   final String? info;
@@ -26,10 +26,10 @@ class PreviewContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final preview = deviceInfo != null
+    final preview = deviceInfo?.deviceInfo != null
         ? DevicePreview(
             showDeviceFrame: showDeviceFrame,
-            deviceInfo: deviceInfo!,
+            deviceInfo: deviceInfo!.deviceInfo!,
             deviceOrientation: deviceOrientation!,
             child: Container(
               decoration: BoxDecoration(
@@ -51,33 +51,38 @@ class PreviewContainer extends StatelessWidget {
           )
         : child;
 
-    return Positioned(
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: (context.isNotPhoneSize && isPropertiesOpen)
-          ? sideBarSizeProperties(context)
-          : 0,
-      child: info == null
-          ? preview
-          : Stack(
-              children: [
-                Positioned.fill(child: preview),
-                Positioned(
-                  bottom: 6,
-                  left: 6,
-                  right: 6,
-                  child: Center(
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Text(info!),
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(
+        textScaleFactor: deviceInfo?.textScaleFactor,
+      ),
+      child: Positioned(
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: (context.isNotPhoneSize && isPropertiesOpen)
+            ? sideBarSizeProperties(context)
+            : 0,
+        child: info == null
+            ? preview
+            : Stack(
+                children: [
+                  Positioned.fill(child: preview),
+                  Positioned(
+                    bottom: 6,
+                    left: 6,
+                    right: 6,
+                    child: Center(
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(info!),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+      ),
     );
   }
 }

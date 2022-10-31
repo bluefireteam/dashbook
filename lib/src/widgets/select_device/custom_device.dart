@@ -10,6 +10,8 @@ class CustomDevice extends StatefulWidget {
     required this.onUpdateDevice,
     required this.changeToList,
     required this.formKey,
+    required this.textScaleValue,
+    required this.onUpdateTextScaleFactor,
     this.selectedDevice,
     Key? key,
   }) : super(key: key);
@@ -17,6 +19,8 @@ class CustomDevice extends StatefulWidget {
   final DeviceInfo? selectedDevice;
   final void Function(DeviceInfo) onUpdateDevice;
   final GlobalKey<FormState> formKey;
+  final Function(double) onUpdateTextScaleFactor;
+  final double textScaleValue;
 
   @override
   CustomDeviceState createState() => CustomDeviceState();
@@ -116,6 +120,15 @@ class CustomDeviceState extends State<CustomDevice> {
                       ),
                     ],
                   ),
+                const SizedBox(height: 12),
+                Slider(
+                  value: widget.textScaleValue,
+                  divisions: 3,
+                  min: 0.85,
+                  max: 1.3,
+                  label: widget.textScaleValue.toString(),
+                  onChanged: widget.onUpdateTextScaleFactor,
+                ),
                 const SizedBox(height: 12),
                 _PickPlatform(
                   selected: custom.identifier.platform,
