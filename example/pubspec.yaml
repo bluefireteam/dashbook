@@ -9,17 +9,21 @@ environment:
   sdk: ">=2.15.0 <3.0.0" # dart version
 
 dependencies:
+  alkami_core_dependencies: 
+    hosted: https://dart.cloudsmith.io/alkami/flutter/
+    version: ^2.1.0
+
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^0.1.2
 
   dashbook:
     path: ../
 
+
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+  alkami_core_dev_dependencies: 
+    hosted: https://dart.cloudsmith.io/alkami/flutter/
+    version: ^2.1.0
 
 flutter:
   uses-material-design: true
