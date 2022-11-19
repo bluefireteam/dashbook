@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 class PreviewContainer extends StatelessWidget {
   final bool usePreviewSafeArea;
   final Widget child;
-  final bool isPropertiesOpen;
-  final DeviceSettings? deviceInfo;
+  final bool isIntrusiveSideMenuOpen;
   final Orientation? deviceOrientation;
   final bool showDeviceFrame;
   final String? info;
@@ -17,19 +16,20 @@ class PreviewContainer extends StatelessWidget {
     required Key key,
     required this.child,
     required this.usePreviewSafeArea,
-    required this.isPropertiesOpen,
+    required this.isIntrusiveSideMenuOpen,
     required this.showDeviceFrame,
-    this.deviceInfo,
     this.deviceOrientation,
     this.info,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final preview = deviceInfo?.deviceInfo != null
+    final deviceInfo = DeviceSettings.of(context).settings;
+
+    final preview = deviceInfo.deviceInfo != null
         ? DevicePreview(
             showDeviceFrame: showDeviceFrame,
-            deviceInfo: deviceInfo!.deviceInfo!,
+            deviceInfo: deviceInfo.deviceInfo!,
             deviceOrientation: deviceOrientation!,
             child: Container(
               decoration: BoxDecoration(
@@ -53,13 +53,13 @@ class PreviewContainer extends StatelessWidget {
 
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
-        textScaleFactor: deviceInfo?.textScaleFactor,
+        textScaleFactor: deviceInfo.textScaleFactor,
       ),
       child: Positioned(
         top: 0,
         bottom: 0,
         left: 0,
-        right: (context.isNotPhoneSize && isPropertiesOpen)
+        right: (context.isNotPhoneSize && isIntrusiveSideMenuOpen)
             ? sideBarSizeProperties(context)
             : 0,
         child: info == null
