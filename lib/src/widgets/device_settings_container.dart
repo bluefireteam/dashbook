@@ -28,11 +28,11 @@ class _DeviceSettingsContainerState extends State<DeviceSettingsContainer> {
     super.initState();
   }
 
-  set isCustom(bool value) {
+  set isCustom(bool isCustom) {
     setState(() {
-      _isCustom = value;
-      DeviceSettings.of(context).updateDevice(
-        value ? Devices.android.largeTablet : null,
+      _isCustom = isCustom;
+      DeviceSettings.of(context, listen: false).updateDevice(
+        isCustom ? Devices.android.largeTablet : null,
       );
     });
   }
@@ -41,9 +41,6 @@ class _DeviceSettingsContainerState extends State<DeviceSettingsContainer> {
 
   @override
   Widget build(BuildContext context) {
-    final settings = DeviceSettings.of(context).settings;
-    final deviceInfo = settings.deviceInfo;
-
     return SideBarPanel(
       title: 'Properties',
       width: sideBarSizeProperties(context),
@@ -54,19 +51,15 @@ class _DeviceSettingsContainerState extends State<DeviceSettingsContainer> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (isCustom && deviceInfo != null)
+            if (isCustom)
               CustomDevice(
                 formKey: _formKey,
                 changeToList: () {
                   isCustom = false;
                 },
-                deviceInfo: deviceInfo,
-                textScaleFactor: settings.textScaleFactor,
               )
             else
-              SelectDevice(
-                changeToCustom: () => isCustom = true,
-              ),
+              SelectDevice(changeToCustom: () => isCustom = true),
             const SizedBox(height: 15),
           ],
         ),

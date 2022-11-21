@@ -1,6 +1,9 @@
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/widgets.dart';
 
+const String kCustomDeviceId = 'custom_device';
+const String kCustomDeviceName = 'Custom Device';
+
 /// A class containing information about a mocked user's device and settings.
 ///
 /// Use [deviceInfo] to control the mocked device itself, such as size and
@@ -40,9 +43,13 @@ class DeviceSettings extends StatefulWidget {
 
   const DeviceSettings({super.key, required this.child});
 
-  static DeviceSettingsState of(BuildContext context) {
-    final result =
-        context.dependOnInheritedWidgetOfExactType<_DeviceSettings>();
+  static DeviceSettingsState of(BuildContext context, {bool listen = true}) {
+    final _DeviceSettings? result;
+    if (listen) {
+      result = context.dependOnInheritedWidgetOfExactType<_DeviceSettings>();
+    } else {
+      result = context.findAncestorWidgetOfExactType<_DeviceSettings>();
+    }
     assert(result != null, 'No DeviceSettings found in context');
     return result!.data;
   }
@@ -74,6 +81,27 @@ class DeviceSettingsState extends State<DeviceSettings> {
     settings = DeviceSettingsData(
       textScaleFactor: _settings.textScaleFactor,
       deviceInfo: deviceInfo,
+    );
+  }
+
+  void updateDeviceData({
+    double? height,
+    double? width,
+    TargetPlatform? platform,
+  }) {
+    final deviceInfo = _settings.deviceInfo;
+    if (deviceInfo == null) return;
+
+    updateDevice(
+      DeviceInfo.genericTablet(
+        platform: platform ?? deviceInfo.identifier.platform,
+        screenSize: Size(
+          width ?? deviceInfo.screenSize.width,
+          height ?? deviceInfo.screenSize.height,
+        ),
+        id: kCustomDeviceId,
+        name: kCustomDeviceName,
+      ),
     );
   }
 

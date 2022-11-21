@@ -8,7 +8,7 @@ import 'package:mockingjay/mockingjay.dart';
 void main() {
   Widget _pumpDeviceDialog({
     MockNavigator? navigator,
-    void Function(DeviceSettings?)? onSelect,
+    void Function(DeviceSettingsData?)? onSelect,
   }) =>
       MaterialApp(
         home: Scaffold(
@@ -19,7 +19,7 @@ void main() {
                 child: ElevatedButton(
                   child: const Text('ButtonTest'),
                   onPressed: () async {
-                    final result = await showDialog<DeviceSettings>(
+                    final result = await showDialog<DeviceSettingsData>(
                       context: context,
                       builder: (_) => const DeviceDialog(),
                     );
@@ -144,7 +144,7 @@ void main() {
     });
 
     testWidgets('Should customize a device info and return it', (tester) async {
-      DeviceSettings? result;
+      DeviceSettingsData? result;
       await tester.pumpWidget(
         _pumpDeviceDialog(onSelect: (selected) async => result = selected),
       );
