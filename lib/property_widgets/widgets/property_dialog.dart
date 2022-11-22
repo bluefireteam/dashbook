@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
 
 class PropertyDialog extends StatelessWidget {
   final String? title;

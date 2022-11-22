@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
 
 import 'package:dashbook/dashbook.dart';
 

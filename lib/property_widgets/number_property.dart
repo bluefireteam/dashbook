@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
 import '../story.dart';
 import 'widgets/property_scaffold.dart';
 

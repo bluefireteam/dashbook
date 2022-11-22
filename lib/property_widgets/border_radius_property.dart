@@ -1,6 +1,5 @@
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
 import 'package:dashbook/property_widgets/widgets/property_4_integer_form.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import '../story.dart';
 import 'widgets/property_scaffold.dart';
 

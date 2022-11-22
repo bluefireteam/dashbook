@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart' as url_launcher;
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
 
 import './story.dart';
 import 'property_widgets/properties.dart' as p;
@@ -449,8 +448,10 @@ class _ChapterIconsOverlay extends StatelessWidget {
   }
 
   Future<void> _launchURL(String url) async {
-    if (await url_launcher.canLaunch(url)) {
-      await url_launcher.launch(url);
+    // ignore: deprecated_member_use
+    if (await canLaunch(url)) {
+      // ignore: deprecated_member_use
+      await launch(url);
     } else {
       throw 'Could not launch $url';
     }
