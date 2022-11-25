@@ -15,8 +15,12 @@ typedef ContentBuilder = Widget Function(BuildContext context);
 class MultiBrandBookBuilder {
   final List<Story> _stories = [];
   final List<DashbookBrand> brands;
+  final String title;
 
-  MultiBrandBookBuilder({required this.brands});
+  MultiBrandBookBuilder({
+    required this.brands,
+    required this.title,
+  });
 
   Story storiesOf(String name) {
     final story = Story(name);
@@ -32,7 +36,7 @@ class MultiBrandBookBuilder {
         usePreviewSafeArea: true,
         autoPinStoriesOnLargeScreen: true,
         preferences: DashbookPreferences(),
-        title: 'Dashbook',
+        title: title,
         stories: _stories,
       ),
     );
@@ -54,7 +58,7 @@ class MultiBrandApp extends StatelessWidget {
       routeInformationProvider: _router.routeInformationProvider,
       routeInformationParser: _router.routeInformationParser,
       routerDelegate: _router.routerDelegate,
-      title: 'GoRouter Example',
+      title: config.title,
     );
   }
 
@@ -63,34 +67,36 @@ class MultiBrandApp extends StatelessWidget {
   GoRouter _createRouter() {
     final routes = GoRoute(
       path: '/:brand/:story/:chapter',
-      pageBuilder: (context, state) => CustomTransitionPage<void>(
-        key: state.pageKey,
-        child: MultiBrandDashbook(
-          brands: brands,
-          selectedBrand: brands.firstWhere(
-            (element) => element.path == state.params['brand'],
+      pageBuilder: (context, state) {
+        return CustomTransitionPage<void>(
+          key: state.pageKey,
+          child: MultiBrandDashbook(
+            brands: brands,
+            selectedBrand: brands.firstWhere(
+              (element) => element.path == state.params['brand'],
+            ),
+            currentChapter:
+                getChapter(state.params['story']!, state.params['chapter']!),
+            config: config,
           ),
-          currentChapter:
-              getChapter(state.params['story']!, state.params['chapter']!),
-          config: config,
-        ),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-            FadeTransition(opacity: animation, child: child),
-      ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child),
+        );
+      },
     );
 
     return GoRouter(
       initialLocation:
-          '/${brands.first.path}/${config.stories.first.name.toLowerCase()}/${config.stories.first.chapters.first.name.toLowerCase()}',
+          '/${brands.first.path}/${config.stories.first.path}/${config.stories.first.chapters.first.path}',
       routes: [routes],
     );
   }
 
   Chapter getChapter(String story, String chapter) {
     return config.stories
-        .firstWhere((element) => element.name.toLowerCase() == story)
+        .firstWhere((element) => element.path == story)
         .chapters
-        .firstWhere((element) => element.name.toLowerCase() == chapter);
+        .firstWhere((element) => element.path == chapter);
   }
 }
 
@@ -142,12 +148,13 @@ class _MultiBrandDashbookState extends State<MultiBrandDashbook> {
     brand ??= widget.selectedBrand.path;
     chapter ??= widget.currentChapter;
     context.go(
-      '/$brand/${chapter.story.name.toLowerCase()}/${chapter.name.toLowerCase()}',
+      '/$brand/${chapter.story.path}/${chapter.path}',
     );
   }
 
   Widget builder(BuildContext context) {
     return _MultiBrandContent(
+      brand: widget.selectedBrand,
       config: widget.config,
       stories: widget.config.stories,
       themeSettings: widget.selectedBrand.themeSettings,
@@ -164,6 +171,7 @@ class _MultiBrandDashbookState extends State<MultiBrandDashbook> {
 
 class _MultiBrandContent extends StatefulWidget {
   const _MultiBrandContent({
+    required this.brand,
     required this.config,
     required this.themeSettings,
     required this.onThemeChange,
@@ -172,6 +180,7 @@ class _MultiBrandContent extends StatefulWidget {
     required this.onChapterChange,
     Key? key,
   }) : super(key: key);
+  final DashbookBrand brand;
   final DashbookConfig config;
   final ThemeSettings themeSettings;
   final OnThemeChange onThemeChange;
@@ -189,6 +198,7 @@ class _MultiBrandContentState extends State<_MultiBrandContent> {
   @override
   Widget build(BuildContext context) {
     return DashbookContent(
+      brand: widget.brand,
       currentView: currentView,
       currentChapter: widget.currentChapter,
       config: widget.config,

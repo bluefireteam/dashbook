@@ -13,6 +13,7 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   flutter_markdown: ^0.6.9
   go_router: ^4.4.1
+  share_plus: ^6.3.0
   shared_preferences: ^2.0.13
   url_launcher: ^6.1.2
 

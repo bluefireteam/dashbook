@@ -52,7 +52,14 @@ class _SmallAppState extends State<SmallApp>
           ),
           TabBar(
             controller: _tabController,
-            tabs: widget.brands.map((brand) => brand.icon).toList(),
+            tabs: widget.brands
+                .map(
+                  (brand) => brand.iconBuilder(
+                    context,
+                    ScreenSize.small,
+                  ),
+                )
+                .toList(),
           ),
         ],
       ),

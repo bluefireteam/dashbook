@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/platform_utils/platform_utils.dart';
 import 'package:flutter/material.dart';
 
 class ControlProperty {
@@ -263,11 +266,12 @@ typedef ChapterBuildFunction = Widget Function(DashbookContext context);
 
 class Story {
   final String name;
+  final String path;
   List<Chapter> chapters = [];
 
   Decorator? _decorator;
 
-  Story(this.name);
+  Story(this.name) : path = PlatformUtils.normalizePathName(name);
 
   Story add(
     String name,
@@ -299,6 +303,7 @@ class Story {
 class Chapter {
   final ChapterBuildFunction _buildFn;
   final String name;
+  final String path;
   DashbookContext ctx = DashbookContext();
   final String? codeLink;
   final String? info;
@@ -313,7 +318,7 @@ class Chapter {
     this.codeLink,
     this.info,
     this.pinInfo = false,
-  });
+  }) : path = PlatformUtils.normalizePathName(name);
 
   Widget widget() {
     final w = _buildFn(ctx);

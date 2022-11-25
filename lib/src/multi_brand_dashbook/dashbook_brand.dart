@@ -1,16 +1,27 @@
 import 'package:dashbook/src/dashbook_config.dart';
+import 'package:dashbook/src/platform_utils/platform_utils.dart';
 import 'package:flutter/widgets.dart';
 
 class DashbookBrand {
   final String name;
   final String path;
-  final Widget icon;
+  final IconBuilder iconBuilder;
   final ThemeSettings themeSettings;
 
-  const DashbookBrand({
+  DashbookBrand({
     required this.name,
     String? path,
-    required this.icon,
+    required this.iconBuilder,
     required this.themeSettings,
-  }) : path = path ?? name;
+  }) : path = path ?? PlatformUtils.normalizePathName(name);
+}
+
+typedef IconBuilder = Widget Function(
+  BuildContext context,
+  ScreenSize size,
+);
+
+enum ScreenSize {
+  small,
+  large,
 }

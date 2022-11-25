@@ -17,6 +17,7 @@ import 'package:device_frame/device_frame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 typedef OnViewChange = void Function(CurrentView?);
@@ -25,6 +26,7 @@ typedef OnThemeChange = void Function(ThemeData);
 class DashbookContent extends StatefulWidget {
   const DashbookContent({
     Key? key,
+    required this.brand,
     required this.currentView,
     required this.currentChapter,
     required this.config,
@@ -34,6 +36,7 @@ class DashbookContent extends StatefulWidget {
     required this.onThemeChange,
   }) : super(key: key);
 
+  final DashbookBrand brand;
   final CurrentView? currentView;
   final Chapter? currentChapter;
   final DashbookConfig config;
@@ -75,6 +78,7 @@ class _DashbookContentState extends State<DashbookContent> {
           if (_currentView == CurrentView.stories || alwaysShowStories)
             Drawer(
               child: StoriesList(
+                title: widget.brand.name,
                 stories: config.stories,
                 storyPanelPinned: _storyPanelPinned,
                 selectedChapter: _currentChapter,
@@ -217,24 +221,16 @@ class _DashbookContentState extends State<DashbookContent> {
                             );
                           },
                         ),
-                      if (kIsWeb && _currentChapter != null)
+                      if (!kIsWeb && PlatformUtils.baseUrl != null)
                         DashbookIcon(
                           tooltip: 'Share this example',
                           icon: Icons.share,
                           onClick: () {
                             final url = PlatformUtils.getChapterUrl(
+                              widget.brand,
                               _currentChapter!,
                             );
-                            Clipboard.setData(
-                              ClipboardData(text: url),
-                            );
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  'Link copied to your clipboard',
-                                ),
-                              ),
-                            );
+                            Share.share(url);
                           },
                         ),
                       DashbookIcon(
