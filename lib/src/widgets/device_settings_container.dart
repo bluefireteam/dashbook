@@ -43,6 +43,7 @@ class _DeviceSettingsContainerState extends State<DeviceSettingsContainer> {
   Widget build(BuildContext context) {
     return SideBarPanel(
       title: 'Properties',
+      onCloseKey: kDevicePreviewCloseIcon,
       width: sideBarSizeProperties(context),
       onCancel: widget.onCancel,
       child: Padding(
@@ -54,6 +55,7 @@ class _DeviceSettingsContainerState extends State<DeviceSettingsContainer> {
             const _DeviceToggles(),
             CheckboxListTile(
               value: _isCustom,
+              key: kCustomDeviceToggle,
               title: const Text('Custom device'),
               contentPadding: EdgeInsets.zero,
               onChanged: (value) => _setIsCustom(value!),
