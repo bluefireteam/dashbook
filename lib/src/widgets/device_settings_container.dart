@@ -69,7 +69,6 @@ class _DeviceSettingsContainerState extends State<DeviceSettingsContainer> {
               )
             else
               const SelectDevice(),
-            // if (DeviceSettings.of(context).settings.deviceInfo != null)
           ],
         ),
       ),
