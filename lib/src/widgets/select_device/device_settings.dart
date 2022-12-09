@@ -21,19 +21,34 @@ const String kCustomDeviceName = 'Custom Device';
 class DeviceSettingsData {
   final DeviceInfo? deviceInfo;
   final double textScaleFactor;
+  final Orientation orientation;
+  final bool showDeviceFrame;
 
   const DeviceSettingsData({
     required this.deviceInfo,
     required this.textScaleFactor,
+    required this.orientation,
+    required this.showDeviceFrame,
   });
+
+  static const DeviceSettingsData _default = DeviceSettingsData(
+    deviceInfo: null,
+    textScaleFactor: 1,
+    orientation: Orientation.portrait,
+    showDeviceFrame: true,
+  );
 
   DeviceSettingsData copyWith({
     DeviceInfo? deviceInfo,
     double? textScaleFactor,
+    Orientation? orientation,
+    bool? showDeviceFrame,
   }) {
     return DeviceSettingsData(
       deviceInfo: deviceInfo ?? this.deviceInfo,
       textScaleFactor: textScaleFactor ?? this.textScaleFactor,
+      orientation: orientation ?? this.orientation,
+      showDeviceFrame: showDeviceFrame ?? this.showDeviceFrame,
     );
   }
 }
@@ -59,10 +74,7 @@ class DeviceSettings extends StatefulWidget {
 }
 
 class DeviceSettingsState extends State<DeviceSettings> {
-  DeviceSettingsData _settings = const DeviceSettingsData(
-    deviceInfo: null,
-    textScaleFactor: 1,
-  );
+  DeviceSettingsData _settings = DeviceSettingsData._default;
 
   DeviceSettingsData get settings => _settings;
 
@@ -71,17 +83,27 @@ class DeviceSettingsState extends State<DeviceSettings> {
       });
 
   void updateTextScaleFactor([double textScaleFactor = 1.0]) {
-    settings = DeviceSettingsData(
+    settings = settings.copyWith(
       textScaleFactor: textScaleFactor,
-      deviceInfo: _settings.deviceInfo,
     );
   }
 
   void updateDevice(DeviceInfo? deviceInfo) {
-    settings = DeviceSettingsData(
-      textScaleFactor: _settings.textScaleFactor,
+    settings = DeviceSettingsData._default.copyWith(
+      textScaleFactor: settings.textScaleFactor,
       deviceInfo: deviceInfo,
     );
+  }
+
+  void rotate() {
+    final newOrientation = settings.orientation == Orientation.portrait
+        ? Orientation.landscape
+        : Orientation.portrait;
+    settings = settings.copyWith(orientation: newOrientation);
+  }
+
+  void toggleDeviceFrame() {
+    settings = settings.copyWith(showDeviceFrame: !settings.showDeviceFrame);
   }
 
   void updateDeviceData({

@@ -8,8 +8,6 @@ class PreviewContainer extends StatelessWidget {
   final bool usePreviewSafeArea;
   final Widget child;
   final bool isIntrusiveSideMenuOpen;
-  final Orientation? deviceOrientation;
-  final bool showDeviceFrame;
   final String? info;
 
   const PreviewContainer({
@@ -17,8 +15,6 @@ class PreviewContainer extends StatelessWidget {
     required this.child,
     required this.usePreviewSafeArea,
     required this.isIntrusiveSideMenuOpen,
-    required this.showDeviceFrame,
-    this.deviceOrientation,
     this.info,
   }) : super(key: key);
 
@@ -28,9 +24,9 @@ class PreviewContainer extends StatelessWidget {
 
     final preview = deviceInfo.deviceInfo != null
         ? DevicePreview(
-            showDeviceFrame: showDeviceFrame,
+            showDeviceFrame: deviceInfo.showDeviceFrame,
             deviceInfo: deviceInfo.deviceInfo!,
-            deviceOrientation: deviceOrientation!,
+            deviceOrientation: deviceInfo.orientation,
             child: Container(
               decoration: BoxDecoration(
                 border: usePreviewSafeArea

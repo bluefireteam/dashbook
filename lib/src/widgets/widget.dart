@@ -4,9 +4,9 @@ import 'package:dashbook/src/platform_utils/platform_utils.dart';
 import 'package:dashbook/src/preferences.dart';
 import 'package:dashbook/src/story_util.dart';
 import 'package:dashbook/src/widgets/actions_container.dart';
+import 'package:dashbook/src/widgets/dashbook_icon.dart';
 import 'package:dashbook/src/widgets/device_settings_container.dart';
 import 'package:dashbook/src/widgets/helpers.dart';
-import 'package:dashbook/src/widgets/icon.dart';
 import 'package:dashbook/src/widgets/intructions_dialog.dart';
 import 'package:dashbook/src/widgets/keys.dart';
 import 'package:dashbook/src/widgets/preview_container.dart';
@@ -128,8 +128,6 @@ class _DashbookState extends State<Dashbook> {
   late DashbookPreferences _preferences;
   bool _loading = true;
   String _storiesFilter = '';
-  Orientation deviceOrientation = Orientation.portrait;
-  bool showDeviceFrame = true;
   bool _storyPanelPinned = false;
 
   @override
@@ -272,8 +270,6 @@ class _DashbookState extends State<Dashbook> {
                                         CurrentView.properties ||
                                     _currentView == CurrentView.actions ||
                                     _currentView == CurrentView.deviceSettings,
-                                deviceOrientation: deviceOrientation,
-                                showDeviceFrame: showDeviceFrame,
                                 info: _currentChapter?.pinInfo == true
                                     ? _currentChapter?.info
                                     : null,
@@ -331,7 +327,8 @@ class _DashbookState extends State<Dashbook> {
                                       tooltip: 'See code',
                                       icon: Icons.code,
                                       onClick: () => _launchURL(
-                                          _currentChapter!.codeLink!),
+                                        _currentChapter!.codeLink!,
+                                      ),
                                     ),
                                   if (widget._dualTheme != null)
                                     _DashbookDualThemeIcon(
@@ -404,35 +401,6 @@ class _DashbookState extends State<Dashbook> {
                                       _storyPanelPinned = false;
                                     }),
                                   ),
-                                  // TODO(lohnn): Move this into device settings
-                                  // if (DeviceSettings.of(context)
-                                  //         .settings
-                                  //         .deviceInfo !=
-                                  //     null)
-                                  //   DashbookIcon(
-                                  //     key: kRotateIcon,
-                                  //     tooltip: 'Orientation',
-                                  //     icon: Icons.screen_rotation_outlined,
-                                  //     onClick: () => setState(() {
-                                  //       deviceOrientation = deviceOrientation ==
-                                  //               Orientation.portrait
-                                  //           ? Orientation.landscape
-                                  //           : Orientation.portrait;
-                                  //     }),
-                                  //   ),
-                                  // if (DeviceSettings.of(context)
-                                  //         .settings
-                                  //         .deviceInfo !=
-                                  //     null)
-                                  //   DashbookIcon(
-                                  //     key: kHideFrameIcon,
-                                  //     tooltip: 'Device frame',
-                                  //     icon: Icons.mobile_off_outlined,
-                                  //     onClick: () => setState(
-                                  //       () =>
-                                  //           showDeviceFrame = !showDeviceFrame,
-                                  //     ),
-                                  //   ),
                                 ],
                               ),
                             ),
