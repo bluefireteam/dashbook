@@ -106,6 +106,10 @@ class DeviceSettingsState extends State<DeviceSettings> {
     settings = settings.copyWith(showDeviceFrame: !settings.showDeviceFrame);
   }
 
+  void reset() {
+    settings = DeviceSettingsData._default;
+  }
+
   void updateDeviceData({
     double? height,
     double? width,
