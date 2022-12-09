@@ -55,7 +55,6 @@ class CustomDeviceState extends State<CustomDevice> {
       key: widget.formKey,
       child: Column(
         children: [
-          const Text('Choose your custom setup'),
           Row(
             children: [
               Expanded(
@@ -87,11 +86,6 @@ class CustomDeviceState extends State<CustomDevice> {
           const SizedBox(height: 12),
           _PickPlatform(
             onSelect: (platform) => _setCustom(platform: platform),
-          ),
-          const SizedBox(height: 20),
-          OutlinedButton(
-            onPressed: widget.changeToList,
-            child: const Text('Devices List'),
           ),
         ],
       ),

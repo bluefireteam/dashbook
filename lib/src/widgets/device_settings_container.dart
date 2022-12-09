@@ -51,6 +51,12 @@ class _DeviceSettingsContainerState extends State<DeviceSettingsContainer> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            CheckboxListTile(
+              value: isCustom,
+              title: const Text('Custom device'),
+              contentPadding: EdgeInsets.zero,
+              onChanged: (value) => isCustom = value!,
+            ),
             if (isCustom)
               CustomDevice(
                 formKey: _formKey,
@@ -59,8 +65,7 @@ class _DeviceSettingsContainerState extends State<DeviceSettingsContainer> {
                 },
               )
             else
-              SelectDevice(changeToCustom: () => isCustom = true),
-            const SizedBox(height: 15),
+              const SelectDevice(),
           ],
         ),
       ),

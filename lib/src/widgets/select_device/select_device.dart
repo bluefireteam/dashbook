@@ -5,29 +5,23 @@ import 'package:flutter/material.dart';
 
 class SelectDevice extends StatelessWidget {
   const SelectDevice({
-    required this.changeToCustom,
     Key? key,
   }) : super(key: key);
-  final VoidCallback changeToCustom;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        const DevicePropertyScaffold(
+      children: const [
+        DevicePropertyScaffold(
           label: 'Select a device frame:',
           child: DeviceDropdown(),
         ),
-        const SizedBox(height: 12),
-        const DevicePropertyScaffold(
+        SizedBox(height: 12),
+        DevicePropertyScaffold(
           label: 'Text scale factor:',
           child: TextScaleFactorSlider(),
         ),
-        const SizedBox(height: 12),
-        OutlinedButton(
-          onPressed: changeToCustom,
-          child: const Text('Custom Device'),
-        ),
+        SizedBox(height: 12),
       ],
     );
   }
