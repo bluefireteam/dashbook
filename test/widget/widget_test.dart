@@ -1,6 +1,7 @@
 // ignore_for_file: one_member_abstracts
 
 import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/dashbook_icon.dart';
 import 'package:dashbook/src/widgets/keys.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,8 @@ void main() {
 
       await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
-      expect(find.text('Select a device frame'), findsOneWidget);
+
+      expect(find.text('Select a device frame:'), findsOneWidget);
     });
 
     testWidgets('can close the stories list', (tester) async {
@@ -86,10 +88,10 @@ void main() {
       await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Cancel'));
+      await tester.tap(find.byKey(kDevicePreviewCloseIcon));
       await tester.pumpAndSettle();
 
-      expect(find.text('Select a device frame'), findsNothing);
+      expect(find.text('Select a device frame:'), findsNothing);
     });
 
     testWidgets('can select and apply a device to preview', (tester) async {
@@ -111,10 +113,6 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.tap(dropdownItem);
-      await tester.pumpAndSettle();
-
-      final selectButton = find.text('Select');
-      await tester.tap(selectButton);
       await tester.pumpAndSettle();
 
       expect(find.byType(DeviceFrame), findsOneWidget);
@@ -142,15 +140,11 @@ void main() {
       await tester.drag(find.byType(Slider), const Offset(100, 0));
       await tester.pumpAndSettle();
 
-      final selectButton = find.text('Select');
-      await tester.tap(selectButton);
-      await tester.pumpAndSettle();
-
       expect(textScaleFactor(), 1.3);
     });
 
     testWidgets(
-        'rotate and hide frame are showed when a device to preview is selected',
+        'rotate and hide frame are active when a device to preview is selected',
         (tester) async {
       final selectedDevice = Devices.android.mediumPhone;
 
@@ -158,6 +152,12 @@ void main() {
 
       await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
+
+      final findRotate = find.byKey(kRotateIcon);
+      final findFrameToggle = find.byKey(kHideFrameIcon);
+
+      expect(tester.widget<DashbookIcon>(findRotate).onClick, isNull);
+      expect(tester.widget<DashbookIcon>(findFrameToggle).onClick, isNull);
 
       final dropDown = find
           .byWidgetPredicate((widget) => widget is DropdownButton<DeviceInfo>);
@@ -172,14 +172,10 @@ void main() {
       await tester.tap(dropdownItem);
       await tester.pumpAndSettle();
 
-      final selectButton = find.text('Select');
-      await tester.tap(selectButton);
-      await tester.pumpAndSettle();
-
       expect(find.byType(DeviceFrame), findsOneWidget);
 
-      expect(find.byKey(kRotateIcon), findsOneWidget);
-      expect(find.byKey(kHideFrameIcon), findsOneWidget);
+      expect(tester.widget<DashbookIcon>(findRotate).onClick, isNotNull);
+      expect(tester.widget<DashbookIcon>(findFrameToggle).onClick, isNotNull);
     });
 
     testWidgets('can clear the device preview selected', (tester) async {
@@ -203,22 +199,22 @@ void main() {
       await tester.tap(dropdownItem);
       await tester.pumpAndSettle();
 
-      final selectButton = find.text('Select');
-      await tester.tap(selectButton);
-      await tester.pumpAndSettle();
-
       expect(find.byType(DeviceFrame), findsOneWidget);
 
-      await tester.tap(find.byKey(kDevicePreviewIcon));
-      await tester.pumpAndSettle();
-
-      final clearButton = find.text('Clear');
+      final clearButton = find.text('Reset');
       await tester.tap(clearButton);
       await tester.pumpAndSettle();
 
       expect(find.byType(DeviceFrame), findsNothing);
-      expect(find.byKey(kRotateIcon), findsNothing);
-      expect(find.byKey(kHideFrameIcon), findsNothing);
+
+      expect(
+        tester.widget<DashbookIcon>(find.byKey(kRotateIcon)).onClick,
+        isNull,
+      );
+      expect(
+        tester.widget<DashbookIcon>(find.byKey(kHideFrameIcon)).onClick,
+        isNull,
+      );
     });
 
     testWidgets('can hide device frame', (tester) async {
@@ -240,10 +236,6 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.tap(dropdownItem);
-      await tester.pumpAndSettle();
-
-      final selectButton = find.text('Select');
-      await tester.tap(selectButton);
       await tester.pumpAndSettle();
 
       expect(find.byType(DeviceFrame), findsOneWidget);
@@ -278,10 +270,6 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.tap(dropdownItem);
-      await tester.pumpAndSettle();
-
-      final selectButton = find.text('Select');
-      await tester.tap(selectButton);
       await tester.pumpAndSettle();
 
       expect(find.byType(DeviceFrame), findsOneWidget);
