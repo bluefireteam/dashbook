@@ -51,6 +51,7 @@ class Dashbook extends StatefulWidget {
   final bool usePreviewSafeArea;
   final bool autoPinStoriesOnLargeScreen;
   final GlobalKey<NavigatorState>? navigatorKey;
+  final List<LocalizationsDelegate<dynamic>>? localizationsDelegates;
 
   /// Called whenever a new chapter is selected.
   final OnChapterChange? onChapterChange;
@@ -63,6 +64,7 @@ class Dashbook extends StatefulWidget {
     this.autoPinStoriesOnLargeScreen = false,
     this.navigatorKey,
     this.onChapterChange,
+    this.localizationsDelegates,
   })  : _dualTheme = null,
         _multiTheme = null,
         super(key: key);
@@ -77,6 +79,7 @@ class Dashbook extends StatefulWidget {
     this.autoPinStoriesOnLargeScreen = false,
     this.navigatorKey,
     this.onChapterChange,
+    this.localizationsDelegates,
   })  : _dualTheme = _DashbookDualTheme(
           dark: dark,
           light: light,
@@ -95,6 +98,7 @@ class Dashbook extends StatefulWidget {
     this.autoPinStoriesOnLargeScreen = false,
     this.navigatorKey,
     this.onChapterChange,
+    this.localizationsDelegates,
   })  : _multiTheme =
             _DashbookMultiTheme(themes: themes, initialTheme: initialTheme),
         theme = null,
@@ -203,6 +207,7 @@ class _DashbookState extends State<Dashbook> {
       navigatorKey: widget.navigatorKey,
       title: widget.title,
       theme: _currentTheme,
+      localizationsDelegates: widget.localizationsDelegates,
       onGenerateRoute: (settings) {
         return MaterialPageRoute<void>(
           builder: (context) {
