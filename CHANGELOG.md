@@ -1,3 +1,6 @@
+## [0.1.12]
+ - Device settings unified with the side panel.
+
 ## [0.1.11]
  - Adding custom properties.
 

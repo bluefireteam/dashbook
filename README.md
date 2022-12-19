@@ -15,7 +15,7 @@ Have any questions or ideas? Join our [Discord](https://discord.gg/FCHGNZ4yxF).
 Add the dependency to your `pubspec.yaml`
 
 ```
-dashbook: ^0.1.11
+dashbook: ^0.1.12
 ```
 
 A `Dashbook` instance has a collection of the app widgets (Stories) and its variants (Chapters). Here you can see a very simple example of how to use it.
