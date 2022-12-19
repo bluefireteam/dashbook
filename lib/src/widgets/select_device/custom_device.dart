@@ -1,26 +1,17 @@
-import 'package:device_frame/device_frame.dart';
+import 'package:dashbook/src/widgets/select_device/components/text_scale_factor_slider.dart';
+import 'package:dashbook/src/widgets/select_device/device_settings.dart';
+import 'package:dashbook/src/widgets/select_device/select_device.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-const String kCustomDeviceId = 'custom_device';
-const String kCustomDeviceName = 'Custom Device';
-
 class CustomDevice extends StatefulWidget {
   const CustomDevice({
-    required this.onUpdateDevice,
     required this.changeToList,
     required this.formKey,
-    required this.textScaleValue,
-    required this.onUpdateTextScaleFactor,
-    this.selectedDevice,
     Key? key,
   }) : super(key: key);
   final VoidCallback changeToList;
-  final DeviceInfo? selectedDevice;
-  final void Function(DeviceInfo) onUpdateDevice;
   final GlobalKey<FormState> formKey;
-  final Function(double) onUpdateTextScaleFactor;
-  final double textScaleValue;
 
   @override
   CustomDeviceState createState() => CustomDeviceState();
@@ -29,15 +20,14 @@ class CustomDevice extends StatefulWidget {
 class CustomDeviceState extends State<CustomDevice> {
   final _widthController = TextEditingController();
   final _heightController = TextEditingController();
-  late DeviceInfo custom;
 
   @override
   void initState() {
     super.initState();
-    custom = widget.selectedDevice ?? Devices.android.largeTablet;
-    widget.onUpdateDevice(custom);
-    _widthController.text = '${custom.screenSize.width}';
-    _heightController.text = '${custom.screenSize.height}';
+    final deviceInfo =
+        DeviceSettings.of(context, listen: false).settings.deviceInfo!;
+    _widthController.text = '${deviceInfo.screenSize.width.toInt()}';
+    _heightController.text = '${deviceInfo.screenSize.height.toInt()}';
   }
 
   @override
@@ -52,103 +42,53 @@ class CustomDeviceState extends State<CustomDevice> {
     double? width,
     TargetPlatform? platform,
   }) {
-    custom = DeviceInfo.genericTablet(
-      platform: platform ?? custom.identifier.platform,
-      id: kCustomDeviceId,
-      name: kCustomDeviceName,
-      screenSize: Size(
-        width ?? custom.screenSize.width,
-        height ?? custom.screenSize.height,
-      ),
+    DeviceSettings.of(context, listen: false).updateDeviceData(
+      height: height,
+      width: width,
+      platform: platform,
     );
-
-    widget.onUpdateDevice(custom);
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return SizedBox(
-          width: constraints.maxWidth * .5,
-          child: Form(
-            key: widget.formKey,
-            child: Column(
-              children: [
-                const Text('Choose your custom setup'),
-                if (constraints.maxWidth < 680)
-                  Column(
-                    children: [
-                      _FormField(
-                        _heightController,
-                        label: 'Height',
-                        onUpdate: (value) => _setCustom(
-                          height: value.toDouble(),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      _FormField(
-                        _widthController,
-                        label: 'Width',
-                        onUpdate: (value) => _setCustom(
-                          width: value.toDouble(),
-                        ),
-                      ),
-                    ],
-                  )
-                else
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _FormField(
-                          _heightController,
-                          label: 'Height',
-                          onUpdate: (value) => _setCustom(
-                            height: value.toDouble(),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _FormField(
-                          _widthController,
-                          label: 'Width',
-                          onUpdate: (value) => _setCustom(
-                            width: value.toDouble(),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                const SizedBox(height: 12),
-                const Text('Text scale factor:'),
-                SizedBox(
-                  width: 300,
-                  child: Slider(
-                    value: widget.textScaleValue,
-                    divisions: 3,
-                    min: 0.85,
-                    max: 1.3,
-                    label: widget.textScaleValue.toString(),
-                    onChanged: widget.onUpdateTextScaleFactor,
+    return Form(
+      key: widget.formKey,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: _FormField(
+                  _widthController,
+                  label: 'Width',
+                  onUpdate: (value) => _setCustom(
+                    width: value.toDouble(),
                   ),
                 ),
-                const SizedBox(height: 12),
-                _PickPlatform(
-                  selected: custom.identifier.platform,
-                  onSelect: (platform) =>
-                      setState(() => _setCustom(platform: platform)),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _FormField(
+                  _heightController,
+                  label: 'Height',
+                  onUpdate: (value) => _setCustom(
+                    height: value.toDouble(),
+                  ),
                 ),
-                const SizedBox(height: 20),
-                OutlinedButton(
-                  onPressed: widget.changeToList,
-                  child: const Text('Devices List'),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        );
-      },
+          const SizedBox(height: 12),
+          const DevicePropertyScaffold(
+            label: 'Text scale factor:',
+            child: TextScaleFactorSlider(),
+          ),
+          const SizedBox(height: 12),
+          _PickPlatform(
+            onSelect: (platform) => _setCustom(platform: platform),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -193,15 +133,15 @@ class _FormField extends StatelessWidget {
 
 class _PickPlatform extends StatelessWidget {
   const _PickPlatform({
-    required this.selected,
     required this.onSelect,
     Key? key,
   }) : super(key: key);
-  final TargetPlatform selected;
   final void Function(TargetPlatform) onSelect;
 
   @override
   Widget build(BuildContext context) {
+    final selected =
+        DeviceSettings.of(context).settings.deviceInfo!.identifier.platform;
     return Wrap(
       children: [TargetPlatform.android, TargetPlatform.iOS].map((platform) {
         return TextButton(

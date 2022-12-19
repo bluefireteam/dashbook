@@ -1,50 +1,46 @@
-import 'package:dashbook/src/widgets/select_device/device_dialog.dart';
+import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/dashbook_icon.dart';
+import 'package:dashbook/src/widgets/keys.dart';
 import 'package:dashbook/src/widgets/select_device/device_settings.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockingjay/mockingjay.dart';
+
+import '../helpers.dart';
 
 void main() {
-  Widget _pumpDeviceDialog({
-    MockNavigator? navigator,
-    void Function(DeviceSettings?)? onSelect,
-  }) =>
-      MaterialApp(
-        home: Scaffold(
-          body: Builder(
-            builder: (context) {
-              return MockNavigatorProvider(
-                navigator: navigator ?? MockNavigator(),
-                child: ElevatedButton(
-                  child: const Text('ButtonTest'),
-                  onPressed: () async {
-                    final result = await showDialog<DeviceSettings>(
-                      context: context,
-                      builder: (_) => const DeviceDialog(),
-                    );
-                    onSelect?.call(result);
-                  },
-                ),
-              );
-            },
-          ),
-        ),
+  Dashbook _getDashbook({
+    void Function(DeviceSettingsData?)? onDeviceSettingsChanged,
+  }) {
+    final dashbook = Dashbook();
+
+    dashbook.storiesOf('Testing').add('default', (context) {
+      return Builder(
+        builder: (context) {
+          onDeviceSettingsChanged?.call(
+            DeviceSettings.of(context).settings,
+          );
+          return const Text('This is test');
+        },
       );
+    });
+
+    return dashbook;
+  }
 
   Future<void> _openCustomSetup(WidgetTester tester) async {
-    final customDeviceButtonLabel = find.text('Custom Device');
+    final customDeviceButtonLabel = find.text('Custom device');
     await tester.tap(customDeviceButtonLabel);
     await tester.pumpAndSettle();
   }
 
-  group('Device dialog', () {
-    testWidgets('show select dialog', (tester) async {
-      await tester.pumpWidget(_pumpDeviceDialog());
-      await tester.tap(find.text('ButtonTest'));
+  group('Device settings', () {
+    testWidgets('show select device settings', (tester) async {
+      await tester.pumpDashbook(_getDashbook());
+      await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
 
-      expect(find.text('Select a device frame'), findsOneWidget);
+      expect(find.text('Select a device frame:'), findsOneWidget);
       expect(
         find.byWidgetPredicate(
           (widget) => widget is DropdownButton<DeviceInfo>,
@@ -52,46 +48,27 @@ void main() {
         findsOneWidget,
       );
 
-      final selectButtonLabel = find.text('Select');
-      expect(selectButtonLabel, findsOneWidget);
-      expect(
-        find.ancestor(
-          of: selectButtonLabel,
-          matching:
-              find.byWidgetPredicate((widget) => widget is ElevatedButton),
-        ),
-        findsOneWidget,
-      );
+      final cancelButton = find.byKey(kDevicePreviewCloseIcon);
+      expect(cancelButton, findsOneWidget);
+      expect(tester.widget(cancelButton), isA<DashbookIcon>());
 
-      final cancelButtonLabel = find.text('Cancel');
-      expect(cancelButtonLabel, findsOneWidget);
-      expect(
-        find.ancestor(
-          of: cancelButtonLabel,
-          matching:
-              find.byWidgetPredicate((widget) => widget is ElevatedButton),
-        ),
-        findsOneWidget,
-      );
-
-      final clearButtonLabel = find.text('Clear');
+      final clearButtonLabel = find.text('Reset');
       expect(clearButtonLabel, findsOneWidget);
       expect(
         find.ancestor(
           of: clearButtonLabel,
-          matching:
-              find.byWidgetPredicate((widget) => widget is ElevatedButton),
+          matching: find.byWidgetPredicate((widget) => widget is TextButton),
         ),
         findsOneWidget,
       );
 
-      final customDeviceButtonLabel = find.text('Custom Device');
+      final customDeviceButtonLabel = find.text('Custom device');
       expect(customDeviceButtonLabel, findsOneWidget);
       expect(
         find.ancestor(
           of: customDeviceButtonLabel,
           matching:
-              find.byWidgetPredicate((widget) => widget is OutlinedButton),
+              find.byWidgetPredicate((widget) => widget is CheckboxListTile),
         ),
         findsOneWidget,
       );
@@ -99,26 +76,16 @@ void main() {
 
     testWidgets(
         'When click in Custom Device button, '
-        'should show a form to customize device info', (tester) async {
-      await tester.pumpWidget(_pumpDeviceDialog());
-      await tester.tap(find.text('ButtonTest'));
+        'should toggle to form to customize device info', (tester) async {
+      await tester.pumpDashbook(_getDashbook());
+      await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
 
       await _openCustomSetup(tester);
 
-      expect(find.text('Custom Device'), findsNothing);
-      final deviceListButtonLabel = find.text('Devices List');
-      expect(
-        find.ancestor(
-          of: deviceListButtonLabel,
-          matching:
-              find.byWidgetPredicate((widget) => widget is OutlinedButton),
-        ),
-        findsOneWidget,
-      );
-
-      final customDeviceTitle = find.text('Choose your custom setup');
-      expect(customDeviceTitle, findsOneWidget);
+      final toggleKey = find.byKey(kCustomDeviceToggle);
+      final toggleWidget = tester.widget(toggleKey) as CheckboxListTile;
+      expect(toggleWidget.value, isTrue);
 
       final formFields = ['Height', 'Width'];
       for (final label in formFields) {
@@ -144,11 +111,15 @@ void main() {
     });
 
     testWidgets('Should customize a device info and return it', (tester) async {
-      DeviceSettings? result;
-      await tester.pumpWidget(
-        _pumpDeviceDialog(onSelect: (selected) async => result = selected),
+      DeviceSettingsData? settings;
+      await tester.pumpDashbook(
+        _getDashbook(
+          onDeviceSettingsChanged: (selected) async {
+            settings = selected;
+          },
+        ),
       );
-      await tester.tap(find.text('ButtonTest'));
+      await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
 
       await _openCustomSetup(tester);
@@ -166,15 +137,14 @@ void main() {
       }
       await tester.tap(find.text('iOS'));
 
-      await tester.drag(find.byType(Slider), const Offset(50, 0));
+      await tester.drag(find.byType(Slider), const Offset(20, 0));
+      await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Select'));
-
-      expect(result, isNotNull);
-      expect(result!.textScaleFactor, 1.15);
-      expect(result!.deviceInfo!.screenSize.width, 1000);
-      expect(result!.deviceInfo!.screenSize.height, 1000);
-      expect(result!.deviceInfo!.identifier.platform, TargetPlatform.iOS);
+      expect(settings, isNotNull);
+      expect(settings!.textScaleFactor, 1.15);
+      expect(settings!.deviceInfo!.screenSize.width, 1000);
+      expect(settings!.deviceInfo!.screenSize.height, 1000);
+      expect(settings!.deviceInfo!.identifier.platform, TargetPlatform.iOS);
     });
 /*
     /// There is an issue on mockingjay when the test uses showdialog with navigator

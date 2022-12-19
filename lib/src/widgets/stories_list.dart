@@ -1,6 +1,6 @@
 import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/dashbook_icon.dart';
 import 'package:dashbook/src/widgets/helpers.dart';
-import 'package:dashbook/src/widgets/icon.dart';
 import 'package:dashbook/src/widgets/keys.dart';
 import 'package:dashbook/src/widgets/link.dart';
 import 'package:dashbook/src/widgets/side_bar_panel.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class DashbookIcon extends StatelessWidget {
   final IconData icon;
-  final VoidCallback onClick;
+  final VoidCallback? onClick;
   final String tooltip;
 
   const DashbookIcon({
@@ -16,20 +16,17 @@ class DashbookIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = iconSize(context);
-    return Tooltip(
-      message: tooltip,
-      child: SizedBox(
-        width: size,
-        height: size,
-        child: Listener(
-          child: Icon(
-            icon,
-            size: size,
-            color: Theme.of(context).iconTheme.color,
-          ),
-          onPointerUp: (_) => onClick.call(),
-        ),
-      ),
+    return IconButton(
+      tooltip: tooltip,
+      padding: EdgeInsets.zero,
+      iconSize: size,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      splashRadius: size,
+      constraints: BoxConstraints.tightFor(width: size, height: size),
+      icon: Icon(icon),
+      onPressed: onClick,
     );
   }
 }
