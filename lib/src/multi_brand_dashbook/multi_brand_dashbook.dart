@@ -11,15 +11,22 @@ import 'package:go_router/go_router.dart';
 
 typedef OnSelectedIndexCallback = void Function(int index);
 typedef ContentBuilder = Widget Function(BuildContext context);
+typedef MaterialAppBuilder = Widget Function({
+  RouteInformationProvider? routeInformationProvider,
+  RouteInformationParser<Object>? routeInformationParser,
+  RouterDelegate<Object>? routerDelegate,
+});
 
 class MultiBrandBookBuilder {
   final List<Story> _stories = [];
   final List<DashbookBrand> brands;
   final String title;
+  final MaterialAppBuilder? appBuilder;
 
   MultiBrandBookBuilder({
     required this.brands,
     required this.title,
+    this.appBuilder,
   });
 
   Story storiesOf(String name) {
@@ -39,6 +46,7 @@ class MultiBrandBookBuilder {
         title: title,
         stories: _stories,
       ),
+      appBuilder: appBuilder,
     );
   }
 }
@@ -47,19 +55,26 @@ class MultiBrandApp extends StatelessWidget {
   MultiBrandApp({
     required this.brands,
     required this.config,
+    this.appBuilder,
     Key? key,
   }) : super(key: key);
   final List<DashbookBrand> brands;
   final DashbookConfig config;
+  final MaterialAppBuilder? appBuilder;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routeInformationProvider: _router.routeInformationProvider,
-      routeInformationParser: _router.routeInformationParser,
-      routerDelegate: _router.routerDelegate,
-      title: config.title,
-    );
+    return appBuilder?.call(
+          routeInformationProvider: _router.routeInformationProvider,
+          routeInformationParser: _router.routeInformationParser,
+          routerDelegate: _router.routerDelegate,
+        ) ??
+        MaterialApp.router(
+          routeInformationProvider: _router.routeInformationProvider,
+          routeInformationParser: _router.routeInformationParser,
+          routerDelegate: _router.routerDelegate,
+          title: config.title,
+        );
   }
 
   late final GoRouter _router = _createRouter();
@@ -125,7 +140,7 @@ class _MultiBrandDashbookState extends State<MultiBrandDashbook> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    final content = screenWidth > 500
+    return screenWidth > 500
         ? WideApp(
             brands: widget.brands,
             selectedIndex: widget.brands.indexOf(widget.selectedBrand),
@@ -138,10 +153,6 @@ class _MultiBrandDashbookState extends State<MultiBrandDashbook> {
             onSelected: (i) => _navigate(brand: widget.brands[i].path),
             contentBuilder: builder,
           );
-    return Theme(
-      data: widget.selectedBrand.themeSettings.currentTheme,
-      child: content,
-    );
   }
 
   void _navigate({String? brand, Chapter? chapter}) {
