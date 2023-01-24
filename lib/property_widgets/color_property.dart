@@ -15,8 +15,7 @@ class ColorProperty extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() =>
-      ColorPropertyState(property!.getValue());
+  State<StatefulWidget> createState() => ColorPropertyState(property!.getValue());
 }
 
 class ColorPropertyState extends State<ColorProperty> {
@@ -36,7 +35,6 @@ class ColorPropertyState extends State<ColorProperty> {
           content: ColorPicker(
             pickerColor: pickerColor!,
             onColorChanged: changeColor,
-            showLabel: true,
             pickerAreaHeightPercent: 0.8,
           ),
           actions: [
@@ -64,7 +62,7 @@ class ColorPropertyState extends State<ColorProperty> {
         child: null,
         style: ElevatedButton.styleFrom(
           elevation: 0,
-          primary: currentColor,
+          backgroundColor: currentColor,
         ),
         onPressed: () async {
           await show();
