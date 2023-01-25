@@ -7,11 +7,12 @@ publish_to: none
 
 environment:
   sdk: ">=2.18.0 <3.0.0" # dart version
+  flutter: ">=3.3.0"
 
 dependencies:
   alkami_core_dependencies: 
     hosted: https://dart.cloudsmith.io/alkami/flutter/
-    version: ^2.1.0
+    version: ^3.0.0
 
   flutter:
     sdk: flutter
@@ -29,7 +30,7 @@ dev_dependencies:
   #   path: ../../flutter_platform/packages/alkami_core_dev_dependencies
   alkami_core_dev_dependencies: 
     hosted: https://dart.cloudsmith.io/alkami/flutter/
-    version: ^2.1.0
+    version: ^3.0.0
 
 flutter:
   uses-material-design: true

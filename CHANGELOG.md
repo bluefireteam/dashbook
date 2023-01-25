@@ -1,3 +1,7 @@
+## 3.1.0
+
+- Upgrade to Flutter 3
+
 ## [0.0.11]
  - Adding code link
 
