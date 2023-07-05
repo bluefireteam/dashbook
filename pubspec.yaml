@@ -4,7 +4,7 @@ version: 0.1.10
 homepage: https://github.com/bluefireteam/dashbook
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
   device_frame: ^1.0.0
