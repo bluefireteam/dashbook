@@ -18,6 +18,10 @@ Add the dependency to your `pubspec.yaml`
 dashbook: ^0.1.12
 ```
 
+> Tip ℹ️: If you use [mason](https://pub.dev/packages/mason_cli), a basic Dashbook brick called
+`dashbook_gallery` is available in brickhub.dev, which creates a basic gallery in seconds.
+
+
 A `Dashbook` instance has a collection of the app widgets (Stories) and its variants (Chapters). Here you can see a very simple example of how to use it.
 
 ```dart
