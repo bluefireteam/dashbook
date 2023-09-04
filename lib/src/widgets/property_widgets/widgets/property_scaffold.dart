@@ -34,7 +34,7 @@ class PropertyScaffold extends StatelessWidget {
                   )
                 : Text(label),
           ),
-          Expanded(flex: 6, child: child)
+          Expanded(flex: 6, child: child),
         ],
       ),
     );

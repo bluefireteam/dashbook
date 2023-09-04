@@ -39,7 +39,7 @@ void addTextStories(Dashbook dashbook) {
             'Hello world'
             'Hello world'
             'Hello world'
-            'Hello world' ,
+            'Hello world',
             overflow: TextOverflow.ellipsis,
           ),
         ),

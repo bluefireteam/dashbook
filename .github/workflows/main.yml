@@ -17,7 +17,7 @@ jobs:
         with:
           channel: 'stable'
           cache: true
-      - run: flutter format --set-exit-if-changed lib test
+      - run: dart format --set-exit-if-changed lib test
 
   analyze:
     runs-on: ubuntu-latest

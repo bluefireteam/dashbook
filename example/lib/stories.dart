@@ -133,7 +133,7 @@ void addStories(Dashbook dashbook) {
             children: [
               Text(
                 'Using DateTimeProperty:',
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               Text(
                 DateTimePropertyView.dateFormat.format(
@@ -148,7 +148,7 @@ void addStories(Dashbook dashbook) {
               const Divider(),
               Text(
                 'Using anonymous property widget builder:',
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               Text(
                 DateTimePropertyView.dateFormat.format(

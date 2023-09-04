@@ -12,7 +12,7 @@ Dashbook _getDashbook() {
     return Text(
       'Current: ${ctx.listProperty('listValue', 'ValueX', [
             'ValueX',
-            'ValueY'
+            'ValueY',
           ])}',
     );
   });

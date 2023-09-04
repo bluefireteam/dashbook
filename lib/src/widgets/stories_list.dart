@@ -130,7 +130,7 @@ class _StoriesListState extends State<StoriesList> {
                 controller: _filterTextController,
               ),
             ),
-            for (Story story in widget.stories)
+            for (final Story story in widget.stories)
               if (_storyMatchesFilter(story))
                 ExpansionTile(
                   key: PageStorageKey('story_${story.name}'),
@@ -143,7 +143,7 @@ class _StoriesListState extends State<StoriesList> {
                   ),
                   initiallyExpanded: true,
                   children: [
-                    for (Chapter chapter in story.chapters)
+                    for (final Chapter chapter in story.chapters)
                       if (_matchesFilter(story.name) ||
                           _matchesFilter(chapter.name))
                         Align(

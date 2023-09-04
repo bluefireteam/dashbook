@@ -10,8 +10,8 @@ class SelectDevice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
+    return const Column(
+      children: [
         DevicePropertyScaffold(
           label: 'Select a device frame:',
           child: DeviceDropdown(),
@@ -54,7 +54,7 @@ class DevicePropertyScaffold extends StatelessWidget {
                   )
                 : Text(label),
           ),
-          Expanded(flex: 6, child: child)
+          Expanded(flex: 6, child: child),
         ],
       ),
     );
