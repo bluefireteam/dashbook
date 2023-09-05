@@ -23,7 +23,7 @@ class ActionsContainer extends StatelessWidget {
       onCancel: onCancel,
       child: Column(
         children: [
-          for (MapEntry<String, void Function(BuildContext)> entry
+          for (final MapEntry<String, void Function(BuildContext)> entry
               in currentChapter.ctx.actions.entries)
             Padding(
               padding: const EdgeInsets.all(8),

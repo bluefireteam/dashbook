@@ -105,7 +105,7 @@ class _DeviceToggles extends StatelessWidget {
         TextButton(
           onPressed: deviceSettings.reset,
           child: const Text('Reset'),
-        )
+        ),
       ],
     );
   }

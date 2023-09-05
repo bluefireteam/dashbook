@@ -1,0 +1,16 @@
+name: gallery
+publish_to: none
+
+environment:
+  sdk: '>=3.0.6 <4.0.0'
+
+dependencies:
+  dashbook: ^0.1.12
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  very_good_analysis: ^5.1.0
+
+flutter:
+  uses-material-design: true

@@ -77,7 +77,7 @@ class _FourIntegerFormState extends State<FourIntegerForm> {
       widget._value1,
       widget._value2,
       widget._value3,
-      widget._value4
+      widget._value4,
     ];
     return values.every((v) => v == values[0]);
   }
