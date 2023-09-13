@@ -1,3 +1,6 @@
+## [0.1.13]
+ - Add global showDialog method using non-root navigator so that dialogs only close themselves.
+
 ## [0.1.12]
  - Device settings unified with the side panel.
 
