@@ -316,7 +316,7 @@ class _DashbookState extends State<Dashbook> {
                                       tooltip: 'Instructions',
                                       icon: Icons.info,
                                       onClick: () {
-                                        showDialog<void>(
+                                        showPopup(
                                           context: context,
                                           builder: (_) {
                                             return InstructionsDialog(
@@ -347,9 +347,8 @@ class _DashbookState extends State<Dashbook> {
                                       tooltip: 'Choose theme',
                                       icon: Icons.palette,
                                       onClick: () {
-                                        showDialog<void>(
+                                        showPopup(
                                           context: context,
-                                          useRootNavigator: false,
                                           builder: (_) => AlertDialog(
                                             title: const Text('Theme chooser'),
                                             content: DropdownButton<ThemeData>(

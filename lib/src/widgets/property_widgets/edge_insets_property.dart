@@ -83,7 +83,7 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
     }
   }
 
-  Future<void> show() => showDialog<void>(
+  Future<void> show() => showPopup(
         context: context,
         builder: (_) => FourIntegerForm(
           _confirmEdition,
