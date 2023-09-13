@@ -1,4 +1,5 @@
 import 'package:dashbook/dashbook.dart';
+import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:dashbook/src/widgets/property_widgets/widgets/property_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -29,7 +30,7 @@ class ColorPropertyState extends State<ColorProperty> {
   }
 
   // raise the [showDialog] widget
-  Future<void> show() => showDialog<void>(
+  Future<void> show() => showPopup(
         context: context,
         builder: (_) => PropertyDialog(
           title: 'Pick a color!',

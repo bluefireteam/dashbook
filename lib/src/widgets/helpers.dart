@@ -16,3 +16,14 @@ double sideBarSizeProperties(BuildContext context) {
   final factor = isLargeScreen(context) ? 0.5 : 1;
   return screenWidth * factor;
 }
+
+Future<void> showPopup({
+  required BuildContext context,
+  required WidgetBuilder builder,
+}) async {
+  return showDialog<void>(
+    context: context,
+    builder: builder,
+    useRootNavigator: false,
+  );
+}

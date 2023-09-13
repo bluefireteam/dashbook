@@ -90,7 +90,7 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
     }
   }
 
-  Future<void> show() => showDialog<void>(
+  Future<void> show() => showPopup(
         context: context,
         builder: (_) => FourIntegerForm(
           _confirmEdition,
