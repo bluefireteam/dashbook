@@ -7,12 +7,14 @@ class DashbookBrand {
   final String path;
   final IconBuilder iconBuilder;
   final ThemeSettings themeSettings;
+  final TransitionBuilder? pageBuilder;
 
   DashbookBrand({
     required this.name,
     String? path,
     required this.iconBuilder,
     required this.themeSettings,
+    this.pageBuilder,
   }) : path = path ?? PlatformUtils.normalizePathName(name);
 }
 

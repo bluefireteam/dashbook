@@ -164,7 +164,7 @@ class _MultiBrandDashbookState extends State<MultiBrandDashbook> {
   }
 
   Widget builder(BuildContext context) {
-    return _MultiBrandContent(
+    final child = _MultiBrandContent(
       brand: widget.selectedBrand,
       config: widget.config,
       stories: widget.config.stories,
@@ -177,6 +177,12 @@ class _MultiBrandDashbookState extends State<MultiBrandDashbook> {
       currentChapter: widget.currentChapter,
       onChapterChange: (chapter) => _navigate(chapter: chapter),
     );
+
+    if (widget.selectedBrand.pageBuilder != null) {
+      return widget.selectedBrand.pageBuilder!(context, child);
+    } else {
+      return child;
+    }
   }
 }
 
