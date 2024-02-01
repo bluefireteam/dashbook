@@ -27,18 +27,18 @@ void addTextStories(Dashbook dashbook) {
         (_) => const SizedBox(
           width: 100,
           child: Text(
-            'Hello world'
-            'Hello world'
-            'Hello world'
-            'Hello world'
-            'Hello world'
-            'Hello world'
-            'Hello world'
-            'Hello world'
-            'Hello world'
-            'Hello world'
-            'Hello world'
-            'Hello world'
+            'Hello world '
+            'Hello world '
+            'Hello world '
+            'Hello world '
+            'Hello world '
+            'Hello world '
+            'Hello world '
+            'Hello world '
+            'Hello world '
+            'Hello world '
+            'Hello world '
+            'Hello world '
             'Hello world',
             overflow: TextOverflow.ellipsis,
           ),
