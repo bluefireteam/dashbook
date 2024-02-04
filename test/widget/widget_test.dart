@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../helpers.dart';
+import '../helpers/helpers.dart';
 
 abstract class _ChapterStub {
   void onCall(Chapter chapter);
@@ -218,6 +219,9 @@ void main() {
     });
 
     testWidgets('can hide device frame', (tester) async {
+      tester.setScreenSize(const Size(2000, 1000));
+      addTearDown(tester.view.resetPhysicalSize);
+
       final selectedDevice = Devices.android.mediumPhone;
 
       await tester.pumpDashbook(_getDashbook());

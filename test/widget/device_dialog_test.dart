@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers.dart';
+import '../helpers/helpers.dart';
 
 void main() {
   Dashbook _getDashbook({
@@ -36,6 +37,7 @@ void main() {
 
   group('Device settings', () {
     testWidgets('show select device settings', (tester) async {
+      tester.setScreenSize(const Size(2000, 1000));
       await tester.pumpDashbook(_getDashbook());
       await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
@@ -77,6 +79,7 @@ void main() {
     testWidgets(
         'When click in Custom Device button, '
         'should toggle to form to customize device info', (tester) async {
+      tester.setScreenSize(const Size(2000, 1000));
       await tester.pumpDashbook(_getDashbook());
       await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
@@ -112,6 +115,7 @@ void main() {
 
     testWidgets('Should customize a device info and return it', (tester) async {
       DeviceSettingsData? settings;
+      tester.setScreenSize(const Size(2000, 1000));
       await tester.pumpDashbook(
         _getDashbook(
           onDeviceSettingsChanged: (selected) async {
@@ -119,6 +123,8 @@ void main() {
           },
         ),
       );
+      await tester.pump();
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
 
@@ -135,6 +141,7 @@ void main() {
           '1000',
         );
       }
+      await tester.ensureVisible(find.text('iOS'));
       await tester.tap(find.text('iOS'));
 
       await tester.drag(find.byType(Slider), const Offset(20, 0));
