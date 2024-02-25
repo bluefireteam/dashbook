@@ -153,20 +153,28 @@ class _StoriesListState extends State<StoriesList> {
                             child: Row(
                               children: [
                                 Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      widget.onSelectChapter(chapter);
-                                    },
-                                    behavior: HitTestBehavior.opaque,
-                                    child: Link(
-                                      label: '  ${chapter.name}',
-                                      textAlign: TextAlign.left,
-                                      padding: const EdgeInsets.only(right: 8),
-                                      textStyle: TextStyle(
-                                        fontWeight: chapter.id ==
-                                                widget.selectedChapter?.id
-                                            ? FontWeight.bold
-                                            : FontWeight.normal,
+                                  child: MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        widget.onSelectChapter(chapter);
+                                      },
+                                      behavior: HitTestBehavior.opaque,
+                                      child: Link(
+                                        label: '  ${chapter.name}',
+                                        textAlign: TextAlign.left,
+                                        padding:
+                                            const EdgeInsets.only(right: 8),
+                                        textStyle: TextStyle(
+                                          fontWeight: chapter.id ==
+                                                  widget.selectedChapter?.id
+                                              ? FontWeight.bold
+                                              : FontWeight.normal,
+                                          color: chapter.id ==
+                                                  widget.selectedChapter?.id
+                                              ? null
+                                              : Theme.of(context).hintColor,
+                                        ),
                                       ),
                                     ),
                                   ),
