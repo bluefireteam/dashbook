@@ -15,7 +15,7 @@ Have any questions or ideas? Join our [Discord](https://discord.gg/FCHGNZ4yxF).
 Add the dependency to your `pubspec.yaml`
 
 ```
-dashbook: ^0.1.12
+flutter pub add dashbook
 ```
 
 > Tip ℹ️: If you use [mason](https://pub.dev/packages/mason_cli), a basic Dashbook brick called
