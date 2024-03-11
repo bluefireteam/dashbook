@@ -208,7 +208,6 @@ void main() {
     testWidgets(
         'rotate and hide frame are active when a device to preview is selected',
         (tester) async {
-      final selectedDevice = Devices.android.mediumPhone;
       tester.setScreenSize(const Size(2000, 1000));
       await tester.pumpDashbook(_getDashbook());
 
