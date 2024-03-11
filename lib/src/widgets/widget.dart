@@ -52,6 +52,7 @@ class Dashbook extends StatefulWidget {
   final bool autoPinStoriesOnLargeScreen;
   final GlobalKey<NavigatorState>? navigatorKey;
   final List<LocalizationsDelegate<dynamic>>? localizationsDelegates;
+  final List<Locale> supportedLocales;
 
   /// Called whenever a new chapter is selected.
   final OnChapterChange? onChapterChange;
@@ -65,6 +66,7 @@ class Dashbook extends StatefulWidget {
     this.navigatorKey,
     this.onChapterChange,
     this.localizationsDelegates,
+    this.supportedLocales = const <Locale>[Locale('en', 'US')],
   })  : _dualTheme = null,
         _multiTheme = null,
         super(key: key);
@@ -80,6 +82,7 @@ class Dashbook extends StatefulWidget {
     this.navigatorKey,
     this.onChapterChange,
     this.localizationsDelegates,
+    this.supportedLocales = const <Locale>[Locale('en', 'US')],
   })  : _dualTheme = _DashbookDualTheme(
           dark: dark,
           light: light,
@@ -99,6 +102,7 @@ class Dashbook extends StatefulWidget {
     this.navigatorKey,
     this.onChapterChange,
     this.localizationsDelegates,
+    this.supportedLocales = const <Locale>[Locale('en', 'US')],
   })  : _multiTheme =
             _DashbookMultiTheme(themes: themes, initialTheme: initialTheme),
         theme = null,
@@ -208,6 +212,7 @@ class _DashbookState extends State<Dashbook> {
         title: widget.title,
         theme: _currentTheme,
         localizationsDelegates: widget.localizationsDelegates,
+        supportedLocales: widget.supportedLocales,
         onGenerateRoute: (settings) {
           return MaterialPageRoute<void>(
             builder: (context) {
