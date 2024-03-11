@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers.dart';
+import '../helpers/helpers.dart';
 
 Dashbook _getDashbookWithIconInfo() {
   final dashbook = Dashbook();
@@ -42,6 +43,7 @@ void main() {
     testWidgets(
       'show the info dialog when the icon is clicked',
       (tester) async {
+        tester.setScreenSize(const Size(2000, 1000));
         await tester.pumpDashbook(_getDashbookWithIconInfo());
 
         await tester.tap(

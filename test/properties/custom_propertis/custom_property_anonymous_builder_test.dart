@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers.dart';
+import '../../helpers/helpers.dart';
 
 Dashbook _getDashbookTextPropertyAnonymousBuilder() {
   final dashbook = Dashbook();
@@ -45,6 +46,7 @@ void main() {
     });
 
     testWidgets('can change the property', (tester) async {
+      tester.setScreenSize(const Size(2000, 1000));
       await tester.pumpDashbook(_getDashbookTextPropertyAnonymousBuilder());
 
       await tester.openPropertiesPanel();

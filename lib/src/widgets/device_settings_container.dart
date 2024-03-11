@@ -25,11 +25,6 @@ class _DeviceSettingsContainerState extends State<DeviceSettingsContainer> {
   final _formKey = GlobalKey<FormState>();
   bool _isCustom = false;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   void _setIsCustom(bool isCustom) {
     setState(() {
       _isCustom = isCustom;
