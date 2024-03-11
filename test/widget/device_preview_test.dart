@@ -1,4 +1,4 @@
-// ignore_for_file: one_member_abstracts
+// ignore_for_file: one_member_abstracts, prefer_const_constructors
 
 import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/widgets/dashbook_icon.dart';
@@ -126,9 +126,9 @@ void main() {
                 element.text.toPlainText() ==
                 'Text story of the default chapter',
           )
-          .textScaleFactor;
+          .textScaler;
 
-      expect(textScaleFactor(), 1.0);
+      expect(textScaleFactor(), TextScaler.linear(1));
 
       await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
@@ -136,7 +136,7 @@ void main() {
       await tester.drag(find.byType(Slider), const Offset(100, 0));
       await tester.pumpAndSettle();
 
-      expect(textScaleFactor(), 1.15);
+      expect(textScaleFactor(), TextScaler.linear(1.15));
     });
 
     testWidgets('can hide device frame', (tester) async {
