@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers.dart';
+import '../helpers/helpers.dart';
 
 Dashbook _getDashbook() {
   final dashbook = Dashbook();
@@ -30,6 +31,7 @@ void main() {
     });
 
     testWidgets('can open the actions list', (tester) async {
+      tester.setScreenSize(const Size(2000, 1000));
       await tester.pumpDashbook(_getDashbook());
 
       await tester.tap(find.byKey(kActionsIcon));
@@ -38,6 +40,7 @@ void main() {
     });
 
     testWidgets('can close the actions list', (tester) async {
+      tester.setScreenSize(const Size(2000, 1000));
       await tester.pumpDashbook(_getDashbook());
 
       await tester.tap(find.byKey(kActionsIcon));
@@ -50,6 +53,7 @@ void main() {
     });
 
     testWidgets('can tap an action', (tester) async {
+      tester.setScreenSize(const Size(2000, 1000));
       await tester.pumpDashbook(_getDashbook());
 
       await tester.tap(find.byKey(kActionsIcon));

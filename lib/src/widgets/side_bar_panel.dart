@@ -54,7 +54,7 @@ class SideBarPanel extends StatelessWidget {
                         if (titleIcon != null)
                           Padding(
                             padding: const EdgeInsets.only(
-                              left: 8,
+                              left: 16,
                             ),
                             child: Opacity(
                               opacity: showTitleIcon ? 1 : 0,
