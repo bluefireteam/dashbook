@@ -10,6 +10,7 @@ typedef OnSelectChapter = Function(Chapter chapter);
 typedef OnBookmarkChapter = Function(String chapter);
 
 class StoriesList extends StatefulWidget {
+  final String title;
   final List<Story> stories;
   final Chapter? selectedChapter;
   final OnSelectChapter onSelectChapter;
@@ -24,6 +25,7 @@ class StoriesList extends StatefulWidget {
   final bool storiesAreAlwaysShown;
 
   const StoriesList({
+    required this.title,
     required this.stories,
     required this.currentBookmark,
     required this.onBookmarkChapter,
@@ -103,7 +105,7 @@ class _StoriesListState extends State<StoriesList> {
         dividerColor: Colors.transparent,
       ),
       child: SideBarPanel(
-        title: 'Stories',
+        title: widget.title,
         titleIcon: DashbookIcon(
           key: kStoryPinIcon,
           tooltip: widget.storyPanelPinned ? 'Unpin' : 'Pin',

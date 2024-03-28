@@ -26,7 +26,7 @@ class WideApp extends StatelessWidget {
             labelType: NavigationRailLabelType.none,
             useIndicator: true,
             indicatorColor: Colors.grey.shade300,
-            destinations: createDestinations(),
+            destinations: createDestinations(context),
           ),
           const VerticalDivider(thickness: 1, width: 1),
           // This is the main content.
@@ -38,12 +38,13 @@ class WideApp extends StatelessWidget {
     );
   }
 
-  List<NavigationRailDestination> createDestinations() => brands
-      .map(
-        (brand) => NavigationRailDestination(
-          icon: brand.icon,
-          label: Text(brand.name),
-        ),
-      )
-      .toList();
+  List<NavigationRailDestination> createDestinations(BuildContext context) =>
+      brands
+          .map(
+            (brand) => NavigationRailDestination(
+              icon: brand.iconBuilder(context, ScreenSize.large),
+              label: Text(brand.name),
+            ),
+          )
+          .toList();
 }
