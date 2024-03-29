@@ -1,3 +1,9 @@
+## [0.1.14]
+ - Change the unselected chapter color
+ - Handle supported locales properties
+ - Make use of web instead of dart:html
+ - Handle space in the shared url 
+
 ## [0.1.13]
  - Add global showDialog method using non-root navigator so that dialogs only close themselves.
 
