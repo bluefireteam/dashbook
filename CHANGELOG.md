@@ -1,3 +1,6 @@
+## [0.1.15]
+ - Bump version of flutter_colorpicker
+
 ## [0.1.14]
  - Change the unselected chapter color
  - Handle supported locales properties
