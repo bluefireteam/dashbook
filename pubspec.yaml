@@ -7,19 +7,19 @@ environment:
   sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
-  device_frame: ^1.0.0
+  device_frame: ^1.2.0
   flutter:
     sdk: flutter
-  flutter_colorpicker: ^1.0.3
+  flutter_colorpicker: ^1.1.0
   flutter_markdown: '>=0.6.9 <0.8.0'
-  go_router: ^5.1.2
-  share_plus: ^6.3.0
-  shared_preferences: ^2.0.13
-  url_launcher: ^6.1.2
+  go_router: ^14.3.0
+  share_plus: ^10.1.1
+  shared_preferences: ^2.3.2
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mockingjay: ^0.3.0
-  mocktail: ^0.3.0
-  very_good_analysis: ^2.4.0
+  mockingjay: ^0.6.0
+  mocktail: ^1.0.4
+  very_good_analysis: ^6.0.0
