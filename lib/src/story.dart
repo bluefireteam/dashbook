@@ -237,6 +237,28 @@ class DashbookContext {
     );
   }
 
+  double sliderProperty(
+    String name,
+    double defaultValue, {
+    String? tooltipMessage,
+    ControlProperty? visibilityControlProperty,
+  }) {
+    return addProperty(
+      Property<double>.withBuilder(
+        name,
+        defaultValue,
+        tooltipMessage: tooltipMessage,
+        visibilityControlProperty: visibilityControlProperty,
+        builder: (property, onChanged, key) => p.SliderProperty(
+          property: property,
+          onChanged: onChanged,
+          key: key,
+        ),
+      ),
+    );
+
+  }
+
   Color colorProperty(
     String name,
     Color defaultValue, {
