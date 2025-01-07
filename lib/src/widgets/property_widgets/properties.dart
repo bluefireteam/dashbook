@@ -5,4 +5,5 @@ export 'edge_insets_property.dart';
 export 'list_property.dart';
 export 'number_property.dart';
 export 'options_property.dart';
+export 'slider_property.dart';
 export 'text_property.dart';
