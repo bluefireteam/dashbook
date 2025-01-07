@@ -6,7 +6,7 @@ environment:
   flutter: ">=3.13.0"
 
 dependencies:
-  dashbook: ^0.1.13
+  dashbook: ^0.1.15
   flutter:
     sdk: flutter
 
