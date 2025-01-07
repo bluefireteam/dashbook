@@ -256,7 +256,6 @@ class DashbookContext {
         ),
       ),
     );
-
   }
 
   Color colorProperty(
