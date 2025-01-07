@@ -1,3 +1,7 @@
+## [0.1.16]
+ - Add a SliderProperty
+ - Bump web to 1.1.0
+
 ## [0.1.15]
  - Bump version of flutter_colorpicker
 
