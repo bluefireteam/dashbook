@@ -5,7 +5,9 @@ class TitleWithTooltip extends StatelessWidget {
   final String tooltipMessage;
 
   const TitleWithTooltip({
-    required this.label, required this.tooltipMessage, super.key,
+    required this.label,
+    required this.tooltipMessage,
+    super.key,
   });
 
   @override

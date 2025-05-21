@@ -13,7 +13,9 @@ class PropertyScaffold extends StatelessWidget {
   final String? tooltipMessage;
 
   const PropertyScaffold({
-    required this.label, required this.child, super.key,
+    required this.label,
+    required this.child,
+    super.key,
     this.tooltipMessage,
   });
 
