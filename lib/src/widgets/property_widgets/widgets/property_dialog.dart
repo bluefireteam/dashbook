@@ -6,11 +6,11 @@ class PropertyDialog extends StatelessWidget {
   final List<Widget> actions;
 
   const PropertyDialog({
-    Key? key,
     required this.title,
     required this.content,
     required this.actions,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

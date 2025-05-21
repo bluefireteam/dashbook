@@ -11,11 +11,11 @@ class PropertiesContainer extends StatefulWidget {
   final VoidCallback onCancel;
 
   const PropertiesContainer({
-    Key? key,
     required this.currentChapter,
     required this.onPropertyChange,
     required this.onCancel,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State createState() => _PropertiesContainerState();
@@ -41,17 +41,17 @@ class _PropertiesContainerState extends State<PropertiesContainer> {
         }
       }
 
-      final _propertyKey =
+      final propertyKey =
           Key('${widget.currentChapter.id}#${entry.value.name}');
-      final _onChanged = () {
+      final onChanged = () {
         setState(() {});
         widget.onPropertyChange();
       };
 
       children.add(
         entry.value.createPropertyEditor(
-          onChanged: _onChanged,
-          key: _propertyKey,
+          onChanged: onChanged,
+          key: propertyKey,
         ),
       );
     }

@@ -6,8 +6,8 @@ import 'package:dashbook/src/widgets/link.dart';
 import 'package:dashbook/src/widgets/side_bar_panel.dart';
 import 'package:flutter/material.dart';
 
-typedef OnSelectChapter = Function(Chapter chapter);
-typedef OnBookmarkChapter = Function(String chapter);
+typedef OnSelectChapter = void Function(Chapter chapter);
+typedef OnBookmarkChapter = void Function(String chapter);
 
 class StoriesList extends StatefulWidget {
   final List<Story> stories;
@@ -35,9 +35,9 @@ class StoriesList extends StatefulWidget {
     required this.storyPanelPinned,
     required this.onStoryPinChange,
     required this.storiesAreAlwaysShown,
-    Key? key,
+    super.key,
     this.selectedChapter,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() {

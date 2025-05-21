@@ -38,9 +38,9 @@ class InstructionsDialog extends StatelessWidget {
   final String instructions;
 
   const InstructionsDialog({
-    Key? key,
     required this.instructions,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

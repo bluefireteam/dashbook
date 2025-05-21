@@ -93,17 +93,12 @@ class ListProperty<T> extends Property<T> {
   final List<T> list;
 
   ListProperty(
-    String name,
-    T defaultValue,
+    super.name,
+    super.defaultValue,
     this.list, {
-    String? tooltipMessage,
-    ControlProperty? visibilityControlProperty,
-  }) : super(
-          name,
-          defaultValue,
-          tooltipMessage: tooltipMessage,
-          visibilityControlProperty: visibilityControlProperty,
-        );
+    super.tooltipMessage,
+    super.visibilityControlProperty,
+  });
 
   @override
   Widget createPropertyEditor({required PropertyChanged onChanged, Key? key}) {
@@ -119,17 +114,12 @@ class OptionsProperty<T> extends Property<T> {
   final List<PropertyOption<T>> list;
 
   OptionsProperty(
-    String name,
-    T defaultValue,
+    super.name,
+    super.defaultValue,
     this.list, {
-    String? tooltipMessage,
-    ControlProperty? visibilityControlProperty,
-  }) : super(
-          name,
-          defaultValue,
-          tooltipMessage: tooltipMessage,
-          visibilityControlProperty: visibilityControlProperty,
-        );
+    super.tooltipMessage,
+    super.visibilityControlProperty,
+  });
 
   @override
   Widget createPropertyEditor({required PropertyChanged onChanged, Key? key}) {
@@ -154,7 +144,7 @@ class PropertyOption<T> {
 }
 
 class DashbookContext {
-  Map<String, Property> properties = {};
+  Map<String, Property<Object?>> properties = {};
   Map<String, void Function(BuildContext)> actions = {};
 
   void action(String name, void Function(BuildContext) callback) {
@@ -375,7 +365,7 @@ class Story {
     String? info,
     bool pinInfo = false,
   }) {
-    final _chapter = Chapter(
+    final chapter = Chapter(
       name,
       buildFn,
       this,
@@ -383,7 +373,7 @@ class Story {
       info: info,
       pinInfo: pinInfo,
     );
-    chapters.add(_chapter);
+    chapters.add(chapter);
 
     return this;
   }

@@ -10,8 +10,8 @@ class BorderRadiusProperty extends StatefulWidget {
   const BorderRadiusProperty({
     required this.property,
     required this.onChanged,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() =>
@@ -60,6 +60,7 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
           bottomRight: Radius.circular(bottomRight),
         );
       }
+      // ignore: avoid_catches_without_on_clauses
     } catch (err) {
       return null;
     }

@@ -8,8 +8,8 @@ class CustomDevice extends StatefulWidget {
   const CustomDevice({
     required this.changeToList,
     required this.formKey,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final VoidCallback changeToList;
   final GlobalKey<FormState> formKey;
 
@@ -98,8 +98,7 @@ class _FormField extends StatelessWidget {
     this.controller, {
     required this.label,
     required this.onUpdate,
-    Key? key,
-  }) : super(key: key);
+  });
   final TextEditingController controller;
   final String label;
   final void Function(num) onUpdate;
@@ -134,8 +133,7 @@ class _FormField extends StatelessWidget {
 class _PickPlatform extends StatelessWidget {
   const _PickPlatform({
     required this.onSelect,
-    Key? key,
-  }) : super(key: key);
+  });
   final void Function(TargetPlatform) onSelect;
 
   @override

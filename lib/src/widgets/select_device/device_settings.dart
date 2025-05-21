@@ -56,7 +56,7 @@ class DeviceSettingsData {
 class DeviceSettings extends StatefulWidget {
   final Widget child;
 
-  const DeviceSettings({super.key, required this.child});
+  const DeviceSettings({required this.child, super.key});
 
   static DeviceSettingsState of(BuildContext context, {bool listen = true}) {
     final _DeviceSettings? result;

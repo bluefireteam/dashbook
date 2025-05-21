@@ -12,9 +12,9 @@ class DeviceSettingsContainer extends StatefulWidget {
   final VoidCallback onCancel;
 
   const DeviceSettingsContainer({
-    Key? key,
     required this.onCancel,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<DeviceSettingsContainer> createState() =>

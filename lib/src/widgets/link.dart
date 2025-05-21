@@ -8,13 +8,13 @@ class Link extends StatelessWidget {
   final EdgeInsets padding;
 
   const Link({
-    Key? key,
     required this.label,
     required this.textStyle,
     required this.textAlign,
+    super.key,
     this.onTap,
     this.padding = const EdgeInsets.all(10),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

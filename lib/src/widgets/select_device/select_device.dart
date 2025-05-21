@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class SelectDevice extends StatelessWidget {
   const SelectDevice({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +33,9 @@ class DevicePropertyScaffold extends StatelessWidget {
   final String? tooltipMessage;
 
   const DevicePropertyScaffold({
-    Key? key,
-    required this.label,
-    required this.child,
+    required this.label, required this.child, super.key,
     this.tooltipMessage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
