@@ -1,3 +1,6 @@
+## [0.1.17]
+ - Bump dependencies
+
 ## [0.1.16]
  - Add a SliderProperty
  - Bump web to 1.1.0
