@@ -32,8 +32,8 @@ class FourIntegerForm extends StatefulWidget {
     this._label2,
     this._label3,
     this._label4, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State createState() {

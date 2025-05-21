@@ -5,10 +5,10 @@ class TitleWithTooltip extends StatelessWidget {
   final String tooltipMessage;
 
   const TitleWithTooltip({
-    Key? key,
     required this.label,
     required this.tooltipMessage,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

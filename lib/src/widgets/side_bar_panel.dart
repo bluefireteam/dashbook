@@ -6,23 +6,23 @@ class SideBarPanel extends StatelessWidget {
   final String title;
   final Widget child;
   final VoidCallback? onCancel;
-  final PageStorageKey? scrollViewKey;
+  final PageStorageKey<Object?>? scrollViewKey;
   final Key? onCloseKey;
   final double width;
   final DashbookIcon? titleIcon;
   final bool sideBarIsAlwaysShown;
 
   const SideBarPanel({
-    Key? key,
     required this.title,
     required this.child,
+    required this.width,
+    super.key,
     this.onCancel,
     this.scrollViewKey,
     this.onCloseKey,
     this.titleIcon,
-    required this.width,
     this.sideBarIsAlwaysShown = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

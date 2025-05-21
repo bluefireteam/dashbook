@@ -10,7 +10,7 @@ import '../helpers.dart';
 import '../helpers/helpers.dart';
 
 void main() {
-  Dashbook _getDashbook({
+  Dashbook getDashbook({
     void Function(DeviceSettingsData?)? onDeviceSettingsChanged,
   }) {
     final dashbook = Dashbook();
@@ -29,7 +29,7 @@ void main() {
     return dashbook;
   }
 
-  Future<void> _openCustomSetup(WidgetTester tester) async {
+  Future<void> openCustomSetup(WidgetTester tester) async {
     final customDeviceButtonLabel = find.text('Custom device');
     await tester.tap(customDeviceButtonLabel);
     await tester.pumpAndSettle();
@@ -38,7 +38,7 @@ void main() {
   group('Device settings', () {
     testWidgets('show select device settings', (tester) async {
       tester.setScreenSize(const Size(2000, 1000));
-      await tester.pumpDashbook(_getDashbook());
+      await tester.pumpDashbook(getDashbook());
       await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
 
@@ -80,11 +80,11 @@ void main() {
         'When click in Custom Device button, '
         'should toggle to form to customize device info', (tester) async {
       tester.setScreenSize(const Size(2000, 1000));
-      await tester.pumpDashbook(_getDashbook());
+      await tester.pumpDashbook(getDashbook());
       await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
 
-      await _openCustomSetup(tester);
+      await openCustomSetup(tester);
 
       final toggleKey = find.byKey(kCustomDeviceToggle);
       final toggleWidget = tester.widget(toggleKey) as CheckboxListTile;
@@ -117,7 +117,7 @@ void main() {
       DeviceSettingsData? settings;
       tester.setScreenSize(const Size(2000, 1000));
       await tester.pumpDashbook(
-        _getDashbook(
+        getDashbook(
           onDeviceSettingsChanged: (selected) async {
             settings = selected;
           },
@@ -128,7 +128,7 @@ void main() {
       await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
 
-      await _openCustomSetup(tester);
+      await openCustomSetup(tester);
 
       final formFields = ['Height', 'Width'];
       for (final label in formFields) {

@@ -4,22 +4,22 @@ version: 0.1.16
 homepage: https://github.com/bluefireteam/dashbook
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.13.0"
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.27.0"
 
 dependencies:
-  device_frame: ^1.1.0
+  device_frame: ^1.2.0
   flutter:
     sdk: flutter
   flutter_colorpicker: ^1.1.0
-  flutter_markdown: ^0.6.17+3
-  shared_preferences: ^2.2.1
-  url_launcher: ^6.1.14
-  web: ^1.1.0
+  flutter_markdown: ^0.7.7+1
+  shared_preferences: ^2.5.3
+  url_launcher: ^6.3.1
+  web: ^1.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mockingjay: ^0.3.0
-  mocktail: ^0.3.0
-  very_good_analysis: ^5.1.0
+  mockingjay: ^1.0.0
+  mocktail: ^1.0.4
+  very_good_analysis: ^7.0.0

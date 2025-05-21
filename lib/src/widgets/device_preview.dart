@@ -8,12 +8,12 @@ class DevicePreview extends StatelessWidget {
   final bool showDeviceFrame;
 
   const DevicePreview({
-    Key? key,
     required this.child,
     required this.deviceInfo,
     required this.deviceOrientation,
     required this.showDeviceFrame,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class DevicePreview extends StatelessWidget {
           isFrameVisible: showDeviceFrame,
           screen: MediaQuery(
             data: mediaQuery,
-            child: Container(
+            child: ColoredBox(
               color: Theme.of(context).scaffoldBackgroundColor,
               child: child,
             ),

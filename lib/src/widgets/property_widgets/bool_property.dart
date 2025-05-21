@@ -8,8 +8,8 @@ class BoolProperty extends StatefulWidget {
   const BoolProperty({
     required this.property,
     required this.onChanged,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() => BoolPropertyState(property.getValue());

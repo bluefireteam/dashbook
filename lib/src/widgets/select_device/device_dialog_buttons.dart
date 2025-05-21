@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class DeviceDialogButtons extends StatelessWidget {
   const DeviceDialogButtons({
-    Key? key,
     required this.onSelect,
     required this.onClear,
     required this.onCancel,
-  }) : super(key: key);
+    super.key,
+  });
   final VoidCallback onSelect;
   final VoidCallback onClear;
   final VoidCallback onCancel;

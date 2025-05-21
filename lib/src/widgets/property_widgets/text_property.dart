@@ -8,8 +8,8 @@ class TextProperty extends StatefulWidget {
   const TextProperty({
     required this.property,
     required this.onChanged,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() => TextPropertyState(property.getValue());

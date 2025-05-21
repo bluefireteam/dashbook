@@ -58,7 +58,7 @@ class Dashbook extends StatefulWidget {
   final OnChapterChange? onChapterChange;
 
   Dashbook({
-    Key? key,
+    super.key,
     this.theme,
     this.title = '',
     this.usePreviewSafeArea = false,
@@ -68,13 +68,12 @@ class Dashbook extends StatefulWidget {
     this.localizationsDelegates,
     this.supportedLocales = const <Locale>[Locale('en', 'US')],
   })  : _dualTheme = null,
-        _multiTheme = null,
-        super(key: key);
+        _multiTheme = null;
 
   Dashbook.dualTheme({
-    Key? key,
     required ThemeData light,
     required ThemeData dark,
+    super.key,
     bool initWithLight = true,
     this.title = '',
     this.usePreviewSafeArea = false,
@@ -89,12 +88,11 @@ class Dashbook extends StatefulWidget {
           initWithLight: initWithLight,
         ),
         theme = null,
-        _multiTheme = null,
-        super(key: key);
+        _multiTheme = null;
 
   Dashbook.multiTheme({
-    Key? key,
     required Map<String, ThemeData> themes,
+    super.key,
     String? initialTheme,
     this.title = '',
     this.usePreviewSafeArea = false,
@@ -106,8 +104,7 @@ class Dashbook extends StatefulWidget {
   })  : _multiTheme =
             _DashbookMultiTheme(themes: themes, initialTheme: initialTheme),
         theme = null,
-        _dualTheme = null,
-        super(key: key);
+        _dualTheme = null;
 
   Story storiesOf(String name) {
     final story = Story(name);
@@ -145,13 +142,13 @@ class _DashbookState extends State<Dashbook> {
     if (widget.theme != null) {
       _currentTheme = widget.theme;
     } else if (widget._dualTheme != null) {
-      final _dualTheme = widget._dualTheme;
+      final dualTheme = widget._dualTheme;
       _currentTheme =
-          _dualTheme!.initWithLight ? _dualTheme.light : _dualTheme.dark;
+          dualTheme!.initWithLight ? dualTheme.light : dualTheme.dark;
     } else if (widget._multiTheme != null) {
-      final _multiTheme = widget._multiTheme;
-      _currentTheme = _multiTheme!.themes[_multiTheme.initialTheme] ??
-          _multiTheme.themes.values.first;
+      final multiTheme = widget._multiTheme;
+      _currentTheme = multiTheme!.themes[multiTheme.initialTheme] ??
+          multiTheme.themes.values.first;
     }
     _finishLoading();
   }
@@ -280,7 +277,7 @@ class _DashbookState extends State<Dashbook> {
                                         CurrentView.properties ||
                                     _currentView == CurrentView.actions ||
                                     _currentView == CurrentView.deviceSettings,
-                                info: _currentChapter?.pinInfo == true
+                                info: (_currentChapter?.pinInfo ?? false)
                                     ? _currentChapter?.info
                                     : null,
                                 child: chapterWidget!,
@@ -511,7 +508,7 @@ class _DashbookRightIconList extends StatelessWidget {
 class _DashbookDualThemeIcon extends StatelessWidget {
   final _DashbookDualTheme dualTheme;
   final ThemeData currentTheme;
-  final Function(ThemeData) onChangeTheme;
+  final void Function(ThemeData) onChangeTheme;
 
   const _DashbookDualThemeIcon({
     required this.dualTheme,

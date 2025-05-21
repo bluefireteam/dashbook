@@ -15,12 +15,12 @@ class MessageCard extends StatelessWidget {
   final Color infoColor;
 
   const MessageCard({
-    Key? key,
     required this.message,
     required this.type,
+    super.key,
     this.errorColor = const Color(0xFFCC6941),
     this.infoColor = const Color(0xFF5E89FF),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

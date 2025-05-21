@@ -8,14 +8,14 @@ class OptionsPropertyWidget<T> extends StatefulWidget {
   const OptionsPropertyWidget({
     required this.property,
     required this.onChanged,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() => OptionsPropertyState();
 }
 
-class OptionsPropertyState extends State<OptionsPropertyWidget> {
+class OptionsPropertyState extends State<OptionsPropertyWidget<Object?>> {
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(

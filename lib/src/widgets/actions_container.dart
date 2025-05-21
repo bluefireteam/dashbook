@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 class ActionsContainer extends StatelessWidget {
   const ActionsContainer({
-    Key? key,
     required this.onCancel,
     required this.currentChapter,
-  }) : super(key: key);
+    super.key,
+  });
 
   final VoidCallback onCancel;
   final Chapter currentChapter;

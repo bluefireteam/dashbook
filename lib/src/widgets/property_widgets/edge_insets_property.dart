@@ -10,8 +10,8 @@ class EdgeInsetsProperty extends StatefulWidget {
   const EdgeInsetsProperty({
     required this.property,
     required this.onChanged,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() =>
@@ -53,7 +53,7 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
 
         return EdgeInsets.fromLTRB(left, top, right, bottom);
       }
-    } catch (err) {
+    } on Exception catch (_) {
       return null;
     }
   }
