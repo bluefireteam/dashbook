@@ -53,8 +53,7 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
 
         return EdgeInsets.fromLTRB(left, top, right, bottom);
       }
-      // ignore: avoid_catches_without_on_clauses
-    } catch (err) {
+    } on Exception catch (_) {
       return null;
     }
   }

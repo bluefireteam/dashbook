@@ -60,8 +60,7 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
           bottomRight: Radius.circular(bottomRight),
         );
       }
-      // ignore: avoid_catches_without_on_clauses
-    } catch (err) {
+    } on Exception catch (_) {
       return null;
     }
   }
