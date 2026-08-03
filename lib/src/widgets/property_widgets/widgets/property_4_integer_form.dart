@@ -97,7 +97,7 @@ class _FourIntegerFormState extends State<FourIntegerForm> {
               Switch(
                 value: _useValueToAll,
                 onChanged: (bool isOn) => setState(() => _useValueToAll = isOn),
-                activeColor: Colors.blue,
+                activeThumbColor: Colors.blue,
                 inactiveTrackColor: Colors.grey,
                 inactiveThumbColor: Colors.grey,
               ),
