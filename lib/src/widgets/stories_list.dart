@@ -99,9 +99,7 @@ class _StoriesListState extends State<StoriesList> {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: Theme.of(context).copyWith(
-        dividerColor: Colors.transparent,
-      ),
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: SideBarPanel(
         title: 'Stories',
         titleIcon: DashbookIcon(
@@ -163,14 +161,17 @@ class _StoriesListState extends State<StoriesList> {
                                       child: Link(
                                         label: '  ${chapter.name}',
                                         textAlign: TextAlign.left,
-                                        padding:
-                                            const EdgeInsets.only(right: 8),
+                                        padding: const EdgeInsets.only(
+                                          right: 8,
+                                        ),
                                         textStyle: TextStyle(
-                                          fontWeight: chapter.id ==
+                                          fontWeight:
+                                              chapter.id ==
                                                   widget.selectedChapter?.id
                                               ? FontWeight.bold
                                               : FontWeight.normal,
-                                          color: chapter.id ==
+                                          color:
+                                              chapter.id ==
                                                   widget.selectedChapter?.id
                                               ? null
                                               : Theme.of(context).hintColor,
@@ -188,8 +189,8 @@ class _StoriesListState extends State<StoriesList> {
                                     onClick: () => _pin(chapter),
                                     tooltip:
                                         chapter.id == widget.currentBookmark
-                                            ? 'Remove this chapter'
-                                            : 'Bookmark this bookmark',
+                                        ? 'Remove this chapter'
+                                        : 'Bookmark this bookmark',
                                   ),
                                 ),
                               ],

@@ -91,19 +91,19 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
   }
 
   Future<void> show() => showPopup(
-        context: context,
-        builder: (_) => FourIntegerForm(
-          _confirmEdition,
-          _currentBorderRadius.topLeft.x.toInt(),
-          _currentBorderRadius.topRight.x.toInt(),
-          _currentBorderRadius.bottomLeft.x.toInt(),
-          _currentBorderRadius.bottomRight.x.toInt(),
-          'Top left',
-          'Top right',
-          'Bottom left',
-          'Bottom right',
-        ),
-      );
+    context: context,
+    builder: (_) => FourIntegerForm(
+      _confirmEdition,
+      _currentBorderRadius.topLeft.x.toInt(),
+      _currentBorderRadius.topRight.x.toInt(),
+      _currentBorderRadius.bottomLeft.x.toInt(),
+      _currentBorderRadius.bottomRight.x.toInt(),
+      'Top left',
+      'Top right',
+      'Bottom left',
+      'Bottom right',
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -128,14 +128,9 @@ class _BorderRadiusPropertyState extends State<BorderRadiusProperty> {
               'BL: ${value.bottomLeft.x.toInt()}, '
               'BR: ${value.bottomRight.x.toInt()}',
             ),
-          const SizedBox(
-            width: 5,
-          ),
+          const SizedBox(width: 5),
           IconButton(
-            icon: const Icon(
-              Icons.edit,
-              size: 20,
-            ),
+            icon: const Icon(Icons.edit, size: 20),
             onPressed: () async {
               await show();
               widget.property.value = _currentBorderRadius;

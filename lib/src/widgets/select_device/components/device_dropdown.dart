@@ -12,10 +12,9 @@ class DeviceDropdown extends StatelessWidget {
     return DropdownButton<DeviceInfo>(
       isExpanded: true,
       value: settings.deviceInfo,
-      items: [
-        ...Devices.android.all,
-        ...Devices.ios.all,
-      ].map((DeviceInfo device) {
+      items: [...Devices.android.all, ...Devices.ios.all].map((
+        DeviceInfo device,
+      ) {
         return DropdownMenuItem<DeviceInfo>(
           value: device,
           child: Text(device.name),

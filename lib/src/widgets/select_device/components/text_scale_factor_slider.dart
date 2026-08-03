@@ -13,8 +13,10 @@ class TextScaleFactorSlider extends StatelessWidget {
       min: 0.85,
       max: 1.3,
       label: textScaleFactor.toString(),
-      onChanged:
-          DeviceSettings.of(context, listen: false).updateTextScaleFactor,
+      onChanged: DeviceSettings.of(
+        context,
+        listen: false,
+      ).updateTextScaleFactor,
     );
   }
 }

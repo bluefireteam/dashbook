@@ -1,14 +1,8 @@
 import 'package:dashbook/src/widgets/property_widgets/widgets/property_dialog.dart';
 import 'package:flutter/material.dart';
 
-typedef ConfirmEditionFucntion = bool Function(
-  bool,
-  String,
-  String,
-  String,
-  String,
-  String,
-);
+typedef ConfirmEditionFucntion =
+    bool Function(bool, String, String, String, String, String);
 
 class FourIntegerForm extends StatefulWidget {
   final ConfirmEditionFucntion _confirmEdition;
@@ -91,13 +85,11 @@ class _FourIntegerFormState extends State<FourIntegerForm> {
           if (_validValues) Container() else const Text('Invalid values!'),
           Row(
             children: [
-              const Text(
-                'Same value to all:',
-              ),
+              const Text('Same value to all:'),
               Switch(
                 value: _useValueToAll,
                 onChanged: (bool isOn) => setState(() => _useValueToAll = isOn),
-                activeColor: Colors.blue,
+                activeThumbColor: Colors.blue,
                 inactiveTrackColor: Colors.grey,
                 inactiveThumbColor: Colors.grey,
               ),

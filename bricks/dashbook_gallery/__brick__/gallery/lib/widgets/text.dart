@@ -5,12 +5,7 @@ void addTextStories(Dashbook dashbook) {
   dashbook
       .storiesOf('Text')
       .decorator(CenterDecorator())
-      .add(
-        'default',
-        (context) => Text(
-          context.textProperty('text', 'Hello'),
-        ),
-      )
+      .add('default', (context) => Text(context.textProperty('text', 'Hello')))
       .add(
         'with style',
         (_) => const Text(

@@ -79,13 +79,11 @@ class DeviceSettingsState extends State<DeviceSettings> {
   DeviceSettingsData get settings => _settings;
 
   set settings(DeviceSettingsData newSettings) => setState(() {
-        _settings = newSettings;
-      });
+    _settings = newSettings;
+  });
 
   void updateTextScaleFactor([double textScaleFactor = 1.0]) {
-    settings = settings.copyWith(
-      textScaleFactor: textScaleFactor,
-    );
+    settings = settings.copyWith(textScaleFactor: textScaleFactor);
   }
 
   void updateDevice(DeviceInfo? deviceInfo) {
@@ -133,11 +131,7 @@ class DeviceSettingsState extends State<DeviceSettings> {
 
   @override
   Widget build(BuildContext context) {
-    return _DeviceSettings(
-      _settings,
-      data: this,
-      child: widget.child,
-    );
+    return _DeviceSettings(_settings, data: this, child: widget.child);
   }
 }
 
