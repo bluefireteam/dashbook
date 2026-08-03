@@ -22,12 +22,7 @@ extension DeviceSizeExtension on BuildContext {
   }
 }
 
-enum SizeCategory {
-  phone,
-  tablet,
-  laptop,
-  desktop,
-}
+enum SizeCategory { phone, tablet, laptop, desktop }
 
 /// These breakpoints are matched to those defined by the [material docs](https://material.io/design/layout/understanding-layout.html)
 /// The number represents the point it starts, so a device between 600 and

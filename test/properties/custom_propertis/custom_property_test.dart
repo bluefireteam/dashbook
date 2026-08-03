@@ -58,9 +58,7 @@ class CounterButtonProperty extends Property<int> {
           value = getValue() + 1;
           onChanged();
         },
-        child: Text(
-          getValue().toString(),
-        ),
+        child: Text(getValue().toString()),
       ),
     );
   }

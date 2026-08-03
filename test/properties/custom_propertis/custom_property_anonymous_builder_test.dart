@@ -15,17 +15,12 @@ Dashbook _getDashbookTextPropertyAnonymousBuilder() {
       Property<String>.withBuilder(
         'textValue',
         'ValueX',
-        builder: (property, onChanged, key) => TextProperty(
-          property: property,
-          onChanged: onChanged,
-          key: key,
-        ),
+        builder: (property, onChanged, key) =>
+            TextProperty(property: property, onChanged: onChanged, key: key),
       ),
     );
 
-    return Text(
-      'Current: $textProperty',
-    );
+    return Text('Current: $textProperty');
   });
 
   return dashbook;

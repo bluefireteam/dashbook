@@ -4,9 +4,7 @@ import 'package:dashbook/src/widgets/select_device/components/text_scale_factor_
 import 'package:flutter/material.dart';
 
 class SelectDevice extends StatelessWidget {
-  const SelectDevice({
-    super.key,
-  });
+  const SelectDevice({super.key});
 
   @override
   Widget build(BuildContext context) {

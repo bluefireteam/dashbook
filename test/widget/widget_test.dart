@@ -17,11 +17,14 @@ class ChapterStub extends Mock implements _ChapterStub {}
 Dashbook _getDashbook({OnChapterChange? onChapterChange}) {
   final dashbook = Dashbook(onChapterChange: onChapterChange);
 
-  dashbook.storiesOf('Text').add('default', (_) {
-    return const Text('Text story of the default chapter');
-  }).add('bold', (_) {
-    return const Text('Text story of the bold chapter');
-  });
+  dashbook
+      .storiesOf('Text')
+      .add('default', (_) {
+        return const Text('Text story of the default chapter');
+      })
+      .add('bold', (_) {
+        return const Text('Text story of the bold chapter');
+      });
 
   return dashbook;
 }

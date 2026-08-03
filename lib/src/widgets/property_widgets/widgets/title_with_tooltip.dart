@@ -20,10 +20,7 @@ class TitleWithTooltip extends StatelessWidget {
           verticalOffset: 8,
           preferBelow: false,
           message: tooltipMessage,
-          child: const Icon(
-            Icons.info_outline_rounded,
-            size: 16,
-          ),
+          child: const Icon(Icons.info_outline_rounded, size: 16),
         ),
       ],
     );

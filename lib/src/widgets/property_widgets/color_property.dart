@@ -31,25 +31,25 @@ class ColorPropertyState extends State<ColorProperty> {
 
   // raise the [showDialog] widget
   Future<void> show() => showPopup(
-        context: context,
-        builder: (_) => PropertyDialog(
-          title: 'Pick a color!',
-          content: ColorPicker(
-            pickerColor: pickerColor,
-            onColorChanged: changeColor,
-            pickerAreaHeightPercent: 0.8,
-          ),
-          actions: [
-            ElevatedButton(
-              child: const Text('Got it'),
-              onPressed: () {
-                setState(() => currentColor = pickerColor);
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+    context: context,
+    builder: (_) => PropertyDialog(
+      title: 'Pick a color!',
+      content: ColorPicker(
+        pickerColor: pickerColor,
+        onColorChanged: changeColor,
+        pickerAreaHeightPercent: 0.8,
+      ),
+      actions: [
+        ElevatedButton(
+          child: const Text('Got it'),
+          onPressed: () {
+            setState(() => currentColor = pickerColor);
+            Navigator.of(context).pop();
+          },
         ),
-      );
+      ],
+    ),
+  );
 
   ColorPropertyState(Color value) {
     currentColor = value;
@@ -62,9 +62,7 @@ class ColorPropertyState extends State<ColorProperty> {
       tooltipMessage: widget.property.tooltipMessage,
       label: widget.property.name,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: currentColor,
-        ),
+        style: ElevatedButton.styleFrom(backgroundColor: currentColor),
         onPressed: () async {
           await show();
           widget.property.value = currentColor;

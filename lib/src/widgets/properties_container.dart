@@ -41,8 +41,9 @@ class _PropertiesContainerState extends State<PropertiesContainer> {
         }
       }
 
-      final propertyKey =
-          Key('${widget.currentChapter.id}#${entry.value.name}');
+      final propertyKey = Key(
+        '${widget.currentChapter.id}#${entry.value.name}',
+      );
       final onChanged = () {
         setState(() {});
         widget.onPropertyChange();
@@ -59,9 +60,7 @@ class _PropertiesContainerState extends State<PropertiesContainer> {
       title: 'Properties',
       width: sideBarSizeProperties(context),
       onCancel: widget.onCancel,
-      child: Column(
-        children: children,
-      ),
+      child: Column(children: children),
     );
   }
 }

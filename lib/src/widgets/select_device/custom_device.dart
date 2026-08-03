@@ -24,8 +24,10 @@ class CustomDeviceState extends State<CustomDevice> {
   @override
   void initState() {
     super.initState();
-    final deviceInfo =
-        DeviceSettings.of(context, listen: false).settings.deviceInfo!;
+    final deviceInfo = DeviceSettings.of(
+      context,
+      listen: false,
+    ).settings.deviceInfo!;
     _widthController.text = '${deviceInfo.screenSize.width.toInt()}';
     _heightController.text = '${deviceInfo.screenSize.height.toInt()}';
   }
@@ -37,16 +39,11 @@ class CustomDeviceState extends State<CustomDevice> {
     super.dispose();
   }
 
-  void _setCustom({
-    double? height,
-    double? width,
-    TargetPlatform? platform,
-  }) {
-    DeviceSettings.of(context, listen: false).updateDeviceData(
-      height: height,
-      width: width,
-      platform: platform,
-    );
+  void _setCustom({double? height, double? width, TargetPlatform? platform}) {
+    DeviceSettings.of(
+      context,
+      listen: false,
+    ).updateDeviceData(height: height, width: width, platform: platform);
   }
 
   @override
@@ -61,9 +58,7 @@ class CustomDeviceState extends State<CustomDevice> {
                 child: _FormField(
                   _widthController,
                   label: 'Width',
-                  onUpdate: (value) => _setCustom(
-                    width: value.toDouble(),
-                  ),
+                  onUpdate: (value) => _setCustom(width: value.toDouble()),
                 ),
               ),
               const SizedBox(width: 12),
@@ -71,9 +66,7 @@ class CustomDeviceState extends State<CustomDevice> {
                 child: _FormField(
                   _heightController,
                   label: 'Height',
-                  onUpdate: (value) => _setCustom(
-                    height: value.toDouble(),
-                  ),
+                  onUpdate: (value) => _setCustom(height: value.toDouble()),
                 ),
               ),
             ],
@@ -84,9 +77,7 @@ class CustomDeviceState extends State<CustomDevice> {
             child: TextScaleFactorSlider(),
           ),
           const SizedBox(height: 12),
-          _PickPlatform(
-            onSelect: (platform) => _setCustom(platform: platform),
-          ),
+          _PickPlatform(onSelect: (platform) => _setCustom(platform: platform)),
         ],
       ),
     );
@@ -123,23 +114,20 @@ class _FormField extends StatelessWidget {
         final parsedValue = num.tryParse(value);
         if (parsedValue != null) onUpdate(parsedValue);
       },
-      decoration: InputDecoration(
-        label: Text(label),
-      ),
+      decoration: InputDecoration(label: Text(label)),
     );
   }
 }
 
 class _PickPlatform extends StatelessWidget {
-  const _PickPlatform({
-    required this.onSelect,
-  });
+  const _PickPlatform({required this.onSelect});
   final void Function(TargetPlatform) onSelect;
 
   @override
   Widget build(BuildContext context) {
-    final selected =
-        DeviceSettings.of(context).settings.deviceInfo!.identifier.platform;
+    final selected = DeviceSettings.of(
+      context,
+    ).settings.deviceInfo!.identifier.platform;
     return Wrap(
       children: [TargetPlatform.android, TargetPlatform.iOS].map((platform) {
         return TextButton(
@@ -147,8 +135,9 @@ class _PickPlatform extends StatelessWidget {
           child: Text(
             _getPlatformName(platform),
             style: TextStyle(
-              fontWeight:
-                  platform == selected ? FontWeight.bold : FontWeight.normal,
+              fontWeight: platform == selected
+                  ? FontWeight.bold
+                  : FontWeight.normal,
             ),
           ),
         );

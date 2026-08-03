@@ -17,24 +17,11 @@ class DeviceDialogButtons extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ElevatedButton(
-          onPressed: onSelect,
-          child: const Text('Select'),
-        ),
-        const SizedBox(
-          width: 15,
-        ),
-        ElevatedButton(
-          onPressed: onCancel,
-          child: const Text('Cancel'),
-        ),
-        const SizedBox(
-          width: 15,
-        ),
-        ElevatedButton(
-          onPressed: onClear,
-          child: const Text('Clear'),
-        ),
+        ElevatedButton(onPressed: onSelect, child: const Text('Select')),
+        const SizedBox(width: 15),
+        ElevatedButton(onPressed: onCancel, child: const Text('Cancel')),
+        const SizedBox(width: 15),
+        ElevatedButton(onPressed: onClear, child: const Text('Clear')),
       ],
     );
   }

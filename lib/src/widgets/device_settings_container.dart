@@ -11,10 +11,7 @@ import 'package:flutter/material.dart';
 class DeviceSettingsContainer extends StatefulWidget {
   final VoidCallback onCancel;
 
-  const DeviceSettingsContainer({
-    required this.onCancel,
-    super.key,
-  });
+  const DeviceSettingsContainer({required this.onCancel, super.key});
 
   @override
   State<DeviceSettingsContainer> createState() =>
@@ -28,9 +25,10 @@ class _DeviceSettingsContainerState extends State<DeviceSettingsContainer> {
   void _setIsCustom(bool isCustom) {
     setState(() {
       _isCustom = isCustom;
-      DeviceSettings.of(context, listen: false).updateDevice(
-        isCustom ? Devices.android.largeTablet : null,
-      );
+      DeviceSettings.of(
+        context,
+        listen: false,
+      ).updateDevice(isCustom ? Devices.android.largeTablet : null);
     });
   }
 
@@ -97,10 +95,7 @@ class _DeviceToggles extends StatelessWidget {
               : null,
         ),
         const Spacer(),
-        TextButton(
-          onPressed: deviceSettings.reset,
-          child: const Text('Reset'),
-        ),
+        TextButton(onPressed: deviceSettings.reset, child: const Text('Reset')),
       ],
     );
   }

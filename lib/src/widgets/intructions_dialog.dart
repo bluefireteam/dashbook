@@ -10,11 +10,13 @@ class _InstructionsText extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
-    final codeTextColor =
-        isDarkTheme ? const Color(0xFFE5E5E5) : const Color(0xFF858585);
+    final codeTextColor = isDarkTheme
+        ? const Color(0xFFE5E5E5)
+        : const Color(0xFF858585);
 
-    final codeBackGroundColor =
-        isDarkTheme ? const Color(0xFF858585) : const Color(0xFFDEDEDE);
+    final codeBackGroundColor = isDarkTheme
+        ? const Color(0xFF858585)
+        : const Color(0xFFDEDEDE);
 
     return Markdown(
       selectable: true,
@@ -37,10 +39,7 @@ class _InstructionsText extends StatelessWidget {
 class InstructionsDialog extends StatelessWidget {
   final String instructions;
 
-  const InstructionsDialog({
-    required this.instructions,
-    super.key,
-  });
+  const InstructionsDialog({required this.instructions, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +48,7 @@ class InstructionsDialog extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            Expanded(
-              child: _InstructionsText(instructions),
-            ),
+            Expanded(child: _InstructionsText(instructions)),
             const SizedBox(height: 15),
             ElevatedButton(
               onPressed: () {

@@ -84,19 +84,19 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
   }
 
   Future<void> show() => showPopup(
-        context: context,
-        builder: (_) => FourIntegerForm(
-          _confirmEdition,
-          _currentEdgeinsets.left.toInt(),
-          _currentEdgeinsets.top.toInt(),
-          _currentEdgeinsets.right.toInt(),
-          _currentEdgeinsets.bottom.toInt(),
-          'Left',
-          'Top',
-          'Right',
-          'Bottom',
-        ),
-      );
+    context: context,
+    builder: (_) => FourIntegerForm(
+      _confirmEdition,
+      _currentEdgeinsets.left.toInt(),
+      _currentEdgeinsets.top.toInt(),
+      _currentEdgeinsets.right.toInt(),
+      _currentEdgeinsets.bottom.toInt(),
+      'Left',
+      'Top',
+      'Right',
+      'Bottom',
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -121,14 +121,9 @@ class _EdgeInsetsPropertyState extends State<EdgeInsetsProperty> {
               'R: ${value.right.toInt()}, '
               'B: ${value.bottom.toInt()}',
             ),
-          const SizedBox(
-            width: 5,
-          ),
+          const SizedBox(width: 5),
           IconButton(
-            icon: const Icon(
-              Icons.edit,
-              size: 20,
-            ),
+            icon: const Icon(Icons.edit, size: 20),
             onPressed: () async {
               await show();
               widget.property.value = _currentEdgeinsets;

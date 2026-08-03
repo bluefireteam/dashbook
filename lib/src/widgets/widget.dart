@@ -36,10 +36,7 @@ class _DashbookMultiTheme {
   final Map<String, ThemeData> themes;
   final String? initialTheme;
 
-  _DashbookMultiTheme({
-    required this.themes,
-    this.initialTheme,
-  });
+  _DashbookMultiTheme({required this.themes, this.initialTheme});
 }
 
 class Dashbook extends StatefulWidget {
@@ -67,8 +64,8 @@ class Dashbook extends StatefulWidget {
     this.onChapterChange,
     this.localizationsDelegates,
     this.supportedLocales = const <Locale>[Locale('en', 'US')],
-  })  : _dualTheme = null,
-        _multiTheme = null;
+  }) : _dualTheme = null,
+       _multiTheme = null;
 
   Dashbook.dualTheme({
     required ThemeData light,
@@ -82,13 +79,13 @@ class Dashbook extends StatefulWidget {
     this.onChapterChange,
     this.localizationsDelegates,
     this.supportedLocales = const <Locale>[Locale('en', 'US')],
-  })  : _dualTheme = _DashbookDualTheme(
-          dark: dark,
-          light: light,
-          initWithLight: initWithLight,
-        ),
-        theme = null,
-        _multiTheme = null;
+  }) : _dualTheme = _DashbookDualTheme(
+         dark: dark,
+         light: light,
+         initWithLight: initWithLight,
+       ),
+       theme = null,
+       _multiTheme = null;
 
   Dashbook.multiTheme({
     required Map<String, ThemeData> themes,
@@ -101,10 +98,12 @@ class Dashbook extends StatefulWidget {
     this.onChapterChange,
     this.localizationsDelegates,
     this.supportedLocales = const <Locale>[Locale('en', 'US')],
-  })  : _multiTheme =
-            _DashbookMultiTheme(themes: themes, initialTheme: initialTheme),
-        theme = null,
-        _dualTheme = null;
+  }) : _multiTheme = _DashbookMultiTheme(
+         themes: themes,
+         initialTheme: initialTheme,
+       ),
+       theme = null,
+       _dualTheme = null;
 
   Story storiesOf(String name) {
     final story = Story(name);
@@ -119,12 +118,7 @@ class Dashbook extends StatefulWidget {
   }
 }
 
-enum CurrentView {
-  stories,
-  properties,
-  actions,
-  deviceSettings,
-}
+enum CurrentView { stories, properties, actions, deviceSettings }
 
 class _DashbookState extends State<Dashbook> {
   Chapter? _currentChapter;
@@ -143,11 +137,13 @@ class _DashbookState extends State<Dashbook> {
       _currentTheme = widget.theme;
     } else if (widget._dualTheme != null) {
       final dualTheme = widget._dualTheme;
-      _currentTheme =
-          dualTheme!.initWithLight ? dualTheme.light : dualTheme.dark;
+      _currentTheme = dualTheme!.initWithLight
+          ? dualTheme.light
+          : dualTheme.dark;
     } else if (widget._multiTheme != null) {
       final multiTheme = widget._multiTheme;
-      _currentTheme = multiTheme!.themes[multiTheme.initialTheme] ??
+      _currentTheme =
+          multiTheme!.themes[multiTheme.initialTheme] ??
           multiTheme.themes.values.first;
     }
     _finishLoading();
@@ -161,8 +157,10 @@ class _DashbookState extends State<Dashbook> {
 
     if (initialChapter == null) {
       if (preferences.bookmarkedChapter != null) {
-        initialChapter =
-            findChapter(preferences.bookmarkedChapter!, widget.stories);
+        initialChapter = findChapter(
+          preferences.bookmarkedChapter!,
+          widget.stories,
+        );
       } else if (widget.stories.isNotEmpty) {
         final story = widget.stories.first;
 
@@ -273,8 +271,8 @@ class _DashbookState extends State<Dashbook> {
                               PreviewContainer(
                                 key: Key(_currentChapter!.id),
                                 usePreviewSafeArea: widget.usePreviewSafeArea,
-                                isIntrusiveSideMenuOpen: _currentView ==
-                                        CurrentView.properties ||
+                                isIntrusiveSideMenuOpen:
+                                    _currentView == CurrentView.properties ||
                                     _currentView == CurrentView.actions ||
                                     _currentView == CurrentView.deviceSettings,
                                 info: (_currentChapter?.pinInfo ?? false)
@@ -293,24 +291,20 @@ class _DashbookState extends State<Dashbook> {
                                       key: kPropertiesIcon,
                                       tooltip: 'Properties panel',
                                       icon: Icons.mode_edit,
-                                      onClick: () => setState(
-                                        () {
-                                          _currentView = CurrentView.properties;
-                                          _storyPanelPinned = false;
-                                        },
-                                      ),
+                                      onClick: () => setState(() {
+                                        _currentView = CurrentView.properties;
+                                        _storyPanelPinned = false;
+                                      }),
                                     ),
                                   if (_hasActions())
                                     DashbookIcon(
                                       key: kActionsIcon,
                                       tooltip: 'Actions panel',
                                       icon: Icons.play_arrow,
-                                      onClick: () => setState(
-                                        () {
-                                          _currentView = CurrentView.actions;
-                                          _storyPanelPinned = false;
-                                        },
-                                      ),
+                                      onClick: () => setState(() {
+                                        _currentView = CurrentView.actions;
+                                        _storyPanelPinned = false;
+                                      }),
                                     ),
                                   if (_currentChapter?.info != null &&
                                       _currentChapter?.pinInfo == false)
@@ -356,7 +350,9 @@ class _DashbookState extends State<Dashbook> {
                                             content: DropdownButton<ThemeData>(
                                               value: _currentTheme,
                                               items: widget
-                                                  ._multiTheme!.themes.entries
+                                                  ._multiTheme!
+                                                  .themes
+                                                  .entries
                                                   .map(
                                                     (entry) => DropdownMenuItem(
                                                       value: entry.value,
@@ -388,8 +384,9 @@ class _DashbookState extends State<Dashbook> {
                                         Clipboard.setData(
                                           ClipboardData(text: url),
                                         );
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
                                           const SnackBar(
                                             content: Text(
                                               'Link copied to your clipboard',
@@ -458,9 +455,8 @@ class _DashbookState extends State<Dashbook> {
                                 right: 0,
                                 bottom: 0,
                                 child: DeviceSettingsContainer(
-                                  onCancel: () => setState(
-                                    () => _currentView = null,
-                                  ),
+                                  onCancel: () =>
+                                      setState(() => _currentView = null),
                                 ),
                               ),
                           ],
@@ -481,9 +477,7 @@ class _DashbookState extends State<Dashbook> {
 class _DashbookRightIconList extends StatelessWidget {
   final List<Widget> children;
 
-  const _DashbookRightIconList({
-    required this.children,
-  });
+  const _DashbookRightIconList({required this.children});
 
   double _rightIconTop(int index, BuildContext ctx) =>
       10.0 + index * iconSize(ctx);

@@ -23,11 +23,7 @@ class Link extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: padding,
-        child: Text(
-          label,
-          textAlign: textAlign,
-          style: textStyle,
-        ),
+        child: Text(label, textAlign: textAlign, style: textStyle),
       ),
     );
   }

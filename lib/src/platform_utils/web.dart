@@ -6,8 +6,10 @@ class PlatformUtils {
   PlatformUtils._();
 
   static String getChapterUrl(Chapter chapter) {
-    final plainUrl =
-        web.window.location.href.replaceFirst(web.window.location.hash, '');
+    final plainUrl = web.window.location.href.replaceFirst(
+      web.window.location.hash,
+      '',
+    );
     return '$plainUrl#/${Uri.encodeComponent(chapter.id)}';
   }
 

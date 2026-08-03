@@ -11,9 +11,9 @@ Dashbook _getDashbook() {
 
   dashbook.storiesOf('Toast').add('default', (context) {
     context.action('Show toast', (context) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Hello')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Hello')));
     });
 
     return const Text('Use actions');

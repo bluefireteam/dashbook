@@ -9,11 +9,14 @@ import '../helpers.dart';
 Dashbook _getDashbook() {
   final dashbook = Dashbook();
 
-  dashbook.storiesOf('Text').add('default', (_) {
-    return const Text('Text story of the default chapter');
-  }).add('bold', (_) {
-    return const Text('Text story of the bold chapter');
-  });
+  dashbook
+      .storiesOf('Text')
+      .add('default', (_) {
+        return const Text('Text story of the default chapter');
+      })
+      .add('bold', (_) {
+        return const Text('Text story of the bold chapter');
+      });
 
   return dashbook;
 }
@@ -59,8 +62,9 @@ void main() {
     });
 
     group('filter', () {
-      testWidgets('when matching a story, shows all the chapters',
-          (tester) async {
+      testWidgets('when matching a story, shows all the chapters', (
+        tester,
+      ) async {
         await tester.pumpDashbook(_getDashbook());
 
         await tester.tap(find.byKey(kStoriesIcon));
@@ -73,8 +77,9 @@ void main() {
         expect(find.text('  bold'), findsOneWidget);
       });
 
-      testWidgets('when matching a chapter, shows only the relevant chapter',
-          (tester) async {
+      testWidgets('when matching a chapter, shows only the relevant chapter', (
+        tester,
+      ) async {
         await tester.pumpDashbook(_getDashbook());
 
         await tester.tap(find.byKey(kStoriesIcon));

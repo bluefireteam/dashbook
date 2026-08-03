@@ -10,12 +10,9 @@ Dashbook _getDashbook() {
   final dashbook = Dashbook();
 
   dashbook.storiesOf('List').add('default', (ctx) {
-    return Text(
-      'Current: ${ctx.listProperty('listValue', 'ValueX', [
-            'ValueX',
-            'ValueY',
-          ])}',
-    );
+    final value = ctx.listProperty('listValue', 'ValueX', ['ValueX', 'ValueY']);
+
+    return Text('Current: $value');
   });
 
   return dashbook;

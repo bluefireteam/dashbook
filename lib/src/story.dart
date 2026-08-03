@@ -12,11 +12,8 @@ class ControlProperty {
 /// Signature for a function that creates the property editor widget.
 ///
 /// Used by [Property.withBuilder].
-typedef PropertyEditorBuilder<T> = Widget Function(
-  Property<T> property,
-  PropertyChanged onChanged,
-  Key? key,
-);
+typedef PropertyEditorBuilder<T> =
+    Widget Function(Property<T> property, PropertyChanged onChanged, Key? key);
 
 abstract class Property<T> {
   final String name;
@@ -63,10 +60,7 @@ abstract class Property<T> {
   ///
   /// See [p.ListPropertyWidget] or [p.ColorProperty] for examples of widgets
   /// used for property editing.
-  Widget createPropertyEditor({
-    required PropertyChanged onChanged,
-    Key? key,
-  });
+  Widget createPropertyEditor({required PropertyChanged onChanged, Key? key});
 
   @override
   String toString() => '$name - ${getValue()}';
@@ -102,11 +96,7 @@ class ListProperty<T> extends Property<T> {
 
   @override
   Widget createPropertyEditor({required PropertyChanged onChanged, Key? key}) {
-    return p.ListPropertyWidget(
-      property: this,
-      onChanged: onChanged,
-      key: key,
-    );
+    return p.ListPropertyWidget(property: this, onChanged: onChanged, key: key);
   }
 }
 
@@ -176,11 +166,8 @@ class DashbookContext {
         defaultValue,
         tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
-        builder: (property, onChanged, key) => p.TextProperty(
-          property: property,
-          onChanged: onChanged,
-          key: key,
-        ),
+        builder: (property, onChanged, key) =>
+            p.TextProperty(property: property, onChanged: onChanged, key: key),
       ),
     );
   }
@@ -218,11 +205,8 @@ class DashbookContext {
         defaultValue,
         tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
-        builder: (property, onChanged, key) => p.BoolProperty(
-          property: property,
-          onChanged: onChanged,
-          key: key,
-        ),
+        builder: (property, onChanged, key) =>
+            p.BoolProperty(property: property, onChanged: onChanged, key: key),
       ),
     );
   }
@@ -260,11 +244,8 @@ class DashbookContext {
         defaultValue,
         tooltipMessage: tooltipMessage,
         visibilityControlProperty: visibilityControlProperty,
-        builder: (property, onChanged, key) => p.ColorProperty(
-          property: property,
-          onChanged: onChanged,
-          key: key,
-        ),
+        builder: (property, onChanged, key) =>
+            p.ColorProperty(property: property, onChanged: onChanged, key: key),
       ),
     );
   }

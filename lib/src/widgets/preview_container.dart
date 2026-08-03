@@ -48,9 +48,9 @@ class PreviewContainer extends StatelessWidget {
         : child;
 
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(
-        textScaler: TextScaler.linear(deviceInfo.textScaleFactor),
-      ),
+      data: MediaQuery.of(
+        context,
+      ).copyWith(textScaler: TextScaler.linear(deviceInfo.textScaleFactor)),
       child: Positioned(
         top: 0,
         bottom: 0,

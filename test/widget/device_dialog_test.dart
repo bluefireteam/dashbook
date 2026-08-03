@@ -18,9 +18,7 @@ void main() {
     dashbook.storiesOf('Testing').add('default', (context) {
       return Builder(
         builder: (context) {
-          onDeviceSettingsChanged?.call(
-            DeviceSettings.of(context).settings,
-          );
+          onDeviceSettingsChanged?.call(DeviceSettings.of(context).settings);
           return const Text('This is test');
         },
       );
@@ -69,15 +67,15 @@ void main() {
       expect(
         find.ancestor(
           of: customDeviceButtonLabel,
-          matching:
-              find.byWidgetPredicate((widget) => widget is CheckboxListTile),
+          matching: find.byWidgetPredicate(
+            (widget) => widget is CheckboxListTile,
+          ),
         ),
         findsOneWidget,
       );
     });
 
-    testWidgets(
-        'When click in Custom Device button, '
+    testWidgets('When click in Custom Device button, '
         'should toggle to form to customize device info', (tester) async {
       tester.setScreenSize(const Size(2000, 1000));
       await tester.pumpDashbook(getDashbook());
@@ -95,8 +93,9 @@ void main() {
         expect(
           find.ancestor(
             of: find.text(label),
-            matching:
-                find.byWidgetPredicate((widget) => widget is TextFormField),
+            matching: find.byWidgetPredicate(
+              (widget) => widget is TextFormField,
+            ),
           ),
           findsOneWidget,
         );
@@ -135,8 +134,9 @@ void main() {
         await tester.enterText(
           find.ancestor(
             of: find.text(label),
-            matching:
-                find.byWidgetPredicate((widget) => widget is TextFormField),
+            matching: find.byWidgetPredicate(
+              (widget) => widget is TextFormField,
+            ),
           ),
           '1000',
         );
@@ -153,7 +153,7 @@ void main() {
       expect(settings!.deviceInfo!.screenSize.height, 1000);
       expect(settings!.deviceInfo!.identifier.platform, TargetPlatform.iOS);
     });
-/*
+    /*
     /// There is an issue on mockingjay when the test uses showdialog with navigator
     /// Uncomment the test after the fix
     testWidgets('select one device', (tester) async {

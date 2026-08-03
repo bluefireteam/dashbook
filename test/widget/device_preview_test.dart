@@ -20,11 +20,14 @@ class ChapterStub extends Mock implements _ChapterStub {}
 Dashbook _getDashbook({OnChapterChange? onChapterChange}) {
   final dashbook = Dashbook(onChapterChange: onChapterChange);
 
-  dashbook.storiesOf('Text').add('default', (_) {
-    return const Text('Text story of the default chapter');
-  }).add('bold', (_) {
-    return const Text('Text story of the bold chapter');
-  });
+  dashbook
+      .storiesOf('Text')
+      .add('default', (_) {
+        return const Text('Text story of the default chapter');
+      })
+      .add('bold', (_) {
+        return const Text('Text story of the bold chapter');
+      });
 
   return dashbook;
 }
@@ -118,9 +121,7 @@ void main() {
       await tester.pumpDashbook(_getDashbook());
 
       final textScaleFactor = () => tester
-          .widgetList<RichText>(
-            find.byType(RichText),
-          )
+          .widgetList<RichText>(find.byType(RichText))
           .firstWhere(
             (element) =>
                 element.text.toPlainText() ==
@@ -206,33 +207,34 @@ void main() {
     });
 
     testWidgets(
-        'rotate and hide frame are active when a device to preview is selected',
-        (tester) async {
-      tester.setScreenSize(const Size(2000, 1000));
-      await tester.pumpDashbook(_getDashbook());
+      'rotate and hide frame are active when a device to preview is selected',
+      (tester) async {
+        tester.setScreenSize(const Size(2000, 1000));
+        await tester.pumpDashbook(_getDashbook());
 
-      await tester.tap(find.byKey(kDevicePreviewIcon));
-      await tester.pumpAndSettle();
+        await tester.tap(find.byKey(kDevicePreviewIcon));
+        await tester.pumpAndSettle();
 
-      final findRotate = find.byKey(kRotateIcon);
-      final findFrameToggle = find.byKey(kHideFrameIcon);
+        final findRotate = find.byKey(kRotateIcon);
+        final findFrameToggle = find.byKey(kHideFrameIcon);
 
-      expect(tester.widget<DashbookIcon>(findRotate).onClick, isNull);
-      expect(tester.widget<DashbookIcon>(findFrameToggle).onClick, isNull);
+        expect(tester.widget<DashbookIcon>(findRotate).onClick, isNull);
+        expect(tester.widget<DashbookIcon>(findFrameToggle).onClick, isNull);
 
-      final dropDown = find.byType(DropdownButton<DeviceInfo>);
+        final dropDown = find.byType(DropdownButton<DeviceInfo>);
 
-      await tester.tap(dropDown);
-      await tester.pumpAndSettle();
+        await tester.tap(dropDown);
+        await tester.pumpAndSettle();
 
-      final dropDownItemFinder = find.byType(DropdownMenuItem<DeviceInfo>);
-      await tester.tap(dropDownItemFinder.first);
-      await tester.pumpAndSettle();
+        final dropDownItemFinder = find.byType(DropdownMenuItem<DeviceInfo>);
+        await tester.tap(dropDownItemFinder.first);
+        await tester.pumpAndSettle();
 
-      expect(find.byType(DeviceFrame), findsOneWidget);
+        expect(find.byType(DeviceFrame), findsOneWidget);
 
-      expect(tester.widget<DashbookIcon>(findRotate).onClick, isNotNull);
-      expect(tester.widget<DashbookIcon>(findFrameToggle).onClick, isNotNull);
-    });
+        expect(tester.widget<DashbookIcon>(findRotate).onClick, isNotNull);
+        expect(tester.widget<DashbookIcon>(findFrameToggle).onClick, isNotNull);
+      },
+    );
   });
 }
