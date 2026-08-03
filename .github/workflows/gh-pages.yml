@@ -9,8 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2
       - uses: bluefireteam/flutter-gh-pages@v9
         with:
           workingDir: example
+          compileToWasm: true
+          # website served from https://bluefireteam.github.io/dashbook
+          baseHref: /dashbook/
