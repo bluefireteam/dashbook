@@ -1,3 +1,6 @@
+## [0.1.18]
+ - Upgrade to latest flutter
+
 ## [0.1.17]
  - Bump dependencies
 
