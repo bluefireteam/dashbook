@@ -5,7 +5,7 @@ enum MessageCardType { info, error }
 /// Naive widget to be an example of a little bit more
 /// complex one with different types.
 class MessageCard extends StatelessWidget {
-  const new({
+  const MessageCard({
     required this.message,
     required this.type,
     super.key,

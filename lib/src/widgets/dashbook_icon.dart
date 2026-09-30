@@ -2,7 +2,7 @@ import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:material_ui/material_ui.dart';
 
 class DashbookIcon extends StatelessWidget {
-  const new({
+  const DashbookIcon({
     required this.icon,
     required this.onPressed,
     required this.tooltip,

@@ -3,7 +3,7 @@ import 'package:dashbook/src/widgets/dashbook_icon.dart';
 import 'package:material_ui/material_ui.dart';
 
 class SideBarPanel extends StatelessWidget {
-  const new({
+  const SideBarPanel({
     required this.title,
     required this.child,
     super.key,

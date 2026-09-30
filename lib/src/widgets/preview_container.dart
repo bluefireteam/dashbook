@@ -4,7 +4,7 @@ import 'package:dashbook/src/widgets/select_device/device_settings.dart';
 import 'package:material_ui/material_ui.dart';
 
 class PreviewContainer extends StatelessWidget {
-  const new({
+  const PreviewContainer({
     required this.child,
     required this.usePreviewSafeArea,
     this.info,

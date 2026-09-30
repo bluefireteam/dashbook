@@ -2,7 +2,11 @@ import 'package:dashbook/dashbook.dart';
 import 'package:material_ui/material_ui.dart';
 
 class TextProperty extends StatelessWidget {
-  const new({required this.property, required this.onChanged, super.key});
+  const TextProperty({
+    required this.property,
+    required this.onChanged,
+    super.key,
+  });
 
   final Property<String> property;
   final PropertyChanged onChanged;

@@ -3,7 +3,11 @@ import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:material_ui/material_ui.dart';
 
 class DualThemeIcon extends StatelessWidget {
-  const new({required this.isDarkTheme, required this.onChanged, super.key});
+  const DualThemeIcon({
+    required this.isDarkTheme,
+    required this.onChanged,
+    super.key,
+  });
 
   final bool isDarkTheme;
   final ValueChanged<bool> onChanged;
@@ -19,7 +23,7 @@ class DualThemeIcon extends StatelessWidget {
 }
 
 class MultiThemeIcon extends StatelessWidget {
-  const new({
+  const MultiThemeIcon({
     required this.themeNames,
     required this.currentTheme,
     required this.onChanged,
@@ -54,7 +58,10 @@ class MultiThemeIcon extends StatelessWidget {
 }
 
 class _ThemeChooserDialog extends StatelessWidget {
-  const new({required this.themeNames, required this.currentTheme});
+  const _ThemeChooserDialog({
+    required this.themeNames,
+    required this.currentTheme,
+  });
 
   final List<String> themeNames;
   final String? currentTheme;

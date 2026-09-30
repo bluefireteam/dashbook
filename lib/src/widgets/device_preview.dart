@@ -2,7 +2,7 @@ import 'package:device_frame/device_frame.dart';
 import 'package:material_ui/material_ui.dart';
 
 class DevicePreview extends StatelessWidget {
-  const new({
+  const DevicePreview({
     required this.child,
     required this.deviceInfo,
     required this.deviceOrientation,

@@ -3,7 +3,7 @@ import 'package:device_frame/device_frame.dart';
 import 'package:material_ui/material_ui.dart';
 
 class DeviceDropdown extends StatelessWidget {
-  const new({super.key});
+  const DeviceDropdown({super.key});
 
   @override
   Widget build(BuildContext context) {

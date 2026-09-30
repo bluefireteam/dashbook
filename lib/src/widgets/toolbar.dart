@@ -10,7 +10,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class Toolbar extends StatelessWidget {
-  const new({
+  const Toolbar({
     required this.chapter,
     required this.onOpenProperties,
     required this.onOpenActions,
@@ -71,7 +71,7 @@ class Toolbar extends StatelessWidget {
 }
 
 class _InstructionsIcon extends StatelessWidget {
-  const new({required this.instructions});
+  const _InstructionsIcon({required this.instructions});
 
   final String instructions;
 
@@ -89,7 +89,7 @@ class _InstructionsIcon extends StatelessWidget {
 }
 
 class _CodeLinkIcon extends StatelessWidget {
-  const new({required this.codeLink});
+  const _CodeLinkIcon({required this.codeLink});
 
   final String codeLink;
 
@@ -117,7 +117,7 @@ class _CodeLinkIcon extends StatelessWidget {
 }
 
 class _ShareIcon extends StatelessWidget {
-  const new({required this.chapter});
+  const _ShareIcon({required this.chapter});
 
   final Chapter chapter;
 

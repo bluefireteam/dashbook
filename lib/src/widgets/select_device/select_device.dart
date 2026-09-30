@@ -4,7 +4,7 @@ import 'package:dashbook/src/widgets/select_device/components/text_scale_factor_
 import 'package:material_ui/material_ui.dart';
 
 class SelectDevice extends StatelessWidget {
-  const new({super.key});
+  const SelectDevice({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 
 class DateTimeProperty extends Property<DateTime> {
-  new(super.name, super.defaultValue);
+  DateTimeProperty(super.name, super.defaultValue);
 
   @override
   Widget createPropertyEditor({required PropertyChanged onChanged, Key? key}) {
@@ -12,7 +12,11 @@ class DateTimeProperty extends Property<DateTime> {
 }
 
 class DateTimePropertyView extends StatelessWidget {
-  const new({required this.property, required this.onChanged, super.key});
+  const DateTimePropertyView({
+    required this.property,
+    required this.onChanged,
+    super.key,
+  });
 
   final Property<DateTime> property;
   final PropertyChanged onChanged;

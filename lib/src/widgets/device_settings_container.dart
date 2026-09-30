@@ -8,7 +8,7 @@ import 'package:dashbook/src/widgets/side_bar_panel.dart';
 import 'package:material_ui/material_ui.dart';
 
 class DeviceSettingsContainer extends StatelessWidget {
-  const new({required this.onCancel, super.key});
+  const DeviceSettingsContainer({required this.onCancel, super.key});
 
   final VoidCallback onCancel;
 
@@ -47,7 +47,7 @@ class DeviceSettingsContainer extends StatelessWidget {
 }
 
 class _DeviceToggles extends StatelessWidget {
-  const new();
+  const _DeviceToggles();
 
   @override
   Widget build(BuildContext context) {

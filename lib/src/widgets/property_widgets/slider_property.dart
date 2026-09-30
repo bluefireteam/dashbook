@@ -2,7 +2,11 @@ import 'package:dashbook/dashbook.dart';
 import 'package:material_ui/material_ui.dart';
 
 class SliderProperty extends StatelessWidget {
-  const new({required this.property, required this.onChanged, super.key});
+  const SliderProperty({
+    required this.property,
+    required this.onChanged,
+    super.key,
+  });
 
   final Property<double> property;
   final PropertyChanged onChanged;

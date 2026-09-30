@@ -12,7 +12,7 @@ import 'package:material_ui/material_ui.dart';
 typedef OnChapterChange = void Function(Chapter);
 
 class _DashbookDualTheme {
-  const new({
+  const _DashbookDualTheme({
     required this.light,
     required this.dark,
     this.initWithLight = true,
@@ -24,7 +24,7 @@ class _DashbookDualTheme {
 }
 
 class _DashbookMultiTheme {
-  const new({required this.themes, this.initialTheme});
+  const _DashbookMultiTheme({required this.themes, this.initialTheme});
 
   final Map<String, ThemeData> themes;
   final String? initialTheme;
@@ -38,7 +38,7 @@ class _DashbookMultiTheme {
 }
 
 class Dashbook extends StatefulWidget {
-  new({
+  Dashbook({
     super.key,
     this.theme,
     this.title = '',
@@ -51,7 +51,7 @@ class Dashbook extends StatefulWidget {
   }) : _dualTheme = null,
        _multiTheme = null;
 
-  new dualTheme({
+  Dashbook.dualTheme({
     required ThemeData light,
     required ThemeData dark,
     super.key,
@@ -71,7 +71,7 @@ class Dashbook extends StatefulWidget {
        theme = null,
        _multiTheme = null;
 
-  new multiTheme({
+  Dashbook.multiTheme({
     required Map<String, ThemeData> themes,
     super.key,
     String? initialTheme,

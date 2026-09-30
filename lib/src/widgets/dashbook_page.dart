@@ -15,7 +15,7 @@ import 'package:material_ui/material_ui.dart';
 enum _Panel { stories, properties, actions, deviceSettings }
 
 class DashbookPage extends StatefulWidget {
-  const new({
+  const DashbookPage({
     required this.stories,
     required this.preferences,
     required this.usePreviewSafeArea,

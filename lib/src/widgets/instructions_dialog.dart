@@ -2,7 +2,7 @@ import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:material_ui/material_ui.dart';
 
 class InstructionsDialog extends StatelessWidget {
-  const new({required this.instructions, super.key});
+  const InstructionsDialog({required this.instructions, super.key});
 
   final String instructions;
 
@@ -27,7 +27,7 @@ class InstructionsDialog extends StatelessWidget {
 }
 
 class _InstructionsText extends StatelessWidget {
-  const new(this.instructions);
+  const _InstructionsText(this.instructions);
 
   final String instructions;
 

@@ -4,7 +4,7 @@ import 'package:material_ui/material_ui.dart';
 /// A dialog for editing four related values, such as the sides of an
 /// [EdgeInsets], which pops with the new values once they are confirmed.
 class FourValuesForm extends StatefulWidget {
-  const new({required this.values, required this.labels, super.key})
+  const FourValuesForm({required this.values, required this.labels, super.key})
     : assert(
         values.length == 4 && labels.length == 4,
         'Exactly four values and labels are required',
@@ -96,7 +96,7 @@ class _FourValuesFormState extends State<FourValuesForm> {
 }
 
 class _FieldWithLabel extends StatelessWidget {
-  const new({required this.label, required this.controller});
+  const _FieldWithLabel({required this.label, required this.controller});
 
   final String label;
   final TextEditingController controller;
