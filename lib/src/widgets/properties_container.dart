@@ -1,7 +1,7 @@
 import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:dashbook/src/widgets/side_bar_panel.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 typedef OnPropertyChange = void Function();
 

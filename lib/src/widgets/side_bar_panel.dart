@@ -1,6 +1,6 @@
 import 'package:dashbook/src/device_size_extension.dart';
 import 'package:dashbook/src/widgets/dashbook_icon.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class SideBarPanel extends StatelessWidget {
   final String title;

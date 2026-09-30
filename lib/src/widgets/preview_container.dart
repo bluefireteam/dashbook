@@ -2,7 +2,7 @@ import 'package:dashbook/src/device_size_extension.dart';
 import 'package:dashbook/src/widgets/device_preview.dart';
 import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:dashbook/src/widgets/select_device/device_settings.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class PreviewContainer extends StatelessWidget {
   final bool usePreviewSafeArea;
@@ -48,9 +48,8 @@ class PreviewContainer extends StatelessWidget {
         : child;
 
     return MediaQuery(
-      data: MediaQuery.of(
-        context,
-      ).copyWith(textScaler: TextScaler.linear(deviceInfo.textScaleFactor)),
+      data: MediaQuery.of(context)
+          .copyWith(textScaler: TextScaler.linear(deviceInfo.textScaleFactor)),
       child: Positioned(
         top: 0,
         bottom: 0,

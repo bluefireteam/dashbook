@@ -1,23 +1,27 @@
 import 'package:dashbook/dashbook.dart';
 import 'package:example/properties/date_time_property.dart';
 import 'package:example/widgets/message_card.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 void addStories(Dashbook dashbook) {
-  dashbook.storiesOf('ElevatedButton').decorator(CenterDecorator()).add(
+  dashbook
+      .storiesOf('ElevatedButton')
+      .decorator(CenterDecorator())
+      .add(
         'default',
         (ctx) => ElevatedButton(
           child: Text(
             ctx.listProperty('Label', 'Ok', ['Ok', 'Cancel', 'Other label']),
-            style: TextStyle(
-              fontSize: ctx.numberProperty('font size', 20),
-            ),
+            style: TextStyle(fontSize: ctx.numberProperty('font size', 20)),
           ),
           onPressed: () {},
         ),
       );
 
-  dashbook.storiesOf('Checkbox').decorator(CenterDecorator()).add(
+  dashbook
+      .storiesOf('Checkbox')
+      .decorator(CenterDecorator())
+      .add(
         'default',
         (ctx) => Checkbox(
           value: ctx.boolProperty('checked', true),
@@ -25,13 +29,12 @@ void addStories(Dashbook dashbook) {
         ),
       );
 
-  dashbook.storiesOf('Container').decorator(CenterDecorator()).add(
+  dashbook
+      .storiesOf('Container')
+      .decorator(CenterDecorator())
+      .add(
         'default',
-        (ctx) => Container(
-          color: Colors.blue[300],
-          width: 300,
-          height: 300,
-        ),
+        (ctx) => Container(color: Colors.blue[300], width: 300, height: 300),
       )
     ..add(
       'with padding',
@@ -65,12 +68,12 @@ void addStories(Dashbook dashbook) {
         ),
       ),
     )
-    ..add(
-      'matching parent size',
-      (ctx) => Container(color: Colors.blue[300]),
-    );
+    ..add('matching parent size', (ctx) => Container(color: Colors.blue[300]));
 
-  dashbook.storiesOf('MessageCard').decorator(CenterDecorator()).add(
+  dashbook
+      .storiesOf('MessageCard')
+      .decorator(CenterDecorator())
+      .add(
         'default',
         (ctx) => MessageCard(
           message: ctx.textProperty('message', 'Some cool message'),
@@ -98,78 +101,69 @@ void addStories(Dashbook dashbook) {
         ),
       );
 
-  dashbook.storiesOf('Toast').add(
-    'deault',
-    (context) {
-      context
-        ..action('Show toast', (context) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Hello'),
-            ),
-          );
-        })
-        ..action('Show toast 2', (context) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Hello 2'),
-            ),
-          );
-        });
+  dashbook
+      .storiesOf('Toast')
+      .add(
+        'deault',
+        (context) {
+          context
+            ..action('Show toast', (context) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('Hello')));
+            })
+            ..action('Show toast 2', (context) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('Hello 2')));
+            });
 
-      return const SizedBox();
-    },
-    info: 'Use the actions menu to show a Toast',
-    pinInfo: true,
-  );
-
-  dashbook.storiesOf('Custom property types').add(
-    'DateTimeProperty',
-    (dashbookContext) {
-      return Builder(
-        builder: (context) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Using DateTimeProperty:',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              Text(
-                DateTimePropertyView.dateFormat.format(
-                  dashbookContext.addProperty(
-                    DateTimeProperty(
-                      'Date in text',
-                      DateTime.now(),
-                    ),
-                  ),
-                ),
-              ),
-              const Divider(),
-              Text(
-                'Using anonymous property widget builder:',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              Text(
-                DateTimePropertyView.dateFormat.format(
-                  dashbookContext.addProperty(
-                    Property.withBuilder(
-                      'Date in text (anonymous)',
-                      DateTime.now(),
-                      builder: (property, onChanged, key) =>
-                          DateTimePropertyView(
-                        property: property,
-                        onChanged: onChanged,
-                        key: key,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
+          return const SizedBox();
         },
+        info: 'Use the actions menu to show a Toast',
+        pinInfo: true,
       );
-    },
-  );
+
+  dashbook.storiesOf('Custom property types').add('DateTimeProperty', (
+    dashbookContext,
+  ) {
+    return Builder(
+      builder: (context) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Using DateTimeProperty:',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            Text(
+              DateTimePropertyView.dateFormat.format(
+                dashbookContext.addProperty(
+                  DateTimeProperty('Date in text', DateTime.now()),
+                ),
+              ),
+            ),
+            const Divider(),
+            Text(
+              'Using anonymous property widget builder:',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            Text(
+              DateTimePropertyView.dateFormat.format(
+                dashbookContext.addProperty(
+                  Property.withBuilder(
+                    'Date in text (anonymous)',
+                    DateTime.now(),
+                    builder: (property, onChanged, key) => DateTimePropertyView(
+                      property: property,
+                      onChanged: onChanged,
+                      key: key,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  });
 }

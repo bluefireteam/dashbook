@@ -1,8 +1,8 @@
 import 'package:dashbook/src/widgets/select_device/components/text_scale_factor_slider.dart';
 import 'package:dashbook/src/widgets/select_device/device_settings.dart';
 import 'package:dashbook/src/widgets/select_device/select_device.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 
 class CustomDevice extends StatefulWidget {
   const CustomDevice({
@@ -125,9 +125,11 @@ class _PickPlatform extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selected = DeviceSettings.of(
-      context,
-    ).settings.deviceInfo!.identifier.platform;
+    final selected = DeviceSettings.of(context)
+        .settings
+        .deviceInfo!
+        .identifier
+        .platform;
     return Wrap(
       children: [TargetPlatform.android, TargetPlatform.iOS].map((platform) {
         return TextButton(

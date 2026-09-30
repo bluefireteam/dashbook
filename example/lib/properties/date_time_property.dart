@@ -1,23 +1,13 @@
 import 'package:dashbook/dashbook.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:material_ui/material_ui.dart';
 
 class DateTimeProperty extends Property<DateTime> {
-  DateTimeProperty(
-    super.name,
-    super.defaultValue,
-  );
+  DateTimeProperty(super.name, super.defaultValue);
 
   @override
-  Widget createPropertyEditor({
-    required PropertyChanged onChanged,
-    Key? key,
-  }) {
-    return DateTimePropertyView(
-      property: this,
-      onChanged: onChanged,
-      key: key,
-    );
+  Widget createPropertyEditor({required PropertyChanged onChanged, Key? key}) {
+    return DateTimePropertyView(property: this, onChanged: onChanged, key: key);
   }
 }
 

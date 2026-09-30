@@ -1,5 +1,5 @@
 import 'package:device_frame/device_frame.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class DevicePreview extends StatelessWidget {
   final Widget child;

@@ -1,7 +1,7 @@
 import 'package:dashbook/src/widgets/property_widgets/widgets/title_with_tooltip.dart';
 import 'package:dashbook/src/widgets/select_device/components/device_dropdown.dart';
 import 'package:dashbook/src/widgets/select_device/components/text_scale_factor_slider.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class SelectDevice extends StatelessWidget {
   const SelectDevice({super.key});

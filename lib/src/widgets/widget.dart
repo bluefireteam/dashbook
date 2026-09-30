@@ -14,8 +14,8 @@ import 'package:dashbook/src/widgets/properties_container.dart';
 import 'package:dashbook/src/widgets/select_device/device_settings.dart';
 import 'package:dashbook/src/widgets/stories_list.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 typedef OnChapterChange = void Function(Chapter);
@@ -208,6 +208,10 @@ class _DashbookState extends State<Dashbook> {
         theme: _currentTheme,
         localizationsDelegates: widget.localizationsDelegates,
         supportedLocales: widget.supportedLocales,
+        // Needed until device_frame, flutter_colorpicker and flutter_markdown
+        // have migrated from package:flutter/material.dart to material_ui.
+        // ignore: deprecated_member_use
+        builder: (_, child) => MaterialUiCompatibilityBridge(child: child!),
         onGenerateRoute: (settings) {
           return MaterialPageRoute<void>(
             builder: (context) {

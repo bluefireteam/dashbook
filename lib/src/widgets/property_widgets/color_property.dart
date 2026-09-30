@@ -1,8 +1,10 @@
 import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:dashbook/src/widgets/property_widgets/widgets/property_dialog.dart';
-import 'package:flutter/material.dart';
+// Needed until flutter_colorpicker has migrated to material_ui.
+import 'package:flutter/material.dart' as legacy;
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ColorProperty extends StatefulWidget {
   final Property<Color> property;
@@ -34,10 +36,13 @@ class ColorPropertyState extends State<ColorProperty> {
     context: context,
     builder: (_) => PropertyDialog(
       title: 'Pick a color!',
-      content: ColorPicker(
-        pickerColor: pickerColor,
-        onColorChanged: changeColor,
-        pickerAreaHeightPercent: 0.8,
+      content: legacy.Material(
+        type: legacy.MaterialType.transparency,
+        child: ColorPicker(
+          pickerColor: pickerColor,
+          onColorChanged: changeColor,
+          pickerAreaHeightPercent: 0.8,
+        ),
       ),
       actions: [
         ElevatedButton(
