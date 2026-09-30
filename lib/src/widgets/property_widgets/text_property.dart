@@ -1,38 +1,27 @@
 import 'package:dashbook/dashbook.dart';
 import 'package:material_ui/material_ui.dart';
 
-class TextProperty extends StatefulWidget {
-  final Property<String> property;
-  final PropertyChanged onChanged;
-
+class TextProperty extends StatelessWidget {
   const TextProperty({
     required this.property,
     required this.onChanged,
     super.key,
   });
 
-  @override
-  State<StatefulWidget> createState() => TextPropertyState(property.getValue());
-}
-
-class TextPropertyState extends State<TextProperty> {
-  TextEditingController controller = TextEditingController();
-
-  TextPropertyState(String value) {
-    controller.text = value;
-  }
+  final Property<String> property;
+  final PropertyChanged onChanged;
 
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
-      tooltipMessage: widget.property.tooltipMessage,
-      label: widget.property.name,
-      child: TextField(
+      tooltipMessage: property.tooltipMessage,
+      label: property.name,
+      child: TextFormField(
+        initialValue: property.getValue(),
         onChanged: (value) {
-          widget.property.value = value;
-          widget.onChanged();
+          property.value = value;
+          onChanged();
         },
-        controller: controller,
       ),
     );
   }

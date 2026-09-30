@@ -5,40 +5,23 @@ import 'package:dashbook/src/widgets/select_device/custom_device.dart';
 import 'package:dashbook/src/widgets/select_device/device_settings.dart';
 import 'package:dashbook/src/widgets/select_device/select_device.dart';
 import 'package:dashbook/src/widgets/side_bar_panel.dart';
-import 'package:device_frame/device_frame.dart';
 import 'package:material_ui/material_ui.dart';
 
-class DeviceSettingsContainer extends StatefulWidget {
-  final VoidCallback onCancel;
-
+class DeviceSettingsContainer extends StatelessWidget {
   const DeviceSettingsContainer({required this.onCancel, super.key});
 
-  @override
-  State<DeviceSettingsContainer> createState() =>
-      _DeviceSettingsContainerState();
-}
-
-class _DeviceSettingsContainerState extends State<DeviceSettingsContainer> {
-  final _formKey = GlobalKey<FormState>();
-  bool _isCustom = false;
-
-  void _setIsCustom(bool isCustom) {
-    setState(() {
-      _isCustom = isCustom;
-      DeviceSettings.of(
-        context,
-        listen: false,
-      ).updateDevice(isCustom ? Devices.android.largeTablet : null);
-    });
-  }
+  final VoidCallback onCancel;
 
   @override
   Widget build(BuildContext context) {
+    final deviceSettings = DeviceSettings.of(context);
+    final isCustom = deviceSettings.settings.isCustomDevice;
+
     return SideBarPanel(
-      title: 'Properties',
+      title: 'Device settings',
       onCloseKey: kDevicePreviewCloseIcon,
       width: sideBarSizeProperties(context),
-      onCancel: widget.onCancel,
+      onCancel: onCancel,
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -47,21 +30,15 @@ class _DeviceSettingsContainerState extends State<DeviceSettingsContainer> {
           children: [
             const _DeviceToggles(),
             CheckboxListTile(
-              value: _isCustom,
+              value: isCustom,
               key: kCustomDeviceToggle,
               title: const Text('Custom device'),
               contentPadding: EdgeInsets.zero,
-              onChanged: (value) => _setIsCustom(value!),
+              onChanged: (_) => isCustom
+                  ? deviceSettings.updateDevice(null)
+                  : deviceSettings.useCustomDevice(),
             ),
-            if (_isCustom)
-              CustomDevice(
-                formKey: _formKey,
-                changeToList: () {
-                  _setIsCustom(false);
-                },
-              )
-            else
-              const SelectDevice(),
+            if (isCustom) const CustomDevice() else const SelectDevice(),
           ],
         ),
       ),
@@ -75,6 +52,7 @@ class _DeviceToggles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final deviceSettings = DeviceSettings.of(context);
+    final hasDevice = deviceSettings.settings.deviceInfo != null;
 
     return Row(
       children: [
@@ -82,17 +60,13 @@ class _DeviceToggles extends StatelessWidget {
           key: kRotateIcon,
           tooltip: 'Orientation',
           icon: Icons.screen_rotation_outlined,
-          onClick: deviceSettings.settings.deviceInfo != null
-              ? deviceSettings.rotate
-              : null,
+          onPressed: hasDevice ? deviceSettings.rotate : null,
         ),
         DashbookIcon(
           key: kHideFrameIcon,
           tooltip: 'Device frame',
           icon: Icons.mobile_off_outlined,
-          onClick: deviceSettings.settings.deviceInfo != null
-              ? deviceSettings.toggleDeviceFrame
-              : null,
+          onPressed: hasDevice ? deviceSettings.toggleDeviceFrame : null,
         ),
         const Spacer(),
         TextButton(onPressed: deviceSettings.reset, child: const Text('Reset')),

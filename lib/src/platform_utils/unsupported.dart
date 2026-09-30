@@ -1,13 +1,7 @@
 import 'package:dashbook/dashbook.dart';
 
-class PlatformUtils {
-  PlatformUtils._();
-
-  static String getChapterUrl(Chapter chapter) {
-    throw 'Platform not supported';
-  }
-
-  static Chapter? getInitialChapter(List<Story> stories) {
-    return null;
-  }
+String getChapterUrl(Chapter chapter) {
+  throw UnsupportedError('Chapter links are only supported on the web');
 }
+
+Chapter? getInitialChapter(List<Story> stories) => null;

@@ -1,41 +1,32 @@
 import 'package:dashbook/dashbook.dart';
 import 'package:material_ui/material_ui.dart';
 
-class ListPropertyWidget<T> extends StatefulWidget {
-  final ListProperty<T> property;
-  final PropertyChanged onChanged;
-
+class ListPropertyWidget<T> extends StatelessWidget {
   const ListPropertyWidget({
     required this.property,
     required this.onChanged,
     super.key,
   });
 
-  @override
-  State<StatefulWidget> createState() => ListPropertyState<T>();
-}
+  final ListProperty<T> property;
+  final PropertyChanged onChanged;
 
-class ListPropertyState<T> extends State<ListPropertyWidget<T>> {
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
-      tooltipMessage: widget.property.tooltipMessage,
-      label: widget.property.name,
+      tooltipMessage: property.tooltipMessage,
+      label: property.name,
       child: DropdownButton<T>(
         isExpanded: true,
-        value: widget.property.getValue(),
+        value: property.getValue(),
         onChanged: (value) {
-          widget.property.value = value;
-          widget.onChanged();
+          property.value = value;
+          onChanged();
         },
-        items: widget.property.list
-            .map(
-              (value) => DropdownMenuItem<T>(
-                value: value,
-                child: Text(value.toString()),
-              ),
-            )
-            .toList(),
+        items: [
+          for (final value in property.list)
+            DropdownMenuItem<T>(value: value, child: Text(value.toString())),
+        ],
       ),
     );
   }

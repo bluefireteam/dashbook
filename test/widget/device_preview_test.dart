@@ -1,24 +1,14 @@
-// ignore_for_file: one_member_abstracts, prefer_const_constructors
-
 import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/widgets/dashbook_icon.dart';
 import 'package:dashbook/src/widgets/keys.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:mocktail/mocktail.dart';
 
-import '../helpers.dart';
 import '../helpers/helpers.dart';
 
-abstract class _ChapterStub {
-  void onCall(Chapter chapter);
-}
-
-class ChapterStub extends Mock implements _ChapterStub {}
-
-Dashbook _getDashbook({OnChapterChange? onChapterChange}) {
-  final dashbook = Dashbook(onChapterChange: onChapterChange);
+Dashbook _getDashbook() {
+  final dashbook = Dashbook();
 
   dashbook
       .storiesOf('Text')
@@ -42,7 +32,7 @@ void main() {
       expect(find.byKey(kHideFrameIcon), findsNothing);
     });
 
-    testWidgets('can open the device preview dialog', (tester) async {
+    testWidgets('can open the device preview panel', (tester) async {
       tester.setScreenSize(const Size(2000, 1000));
       await tester.pumpDashbook(_getDashbook());
 
@@ -52,7 +42,7 @@ void main() {
       expect(find.text('Select a device frame:'), findsOneWidget);
     });
 
-    testWidgets('can close the stories list', (tester) async {
+    testWidgets('can close the device preview panel', (tester) async {
       tester.setScreenSize(const Size(2000, 1000));
       await tester.pumpDashbook(_getDashbook());
 
@@ -120,7 +110,7 @@ void main() {
       tester.setScreenSize(const Size(2000, 1000));
       await tester.pumpDashbook(_getDashbook());
 
-      final textScaleFactor = () => tester
+      TextScaler textScaleFactor() => tester
           .widgetList<RichText>(find.byType(RichText))
           .firstWhere(
             (element) =>
@@ -129,7 +119,7 @@ void main() {
           )
           .textScaler;
 
-      expect(textScaleFactor(), TextScaler.linear(1));
+      expect(textScaleFactor(), TextScaler.noScaling);
 
       await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
@@ -137,12 +127,11 @@ void main() {
       await tester.drag(find.byType(Slider), const Offset(100, 0));
       await tester.pumpAndSettle();
 
-      expect(textScaleFactor(), TextScaler.linear(1.15));
+      expect(textScaleFactor(), const TextScaler.linear(1.15));
     });
 
     testWidgets('can hide device frame', (tester) async {
       tester.setScreenSize(const Size(2000, 1000));
-      addTearDown(tester.view.resetPhysicalSize);
 
       await tester.pumpDashbook(_getDashbook());
 
@@ -197,11 +186,11 @@ void main() {
       expect(find.byType(DeviceFrame), findsNothing);
 
       expect(
-        tester.widget<DashbookIcon>(find.byKey(kRotateIcon)).onClick,
+        tester.widget<DashbookIcon>(find.byKey(kRotateIcon)).onPressed,
         isNull,
       );
       expect(
-        tester.widget<DashbookIcon>(find.byKey(kHideFrameIcon)).onClick,
+        tester.widget<DashbookIcon>(find.byKey(kHideFrameIcon)).onPressed,
         isNull,
       );
     });
@@ -218,8 +207,8 @@ void main() {
         final findRotate = find.byKey(kRotateIcon);
         final findFrameToggle = find.byKey(kHideFrameIcon);
 
-        expect(tester.widget<DashbookIcon>(findRotate).onClick, isNull);
-        expect(tester.widget<DashbookIcon>(findFrameToggle).onClick, isNull);
+        expect(tester.widget<DashbookIcon>(findRotate).onPressed, isNull);
+        expect(tester.widget<DashbookIcon>(findFrameToggle).onPressed, isNull);
 
         final dropDown = find.byType(DropdownButton<DeviceInfo>);
 
@@ -232,8 +221,11 @@ void main() {
 
         expect(find.byType(DeviceFrame), findsOneWidget);
 
-        expect(tester.widget<DashbookIcon>(findRotate).onClick, isNotNull);
-        expect(tester.widget<DashbookIcon>(findFrameToggle).onClick, isNotNull);
+        expect(tester.widget<DashbookIcon>(findRotate).onPressed, isNotNull);
+        expect(
+          tester.widget<DashbookIcon>(findFrameToggle).onPressed,
+          isNotNull,
+        );
       },
     );
   });

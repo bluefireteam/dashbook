@@ -2,16 +2,16 @@ import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:material_ui/material_ui.dart';
 
 class DashbookIcon extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback? onClick;
-  final String tooltip;
-
   const DashbookIcon({
     required this.icon,
-    required this.onClick,
+    required this.onPressed,
     required this.tooltip,
     super.key,
   });
+
+  final IconData icon;
+  final VoidCallback? onPressed;
+  final String tooltip;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +25,11 @@ class DashbookIcon extends StatelessWidget {
       hoverColor: Colors.transparent,
       splashRadius: size,
       constraints: BoxConstraints.tightFor(width: size, height: size),
+      style: IconButton.styleFrom(
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
       icon: Icon(icon),
-      onPressed: onClick,
+      onPressed: onPressed,
     );
   }
 }

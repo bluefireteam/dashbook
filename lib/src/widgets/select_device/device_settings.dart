@@ -19,11 +19,6 @@ const String kCustomDeviceName = 'Custom Device';
 /// directly from a Pixel 5 running Android 13.
 @immutable
 class DeviceSettingsData {
-  final DeviceInfo? deviceInfo;
-  final double textScaleFactor;
-  final Orientation orientation;
-  final bool showDeviceFrame;
-
   const DeviceSettingsData({
     required this.deviceInfo,
     required this.textScaleFactor,
@@ -37,6 +32,13 @@ class DeviceSettingsData {
     orientation: Orientation.portrait,
     showDeviceFrame: true,
   );
+
+  final DeviceInfo? deviceInfo;
+  final double textScaleFactor;
+  final Orientation orientation;
+  final bool showDeviceFrame;
+
+  bool get isCustomDevice => deviceInfo?.identifier.name == kCustomDeviceId;
 
   DeviceSettingsData copyWith({
     DeviceInfo? deviceInfo,
@@ -54,19 +56,15 @@ class DeviceSettingsData {
 }
 
 class DeviceSettings extends StatefulWidget {
-  final Widget child;
-
   const DeviceSettings({required this.child, super.key});
 
-  static DeviceSettingsState of(BuildContext context, {bool listen = true}) {
-    final _DeviceSettings? result;
-    if (listen) {
-      result = context.dependOnInheritedWidgetOfExactType<_DeviceSettings>();
-    } else {
-      result = context.findAncestorWidgetOfExactType<_DeviceSettings>();
-    }
+  final Widget child;
+
+  static DeviceSettingsState of(BuildContext context) {
+    final result = context
+        .dependOnInheritedWidgetOfExactType<_DeviceSettings>();
     assert(result != null, 'No DeviceSettings found in context');
-    return result!.data;
+    return result!.state;
   }
 
   @override
@@ -78,72 +76,100 @@ class DeviceSettingsState extends State<DeviceSettings> {
 
   DeviceSettingsData get settings => _settings;
 
-  set settings(DeviceSettingsData newSettings) => setState(() {
-    _settings = newSettings;
-  });
+  void _update(DeviceSettingsData settings) {
+    setState(() => _settings = settings);
+  }
 
-  void updateTextScaleFactor([double textScaleFactor = 1.0]) {
-    settings = settings.copyWith(textScaleFactor: textScaleFactor);
+  void updateTextScaleFactor(double textScaleFactor) {
+    _update(_settings.copyWith(textScaleFactor: textScaleFactor));
   }
 
   void updateDevice(DeviceInfo? deviceInfo) {
-    settings = DeviceSettingsData._default.copyWith(
-      textScaleFactor: settings.textScaleFactor,
-      deviceInfo: deviceInfo,
+    _update(
+      DeviceSettingsData._default.copyWith(
+        textScaleFactor: _settings.textScaleFactor,
+        deviceInfo: deviceInfo,
+      ),
     );
   }
 
   void rotate() {
-    final newOrientation = settings.orientation == Orientation.portrait
+    final newOrientation = _settings.orientation == Orientation.portrait
         ? Orientation.landscape
         : Orientation.portrait;
-    settings = settings.copyWith(orientation: newOrientation);
+    _update(_settings.copyWith(orientation: newOrientation));
   }
 
   void toggleDeviceFrame() {
-    settings = settings.copyWith(showDeviceFrame: !settings.showDeviceFrame);
+    _update(_settings.copyWith(showDeviceFrame: !_settings.showDeviceFrame));
   }
 
   void reset() {
-    settings = DeviceSettingsData._default;
+    _update(DeviceSettingsData._default);
   }
 
-  void updateDeviceData({
+  void useCustomDevice() {
+    updateDevice(_customDevice(Devices.android.largeTablet));
+  }
+
+  void updateCustomDevice({
     double? height,
     double? width,
     TargetPlatform? platform,
   }) {
     final deviceInfo = _settings.deviceInfo;
-    if (deviceInfo == null) return;
+    if (deviceInfo == null) {
+      return;
+    }
 
-    updateDevice(
-      DeviceInfo.genericTablet(
-        platform: platform ?? deviceInfo.identifier.platform,
-        screenSize: Size(
-          width ?? deviceInfo.screenSize.width,
-          height ?? deviceInfo.screenSize.height,
+    _update(
+      _settings.copyWith(
+        deviceInfo: _customDevice(
+          deviceInfo,
+          height: height,
+          width: width,
+          platform: platform,
         ),
-        id: kCustomDeviceId,
-        name: kCustomDeviceName,
       ),
+    );
+  }
+
+  DeviceInfo _customDevice(
+    DeviceInfo template, {
+    double? height,
+    double? width,
+    TargetPlatform? platform,
+  }) {
+    return DeviceInfo.genericTablet(
+      platform: platform ?? template.identifier.platform,
+      screenSize: Size(
+        width ?? template.screenSize.width,
+        height ?? template.screenSize.height,
+      ),
+      id: kCustomDeviceId,
+      name: kCustomDeviceName,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return _DeviceSettings(_settings, data: this, child: widget.child);
+    return _DeviceSettings(
+      settings: _settings,
+      state: this,
+      child: widget.child,
+    );
   }
 }
 
 class _DeviceSettings extends InheritedWidget {
-  final DeviceSettingsData settings;
-  final DeviceSettingsState data;
-
-  const _DeviceSettings(
-    this.settings, {
-    required this.data,
+  const _DeviceSettings({
+    required this.settings,
+    required this.state,
     required super.child,
   });
+
+  final DeviceSettingsData settings;
+  final DeviceSettingsState state;
 
   @override
   bool updateShouldNotify(_DeviceSettings oldWidget) {

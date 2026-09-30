@@ -3,13 +3,7 @@ import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:dashbook/src/widgets/side_bar_panel.dart';
 import 'package:material_ui/material_ui.dart';
 
-typedef OnPropertyChange = void Function();
-
-class PropertiesContainer extends StatefulWidget {
-  final Chapter currentChapter;
-  final OnPropertyChange onPropertyChange;
-  final VoidCallback onCancel;
-
+class PropertiesContainer extends StatelessWidget {
   const PropertiesContainer({
     required this.currentChapter,
     required this.onPropertyChange,
@@ -17,50 +11,37 @@ class PropertiesContainer extends StatefulWidget {
     super.key,
   });
 
-  @override
-  State createState() => _PropertiesContainerState();
-}
+  final Chapter currentChapter;
+  final VoidCallback onPropertyChange;
+  final VoidCallback onCancel;
 
-class _PropertiesContainerState extends State<PropertiesContainer> {
+  bool _isVisible(Property<Object?> property) {
+    final controlProperty = property.visibilityControlProperty;
+    if (controlProperty == null) {
+      return true;
+    }
+
+    final controlledBy = currentChapter.ctx.properties[controlProperty.key];
+    return controlledBy == null ||
+        controlledBy.getValue() == controlProperty.value;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final children = <Widget>[];
-
-    for (final entry in widget.currentChapter.ctx.properties.entries) {
-      // Check if this property is controlled by another one and if so
-      // we only add it to the list if the values matches
-      final visibilityControlProperty = entry.value.visibilityControlProperty;
-      if (visibilityControlProperty != null) {
-        final controlledByProperty =
-            widget.currentChapter.ctx.properties[visibilityControlProperty.key];
-        if (controlledByProperty != null) {
-          if (controlledByProperty.getValue() !=
-              visibilityControlProperty.value) {
-            continue;
-          }
-        }
-      }
-
-      final propertyKey = Key(
-        '${widget.currentChapter.id}#${entry.value.name}',
-      );
-      final onChanged = () {
-        setState(() {});
-        widget.onPropertyChange();
-      };
-
-      children.add(
-        entry.value.createPropertyEditor(
-          onChanged: onChanged,
-          key: propertyKey,
-        ),
-      );
-    }
     return SideBarPanel(
       title: 'Properties',
       width: sideBarSizeProperties(context),
-      onCancel: widget.onCancel,
-      child: Column(children: children),
+      onCancel: onCancel,
+      child: Column(
+        children: [
+          for (final property in currentChapter.ctx.properties.values)
+            if (_isVisible(property))
+              property.createPropertyEditor(
+                onChanged: onPropertyChange,
+                key: Key('${currentChapter.id}#${property.name}'),
+              ),
+        ],
+      ),
     );
   }
 }

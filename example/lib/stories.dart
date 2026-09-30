@@ -36,39 +36,39 @@ void addStories(Dashbook dashbook) {
         'default',
         (ctx) => Container(color: Colors.blue[300], width: 300, height: 300),
       )
-    ..add(
-      'with padding',
-      (ctx) => Container(
-        color: Colors.blue[300],
-        width: 300,
-        height: 300,
-        padding: ctx.edgeInsetsProperty(
-          'edge Insets',
-          const EdgeInsets.fromLTRB(30, 10, 30, 50),
-        ),
-        child: Container(color: Colors.green),
-      ),
-    )
-    ..add(
-      'with border radius',
-      (ctx) => Container(
-        width: 300,
-        height: 300,
-        decoration: BoxDecoration(
+      .add(
+        'with padding',
+        (ctx) => Container(
           color: Colors.blue[300],
-          borderRadius: ctx.borderRadiusProperty(
-            'border radius',
-            const BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-              bottomLeft: Radius.circular(50),
-              bottomRight: Radius.circular(50),
+          width: 300,
+          height: 300,
+          padding: ctx.edgeInsetsProperty(
+            'edge Insets',
+            const EdgeInsets.fromLTRB(30, 10, 30, 50),
+          ),
+          child: Container(color: Colors.green),
+        ),
+      )
+      .add(
+        'with border radius',
+        (ctx) => Container(
+          width: 300,
+          height: 300,
+          decoration: BoxDecoration(
+            color: Colors.blue[300],
+            borderRadius: ctx.borderRadiusProperty(
+              'border radius',
+              const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(50),
+                bottomRight: Radius.circular(50),
+              ),
             ),
           ),
         ),
-      ),
-    )
-    ..add('matching parent size', (ctx) => Container(color: Colors.blue[300]));
+      )
+      .add('matching parent size', (ctx) => Container(color: Colors.blue[300]));
 
   dashbook
       .storiesOf('MessageCard')
@@ -85,7 +85,7 @@ void addStories(Dashbook dashbook) {
           errorColor: ctx.colorProperty(
             'errorColor',
             const Color(0xFFCC6941),
-            visibilityControlProperty: ControlProperty(
+            visibilityControlProperty: const ControlProperty(
               'type',
               MessageCardType.error,
             ),
@@ -93,7 +93,7 @@ void addStories(Dashbook dashbook) {
           infoColor: ctx.colorProperty(
             'infoColor',
             const Color(0xFF5E89FF),
-            visibilityControlProperty: ControlProperty(
+            visibilityControlProperty: const ControlProperty(
               'type',
               MessageCardType.info,
             ),
@@ -104,7 +104,7 @@ void addStories(Dashbook dashbook) {
   dashbook
       .storiesOf('Toast')
       .add(
-        'deault',
+        'default',
         (context) {
           context
             ..action('Show toast', (context) {

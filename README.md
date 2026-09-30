@@ -1,10 +1,10 @@
 # Dashbook
 
 <p align="center">
-  <img alt="dashbook" width="600px" src="https://github.com/erickzanardo/dashbook/raw/main/media/dashbook-logo-typo.png">
+  <img alt="dashbook" width="600px" src="https://github.com/bluefireteam/dashbook/raw/main/media/dashbook-logo-typo.png">
 </p>
 
-Dashbook is a UI development tool for Flutter, it works as a development enviroment for the project widgets and also a showcase for common widgets on the app, it is heavly inspired by [Storybook](https://storybook.js.org/) library, so it should be very easy for people who has already used Storybook, to use Dashbook.
+Dashbook is a UI development tool for Flutter, it works as a development environment for the project widgets and also a showcase for common widgets on the app, it is heavily inspired by the [Storybook](https://storybook.js.org/) library, so it should be very easy for people who have already used Storybook, to use Dashbook.
 
 It currently supports both mobile and web, having a friendly layout built to work nice on web and large resolutions.
 
@@ -35,12 +35,12 @@ void main() {
   // Adds the Text widget stories
   dashbook
       .storiesOf('Text')
-      // Decorators are easy ways to apply a common layout to all of the story chapters, here are using onde of Dashbook's decorators,
-      // which will center all the widgets on the center of the screen
+      // Decorators are easy ways to apply a common layout to all of the story chapters, here we are using one of Dashbook's decorators,
+      // which will center all the widgets on the screen
       .decorator(CenterDecorator())
       // The Widget story can have as many chapters as needed
       .add('default', (ctx) {
-        return Container(width: 300, child: Text(
+        return SizedBox(width: 300, child: Text(
           ctx.textProperty("text", "Text Example"),
           textAlign: ctx.listProperty(
               "text align",
@@ -79,7 +79,7 @@ void main() {
 
 ## Actions
 
-Dashbook also provides a way for easily calling methods from its UI, these callbacks can be used for more complex examples which demands user interaction.
+Dashbook also provides a way for easily calling methods from its UI, these callbacks can be used for more complex examples which demand user interaction.
 
 For example, a `Dialog` is something that isn't directly rendered on a page, but rather shows upon an action, an example for a `CustomDialog` widget could be achieved on Dashbook by using the following code:
 
@@ -146,13 +146,13 @@ dashbook
 
 ## Preview area
 
-By default Dashbook will provide the whole screen area for the preview, which means that its controll icons will appear floating above the example.
+By default Dashbook will provide the whole screen area for the preview, which means that its control icons will appear floating above the example.
 
 That behavior can be changed with the use of the `usePreviewSafeArea` parameter on `Dashbook` constructors, when setting this parameter to `true`, Dashbook will make sure that its icons will not appear floating above the example creating a safe area for the example preview.
 
 ## Managing themes
 
-Dashbook offers three of ways to let you change themes when viewing your stories. Dashbook iteself is built to use the provided theme to stylize its own UI, so whatever theme is provided, the Dashbook UI show works nice.
+Dashbook offers three ways to let you change themes when viewing your stories. Dashbook itself is built to use the provided theme to stylize its own UI, so whatever theme is provided, the Dashbook UI should work nicely.
 
 ### Single theme
 
@@ -164,7 +164,7 @@ final dashbook = Dashbook(theme: ThemeData());
 
 ### Dual theme
 
-When your app has two theme, the `dualTheme` constructor can be used. Two parameters `light` and `dark` can be informed to set which `ThemeData` represents a light theme, and which represents the dark theme, an additional parameter `initWithLight` can be used to tell Dashbook which theme should be used initially (defaults to `true`).
+When your app has two themes, the `dualTheme` constructor can be used. Two parameters `light` and `dark` can be informed to set which `ThemeData` represents a light theme, and which represents the dark theme, an additional parameter `initWithLight` can be used to tell Dashbook which theme should be used initially (defaults to `true`).
 
 When using this, Dashbook will present an icon for the user to toggle between light and dark themes
 
@@ -177,7 +177,7 @@ final dashbook = Dashbook.dualTheme(
 
 ### Multiple themes
 
-When an app have more than two themes, the `multiTheme` contructor can be used. It receives a `themes` parameter, which is a `Map<String, ThemeData>`, and an optional parameter `initialTheme` to inform which theme should be used initially (defaults to the first entry of the map).
+When an app has more than two themes, the `multiTheme` constructor can be used. It receives a `themes` parameter, which is a `Map<String, ThemeData>`, and an optional parameter `initialTheme` to inform which theme should be used initially (defaults to the first entry of the map).
 
 When using this, Dashbook will present an icon, which shows a modal with a dropdown menu to enable the user to choose between the informed themes
 
@@ -193,7 +193,7 @@ final dashbook = Dashbook.multiTheme(
 
 ### Visibility control properties
 
-Some more complex Widgets may feature several fields, which can lead to a very long list of properties which will in turn can create a confusing example.
+Some more complex Widgets may feature several fields, which can lead to a very long list of properties which in turn can create a confusing example.
 
 This can be improved by the use of visibility control properties. This API allows a property to be shown or hidden according to the value of another property.
 
@@ -211,13 +211,13 @@ dashbook.storiesOf('MessageCard').decorator(CenterDecorator()).add(
             'errorColor',
             const Color(0xFFCC6941),
             // this property will only be shown when type is error
-            visibilityControlProperty: ControlProperty('type', MessageCardType.error),
+            visibilityControlProperty: const ControlProperty('type', MessageCardType.error),
         ),
         infoColor: ctx.colorProperty(
             'infoColor',
             const Color(0xFF5E89FF),
             // this property will only be shown when type is info
-            visibilityControlProperty: ControlProperty('type', MessageCardType.info),
+            visibilityControlProperty: const ControlProperty('type', MessageCardType.info),
         ),
     ),
 );
@@ -228,7 +228,7 @@ dashbook.storiesOf('MessageCard').decorator(CenterDecorator()).add(
 
 ## Structure
 
-Dashbook is just a widget, so it can be ran in any way wanted, as there is no required structure that must be followed, although, we do recommend the following approach:
+Dashbook is just a widget, so it can be run in any way wanted, as there is no required structure that must be followed, although, we do recommend the following approach:
 
  - Create a file named `main_dashbook.dart` on the root source of your project (e.g. `lib/main_dashbook.dart`)
  - Create the Dashbook instance inside that file, calling the `runApp` method in the end (look on the example above)

@@ -23,13 +23,13 @@ class ActionsContainer extends StatelessWidget {
       onCancel: onCancel,
       child: Column(
         children: [
-          for (final MapEntry<String, void Function(BuildContext)> entry
+          for (final MapEntry(key: name, value: action)
               in currentChapter.ctx.actions.entries)
             Padding(
               padding: const EdgeInsets.all(8),
               child: ElevatedButton(
-                onPressed: () => entry.value.call(context),
-                child: Text(entry.key),
+                onPressed: () => action(context),
+                child: Text(name),
               ),
             ),
         ],
