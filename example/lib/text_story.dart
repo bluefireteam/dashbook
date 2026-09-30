@@ -1,5 +1,5 @@
 import 'package:dashbook/dashbook.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 void addTextStories(Dashbook dashbook) {
   dashbook
@@ -18,7 +18,8 @@ void addTextStories(Dashbook dashbook) {
               ctx.textProperty(
                 'text',
                 'Text Example',
-                tooltipMessage: 'This property is used to change the content '
+                tooltipMessage:
+                    'This property is used to change the content '
                     'from Text widget',
               ),
               textAlign: ctx.listProperty(
@@ -43,16 +44,12 @@ void addTextStories(Dashbook dashbook) {
                   FontStyle.values,
                 ),
                 fontSize: ctx.numberProperty('font size', 20),
-                color: ctx.colorProperty(
-                  'color',
-                  Colors.red,
-                ),
+                color: ctx.colorProperty('color', Colors.red),
               ),
             ),
           );
         },
-        codeLink:
-            'https://github.com/erickzanardo/dashbook/blob/master/example/lib/main.dart',
+        codeLink: 'https://github.com/erickzanardo/dashbook/blob/master/example/lib/main.dart',
         info: '''
 
 ## General information
@@ -89,25 +86,19 @@ Proin sit amet euismod ligula. Phasellus consectetur venenatis ipsum, in digniss
       )
       .add(
         'bold',
-        (_) => const Text(
-          'Text',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        (_) =>
+            const Text('Text', style: TextStyle(fontWeight: FontWeight.bold)),
       )
       .add(
         'color text',
         (ctx) => Text(
           'Text',
           style: TextStyle(
-            color: ctx.optionsProperty(
-              'color',
-              const Color(0xFF0000FF),
-              [
-                PropertyOption('Red', const Color(0xFFFF0000)),
-                PropertyOption('Green', const Color(0xFF00FF00)),
-                PropertyOption('Blue', const Color(0xFF0000FF)),
-              ],
-            ),
+            color: ctx.optionsProperty('color', const Color(0xFF0000FF), [
+              PropertyOption('Red', const Color(0xFFFF0000)),
+              PropertyOption('Green', const Color(0xFF00FF00)),
+              PropertyOption('Blue', const Color(0xFF0000FF)),
+            ]),
           ),
         ),
       );

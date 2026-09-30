@@ -3,8 +3,8 @@ import 'package:dashbook/src/widgets/dashbook_icon.dart';
 import 'package:dashbook/src/widgets/keys.dart';
 import 'package:dashbook/src/widgets/select_device/device_settings.dart';
 import 'package:device_frame/device_frame.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../helpers.dart';
 import '../helpers/helpers.dart';

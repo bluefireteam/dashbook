@@ -1,6 +1,6 @@
 import 'package:dashbook/dashbook.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 
 class NumberProperty extends StatefulWidget {
   final Property<double> property;

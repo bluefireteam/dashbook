@@ -1,7 +1,7 @@
 import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/widgets/keys.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../helpers.dart';
 import '../helpers/helpers.dart';
@@ -11,9 +11,8 @@ Dashbook _getDashbook() {
 
   dashbook.storiesOf('Toast').add('default', (context) {
     context.action('Show toast', (context) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Hello')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Hello')));
     });
 
     return const Text('Use actions');

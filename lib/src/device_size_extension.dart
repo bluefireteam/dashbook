@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 extension DeviceSizeExtension on BuildContext {
   /// Is extra small is the group of device

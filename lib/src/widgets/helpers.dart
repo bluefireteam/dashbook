@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 bool isLargeScreen(BuildContext context) =>
     MediaQuery.of(context).size.width > 768;

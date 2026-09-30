@@ -1,8 +1,14 @@
 import 'package:dashbook/src/widgets/property_widgets/widgets/property_dialog.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
-typedef ConfirmEditionFucntion =
-    bool Function(bool, String, String, String, String, String);
+typedef ConfirmEditionFucntion = bool Function(
+  bool,
+  String,
+  String,
+  String,
+  String,
+  String,
+);
 
 class FourIntegerForm extends StatefulWidget {
   final ConfirmEditionFucntion _confirmEdition;

@@ -4,8 +4,8 @@ version: 0.1.18
 homepage: https://github.com/bluefireteam/dashbook
 
 environment:
-  sdk: ">=3.8.0 <4.0.0"
-  flutter: ">=3.32.0"
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
 
 dependencies:
   device_frame: ^1.2.0
@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   flutter_colorpicker: ^1.1.0
   flutter_markdown: ^0.7.7+1
+  material_ui: ^1.5.0
   shared_preferences: ^2.5.3
   url_launcher: ^6.3.1
   web: ^1.1.1

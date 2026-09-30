@@ -1,6 +1,6 @@
 import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/widgets/property_widgets/properties.dart' as p;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ControlProperty {
   final String key;
@@ -12,8 +12,11 @@ class ControlProperty {
 /// Signature for a function that creates the property editor widget.
 ///
 /// Used by [Property.withBuilder].
-typedef PropertyEditorBuilder<T> =
-    Widget Function(Property<T> property, PropertyChanged onChanged, Key? key);
+typedef PropertyEditorBuilder<T> = Widget Function(
+  Property<T> property,
+  PropertyChanged onChanged,
+  Key? key,
+);
 
 abstract class Property<T> {
   final String name;

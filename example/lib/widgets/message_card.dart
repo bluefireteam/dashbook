@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
-enum MessageCardType {
-  info,
-  error,
-}
+enum MessageCardType { info, error }
 
 /// Naive widget to be an example of a little bit more
 /// complex one with different types.

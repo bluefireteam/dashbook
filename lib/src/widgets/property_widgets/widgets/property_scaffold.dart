@@ -1,5 +1,5 @@
 import 'package:dashbook/src/widgets/property_widgets/widgets/title_with_tooltip.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Signature for a callback function that is called to tell properties that
 /// they have updated values.
