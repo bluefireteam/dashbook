@@ -1,33 +1,14 @@
 import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/widgets/dashbook_icon.dart';
-import 'package:dashbook/src/widgets/helpers.dart';
 import 'package:dashbook/src/widgets/keys.dart';
-import 'package:dashbook/src/widgets/link.dart';
 import 'package:dashbook/src/widgets/side_bar_panel.dart';
 import 'package:material_ui/material_ui.dart';
 
-typedef OnSelectChapter = void Function(Chapter chapter);
-typedef OnBookmarkChapter = void Function(String chapter);
-
 class StoriesList extends StatefulWidget {
-  final List<Story> stories;
-  final Chapter? selectedChapter;
-  final OnSelectChapter onSelectChapter;
-  final String? currentBookmark;
-  final OnBookmarkChapter onBookmarkChapter;
-  final VoidCallback onClearBookmark;
-  final VoidCallback onCancel;
-  final void Function(String) onUpdateFilter;
-  final String currentFilter;
-  final bool storyPanelPinned;
-  final void Function() onStoryPinChange;
-  final bool storiesAreAlwaysShown;
-
   const StoriesList({
     required this.stories,
     required this.currentBookmark,
-    required this.onBookmarkChapter,
-    required this.onClearBookmark,
+    required this.onBookmarkChanged,
     required this.onSelectChapter,
     required this.onCancel,
     required this.onUpdateFilter,
@@ -39,62 +20,36 @@ class StoriesList extends StatefulWidget {
     this.selectedChapter,
   });
 
+  final List<Story> stories;
+  final Chapter? selectedChapter;
+  final ValueChanged<Chapter> onSelectChapter;
+  final String? currentBookmark;
+  final ValueChanged<String?> onBookmarkChanged;
+  final VoidCallback onCancel;
+  final ValueChanged<String> onUpdateFilter;
+  final String currentFilter;
+  final bool storyPanelPinned;
+  final VoidCallback onStoryPinChange;
+  final bool storiesAreAlwaysShown;
+
   @override
-  State<StatefulWidget> createState() {
-    return _StoriesListState();
-  }
+  State<StoriesList> createState() => _StoriesListState();
 }
 
 class _StoriesListState extends State<StoriesList> {
-  late TextEditingController _filterTextController;
-  String _filter = '';
+  late String _filter = widget.currentFilter;
 
-  @override
-  void initState() {
-    super.initState();
-    _filter = widget.currentFilter;
-    _filterTextController = TextEditingController()
-      ..text = widget.currentFilter;
-
-    _filterTextController.addListener(() {
-      setState(() {
-        _filter = _filterTextController.text;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _filterTextController.dispose();
-
-    widget.onUpdateFilter(_filter);
-    super.dispose();
-  }
-
-  void _pin(Chapter chapter) {
-    if (chapter.id == widget.currentBookmark) {
-      widget.onClearBookmark();
-    } else {
-      widget.onBookmarkChapter(chapter.id);
-    }
-  }
-
-  bool _storyMatchesFilter(Story story) {
-    if (_matchesFilter(story.name)) {
-      return true;
-    }
-
-    for (final chapter in story.chapters) {
-      if (_matchesFilter(chapter.name)) {
-        return true;
-      }
-    }
-
-    return false;
+  void _updateFilter(String filter) {
+    setState(() => _filter = filter);
+    widget.onUpdateFilter(filter);
   }
 
   bool _matchesFilter(String value) =>
-      value.isEmpty || value.toLowerCase().contains(_filter.toLowerCase());
+      value.toLowerCase().contains(_filter.toLowerCase());
+
+  bool _storyMatchesFilter(Story story) =>
+      _matchesFilter(story.name) ||
+      story.chapters.any((chapter) => _matchesFilter(chapter.name));
 
   @override
   Widget build(BuildContext context) {
@@ -108,9 +63,8 @@ class _StoriesListState extends State<StoriesList> {
           icon: widget.storyPanelPinned
               ? Icons.push_pin
               : Icons.push_pin_outlined,
-          onClick: widget.onStoryPinChange,
+          onPressed: widget.onStoryPinChange,
         ),
-        width: sideBarSizeStory(context),
         onCloseKey: kStoriesCloseIcon,
         scrollViewKey: const PageStorageKey<String>('stories_list'),
         onCancel: widget.onCancel,
@@ -120,15 +74,16 @@ class _StoriesListState extends State<StoriesList> {
           children: [
             Padding(
               padding: const EdgeInsets.only(right: 16),
-              child: TextField(
+              child: TextFormField(
                 key: kStoriesFilterField,
+                initialValue: widget.currentFilter,
                 decoration: const InputDecoration(
                   hintText: 'Filter stories and chapters',
                 ),
-                controller: _filterTextController,
+                onChanged: _updateFilter,
               ),
             ),
-            for (final Story story in widget.stories)
+            for (final story in widget.stories)
               if (_storyMatchesFilter(story))
                 ExpansionTile(
                   key: PageStorageKey('story_${story.name}'),
@@ -141,67 +96,80 @@ class _StoriesListState extends State<StoriesList> {
                   ),
                   initiallyExpanded: true,
                   children: [
-                    for (final Chapter chapter in story.chapters)
+                    for (final chapter in story.chapters)
                       if (_matchesFilter(story.name) ||
                           _matchesFilter(chapter.name))
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: MouseRegion(
-                                    cursor: SystemMouseCursors.click,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        widget.onSelectChapter(chapter);
-                                      },
-                                      behavior: HitTestBehavior.opaque,
-                                      child: Link(
-                                        label: '  ${chapter.name}',
-                                        textAlign: TextAlign.left,
-                                        padding: const EdgeInsets.only(
-                                          right: 8,
-                                        ),
-                                        textStyle: TextStyle(
-                                          fontWeight:
-                                              chapter.id ==
-                                                  widget.selectedChapter?.id
-                                              ? FontWeight.bold
-                                              : FontWeight.normal,
-                                          color:
-                                              chapter.id ==
-                                                  widget.selectedChapter?.id
-                                              ? null
-                                              : Theme.of(context).hintColor,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Opacity(
-                                  opacity: chapter.id == widget.currentBookmark
-                                      ? 1
-                                      : 0.05,
-                                  child: DashbookIcon(
-                                    icon: Icons.bookmark,
-                                    onClick: () => _pin(chapter),
-                                    tooltip:
-                                        chapter.id == widget.currentBookmark
-                                        ? 'Remove this chapter'
-                                        : 'Bookmark this bookmark',
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        _ChapterTile(
+                          chapter: chapter,
+                          isSelected: chapter.id == widget.selectedChapter?.id,
+                          isBookmarked: chapter.id == widget.currentBookmark,
+                          onSelect: () => widget.onSelectChapter(chapter),
+                          onBookmarkChanged: widget.onBookmarkChanged,
                         ),
                     const SizedBox(height: 10),
                   ],
                 ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ChapterTile extends StatelessWidget {
+  const _ChapterTile({
+    required this.chapter,
+    required this.isSelected,
+    required this.isBookmarked,
+    required this.onSelect,
+    required this.onBookmarkChanged,
+  });
+
+  final Chapter chapter;
+  final bool isSelected;
+  final bool isBookmarked;
+  final VoidCallback onSelect;
+  final ValueChanged<String?> onBookmarkChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: [
+          Expanded(
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: onSelect,
+                behavior: HitTestBehavior.opaque,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    chapter.name,
+                    style: TextStyle(
+                      fontWeight: isSelected
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                      color: isSelected ? null : Theme.of(context).hintColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Opacity(
+            opacity: isBookmarked ? 1 : 0.05,
+            child: DashbookIcon(
+              icon: Icons.bookmark,
+              onPressed: () =>
+                  onBookmarkChanged(isBookmarked ? null : chapter.id),
+              tooltip: isBookmarked
+                  ? 'Remove bookmark'
+                  : 'Bookmark this chapter',
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,38 +1,26 @@
 import 'package:dashbook/dashbook.dart';
 import 'package:material_ui/material_ui.dart';
 
-class BoolProperty extends StatefulWidget {
-  final Property<bool> property;
-  final PropertyChanged onChanged;
-
+class BoolProperty extends StatelessWidget {
   const BoolProperty({
     required this.property,
     required this.onChanged,
     super.key,
   });
 
-  @override
-  State<StatefulWidget> createState() => BoolPropertyState(property.getValue());
-}
-
-class BoolPropertyState extends State<BoolProperty> {
-  bool? _value;
-
-  BoolPropertyState(this._value);
+  final Property<bool> property;
+  final PropertyChanged onChanged;
 
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
-      tooltipMessage: widget.property.tooltipMessage,
-      label: widget.property.name,
+      tooltipMessage: property.tooltipMessage,
+      label: property.name,
       child: Checkbox(
-        value: _value,
-        onChanged: (newValue) {
-          widget.property.value = newValue;
-          widget.onChanged();
-          setState(() {
-            _value = newValue;
-          });
+        value: property.getValue(),
+        onChanged: (value) {
+          property.value = value;
+          onChanged();
         },
       ),
     );

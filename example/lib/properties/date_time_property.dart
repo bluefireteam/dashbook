@@ -12,34 +12,40 @@ class DateTimeProperty extends Property<DateTime> {
 }
 
 class DateTimePropertyView extends StatelessWidget {
-  final Property<DateTime> property;
-  final PropertyChanged onChanged;
-
   const DateTimePropertyView({
     required this.property,
     required this.onChanged,
     super.key,
   });
 
-  static DateFormat dateFormat = DateFormat.yMMMMEEEEd();
+  final Property<DateTime> property;
+  final PropertyChanged onChanged;
+
+  static final DateFormat dateFormat = DateFormat.yMMMMEEEEd();
+
+  Future<void> _pickDate(BuildContext context) async {
+    final selectedDate = property.getValue();
+    final date = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: selectedDate.subtract(const Duration(days: 365 * 5)),
+      lastDate: selectedDate.add(const Duration(days: 365 * 5)),
+    );
+    if (date == null) {
+      return;
+    }
+
+    property.value = date;
+    onChanged();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final selectedDate = property.getValue();
-
     return PropertyScaffold(
       tooltipMessage: property.tooltipMessage,
       label: property.name,
       child: OutlinedButton(
-        onPressed: () async {
-          property.value = await showDatePicker(
-            context: context,
-            initialDate: selectedDate,
-            firstDate: DateTime.now(),
-            lastDate: selectedDate.add(const Duration(days: 365 * 5)),
-          );
-          onChanged();
-        },
+        onPressed: () => _pickDate(context),
         child: Text(dateFormat.format(property.getValue())),
       ),
     );

@@ -2,11 +2,6 @@ import 'package:device_frame/device_frame.dart';
 import 'package:material_ui/material_ui.dart';
 
 class DevicePreview extends StatelessWidget {
-  final Widget child;
-  final DeviceInfo deviceInfo;
-  final Orientation deviceOrientation;
-  final bool showDeviceFrame;
-
   const DevicePreview({
     required this.child,
     required this.deviceInfo,
@@ -14,6 +9,29 @@ class DevicePreview extends StatelessWidget {
     required this.showDeviceFrame,
     super.key,
   });
+
+  final Widget child;
+  final DeviceInfo deviceInfo;
+  final Orientation deviceOrientation;
+  final bool showDeviceFrame;
+
+  MediaQueryData _mediaQueryData(BuildContext context) {
+    final isRotated = deviceInfo.isLandscape(deviceOrientation);
+
+    final padding = isRotated
+        ? (deviceInfo.rotatedSafeAreas ?? deviceInfo.safeAreas)
+        : deviceInfo.safeAreas;
+
+    final screenSize = deviceInfo.screenSize;
+
+    return MediaQuery.of(context).copyWith(
+      size: isRotated ? screenSize.flipped : screenSize,
+      padding: padding,
+      viewInsets: EdgeInsets.zero,
+      viewPadding: padding,
+      devicePixelRatio: deviceInfo.pixelRatio,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,27 +58,6 @@ class DevicePreview extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  MediaQueryData _mediaQueryData(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final isRotated = deviceInfo.isLandscape(deviceOrientation);
-
-    final padding = isRotated
-        ? (deviceInfo.rotatedSafeAreas ?? deviceInfo.safeAreas)
-        : deviceInfo.safeAreas;
-
-    final screenSize = deviceInfo.screenSize;
-    final width = isRotated ? screenSize.height : screenSize.width;
-    final height = isRotated ? screenSize.width : screenSize.height;
-
-    return mediaQuery.copyWith(
-      size: Size(width, height),
-      padding: padding,
-      viewInsets: EdgeInsets.zero,
-      viewPadding: padding,
-      devicePixelRatio: deviceInfo.pixelRatio,
     );
   }
 }

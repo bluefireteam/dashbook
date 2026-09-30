@@ -2,25 +2,23 @@ import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/story_util.dart';
 import 'package:web/web.dart' as web;
 
-class PlatformUtils {
-  PlatformUtils._();
+String getChapterUrl(Chapter chapter) {
+  final plainUrl = web.window.location.href.split('#').first;
+  return '$plainUrl#/${Uri.encodeComponent(chapter.id)}';
+}
 
-  static String getChapterUrl(Chapter chapter) {
-    final plainUrl = web.window.location.href.replaceFirst(
-      web.window.location.hash,
-      '',
-    );
-    return '$plainUrl#/${Uri.encodeComponent(chapter.id)}';
+Chapter? getInitialChapter(List<Story> stories) {
+  final encodedId = web.window.location.hash.replaceFirst(RegExp('^#/?'), '');
+  if (encodedId.isEmpty) {
+    return null;
   }
 
-  static Chapter? getInitialChapter(List<Story> stories) {
-    final hash = web.window.location.hash;
-
-    if (hash.isNotEmpty) {
-      final currentId = Uri.decodeComponent(hash.substring(2));
-
-      return findChapter(currentId, stories);
-    }
+  try {
+    return findChapter(Uri.decodeComponent(encodedId), stories);
+    // ignore: avoid_catching_errors
+  } on ArgumentError {
+    return null;
+  } on FormatException {
     return null;
   }
 }

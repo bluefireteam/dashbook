@@ -8,10 +8,6 @@ import 'package:material_ui/material_ui.dart';
 typedef PropertyChanged = void Function();
 
 class PropertyScaffold extends StatelessWidget {
-  final String label;
-  final Widget child;
-  final String? tooltipMessage;
-
   const PropertyScaffold({
     required this.label,
     required this.child,
@@ -19,8 +15,14 @@ class PropertyScaffold extends StatelessWidget {
     this.tooltipMessage,
   });
 
+  final String label;
+  final Widget child;
+  final String? tooltipMessage;
+
   @override
   Widget build(BuildContext context) {
+    final tooltipMessage = this.tooltipMessage;
+
     return Padding(
       padding: const EdgeInsets.all(5),
       child: Row(
@@ -28,10 +30,7 @@ class PropertyScaffold extends StatelessWidget {
           Expanded(
             flex: 4,
             child: tooltipMessage != null
-                ? TitleWithTooltip(
-                    label: label,
-                    tooltipMessage: tooltipMessage!,
-                  )
+                ? TitleWithTooltip(label: label, tooltipMessage: tooltipMessage)
                 : Text(label),
           ),
           Expanded(flex: 6, child: child),

@@ -1,27 +1,20 @@
 import 'package:material_ui/material_ui.dart';
 
 bool isLargeScreen(BuildContext context) =>
-    MediaQuery.of(context).size.width > 768;
+    MediaQuery.sizeOf(context).width > 768;
 
-double iconSize(BuildContext context) => isLargeScreen(context) ? 24.0 : 48.0;
-
-double sideBarSizeStory(BuildContext context) {
-  final screenWidth = MediaQuery.of(context).size.width;
-  final factor = isLargeScreen(context) ? 0.25 : 1;
-  return screenWidth * factor;
-}
+double iconSize(BuildContext context) => isLargeScreen(context) ? 24 : 48;
 
 double sideBarSizeProperties(BuildContext context) {
-  final screenWidth = MediaQuery.of(context).size.width;
-  final factor = isLargeScreen(context) ? 0.5 : 1;
-  return screenWidth * factor;
+  final screenWidth = MediaQuery.sizeOf(context).width;
+  return isLargeScreen(context) ? screenWidth * 0.5 : screenWidth;
 }
 
-Future<void> showPopup({
+Future<T?> showPopup<T>({
   required BuildContext context,
   required WidgetBuilder builder,
-}) async {
-  return showDialog<void>(
+}) {
+  return showDialog<T>(
     context: context,
     builder: builder,
     useRootNavigator: false,

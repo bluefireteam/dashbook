@@ -6,7 +6,6 @@ import 'package:device_frame/device_frame.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../helpers.dart';
 import '../helpers/helpers.dart';
 
 void main() {
@@ -104,7 +103,7 @@ void main() {
       for (final platform in availablePlatforms) {
         expect(
           find.ancestor(
-            of: find.text(platform.toString().split('.').last),
+            of: find.text(platform.name),
             matching: find.byWidgetPredicate((widget) => widget is TextButton),
           ),
           findsOneWidget,
@@ -116,11 +115,7 @@ void main() {
       DeviceSettingsData? settings;
       tester.setScreenSize(const Size(2000, 1000));
       await tester.pumpDashbook(
-        getDashbook(
-          onDeviceSettingsChanged: (selected) async {
-            settings = selected;
-          },
-        ),
+        getDashbook(onDeviceSettingsChanged: (selected) => settings = selected),
       );
       await tester.pump();
       await tester.pumpAndSettle();
@@ -153,38 +148,70 @@ void main() {
       expect(settings!.deviceInfo!.screenSize.height, 1000);
       expect(settings!.deviceInfo!.identifier.platform, TargetPlatform.iOS);
     });
-    /*
-    /// There is an issue on mockingjay when the test uses showdialog with navigator
-    /// Uncomment the test after the fix
-    testWidgets('select one device', (tester) async {
-      final selectedDevice = Devices.android.nexus9;
 
-      final navigator = MockNavigator();
-
-      await tester.pumpWidget(_pumpDeviceDialog(navigator: navigator));
-      //   await tester.tap(find.text('ButtonTest'));
+    testWidgets('ignores custom sizes that are out of range', (tester) async {
+      DeviceSettingsData? settings;
+      tester.setScreenSize(const Size(2000, 1000));
+      await tester.pumpDashbook(
+        getDashbook(onDeviceSettingsChanged: (selected) => settings = selected),
+      );
+      await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
 
-      final dropDown = find
-          .byWidgetPredicate((widget) => widget is DropdownButton<DeviceInfo>);
+      await openCustomSetup(tester);
 
-      await tester.tap(dropDown);
+      final widthField = find.ancestor(
+        of: find.text('Width'),
+        matching: find.byType(TextFormField),
+      );
+      await tester.enterText(widthField, '1000');
+      await tester.enterText(widthField, '1');
       await tester.pumpAndSettle();
 
-      final dropdownItem = find.text(selectedDevice.name).last;
-      await tester.ensureVisible(dropdownItem);
+      expect(find.text('Try to use a value greater than 100'), findsOneWidget);
+      expect(settings!.deviceInfo!.screenSize.width, 1000);
+    });
+
+    testWidgets('can reset while customizing a device', (tester) async {
+      tester.setScreenSize(const Size(2000, 1000));
+      await tester.pumpDashbook(getDashbook());
+      await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
 
-      await tester.tap(dropdownItem, warnIfMissed: true);
+      await openCustomSetup(tester);
+
+      await tester.tap(find.text('Reset'));
       await tester.pumpAndSettle();
 
-      final selectButton = find.text('Select');
-      await tester.tap(selectButton);
+      expect(find.byType(DeviceFrame), findsNothing);
+      expect(find.text('Select a device frame:'), findsOneWidget);
+      expect(
+        tester.widget<CheckboxListTile>(find.byKey(kCustomDeviceToggle)).value,
+        isFalse,
+      );
+    });
+
+    testWidgets('keeps the custom device when the panel is reopened', (
+      tester,
+    ) async {
+      tester.setScreenSize(const Size(2000, 1000));
+      await tester.pumpDashbook(getDashbook());
+      await tester.tap(find.byKey(kDevicePreviewIcon));
       await tester.pumpAndSettle();
 
-      verify(
-        () => navigator.pop(selectedDevice),
-      ).called(1);
-    });*/
+      await openCustomSetup(tester);
+
+      await tester.tap(find.byKey(kDevicePreviewCloseIcon));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(kDevicePreviewIcon));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(DeviceFrame), findsOneWidget);
+      expect(find.text('Width'), findsOneWidget);
+      expect(
+        tester.widget<CheckboxListTile>(find.byKey(kCustomDeviceToggle)).value,
+        isTrue,
+      );
+    });
   });
 }

@@ -3,10 +3,10 @@ import 'package:dashbook/src/widgets/property_widgets/properties.dart' as p;
 import 'package:material_ui/material_ui.dart';
 
 class ControlProperty {
+  const ControlProperty(this.key, this.value);
+
   final String key;
   final Object value;
-
-  ControlProperty(this.key, this.value);
 }
 
 /// Signature for a function that creates the property editor widget.
@@ -19,16 +19,6 @@ typedef PropertyEditorBuilder<T> = Widget Function(
 );
 
 abstract class Property<T> {
-  final String name;
-
-  final T defaultValue;
-
-  final String? tooltipMessage;
-
-  T? value;
-
-  final ControlProperty? visibilityControlProperty;
-
   Property(
     this.name,
     this.defaultValue, {
@@ -54,6 +44,16 @@ abstract class Property<T> {
     );
   }
 
+  final String name;
+
+  final T defaultValue;
+
+  final String? tooltipMessage;
+
+  T? value;
+
+  final ControlProperty? visibilityControlProperty;
+
   T getValue() => value ?? defaultValue;
 
   /// Function that creates the widget shown in the property editor sidebar.
@@ -70,8 +70,6 @@ abstract class Property<T> {
 }
 
 class _PropertyWithBuilder<T> extends Property<T> {
-  final PropertyEditorBuilder<T> builder;
-
   _PropertyWithBuilder(
     super.name,
     super.defaultValue, {
@@ -80,6 +78,8 @@ class _PropertyWithBuilder<T> extends Property<T> {
     super.visibilityControlProperty,
   });
 
+  final PropertyEditorBuilder<T> builder;
+
   @override
   Widget createPropertyEditor({required PropertyChanged onChanged, Key? key}) {
     return builder(this, onChanged, key);
@@ -87,8 +87,6 @@ class _PropertyWithBuilder<T> extends Property<T> {
 }
 
 class ListProperty<T> extends Property<T> {
-  final List<T> list;
-
   ListProperty(
     super.name,
     super.defaultValue,
@@ -97,6 +95,8 @@ class ListProperty<T> extends Property<T> {
     super.visibilityControlProperty,
   });
 
+  final List<T> list;
+
   @override
   Widget createPropertyEditor({required PropertyChanged onChanged, Key? key}) {
     return p.ListPropertyWidget(property: this, onChanged: onChanged, key: key);
@@ -104,8 +104,6 @@ class ListProperty<T> extends Property<T> {
 }
 
 class OptionsProperty<T> extends Property<T> {
-  final List<PropertyOption<T>> list;
-
   OptionsProperty(
     super.name,
     super.defaultValue,
@@ -113,6 +111,8 @@ class OptionsProperty<T> extends Property<T> {
     super.tooltipMessage,
     super.visibilityControlProperty,
   });
+
+  final List<PropertyOption<T>> list;
 
   @override
   Widget createPropertyEditor({required PropertyChanged onChanged, Key? key}) {
@@ -125,20 +125,18 @@ class OptionsProperty<T> extends Property<T> {
 }
 
 class PropertyOption<T> {
+  const PropertyOption(this.label, this.value);
+
   final String label;
   final T value;
 
-  PropertyOption(this.label, this.value);
-
   @override
-  String toString() {
-    return label;
-  }
+  String toString() => label;
 }
 
 class DashbookContext {
-  Map<String, Property<Object?>> properties = {};
-  Map<String, void Function(BuildContext)> actions = {};
+  final Map<String, Property<Object?>> properties = {};
+  final Map<String, void Function(BuildContext)> actions = {};
 
   void action(String name, void Function(BuildContext) callback) {
     actions[name] = callback;
@@ -149,12 +147,8 @@ class DashbookContext {
   /// To add a property could extend [Property] or create a property with an
   /// anonymous property widget builder with [Property.withBuilder]
   T addProperty<T>(Property<T> property) {
-    if (properties.containsKey(property.name)) {
-      return properties[property.name]!.getValue() as T;
-    } else {
-      properties[property.name] = property;
-      return property.getValue();
-    }
+    return properties.putIfAbsent(property.name, () => property).getValue()
+        as T;
   }
 
   String textProperty(
@@ -335,12 +329,12 @@ class DashbookContext {
 typedef ChapterBuildFunction = Widget Function(DashbookContext context);
 
 class Story {
+  Story(this.name);
+
   final String name;
-  List<Chapter> chapters = [];
+  final List<Chapter> chapters = [];
 
   Decorator? _decorator;
-
-  Story(this.name);
 
   Story add(
     String name,
@@ -349,15 +343,16 @@ class Story {
     String? info,
     bool pinInfo = false,
   }) {
-    final chapter = Chapter(
-      name,
-      buildFn,
-      this,
-      codeLink: codeLink,
-      info: info,
-      pinInfo: pinInfo,
+    chapters.add(
+      Chapter(
+        name,
+        buildFn,
+        this,
+        codeLink: codeLink,
+        info: info,
+        pinInfo: pinInfo,
+      ),
     );
-    chapters.add(chapter);
 
     return this;
   }
@@ -370,15 +365,6 @@ class Story {
 }
 
 class Chapter {
-  final ChapterBuildFunction _buildFn;
-  final String name;
-  DashbookContext ctx = DashbookContext();
-  final String? codeLink;
-  final String? info;
-  final bool pinInfo;
-
-  final Story story;
-
   Chapter(
     this.name,
     this._buildFn,
@@ -388,10 +374,19 @@ class Chapter {
     this.pinInfo = false,
   });
 
-  Widget widget() {
-    final w = _buildFn(ctx);
+  final ChapterBuildFunction _buildFn;
+  final String name;
+  final DashbookContext ctx = DashbookContext();
+  final String? codeLink;
+  final String? info;
+  final bool pinInfo;
 
-    return story._decorator?.decorate(w) ?? w;
+  final Story story;
+
+  Widget widget() {
+    final child = _buildFn(ctx);
+
+    return story._decorator?.decorate(child) ?? child;
   }
 
   String get id => '${story.name}_$name'.replaceAll(' ', '_');

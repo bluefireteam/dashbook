@@ -49,14 +49,14 @@ void addTextStories(Dashbook dashbook) {
             ),
           );
         },
-        codeLink: 'https://github.com/erickzanardo/dashbook/blob/master/example/lib/main.dart',
+        codeLink: 'https://github.com/bluefireteam/dashbook/blob/main/example/lib/text_story.dart',
         info: '''
 
 ## General information
 
 Here could be some general information about this example, it could be any general information, maybe some instructions of any type of interactivity that this example could offer, or anything else that could be relevant to the user seeing this example about the `Text` widget.
 
-Here even so cool code snippets could be used, just like the on below:
+Here even some cool code snippets could be used, just like the one below:
 
 ```
 Text(
@@ -66,7 +66,7 @@ Text(
 ```
 
 And now, here is some good old fashion lorem ipsum
-   
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus diam pharetra tellus pulvinar malesuada. Etiam eget facilisis dui. Sed tincidunt luctus mauris, eu dictum neque pellentesque at. Proin maximus augue tempus turpis venenatis luctus. Curabitur sed felis velit. Quisque a feugiat urna, et tempus ipsum. Praesent maximus vel arcu ut tincidunt. Quisque ac lacus arcu. Nulla id tellus non urna condimentum sodales.
 
 Suspendisse scelerisque, nisi eu convallis vestibulum, neque elit faucibus urna, a lacinia tellus ex at enim. Pellentesque quis mi tempus, fermentum justo vel, molestie est. Fusce ut luctus felis. In ullamcorper pharetra mauris a porta. Nullam varius turpis in iaculis maximus. Morbi porttitor imperdiet commodo. Duis auctor malesuada leo a viverra. Maecenas sed accumsan tortor. Maecenas ut enim lobortis metus tempus euismod quis at erat. Donec risus risus, facilisis at pharetra in, faucibus sed velit. Vestibulum semper dictum consequat. Quisque at leo sollicitudin, venenatis lorem vel, auctor odio. Mauris faucibus est et arcu pharetra, vel auctor sapien congue. Ut efficitur nec mi nec euismod. Integer in ipsum ac erat mollis porttitor. Aenean congue volutpat orci, ac ultrices turpis vulputate in.
@@ -95,9 +95,9 @@ Proin sit amet euismod ligula. Phasellus consectetur venenatis ipsum, in digniss
           'Text',
           style: TextStyle(
             color: ctx.optionsProperty('color', const Color(0xFF0000FF), [
-              PropertyOption('Red', const Color(0xFFFF0000)),
-              PropertyOption('Green', const Color(0xFF00FF00)),
-              PropertyOption('Blue', const Color(0xFF0000FF)),
+              const PropertyOption('Red', Color(0xFFFF0000)),
+              const PropertyOption('Green', Color(0xFF00FF00)),
+              const PropertyOption('Blue', Color(0xFF0000FF)),
             ]),
           ),
         ),

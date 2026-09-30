@@ -7,20 +7,16 @@ class DeviceDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settings = DeviceSettings.of(context).settings;
+    final deviceSettings = DeviceSettings.of(context);
 
     return DropdownButton<DeviceInfo>(
       isExpanded: true,
-      value: settings.deviceInfo,
-      items: [...Devices.android.all, ...Devices.ios.all].map((
-        DeviceInfo device,
-      ) {
-        return DropdownMenuItem<DeviceInfo>(
-          value: device,
-          child: Text(device.name),
-        );
-      }).toList(),
-      onChanged: DeviceSettings.of(context, listen: false).updateDevice,
+      value: deviceSettings.settings.deviceInfo,
+      items: [
+        for (final device in [...Devices.android.all, ...Devices.ios.all])
+          DropdownMenuItem<DeviceInfo>(value: device, child: Text(device.name)),
+      ],
+      onChanged: deviceSettings.updateDevice,
     );
   }
 }

@@ -1,20 +1,20 @@
 import 'package:material_ui/material_ui.dart';
 
 class TitleWithTooltip extends StatelessWidget {
-  final String label;
-  final String tooltipMessage;
-
   const TitleWithTooltip({
     required this.label,
     required this.tooltipMessage,
     super.key,
   });
 
+  final String label;
+  final String tooltipMessage;
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(label),
+        Flexible(child: Text(label)),
         const SizedBox(width: 8),
         Tooltip(
           verticalOffset: 8,

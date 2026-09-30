@@ -3,7 +3,6 @@ import 'package:dashbook/src/widgets/keys.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../helpers.dart';
 import '../helpers/helpers.dart';
 
 Dashbook _getDashbook() {
@@ -12,8 +11,8 @@ Dashbook _getDashbook() {
   dashbook.storiesOf('Options').add('default', (ctx) {
     return Text(
       ctx.optionsProperty('optionsProperty', 'ValueX', [
-        PropertyOption('First option', 'ValueX'),
-        PropertyOption('Second option', 'ValueY'),
+        const PropertyOption('First option', 'ValueX'),
+        const PropertyOption('Second option', 'ValueY'),
       ]),
     );
   });

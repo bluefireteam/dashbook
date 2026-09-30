@@ -6,75 +6,73 @@ import 'package:flutter/material.dart' as legacy;
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:material_ui/material_ui.dart';
 
-class ColorProperty extends StatefulWidget {
-  final Property<Color> property;
-  final PropertyChanged onChanged;
-
+class ColorProperty extends StatelessWidget {
   const ColorProperty({
     required this.property,
     required this.onChanged,
     super.key,
   });
 
-  @override
-  State<StatefulWidget> createState() =>
-      // ignore: no_logic_in_create_state
-      ColorPropertyState(property.getValue());
-}
+  final Property<Color> property;
+  final PropertyChanged onChanged;
 
-class ColorPropertyState extends State<ColorProperty> {
-  late Color pickerColor;
-  late Color currentColor;
+  Future<void> _pickColor(BuildContext context) async {
+    final color = await showPopup<Color>(
+      context: context,
+      builder: (_) => _ColorPickerDialog(initialColor: property.getValue()),
+    );
+    if (color == null) {
+      return;
+    }
 
-  // ValueChanged<Color> callback
-  void changeColor(Color color) {
-    setState(() => pickerColor = color);
-  }
-
-  // raise the [showDialog] widget
-  Future<void> show() => showPopup(
-    context: context,
-    builder: (_) => PropertyDialog(
-      title: 'Pick a color!',
-      content: legacy.Material(
-        type: legacy.MaterialType.transparency,
-        child: ColorPicker(
-          pickerColor: pickerColor,
-          onColorChanged: changeColor,
-          pickerAreaHeightPercent: 0.8,
-        ),
-      ),
-      actions: [
-        ElevatedButton(
-          child: const Text('Got it'),
-          onPressed: () {
-            setState(() => currentColor = pickerColor);
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
-    ),
-  );
-
-  ColorPropertyState(Color value) {
-    currentColor = value;
-    pickerColor = value;
+    property.value = color;
+    onChanged();
   }
 
   @override
   Widget build(BuildContext context) {
     return PropertyScaffold(
-      tooltipMessage: widget.property.tooltipMessage,
-      label: widget.property.name,
+      tooltipMessage: property.tooltipMessage,
+      label: property.name,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(backgroundColor: currentColor),
-        onPressed: () async {
-          await show();
-          widget.property.value = currentColor;
-          widget.onChanged();
-        },
-        child: Container(),
+        style: ElevatedButton.styleFrom(backgroundColor: property.getValue()),
+        onPressed: () => _pickColor(context),
+        child: const SizedBox.shrink(),
       ),
+    );
+  }
+}
+
+class _ColorPickerDialog extends StatefulWidget {
+  const _ColorPickerDialog({required this.initialColor});
+
+  final Color initialColor;
+
+  @override
+  State<_ColorPickerDialog> createState() => _ColorPickerDialogState();
+}
+
+class _ColorPickerDialogState extends State<_ColorPickerDialog> {
+  late Color _color = widget.initialColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return PropertyDialog(
+      title: 'Pick a color!',
+      content: legacy.Material(
+        type: legacy.MaterialType.transparency,
+        child: ColorPicker(
+          pickerColor: _color,
+          onColorChanged: (color) => setState(() => _color = color),
+          pickerAreaHeightPercent: 0.8,
+        ),
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: () => Navigator.of(context).pop(_color),
+          child: const Text('Got it'),
+        ),
+      ],
     );
   }
 }

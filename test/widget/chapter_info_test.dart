@@ -2,7 +2,6 @@ import 'package:dashbook/dashbook.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../helpers.dart';
 import '../helpers/helpers.dart';
 
 Dashbook _getDashbookWithIconInfo() {
@@ -49,7 +48,7 @@ void main() {
       expect(find.text('This is some info'), findsOneWidget);
     });
 
-    testWidgets('show the info dialog when the icon is clicked', (
+    testWidgets('shows the pinned info without any interaction', (
       tester,
     ) async {
       await tester.pumpDashbook(_getDashbookWithPinnedInfo());
