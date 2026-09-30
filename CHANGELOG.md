@@ -1,3 +1,7 @@
+## 0.1.19
+
+ - **FIX**: Fix bugs and clean up non-idiomatic code ([#134](https://github.com/bluefireteam/dashbook/issues/134)). ([25532f78](https://github.com/bluefireteam/dashbook/commit/25532f781c5edcc331d6d2615831e1eb19ea0b9f))
+
 ## [0.1.18]
  - Upgrade to latest flutter
 
