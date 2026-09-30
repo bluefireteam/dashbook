@@ -4,11 +4,7 @@ import 'package:dashbook/src/widgets/property_widgets/widgets/four_values_form.d
 import 'package:material_ui/material_ui.dart';
 
 class EdgeInsetsProperty extends StatelessWidget {
-  const EdgeInsetsProperty({
-    required this.property,
-    required this.onChanged,
-    super.key,
-  });
+  const new({required this.property, required this.onChanged, super.key});
 
   final Property<EdgeInsets> property;
   final PropertyChanged onChanged;

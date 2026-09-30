@@ -5,11 +5,7 @@ import 'package:dashbook/src/widgets/side_bar_panel.dart';
 import 'package:material_ui/material_ui.dart';
 
 class ActionsContainer extends StatelessWidget {
-  const ActionsContainer({
-    required this.onCancel,
-    required this.currentChapter,
-    super.key,
-  });
+  const new({required this.onCancel, required this.currentChapter, super.key});
 
   final VoidCallback onCancel;
   final Chapter currentChapter;

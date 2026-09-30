@@ -2,11 +2,7 @@ import 'package:dashbook/dashbook.dart';
 import 'package:material_ui/material_ui.dart';
 
 class OptionsPropertyWidget<T> extends StatelessWidget {
-  const OptionsPropertyWidget({
-    required this.property,
-    required this.onChanged,
-    super.key,
-  });
+  const new({required this.property, required this.onChanged, super.key});
 
   final OptionsProperty<T> property;
   final PropertyChanged onChanged;

@@ -8,7 +8,7 @@ import 'package:material_ui/material_ui.dart';
 typedef PropertyChanged = void Function();
 
 class PropertyScaffold extends StatelessWidget {
-  const PropertyScaffold({
+  const new({
     required this.label,
     required this.child,
     super.key,

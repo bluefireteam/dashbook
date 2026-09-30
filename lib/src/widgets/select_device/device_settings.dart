@@ -19,7 +19,7 @@ const String kCustomDeviceName = 'Custom Device';
 /// directly from a Pixel 5 running Android 13.
 @immutable
 class DeviceSettingsData {
-  const DeviceSettingsData({
+  const new({
     required this.deviceInfo,
     required this.textScaleFactor,
     required this.orientation,
@@ -56,7 +56,7 @@ class DeviceSettingsData {
 }
 
 class DeviceSettings extends StatefulWidget {
-  const DeviceSettings({required this.child, super.key});
+  const new({required this.child, super.key});
 
   final Widget child;
 
@@ -162,7 +162,7 @@ class DeviceSettingsState extends State<DeviceSettings> {
 }
 
 class _DeviceSettings extends InheritedWidget {
-  const _DeviceSettings({
+  const new({
     required this.settings,
     required this.state,
     required super.child,

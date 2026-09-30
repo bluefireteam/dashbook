@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 
 class CustomDevice extends StatelessWidget {
-  const CustomDevice({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class CustomDevice extends StatelessWidget {
 }
 
 class _SizeField extends StatelessWidget {
-  const _SizeField({
+  const new({
     required this.label,
     required this.initialValue,
     required this.onChanged,
@@ -93,7 +93,7 @@ class _SizeField extends StatelessWidget {
 }
 
 class _PlatformPicker extends StatelessWidget {
-  const _PlatformPicker({required this.selected, required this.onSelect});
+  const new({required this.selected, required this.onSelect});
 
   final TargetPlatform selected;
   final ValueChanged<TargetPlatform> onSelect;

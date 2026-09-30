@@ -3,11 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 
 class NumberProperty extends StatelessWidget {
-  const NumberProperty({
-    required this.property,
-    required this.onChanged,
-    super.key,
-  });
+  const new({required this.property, required this.onChanged, super.key});
 
   final Property<double> property;
   final PropertyChanged onChanged;

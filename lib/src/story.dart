@@ -3,7 +3,7 @@ import 'package:dashbook/src/widgets/property_widgets/properties.dart' as p;
 import 'package:material_ui/material_ui.dart';
 
 class ControlProperty {
-  const ControlProperty(this.key, this.value);
+  const new(this.key, this.value);
 
   final String key;
   final Object value;
@@ -19,7 +19,7 @@ typedef PropertyEditorBuilder<T> = Widget Function(
 );
 
 abstract class Property<T> {
-  Property(
+  new(
     this.name,
     this.defaultValue, {
     this.tooltipMessage,
@@ -28,7 +28,7 @@ abstract class Property<T> {
 
   /// Constructor for a Property with an anonymous builder function instead of
   /// overridden function.
-  factory Property.withBuilder(
+  factory withBuilder(
     String name,
     T defaultValue, {
     required PropertyEditorBuilder<T> builder,
@@ -70,7 +70,7 @@ abstract class Property<T> {
 }
 
 class _PropertyWithBuilder<T> extends Property<T> {
-  _PropertyWithBuilder(
+  new(
     super.name,
     super.defaultValue, {
     required this.builder,
@@ -87,7 +87,7 @@ class _PropertyWithBuilder<T> extends Property<T> {
 }
 
 class ListProperty<T> extends Property<T> {
-  ListProperty(
+  new(
     super.name,
     super.defaultValue,
     this.list, {
@@ -104,7 +104,7 @@ class ListProperty<T> extends Property<T> {
 }
 
 class OptionsProperty<T> extends Property<T> {
-  OptionsProperty(
+  new(
     super.name,
     super.defaultValue,
     this.list, {
@@ -125,7 +125,7 @@ class OptionsProperty<T> extends Property<T> {
 }
 
 class PropertyOption<T> {
-  const PropertyOption(this.label, this.value);
+  const new(this.label, this.value);
 
   final String label;
   final T value;
@@ -329,7 +329,7 @@ class DashbookContext {
 typedef ChapterBuildFunction = Widget Function(DashbookContext context);
 
 class Story {
-  Story(this.name);
+  new(this.name);
 
   final String name;
   final List<Chapter> chapters = [];
@@ -365,7 +365,7 @@ class Story {
 }
 
 class Chapter {
-  Chapter(
+  new(
     this.name,
     this._buildFn,
     this.story, {

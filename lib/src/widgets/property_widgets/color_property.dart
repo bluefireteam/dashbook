@@ -7,11 +7,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:material_ui/material_ui.dart';
 
 class ColorProperty extends StatelessWidget {
-  const ColorProperty({
-    required this.property,
-    required this.onChanged,
-    super.key,
-  });
+  const new({required this.property, required this.onChanged, super.key});
 
   final Property<Color> property;
   final PropertyChanged onChanged;
@@ -44,7 +40,7 @@ class ColorProperty extends StatelessWidget {
 }
 
 class _ColorPickerDialog extends StatefulWidget {
-  const _ColorPickerDialog({required this.initialColor});
+  const new({required this.initialColor});
 
   final Color initialColor;
 

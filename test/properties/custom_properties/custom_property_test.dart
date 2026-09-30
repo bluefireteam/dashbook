@@ -46,7 +46,7 @@ void main() {
 }
 
 class CounterButtonProperty extends Property<int> {
-  CounterButtonProperty(super.name, [super.defaultValue = 0]);
+  new(super.name, [super.defaultValue = 0]);
 
   @override
   Widget createPropertyEditor({required PropertyChanged onChanged, Key? key}) {

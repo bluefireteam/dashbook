@@ -5,7 +5,7 @@ import 'package:dashbook/src/widgets/side_bar_panel.dart';
 import 'package:material_ui/material_ui.dart';
 
 class StoriesList extends StatefulWidget {
-  const StoriesList({
+  const new({
     required this.stories,
     required this.currentBookmark,
     required this.onBookmarkChanged,
@@ -117,7 +117,7 @@ class _StoriesListState extends State<StoriesList> {
 }
 
 class _ChapterTile extends StatelessWidget {
-  const _ChapterTile({
+  const new({
     required this.chapter,
     required this.isSelected,
     required this.isBookmarked,

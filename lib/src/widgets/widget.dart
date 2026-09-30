@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/platform_utils/platform_utils.dart';
 import 'package:dashbook/src/preferences.dart';
@@ -10,7 +12,7 @@ import 'package:material_ui/material_ui.dart';
 typedef OnChapterChange = void Function(Chapter);
 
 class _DashbookDualTheme {
-  const _DashbookDualTheme({
+  const new({
     required this.light,
     required this.dark,
     this.initWithLight = true,
@@ -22,7 +24,7 @@ class _DashbookDualTheme {
 }
 
 class _DashbookMultiTheme {
-  const _DashbookMultiTheme({required this.themes, this.initialTheme});
+  const new({required this.themes, this.initialTheme});
 
   final Map<String, ThemeData> themes;
   final String? initialTheme;
@@ -36,7 +38,7 @@ class _DashbookMultiTheme {
 }
 
 class Dashbook extends StatefulWidget {
-  Dashbook({
+  new({
     super.key,
     this.theme,
     this.title = '',
@@ -49,7 +51,7 @@ class Dashbook extends StatefulWidget {
   }) : _dualTheme = null,
        _multiTheme = null;
 
-  Dashbook.dualTheme({
+  new dualTheme({
     required ThemeData light,
     required ThemeData dark,
     super.key,
@@ -69,7 +71,7 @@ class Dashbook extends StatefulWidget {
        theme = null,
        _multiTheme = null;
 
-  Dashbook.multiTheme({
+  new multiTheme({
     required Map<String, ThemeData> themes,
     super.key,
     String? initialTheme,
@@ -130,7 +132,7 @@ class _DashbookState extends State<Dashbook> {
   @override
   void initState() {
     super.initState();
-    _load();
+    unawaited(_load());
   }
 
   Future<void> _load() async {
@@ -198,8 +200,8 @@ class _DashbookState extends State<Dashbook> {
         theme: _theme,
         localizationsDelegates: widget.localizationsDelegates,
         supportedLocales: widget.supportedLocales,
-        // Needed until device_frame, flutter_colorpicker and flutter_markdown
-        // have migrated from package:flutter/material.dart to material_ui.
+        // Needed until device_frame, flutter_colorpicker and
+        // flutter_markdown_plus have migrated from package:flutter/material.dart to material_ui.
         // ignore: deprecated_member_use
         builder: (_, child) => MaterialUiCompatibilityBridge(child: child!),
         onGenerateInitialRoutes: (_) => [_createRoute()],

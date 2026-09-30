@@ -12,22 +12,22 @@ workspace:
   - example
 
 dependencies:
-  device_frame: ^1.2.0
+  device_frame: ^1.4.0
   flutter:
     sdk: flutter
   flutter_colorpicker: ^1.1.0
-  flutter_markdown: ^0.7.7+1
+  flutter_markdown_plus: ^1.0.12
   material_ui: ^1.5.0
-  shared_preferences: ^2.5.3
-  url_launcher: ^6.3.1
+  shared_preferences: ^2.5.5
+  url_launcher: ^6.3.2
   web: ^1.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   melos: ^8.9.0
-  mocktail: ^1.0.4
-  very_good_analysis: ^7.0.0
+  mocktail: ^1.0.5
+  very_good_analysis: ^11.0.0
 
 melos:
   useRootAsPackage: true

@@ -4,7 +4,7 @@ import 'package:dashbook/src/widgets/side_bar_panel.dart';
 import 'package:material_ui/material_ui.dart';
 
 class PropertiesContainer extends StatelessWidget {
-  const PropertiesContainer({
+  const new({
     required this.currentChapter,
     required this.onPropertyChange,
     required this.onCancel,

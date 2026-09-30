@@ -1,11 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 class TitleWithTooltip extends StatelessWidget {
-  const TitleWithTooltip({
-    required this.label,
-    required this.tooltipMessage,
-    super.key,
-  });
+  const new({required this.label, required this.tooltipMessage, super.key});
 
   final String label;
   final String tooltipMessage;

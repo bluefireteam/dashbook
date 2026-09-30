@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 class PropertyDialog extends StatelessWidget {
-  const PropertyDialog({
+  const new({
     required this.title,
     required this.content,
     required this.actions,
