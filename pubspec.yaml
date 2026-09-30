@@ -2,10 +2,14 @@ name: dashbook
 description: A showcase/sandbox library to help you build isolated widgets in Flutter
 version: 0.1.18
 homepage: https://github.com/bluefireteam/dashbook
+repository: https://github.com/bluefireteam/dashbook
 
 environment:
   sdk: ">=3.13.0 <4.0.0"
   flutter: ">=3.47.0"
+
+workspace:
+  - example
 
 dependencies:
   device_frame: ^1.2.0
@@ -21,6 +25,32 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  melos: ^8.9.0
   mockingjay: ^1.0.0
   mocktail: ^1.0.4
   very_good_analysis: ^7.0.0
+
+melos:
+  useRootAsPackage: true
+
+  command:
+    version:
+      branch: main
+      releaseUrl: true
+      includeCommitId: true
+      linkToCommits: true
+
+  scripts:
+    analyze:
+      run: melos exec -- dart analyze --fatal-infos .
+      description: Run `dart analyze` for all packages.
+
+    format-check:
+      run: melos exec -- dart format . --set-exit-if-changed
+      description: Run `dart format` checks for all packages.
+
+    test:
+      run: melos exec -c 1 -- flutter test
+      packageFilters:
+        dirExists: test
+      description: Run `flutter test` for all packages with tests.

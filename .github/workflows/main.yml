@@ -14,16 +14,16 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2
-      - run: |
-          flutter pub get
-          dart format --set-exit-if-changed .
+      - uses: bluefireteam/melos-action@v3
+      - run: melos run format-check
 
   analyze:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2
-      - run: flutter analyze lib test
+      - uses: bluefireteam/melos-action@v3
+      - run: melos run analyze
   # END LINTING STAGE
 
   # BEGIN TESTING STAGE
@@ -32,5 +32,6 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2
-      - run: flutter test
+      - uses: bluefireteam/melos-action@v3
+      - run: melos run test
   # END TESTING STAGE
