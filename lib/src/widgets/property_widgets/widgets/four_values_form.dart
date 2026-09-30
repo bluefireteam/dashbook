@@ -21,7 +21,7 @@ class _FourValuesFormState extends State<FourValuesForm> {
   late final _sameValueController = TextEditingController(
     text: _format(widget.values.first),
   );
-  late final _controllers = [
+  late final List<TextEditingController> _controllers = [
     for (final value in widget.values)
       TextEditingController(text: _format(value)),
   ];

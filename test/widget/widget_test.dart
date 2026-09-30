@@ -1,5 +1,3 @@
-// ignore_for_file: one_member_abstracts
-
 import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/widgets/keys.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,7 +10,7 @@ abstract class _ChapterStub {
   void onCall(Chapter chapter);
 }
 
-class ChapterStub extends Mock implements _ChapterStub {}
+class ChapterStub extends Mock implements _ChapterStub;
 
 Dashbook _addStories(Dashbook dashbook) {
   dashbook

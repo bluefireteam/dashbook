@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashbookPreferences {
@@ -23,6 +25,6 @@ class DashbookPreferences {
   String? get bookmarkedChapter => _bookmarkedChapter;
   set bookmarkedChapter(String? value) {
     _bookmarkedChapter = value;
-    _setString(_kBookmarkedChapter, value);
+    unawaited(_setString(_kBookmarkedChapter, value));
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dashbook/dashbook.dart';
 import 'package:dashbook/src/platform_utils/platform_utils.dart';
 import 'package:dashbook/src/preferences.dart';
@@ -130,7 +132,7 @@ class _DashbookState extends State<Dashbook> {
   @override
   void initState() {
     super.initState();
-    _load();
+    unawaited(_load());
   }
 
   Future<void> _load() async {
@@ -198,8 +200,8 @@ class _DashbookState extends State<Dashbook> {
         theme: _theme,
         localizationsDelegates: widget.localizationsDelegates,
         supportedLocales: widget.supportedLocales,
-        // Needed until device_frame, flutter_colorpicker and flutter_markdown
-        // have migrated from package:flutter/material.dart to material_ui.
+        // Needed until device_frame, flutter_colorpicker and
+        // flutter_markdown_plus have migrated from package:flutter/material.dart to material_ui.
         // ignore: deprecated_member_use
         builder: (_, child) => MaterialUiCompatibilityBridge(child: child!),
         onGenerateInitialRoutes: (_) => [_createRoute()],

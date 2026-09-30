@@ -1,4 +1,4 @@
-include: package:very_good_analysis/analysis_options.7.0.0.yaml
+include: package:very_good_analysis/analysis_options.11.0.0.yaml
 
 analyzer:
   errors:
@@ -10,5 +10,6 @@ analyzer:
 linter:
   rules:
     public_member_api_docs: false
+    unnecessary_type_name_in_constructor: false
     avoid_positional_boolean_parameters: false
     avoid_returning_this: false

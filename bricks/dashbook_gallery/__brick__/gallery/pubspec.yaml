@@ -12,7 +12,7 @@ dependencies:
   material_ui: ^1.5.0
 
 dev_dependencies:
-  very_good_analysis: ^5.1.0
+  very_good_analysis: ^11.0.0
 
 flutter:
   uses-material-design: true

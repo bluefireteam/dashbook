@@ -1,6 +1,5 @@
 import 'package:material_ui/material_ui.dart';
 
-// ignore: one_member_abstracts
 abstract class Decorator {
   Widget decorate(Widget child);
 }
