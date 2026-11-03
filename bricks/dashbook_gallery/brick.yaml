@@ -1,8 +1,0 @@
-name: dashbook_gallery
-description: Creates a simple dashbook gallery app with a minimal structure to get started.
-repository: https://github.com/bluefireteam/dashbook
-
-version: 0.1.0
-
-environment:
-  mason: ">=0.1.0-dev.50 <0.1.0"
